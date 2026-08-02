@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface Props {
+  title: string;
+  locale?: string;
+  mode?: 'login' | 'register';
+}
+
+const { title } = Astro.props;
+---
+
+<BaseLayout title={title} solidNav>
+  <section class="premium-auth-shell"></section>
+</BaseLayout>
+
+<style>
+  .premium-auth-shell {
+    /* Inherits the page body background — dark in dark mode, white in light mode.
+       The centered container inside provides the actual content area.
+       Left/right margins beyond max-width naturally show the page bg color. */
+    background: transparent;
+    min-height: calc(100vh - 70px);
+    width: 100%;
+    padding-top: 0;
+    margin-top: 0;
+  }
+</style>

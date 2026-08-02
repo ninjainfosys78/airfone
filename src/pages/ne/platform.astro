@@ -1,0 +1,270 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const locale = 'ne';
+---
+
+<BaseLayout title="प्लेटफर्म आर्किटेक्चर — AirFone" solidNav={true}>
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-hero-crumb">प्लेटफर्म / ०१</div>
+      <h1 class="page-hero-title">
+        SIM कार्डदेखि CRM सम्म<br />एउटा क्लाउड-नेटिभ स्ट्याक।
+      </h1>
+      <p class="page-hero-lede">
+        उच्च उपलब्धता, सब-सेकेन्ड अडियो विलम्बता र लचिलो स्केलेबिलिटीका लागि माइक्रोसर्भिस
+        आर्किटेक्चरमा निर्मित — SIP ट्रंक र WebRTC गेटवेमार्फत मानक टेलिकम PSTN/PLMN
+        नेटवर्कहरूलाई आधुनिक AI माइक्रोसर्भिसहरूसँग जोड्दै।
+      </p>
+    </div>
+  </section>
+
+  <!-- Core Architectural Layers Section -->
+  <section class="layers-section">
+    <div class="layers-inner">
+      <div class="layers-header">
+        <span class="layers-tag">मुख्य आर्किटेक्चरल तहहरू</span>
+        <h2 class="layers-title">चार तहहरू, प्रत्येकले एउटा काम कुशलतापूर्वक गर्दै।</h2>
+      </div>
+
+      <div class="layers-timeline">
+        <div class="layer-card">
+          <div class="layer-num">०१</div>
+          <div class="layer-title">टेलिफोनी र एज तह</div>
+          <div class="layer-desc">
+            सेसन बोर्डर कन्ट्रोलर र WebRTC गेटवेहरूले मिडिया स्ट्रिमिङ (RTP/SRTP) ह्यान्डल गर्छन् र स्थानीय टेलिकम अपरेटरहरू — NTC, Ncell र अन्तर्राष्ट्रिय प्रदायकहरूसँग प्रत्यक्ष रूपमा जोडिन्छन्।
+          </div>
+        </div>
+
+        <div class="layer-connector"></div>
+
+        <div class="layer-card">
+          <div class="layer-num">०२</div>
+          <div class="layer-title">AI भ्वाइस अर्केस्ट्रेशन इन्जिन</div>
+          <div class="layer-desc">
+            पूर्ण-डुप्लेक्स रियल-टाइम अडियो स्ट्रिमिङ व्यवस्थापन गर्दछ, ७००ms भन्दा कम मानव-जस्तै प्रतिक्रिया समयका लागि न्यून-विलम्बता स्पीच-टु-टेक्स्ट, प्राकृतिक भाषा समझ (NLU) र न्युरल टेक्स्ट-टु-स्पीच पाइपलाइनहरू समन्वय गर्दछ।
+          </div>
+        </div>
+
+        <div class="layer-connector"></div>
+
+        <div class="layer-card">
+          <div class="layer-num">०३</div>
+          <div class="layer-title">एप्लिकेसन र डाटाबेस तह</div>
+          <div class="layer-desc">
+            बिजनेस लजिक, क्याम्पेन सेड्युलर, कल क्यु वितरण र रियल-टाइम अनुगमनका लागि लाइभ सकेट जडानहरू व्यवस्थापन गर्ने एउटा मल्टि-टेनेन्ट क्लस्टर।
+          </div>
+        </div>
+
+        <div class="layer-connector"></div>
+
+        <div class="layer-card">
+          <div class="layer-num">०४</div>
+          <div class="layer-title">इन्टिग्रेसन गेटवे</div>
+          <div class="layer-desc">
+            गतिशील डाटा ल्याउन र इभेन्ट लगिङका लागि बाह्य CRM, ERP र कस्टम डाटाबेसहरूसँग इन्टरफेस गर्ने RESTful API र वेबहुक मिडलवेयर।
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: var(--bg-secondary);      /* #F4FAF5 — matches your light-green sections */
+    border-bottom: 1px solid var(--border-color);
+    padding: 9rem 2rem 3.5rem;             /* extra top padding clears the fixed navbar */
+  }
+
+  .page-hero-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .page-hero-crumb {
+    font-family: monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--primary-dark);
+    margin-bottom: 1rem;
+  }
+
+  .page-hero-title {
+    font-size: clamp(1.9rem, 4vw, 2.6rem);
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--text-primary);
+    margin: 0 0 1rem;
+    max-width: 760px;
+    letter-spacing: -0.02em;
+  }
+
+  .page-hero-lede {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    max-width: 640px;
+    margin: 0;
+  }
+
+  /* ── Core Architectural Layers Section ────────────────────────────────── */
+  .layers-section {
+    background: #FAFAFA;
+    padding: 5rem 2rem 6rem;
+  }
+
+  html[data-theme="dark"] .layers-section {
+    background: #0A140C;
+  }
+
+  .layers-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .layers-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .layers-tag {
+    display: inline-block;
+    padding: 0.35rem 0.85rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(61, 181, 81, 0.3);
+    background: rgba(61, 181, 81, 0.08);
+    color: #2A8A3C;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  html[data-theme="dark"] .layers-tag {
+    color: #6DC040;
+    background: rgba(109, 192, 64, 0.12);
+    border-color: rgba(109, 192, 64, 0.3);
+  }
+
+  .layers-title {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 800;
+    color: #1A1A1A;
+    margin: 0;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  html[data-theme="dark"] .layers-title {
+    color: #FFFFFF;
+  }
+
+  .layers-timeline {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .layer-card {
+    background: #FFFFFF;
+    border: 1px solid #EBEBEB;
+    border-radius: 20px;
+    padding: 1.75rem 2.25rem;
+    display: grid;
+    grid-template-columns: auto 240px 1fr;
+    align-items: center;
+    gap: 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+    transition: all 0.25s ease;
+  }
+
+  html[data-theme="dark"] .layer-card {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(109, 192, 64, 0.18);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .layer-card:hover {
+    border-color: #C8E6C9;
+    box-shadow: 0 8px 24px rgba(61, 181, 81, 0.12);
+    transform: translateY(-2px);
+  }
+
+  html[data-theme="dark"] .layer-card:hover {
+    border-color: #6DC040;
+    box-shadow: 0 8px 24px rgba(109, 192, 64, 0.2);
+  }
+
+  .layer-num {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(61, 181, 81, 0.12);
+    color: #2A8A3C;
+    font-size: 1.15rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  html[data-theme="dark"] .layer-num {
+    background: rgba(109, 192, 64, 0.18);
+    color: #6DC040;
+  }
+
+  .layer-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1A1A1A;
+    line-height: 1.35;
+  }
+
+  html[data-theme="dark"] .layer-title {
+    color: #FFFFFF;
+  }
+
+  .layer-desc {
+    font-size: 0.95rem;
+    color: #555555;
+    line-height: 1.65;
+  }
+
+  html[data-theme="dark"] .layer-desc {
+    color: rgba(232, 233, 235, 0.7);
+  }
+
+  .layer-connector {
+    width: 2px;
+    height: 28px;
+    background: #E5E7EB;
+    margin-left: 3.25rem;
+  }
+
+  html[data-theme="dark"] .layer-connector {
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  @media (max-width: 900px) {
+    .layer-card {
+      grid-template-columns: auto 1fr;
+      gap: 1.25rem 1.5rem;
+    }
+    .layer-desc {
+      grid-column: 1 / -1;
+      padding-top: 0.25rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .page-hero { padding: 7.5rem 1.25rem 2.5rem; }
+    .page-hero-title { font-size: clamp(1.6rem, 7vw, 2.2rem); }
+    .page-hero-lede { font-size: 0.95rem; }
+
+    .layers-section { padding: 3.5rem 1.25rem 4.5rem; }
+    .layer-card { padding: 1.5rem 1.25rem; }
+    .layer-connector { margin-left: 2.75rem; height: 20px; }
+  }
+</style>

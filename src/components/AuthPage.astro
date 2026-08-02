@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AuthIsland from '../AuthIsland.tsx';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<BaseLayout title={title}>
+  <section class="auth-shell">
+    <AuthIsland client:only="react" />
+  </section>
+</BaseLayout>

@@ -1,0 +1,12 @@
+---
+import AuthPage from '../../../components/AuthPage.astro';
+
+// Static-build placeholder: real tokens are read client-side via
+// react-router's useParams inside PublicAuthRouter's /share/:token
+// route. We emit a single `_` placeholder page so static prerender
+// doesn't choke; in dev/SPA-fallback the island handles any token.
+export function getStaticPaths() {
+  return [{ params: { token: '_' } }];
+}
+---
+<AuthPage title="साझेदारी — स्मार्ट IVR AI" />

@@ -1,0 +1,297 @@
+---
+interface Props {
+  locale?: 'en' | 'ne';
+}
+
+const { locale = 'en' } = Astro.props;
+
+const isNe = locale === 'ne';
+const title = isNe ? 'स्मार्ट IVR AI' : 'SmartIVRAI';
+const subtitle = isNe ? ', लमजुङ' : 'Municipal Executive Office, Lamjung';
+---
+
+<div class="interactive-map-wrapper">
+  <!-- Leaflet map container -->
+  <div id="contact-leaflet-map" class="leaflet-map-canvas"></div>
+
+  <!-- Location Badge (Top-Left) -->
+  <div class="map-header-badge">
+    <span class="pulse-dot"></span>
+    <div class="badge-text">
+      <strong>{title}</strong>
+      <small>{subtitle}</small>
+    </div>
+  </div>
+
+  <!-- Interactive Map Navigation Pad (Exact Replica of User Requested Controller) -->
+  <div class="map-navigation-pad">
+    <button id="nav-pan-up" class="nav-pad-btn grid-up" title="Pan North" aria-label="Pan Up">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+    </button>
+
+    <button id="nav-zoom-in" class="nav-pad-btn grid-plus" title="Zoom In" aria-label="Zoom In">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    </button>
+
+    <button id="nav-pan-left" class="nav-pad-btn grid-left" title="Pan West" aria-label="Pan Left">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+
+    <button id="nav-pan-right" class="nav-pad-btn grid-right" title="Pan East" aria-label="Pan Right">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+
+    <button id="nav-pan-down" class="nav-pad-btn grid-down" title="Pan South" aria-label="Pan Down">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+
+    <button id="nav-zoom-out" class="nav-pad-btn grid-minus" title="Zoom Out" aria-label="Zoom Out">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    </button>
+
+    <button id="nav-recenter" class="nav-pad-btn grid-recenter" title="Recenter / Reset View" aria-label="Recenter Map">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+    </button>
+  </div>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" is:inline crossorigin=""></script>
+
+<script is:inline define:vars={{ title, subtitle }}>
+  function initContactLeafletMap() {
+    const mapContainer = document.getElementById('contact-leaflet-map');
+    if (!mapContainer || mapContainer.dataset.initialized === 'true' || typeof L === 'undefined') return;
+    mapContainer.dataset.initialized = 'true';
+
+    const lat = 28.2307;
+    const lng = 84.3752;
+
+    // Create Leaflet map instance without default zoom control
+    const map = L.map('contact-leaflet-map', {
+      center: [lat, lng],
+      zoom: 15,
+      scrollWheelZoom: true,
+      zoomControl: false
+    });
+
+    // High quality OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+
+    // Custom marker pin
+    const customIcon = L.divIcon({
+      className: 'custom-map-pin',
+      html: `<div class="pin-pulse"></div><div class="pin-icon">🏛️</div>`,
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+      popupAnchor: [0, -38]
+    });
+
+    const marker = L.marker([lat, lng], { icon: customIcon }).addTo(map);
+
+    const popupHtml = `
+      <div style="font-family: system-ui, sans-serif; min-width: 200px; padding: 4px; text-align: center;">
+        <div style="color: #3DB551; font-weight: 800; font-size: 0.98rem; margin-bottom: 2px;">${title}</div>
+        <div style="font-size: 0.82rem; color: #444; margin-bottom: 6px;">${subtitle}</div>
+        <div style="display: flex; gap: 6px; justify-content: center; margin-top: 6px;">
+          <a href="tel:066-520204" style="background: #1A3A1A; color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; text-decoration: none; font-weight: 600;">📞 Call</a>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=28.2307,84.3752" target="_blank" rel="noopener" style="background: #3DB551; color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; text-decoration: none; font-weight: 600;">📍 Directions</a>
+        </div>
+      </div>
+    `;
+
+    marker.bindPopup(popupHtml).openPopup();
+
+    // Map navigation directional pad controls
+    const PAN_OFFSET = 140;
+
+    document.getElementById('nav-pan-up')?.addEventListener('click', () => map.panBy([0, -PAN_OFFSET], { animate: true }));
+    document.getElementById('nav-pan-down')?.addEventListener('click', () => map.panBy([0, PAN_OFFSET], { animate: true }));
+    document.getElementById('nav-pan-left')?.addEventListener('click', () => map.panBy([-PAN_OFFSET, 0], { animate: true }));
+    document.getElementById('nav-pan-right')?.addEventListener('click', () => map.panBy([PAN_OFFSET, 0], { animate: true }));
+    document.getElementById('nav-zoom-in')?.addEventListener('click', () => map.zoomIn());
+    document.getElementById('nav-zoom-out')?.addEventListener('click', () => map.zoomOut());
+    document.getElementById('nav-recenter')?.addEventListener('click', () => {
+      map.flyTo([lat, lng], 15, { duration: 1 });
+      marker.openPopup();
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initContactLeafletMap);
+  } else {
+    initContactLeafletMap();
+  }
+</script>
+
+<style>
+  .interactive-map-wrapper {
+    position: relative;
+    width: 100%;
+    height: 440px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(220, 20, 60, 0.15);
+  }
+
+  .leaflet-map-canvas {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  /* Header badge */
+  .map-header-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(15, 23, 42, 0.88);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 0.6rem 1rem;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    color: white;
+  }
+
+  .pulse-dot {
+    width: 10px;
+    height: 10px;
+    background: #3DB551;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(220, 20, 60, 0.7);
+    animation: pulse 1.8s infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 20, 60, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(220, 20, 60, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 20, 60, 0); }
+  }
+
+  .badge-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .badge-text strong {
+    font-size: 0.85rem;
+    color: #ffffff;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .badge-text small {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  /* Directional Navigation Pad (Exact Replica of User Design) */
+  .map-navigation-pad {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 1000;
+    display: grid;
+    grid-template-columns: repeat(3, 44px);
+    grid-template-rows: repeat(3, 44px);
+    gap: 8px;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(8px);
+    border-radius: 24px;
+  }
+
+  .nav-pad-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    transition: all 0.2s ease-in-out;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .nav-pad-btn:hover {
+    background: #F8F9FA;
+    transform: scale(1.08);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  .nav-pad-btn:active {
+    transform: scale(0.95);
+    background: #EAECEE;
+  }
+
+  /* Grid Layout Placement */
+  .grid-up       { grid-column: 1; grid-row: 1; }
+  .grid-plus     { grid-column: 2; grid-row: 1; }
+  .grid-left     { grid-column: 1; grid-row: 2; }
+  .grid-right    { grid-column: 2; grid-row: 2; }
+  .grid-down     { grid-column: 1; grid-row: 3; }
+  .grid-minus    { grid-column: 2; grid-row: 3; }
+  .grid-recenter { grid-column: 3; grid-row: 3; }
+
+  /* Custom Leaflet Pin */
+  :global(.custom-map-pin) {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  :global(.pin-icon) {
+    font-size: 24px;
+    z-index: 2;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+  }
+
+  :global(.pin-pulse) {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    background: rgba(220, 20, 60, 0.35);
+    border-radius: 50%;
+    z-index: 1;
+    animation: pinPulse 2s infinite ease-out;
+  }
+
+  @keyframes pinPulse {
+    0% { transform: scale(0.5); opacity: 1; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+
+  @media (max-width: 768px) {
+    .interactive-map-wrapper {
+      height: 380px;
+    }
+    .map-navigation-pad {
+      right: 0.75rem;
+      bottom: 0.75rem;
+      grid-template-columns: repeat(3, 38px);
+      grid-template-rows: repeat(3, 38px);
+      gap: 6px;
+      padding: 6px;
+    }
+    .nav-pad-btn {
+      width: 38px;
+      height: 38px;
+    }
+  }
+</style>

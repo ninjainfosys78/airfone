@@ -1,0 +1,52 @@
+---
+interface Props {
+  title: string;
+  date: string;
+  href?: string;
+}
+
+const { title, date, href = "#" } = Astro.props;
+---
+
+<div class="card">
+  <h3><a href={href}>{title}</a></h3>
+  <p class="date">मिति: {date}</p>
+</div>
+
+<style>
+  .card {
+    padding: 1.5rem;
+    border: 1px solid var(--line-light);
+    border-left: 3px solid var(--gov-blue-1);
+    background: #fff;
+    transition: all 0.25s ease;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border-left-color: var(--gov-saffron);
+  }
+  h3 {
+    margin: 0 0 0.75rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+  h3 a {
+    color: var(--gov-blue-deep);
+    text-decoration: none;
+  }
+  h3 a:hover {
+    color: var(--gov-blue-1);
+  }
+  .date {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+</style>

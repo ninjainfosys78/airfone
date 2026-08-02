@@ -1,0 +1,567 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { MapPin, Phone, Mail, Clock, Facebook, Twitter, Youtube } from 'lucide-react';
+---
+<BaseLayout title="सम्पर्क — स्मार्ट IVR AI">
+  <div class="breadcrumb">
+    <a href="/ne">गृह</a> > <span>सम्पर्क</span>
+  </div>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>हामीसँग <span class="highlight">सम्पर्क</span> गर्नुहोस्</h1>
+      <p>स्मार्ट IVR AIका सेवा, योजना तथा प्रस्तावको सम्बन्धमा जानकारी आवश्यक परेमा तलका माध्यमबाट हामीसँग जोडिन सकुनुछ।</p>
+    </div>
+  </section>
+
+  <div class="contact-wrapper">
+    <div class="contact-container">
+      <div class="contact-info">
+        <div class="contact-card">
+          <div class="icon location-icon"><MapPin size={24} color="#3DB551" /></div>
+          <div class="content">
+            <h3>कार्यालयको ठेगाना</h3>
+            <p>वडा नं. ७, स्मार्ट IVR AI, लमजुङ<br />, नेपाल</p>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="icon phone-icon"><Phone size={24} color="#3DB551" /></div>
+          <div class="content">
+            <h3>फोन नम्बर</h3>
+            <p>
+              <a href="tel:066-520204">०६६-५२०२०४</a> / <a href="tel:066-520150">०६६-५२०१५०</a><br />
+              <small>पछ्याउनु:</small> <a href="tel:066-520203">०६६-५२०२०३</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="icon email-icon"><Mail size={24} color="#3DB551" /></div>
+          <div class="content">
+            <h3>इमेल ठेगाना</h3>
+            <p>
+              <a href="mailto:info@besishaharmun.gov.np">info@besishaharmun.gov.np</a><br />
+              <a href="mailto:besishaharmunicipality@gmail.com">besishaharmunicipality@gmail.com</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="icon time-icon"><Clock size={24} color="#3DB551" /></div>
+          <div class="content">
+            <h3>कार्यालय समय</h3>
+            <p>
+              आइतबार – बिहीबार: ९:०० – ५:००<br />
+              शुक्रबार: ९:०० – ३:००
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <section class="social-section">
+    <div class="social-left">
+      <div class="map-preview">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d56251.591870033735!2d84.34558525414049!3d28.21568196262296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3995730ebda1341b%3A0x1a4a34af3eefcaa3!2sBesishahar%20Municipality%20Office!5e0!3m2!1sen!2snp!4v1784881797281!5m2!1sen!2snp"
+          width="100%"
+          height="100%"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+          title="स्मार्ट IVR AI नक्सा"
+        ></iframe>
+      </div>
+    </div>
+    <div class="social-right">
+      <h2>सामाजिक सञ्जालमा जोडिनुहोस्</h2>
+      <p>नगरपालिकाको गतिविधिविषय निरन्तर रूपमा हेर्नको लागि फलो गर्नुहोस्।</p>
+      <div class="social-icons">
+        <a href="https://facebook.com/smartivrai" target="_blank" rel="noopener" class="social-icon facebook" title="Facebook">
+          <Facebook size={24} fill="currentColor" />
+        </a>
+        <a href="https://twitter.com/smartivrai" target="_blank" rel="noopener" class="social-icon twitter" title="Twitter">
+          <Twitter size={24} fill="currentColor" />
+        </a>
+        <a href="https://youtube.com/smartivrai" target="_blank" rel="noopener" class="social-icon youtube" title="YouTube">
+          <Youtube size={24} fill="currentColor" />
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .breadcrumb {
+    display: none;
+  }
+
+  .hero {
+    background: linear-gradient(135deg, #0F1419 0%, #1A2332 50%, #0F1E2E 100%);
+    color: white;
+    padding: 10rem 0 5rem;
+    margin: 0;
+    text-align: center;
+    animation: fadeInDown 0.8s ease-out;
+  }
+  .hero-content {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  .hero h1 {
+    font-size: 3.2rem;
+    margin: 0 0 1rem;
+    font-weight: 800;
+    line-height: 1.2;
+    animation: fadeInDown 0.8s ease-out 0.1s both;
+  }
+  .hero .highlight {
+    color: #3DB551;
+    text-shadow: 0 0 20px rgba(220, 20, 60, 0.3);
+  }
+  .hero p {
+    font-size: 1.2rem;
+    margin: 0;
+    max-width: 650px;
+    margin: 0 auto;
+    opacity: 0.95;
+    animation: fadeInDown 0.8s ease-out 0.2s both;
+  }
+
+  .contact-wrapper {
+    max-width: 1280px;
+    margin: 0 auto 4rem;
+    padding: 0 2rem;
+  }
+
+  .contact-container {
+     margin-bottom: 0;
+  background: linear-gradient(135deg, #faf8f3 0%, #f5f2ea 100%);
+  padding: 3rem;
+  border-radius: 16px;
+  animation: fadeInUp 0.8s ease-out 0.3s both;
+  border: 1px solid rgba(220, 20, 60, 0.1);
+  }
+
+  .contact-info {
+     display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  }
+
+  .contact-card {
+    background: linear-gradient(135deg, #ffffff 0%, #fafbfc 100%);
+    border-radius: 12px;
+    padding: 1.75rem;
+    display: flex;
+    gap: 1.25rem;
+    border: 1px solid rgba(220, 20, 60, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: slideInLeft 0.6s ease-out backwards;
+  }
+
+  .contact-card:nth-child(1) { animation-delay: 0.4s; }
+  .contact-card:nth-child(2) { animation-delay: 0.5s; }
+  .contact-card:nth-child(3) { animation-delay: 0.6s; }
+  .contact-card:nth-child(4) { animation-delay: 0.7s; }
+
+  .contact-card:hover {
+     transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  border-color: rgba(220, 20, 60, 0.1);
+  background: linear-gradient(135deg, #ffffff 0%, #fafbfc 100%);
+  }
+
+  .icon {
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: #fce4ec;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .contact-card .content h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.1rem;
+    color: #2c3e50;
+    font-weight: 700;
+  }
+  .contact-card .content p {
+    margin: 0;
+    color: #555;
+    font-size: 0.95rem; color: #1A3A1A; font-weight: 500;
+    line-height: 1.6;
+  }
+  .contact-card a {
+    color: #3DB551;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .contact-card a:hover {
+    text-decoration: underline;
+  }
+
+  .contact-form-section {
+    background: linear-gradient(135deg, #ffffff 0%, #fafbfc 100%);
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    animation: slideInRight 0.6s ease-out 0.4s both;
+    border: 1px solid rgba(220, 20, 60, 0.1);
+  }
+  .contact-form-section h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.5rem;
+    color: #2c3e50;
+    font-weight: 700;
+    animation: fadeInDown 0.6s ease-out 0.5s both;
+  }
+  .contact-form-section > p {
+    color: #1A3A1A;
+    margin: 0 0 2rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.6;
+    animation: fadeInDown 0.6s ease-out 0.6s both;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .form-group label {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #1A3A1A;
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+  .form-group input,
+  .form-group textarea {
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1A3A1A;
+    background: #fafafa;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: #888;
+    font-weight: 500;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #3DB551;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(220, 20, 60, 0.15);
+    transform: translateY(-2px);
+  }
+  .form-group textarea {
+    resize: vertical;
+  }
+
+  .submit-btn {
+    background: linear-gradient(135deg, #3DB551 0%, #B80A2B 100%);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 1rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    align-self: flex-start;
+    box-shadow: 0 4px 12px rgba(220, 20, 60, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(220, 20, 60, 0.4);
+  }
+
+  .submit-btn:hover::before {
+    left: 100%;
+  }
+
+  .submit-btn:active {
+    transform: translateY(-1px);
+  }
+
+  .map-section {
+    position: relative;
+    margin-bottom: 3rem;
+  }
+  .map-container {
+    border-radius: 12px;
+    overflow: hidden;
+    height: 400px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  }
+  .map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    pointer-events: none;
+  }
+  .map-label {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 2rem;
+    background: white;
+    color: #3DB551;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  }
+
+  .social-section {
+    max-width: 1280px;
+    margin: 0 auto 4rem;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    animation: fadeInUp 0.8s ease-out 0.5s both;
+  }
+
+  .social-left {
+    position: relative;
+    animation: slideInLeft 0.7s ease-out 0.6s both;
+  }
+
+  .map-preview {
+    border-radius: 16px;
+    overflow: hidden;
+    height: 420px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(220, 20, 60, 0.15);
+    position: relative;
+  }
+
+  .map-preview iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    pointer-events: auto;
+  }
+
+  .social-right {
+    animation: slideInRight 0.7s ease-out 0.6s both;
+  }
+
+  .social-right h2 {
+    font-size: 1.8rem;
+    color: white;
+    margin: 0 0 1rem;
+    font-weight: 700;
+    animation: fadeInDown 0.6s ease-out 0.7s both;
+  }
+
+  html[data-theme="light"] .social-right h2 {
+    color: #1A3A1A;
+  }
+
+  .social-right > p {
+    color: #3DB551;
+    margin: 0 0 2rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.6;
+    animation: fadeInDown 0.6s ease-out 0.8s both;
+  }
+
+  html[data-theme="light"] .social-right > p {
+    color: #1A3A1A;
+  }
+
+  .social-icons {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
+    color: #3DB551;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid transparent;
+    animation: fadeInUp 0.6s ease-out backwards;
+  }
+
+  html[data-theme="light"] .social-icon {
+    color: #1A3A1A;
+  }
+
+  .social-icon:nth-child(1) { animation-delay: 0.9s; }
+  .social-icon:nth-child(2) { animation-delay: 1s; }
+  .social-icon:nth-child(3) { animation-delay: 1.1s; }
+
+  .social-icon svg {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+  }
+
+  .social-icon:hover {
+    transform: translateY(-4px) scale(1.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .social-icon:hover svg {
+    transform: rotate(10deg) scale(1.1);
+  }
+
+  @media (max-width: 1024px) {
+    .contact-container {
+      gap: 2rem;
+      padding: 2rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .contact-container {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding: 1.5rem;
+    }
+    .hero { padding: 7rem 1.25rem 2.5rem; }
+    .hero h1 {
+      font-size: clamp(1.6rem, 7vw, 2.2rem);
+    }
+    .hero p { font-size: 1rem; }
+    .contact-wrapper { padding: 1.5rem 1rem 2.5rem; }
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+    .map-container {
+      height: 280px;
+    }
+    .contact-form-section {
+      padding: 1.5rem;
+    }
+    .social-section {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 0 1rem;
+    }
+    .map-preview {
+      height: 280px;
+    }
+    .social-right h2 {
+      font-size: 1.5rem;
+    }
+    .submit-btn {
+      width: 100%;
+      align-self: stretch;
+      text-align: center;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero { padding: 6rem 1rem 2rem; }
+    .hero h1 { font-size: clamp(1.4rem, 8vw, 1.8rem); }
+    .contact-wrapper { padding: 1rem 0.75rem 2rem; }
+    .contact-container { padding: 1rem; gap: 1rem; }
+    .contact-card { padding: 1rem; gap: 1rem; }
+    .contact-card .content h3 { font-size: 1rem; }
+    .contact-card .content p { font-size: 0.88rem; }
+    .contact-form-section { padding: 1rem; }
+    .contact-form { gap: 1rem; }
+    .map-preview { height: 220px; }
+    .social-icons { gap: 1rem; }
+    .social-section { padding: 0 0.75rem; margin-bottom: 2rem; }
+  }
+</style>
