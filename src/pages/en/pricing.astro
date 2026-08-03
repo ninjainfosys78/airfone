@@ -1,0 +1,284 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const locale = 'en';
+---
+
+<BaseLayout title="Pricing — AirFone" solidNav={true}>
+
+  <!-- ============ HERO ============ -->
+  <section class="pricing-hero">
+    <div class="section-container">
+      <h1 class="pricing-hero-title">Transparent tiers. No surprise minutes.</h1>
+      <p class="pricing-hero-lede">
+        One-time setup, a monthly subscription that fits your call volume, and pay-as-you-go
+        rates for broadcast minutes.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ SETUP FEE ============ -->
+  <section class="setup-section">
+    <div class="section-container">
+      <h2 class="section-title">One-Time Setup Fee</h2>
+
+      <div class="setup-table">
+        <div class="setup-row setup-head">
+          <span>Package</span><span>Includes</span><span>Fee</span>
+        </div>
+        <div class="setup-row">
+          <span class="setup-name">Standard Cloud Setup</span>
+          <span>Multi-tenant cloud onboarding, SIP trunk config, base IVR flow</span>
+          <span class="setup-fee">NPR 30,000</span>
+        </div>
+        <div class="setup-row">
+          <span class="setup-name">Enterprise / AI Custom Setup</span>
+          <span>Dedicated cluster, custom AI flow design, CRM integration build</span>
+          <span class="setup-fee">NPR 50,000</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PLANS ============ -->
+  <section class="plans-section">
+    <div class="section-container">
+      <span class="section-eyebrow">Subscription</span>
+      <h2 class="section-title">Monthly Plans</h2>
+
+      <div class="plans-grid">
+        <div class="plan-card">
+          <span class="plan-name">Starter</span>
+          <div class="plan-price">NPR 4,500<span>/mo</span></div>
+          <ul class="plan-specs">
+            <li><span>Channels</span><b>10 concurrent</b></li>
+            <li><span>Agent extensions</span><b>5</b></li>
+            <li><span>Included minutes</span><b>2,000</b></li>
+            <li><span>IVR type</span><b>Standard menu</b></li>
+            <li><span>AI capability</span><b>Basic NLU</b></li>
+            <li><span>Recording retention</span><b>30 days</b></li>
+            <li><span>SLA uptime</span><b>99.5%</b></li>
+          </ul>
+          <a href={`/${locale}/demo/`} class="plan-btn plan-btn-outline">Choose Starter</a>
+        </div>
+
+        <div class="plan-card plan-featured">
+          <span class="plan-ribbon">Recommended</span>
+          <span class="plan-name">Growth</span>
+          <div class="plan-price">NPR 9,500<span>/mo</span></div>
+          <ul class="plan-specs">
+            <li><span>Channels</span><b>50 concurrent</b></li>
+            <li><span>Agent extensions</span><b>25</b></li>
+            <li><span>Included minutes</span><b>10,000</b></li>
+            <li><span>IVR type</span><b>Dynamic + Self-Service</b></li>
+            <li><span>AI capability</span><b>Conversational AI</b></li>
+            <li><span>Recording retention</span><b>90 days</b></li>
+            <li><span>SLA uptime</span><b>99.9%</b></li>
+          </ul>
+          <a href={`/${locale}/demo/`} class="plan-btn plan-btn-filled">Choose Growth</a>
+        </div>
+
+        <div class="plan-card">
+          <span class="plan-name">AI Enterprise</span>
+          <div class="plan-price">NPR 22,500<span>/mo</span></div>
+          <ul class="plan-specs">
+            <li><span>Channels</span><b>1,000+ concurrent</b></li>
+            <li><span>Agent extensions</span><b>Unlimited</b></li>
+            <li><span>Included minutes</span><b>50,000</b></li>
+            <li><span>IVR type</span><b>Full AI Orchestration</b></li>
+            <li><span>AI capability</span><b>Sentiment + Analytics</b></li>
+            <li><span>Recording retention</span><b>365 days</b></li>
+            <li><span>SLA uptime</span><b>99.95%</b></li>
+          </ul>
+          <a href={`/${locale}/contact/`} class="plan-btn plan-btn-outline">Talk to Sales</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PAYG RATES ============ -->
+  <section class="payg-section">
+    <div class="section-container">
+      <span class="section-eyebrow">Pay-As-You-Go</span>
+      <h2 class="section-title">Outbound Broadcast &amp; TTS Rates</h2>
+
+      <div class="payg-table">
+        <div class="payg-row payg-head">
+          <span>Usage Tier</span><span>Monthly Minutes</span><span>Broadcast Rate</span><span>Dynamic TTS Rate</span>
+        </div>
+        <div class="payg-row">
+          <span class="payg-tier">Tier 1</span><span>Up to 10,000 min</span><span class="payg-rate">NPR 1.20/min</span><span class="payg-rate">NPR 1.50/min</span>
+        </div>
+        <div class="payg-row">
+          <span class="payg-tier">Tier 2</span><span>10,000–50,000 min</span><span class="payg-rate">NPR 1.00/min</span><span class="payg-rate">NPR 1.25/min</span>
+        </div>
+        <div class="payg-row">
+          <span class="payg-tier">Tier 3</span><span>50,000+ min</span><span class="payg-rate">NPR 0.80/min</span><span class="payg-rate">NPR 1.00/min</span>
+        </div>
+      </div>
+
+      <span class="section-eyebrow addon-eyebrow">Add-On Credits</span>
+      <div class="addon-table">
+        <div class="addon-row addon-head"><span>Add-On</span><span>Rate</span></div>
+        <div class="addon-row"><span>Automated transcription</span><span class="payg-rate">NPR 0.50/min</span></div>
+        <div class="addon-row"><span>Sentiment analysis</span><span class="payg-rate">NPR 0.30/call</span></div>
+        <div class="addon-row"><span>SMS fallback</span><span class="payg-rate">NPR 1.00/SMS</span></div>
+      </div>
+      <p class="vat-note">All NPR pricing excludes VAT.</p>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="pricing-cta-section">
+    <div class="pricing-cta-inner">
+      <div class="pricing-cta-text">
+        <h2>Not sure which tier fits your call volume?</h2>
+        <p>Send us your average concurrent calls and we'll recommend a plan.</p>
+      </div>
+      <a href={`/${locale}/contact/`} class="pricing-cta-btn">Talk to Sales</a>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .section-container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+  .section-eyebrow {
+    display: block; font-family: monospace; font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--primary-dark); margin-bottom: 1rem;
+  }
+  .section-title { font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em; margin: 0 0 2rem; }
+
+  /* ============ HERO ============ */
+  .pricing-hero { background: var(--bg-secondary); padding: 11rem 0 3.5rem; border-bottom: 1px solid var(--border-color); }
+  .pricing-hero-title { font-size: clamp(1.9rem, 4vw, 2.6rem); font-weight: 800; line-height: 1.2; color: var(--text-primary); letter-spacing: -0.02em; margin: 0 0 1rem; max-width: 700px; }
+  .pricing-hero-lede { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.65; max-width: 620px; margin: 0; }
+
+  /* ============ SETUP TABLE ============ */
+  .setup-section { background: #FFFFFF; padding: 4.5rem 0; }
+  .setup-table { border: 1px solid var(--border-color); border-radius: 14px; overflow: hidden; }
+  .setup-row {
+    display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 1.5rem; padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-color); align-items: center;
+  }
+  .setup-row:last-child { border-bottom: none; }
+  .setup-head { background: var(--bg-secondary); font-family: monospace; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); }
+  .setup-name { font-weight: 700; color: var(--text-primary); font-size: 0.95rem; }
+  .setup-row:not(.setup-head) span:nth-child(2) { font-size: 0.9rem; color: var(--text-secondary); }
+  .setup-fee { font-family: monospace; color: var(--primary-dark); font-weight: 700; }
+
+  /* ============ PLANS ============ */
+  .plans-section { background: var(--bg-secondary); padding: 4.5rem 0; }
+  .plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; align-items: start; }
+
+  .plan-card {
+    background: #FFFFFF; border: 1px solid var(--border-color); border-radius: 18px;
+    padding: 2rem; display: flex; flex-direction: column; position: relative;
+  }
+  .plan-featured { border: 2px solid var(--primary); box-shadow: 0 12px 30px rgba(61, 181, 81, 0.15); }
+  .plan-ribbon {
+    position: absolute; top: -13px; left: 2rem; background: var(--primary-dark); color: #fff;
+    font-family: monospace; font-size: 0.7rem; padding: 0.3rem 0.8rem; border-radius: 9999px; letter-spacing: 0.04em;
+  }
+  .plan-name { font-family: monospace; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); }
+  .plan-price { font-size: 2rem; font-weight: 800; color: var(--text-primary); margin: 0.6rem 0 1.5rem; }
+  .plan-price span { font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); }
+
+  .plan-specs { list-style: none; margin: 0 0 1.5rem; padding: 0; flex: 1; }
+  .plan-specs li { display: flex; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px solid var(--border-color); font-size: 0.85rem; }
+  .plan-specs li:first-child { border-top: 1px solid var(--border-color); }
+  .plan-specs li span { color: var(--text-secondary); }
+  .plan-specs li b { color: var(--text-primary); font-weight: 700; }
+
+  .plan-btn { display: block; text-align: center; padding: 0.85rem; border-radius: 10px; font-weight: 700; font-size: 0.9rem; text-decoration: none; }
+  .plan-btn-outline { border: 1.5px solid var(--border-color); color: var(--text-primary); }
+  .plan-btn-outline:hover { border-color: var(--primary); color: var(--primary-dark); }
+  .plan-btn-filled { background: linear-gradient(135deg, #6DC040, #2A8A3C); color: #FFFFFF; box-shadow: 0 3px 12px rgba(61, 181, 81, 0.3); }
+  .plan-btn-filled:hover { background: linear-gradient(135deg, #3DB551, #1B7A2F); color: #FFFFFF; }
+
+  /* ============ PAYG + ADD-ON TABLES ============ */
+  .payg-section { background: #FFFFFF; padding: 4.5rem 0; }
+  .payg-table, .addon-table { border: 1px solid var(--border-color); border-radius: 14px; overflow: hidden; margin-bottom: 1rem; }
+  .payg-row { display: grid; grid-template-columns: 1fr 1.4fr 1fr 1fr; gap: 1rem; padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border-color); align-items: center; }
+  .addon-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border-color); align-items: center; }
+  .payg-row:last-child, .addon-row:last-child { border-bottom: none; }
+  .payg-head, .addon-head { background: var(--bg-secondary); font-family: monospace; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); }
+  .payg-tier { font-weight: 700; color: var(--text-primary); }
+  .payg-rate { font-family: monospace; color: var(--primary-dark); font-weight: 700; }
+  .addon-eyebrow { margin-top: 3rem; }
+  .vat-note { font-size: 0.8rem; color: var(--text-secondary); opacity: 0.7; margin: 0.5rem 0 0; }
+
+  /* ============ CTA ============ */
+  .pricing-cta-section {
+    background: linear-gradient(180deg, #E4F5D4 0%, #F2FAE6 55%, #F8FCF2 100%);
+    padding: 4rem 2.5rem 5rem;
+  }
+  .pricing-cta-inner {
+    max-width: 1280px; margin: 0 auto;
+    background: #FFFFFF;
+    border: 1px solid rgba(61, 181, 81, 0.25); border-radius: 16px; padding: 2.5rem 3rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+    box-shadow: 0 8px 24px rgba(61, 181, 81, 0.15);
+  }
+  .pricing-cta-text h2 { font-size: 1.5rem; font-weight: 700; color: #1A3A1A; margin: 0 0 0.4rem; }
+  .pricing-cta-text p { font-size: 0.9rem; color: rgba(26, 58, 26, 0.7); margin: 0; }
+  .pricing-cta-btn {
+    display: inline-flex; align-items: center; padding: 0.8rem 1.6rem;
+    background: linear-gradient(135deg, #6DC040, #2A8A3C); color: #FFFFFF; font-weight: 700;
+    font-size: 0.9rem; border-radius: 10px; text-decoration: none; white-space: nowrap;
+    box-shadow: 0 3px 12px rgba(61, 181, 81, 0.35); transition: all 0.2s ease;
+  }
+  .pricing-cta-btn:hover { background: linear-gradient(135deg, #3DB551, #1B7A2F); color: #FFFFFF; transform: translateY(-1px); }
+
+  @media (max-width: 900px) {
+    .plans-grid { grid-template-columns: 1fr; }
+    .setup-row { grid-template-columns: 1fr; gap: 0.4rem; }
+    .payg-row { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .pricing-hero { padding: 9rem 0 2.5rem; }
+    .addon-row, .payg-row { grid-template-columns: 1fr; gap: 0.3rem; }
+    .pricing-cta-section { padding: 3rem 1.25rem 3rem; }
+    .pricing-cta-inner { flex-direction: column; align-items: flex-start; padding: 2rem 1.5rem; }
+    .pricing-cta-btn { width: 100%; text-align: center; justify-content: center; }
+  }
+
+  /* Dark mode — deep/medium green sections */
+  html[data-theme="dark"] .setup-section {
+    background: var(--bg-primary);
+  }
+
+  html[data-theme="dark"] .plans-section {
+    background: var(--bg-secondary);
+  }
+
+  html[data-theme="dark"] .plan-card {
+    background: var(--card-bg);
+    border-color: var(--card-border);
+  }
+
+  html[data-theme="dark"] .plan-featured {
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  }
+
+  html[data-theme="dark"] .payg-section {
+    background: var(--bg-primary);
+  }
+
+  html[data-theme="dark"] .pricing-cta-section {
+    background: linear-gradient(180deg, #0A2410 0%, #0C2B14 55%, #0F2E1A 100%);
+  }
+
+  html[data-theme="dark"] .pricing-cta-inner {
+    background: var(--card-bg);
+    border-color: rgba(109, 192, 64, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+
+  html[data-theme="dark"] .pricing-cta-text h2 {
+    color: var(--text-primary);
+  }
+
+  html[data-theme="dark"] .pricing-cta-text p {
+    color: var(--text-secondary);
+  }
+</style>

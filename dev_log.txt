@@ -1,0 +1,17 @@
+
+> @eshasan-customer/smartivrai-landing@0.1.0 dev C:\Users\DELL\OneDrive\Desktop\Smarto\SmartIVRAI\apps\landing
+> astro dev "--port" "4399" "--host" "127.0.0.1"
+
+22:44:15 [types] Generated 11ms
+
+ astro  v4.16.19 ready in 1307 ms
+
+┃ Local    http://127.0.0.1:4399/
+
+22:44:16 watching for file changes...
+22:45:35 [200] /en/ 340ms
+22:45:36 [ERROR] PhoneMissed is not defined
+  Stack trace:
+    at Object.default (C:\Users\DELL\OneDrive\Desktop\Smarto\SmartIVRAI\apps\landing\src\pages\en\index.astro:1:1)
+    [...] See full stack trace in the browser, or rerun with --verbose.
+22:47:03 [watch] src/pages/en/index.astro

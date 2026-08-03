@@ -130,7 +130,7 @@ import { ShieldCheck, Lock, Globe2, BarChart3 } from 'lucide-react';
   /* ============ ABOUT INTRO ============ */
   .about-hero {
     background: #FFFFFF;
-    padding: 9rem 0 4rem;
+    padding: 11rem 0 4rem;
   }
 
   .about-hero-inner {
@@ -246,7 +246,7 @@ import { ShieldCheck, Lock, Globe2, BarChart3 } from 'lucide-react';
   }
 
   @media (max-width: 600px) {
-    .about-hero { padding: 7.5rem 0 3rem; }
+    .about-hero { padding: 9rem 0 3rem; }
     .vision-section { padding: 3rem 0; }
     .about-hero-inner, .vision-inner { padding-left: 1rem; padding-right: 1rem; }
     .vision-card { grid-template-columns: 1fr; padding: 2rem; }
@@ -286,7 +286,7 @@ import { ShieldCheck, Lock, Globe2, BarChart3 } from 'lucide-react';
     max-width: 640px;
   }
 
-  .section-title.light { color: #FFFFFF; }
+  .section-title.light { color: var(--text-primary); }
 
   /* ============ VALUES ============ */
   .values-section {
@@ -336,13 +336,13 @@ import { ShieldCheck, Lock, Globe2, BarChart3 } from 'lucide-react';
 
   /* ============ WHO WE WORK WITH ============ */
   .audience-section {
-    background: #0A1F0D;   /* same dark green as your footer, for contrast */
+    background: #F4FAF5;
     padding: 5rem 0;
   }
 
   .audience-lede {
     font-size: 1rem;
-    color: rgba(232,233,235,0.65);
+    color: var(--text-secondary);
     line-height: 1.7;
     max-width: 640px;
     margin: 0 0 2.25rem;
@@ -357,9 +357,9 @@ import { ShieldCheck, Lock, Globe2, BarChart3 } from 'lucide-react';
   .industry-tag {
     font-family: monospace;
     font-size: 0.85rem;
-    color: rgba(232,233,235,0.85);
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--primary-dark);
+    background: #FFFFFF;
+    border: 1px solid var(--border-color);
     border-radius: 9999px;
     padding: 0.55rem 1.1rem;
   }
@@ -437,6 +437,53 @@ import { ShieldCheck, Lock, Globe2, BarChart3 } from 'lucide-react';
     }
     .team-cta-btn { width: 100%; text-align: center; justify-content: center; }
     .team-cta-section { padding: 3rem 1rem 3rem; }
+  }
+
+  /* Dark mode — deep/medium green sections */
+  html[data-theme="dark"] .about-hero {
+    background: var(--bg-primary);
+  }
+
+  html[data-theme="dark"] .vision-card {
+    background: var(--card-bg);
+    border-color: var(--card-border);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+  }
+
+  html[data-theme="dark"] .values-section {
+    background: var(--bg-primary);
+  }
+
+  html[data-theme="dark"] .value-card {
+    background: var(--card-bg);
+    border-color: var(--card-border);
+  }
+
+  html[data-theme="dark"] .audience-section {
+    background: var(--bg-secondary);
+  }
+
+  html[data-theme="dark"] .industry-tag {
+    background: var(--card-bg);
+    border-color: var(--card-border);
+  }
+
+  html[data-theme="dark"] .team-cta-section {
+    background: linear-gradient(180deg, #0A2410 0%, #0C2B14 55%, #0F2E1A 100%);
+  }
+
+  html[data-theme="dark"] .team-cta-inner {
+    background: var(--card-bg);
+    border-color: rgba(109, 192, 64, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+
+  html[data-theme="dark"] .team-cta-text h2 {
+    color: var(--text-primary);
+  }
+
+  html[data-theme="dark"] .team-cta-text p {
+    color: var(--text-secondary);
   }
 
 </style>

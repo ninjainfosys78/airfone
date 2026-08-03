@@ -28,9 +28,10 @@ const enPath = `/en${pathWithoutLocale}`;
 
 const isHome       = normalizedPath === '/';
 const isAbout      = normalizedPath.startsWith('/about');
-const isPlatform   = normalizedPath.startsWith('/platform');
+const isFeatures   = normalizedPath.startsWith('/features');
 const isEnterprise = normalizedPath.startsWith('/enterprise');
 const isPricing    = normalizedPath.startsWith('/pricing');
+const isContact    = normalizedPath.startsWith('/contact');
 
 const isLogin    = pathWithoutLocale.startsWith('/login');
 const isRegister = pathWithoutLocale.startsWith('/register');
@@ -43,7 +44,27 @@ const isRegister = pathWithoutLocale.startsWith('/register');
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <title>{title}</title>
-    <link rel="icon" type="image/png" href="/coat-of-arms.png" />
+    <script is:inline>
+      // Apply saved theme before the first paint and re-apply it after every
+      // View Transition swap. Astro restores the root <html> attributes from the
+      // server-rendered page (which has no data-theme), so without this the page
+      // would flash white/dark before initLayout runs on astro:page-load.
+      (function () {
+        function applyTheme() {
+          try {
+            var stored = localStorage.getItem('theme');
+            var theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+          } catch (e) {}
+        }
+        applyTheme();
+        if (!window.__themeSwapHandler) {
+          window.__themeSwapHandler = applyTheme;
+          document.addEventListener('astro:after-swap', applyTheme);
+        }
+      })();
+    </script>
+    <link rel="icon" type="image/png" href="/airfone-logo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -64,18 +85,21 @@ const isRegister = pathWithoutLocale.startsWith('/register');
         <ul class="nav-links">
           <li><a href={`/${locale}/`} class={`nav-link${isHome ? ' active' : ''}`}>{locale === 'en' ? 'Home' : 'गृह'}</a></li>
           <li><a href={`/${locale}/about/`} class={`nav-link${isAbout ? ' active' : ''}`}>{locale === 'en' ? 'About Us' : 'हाम्रोबारे'}</a></li>
-          <li><a href={`/${locale}/platform/`} class={`nav-link${isPlatform ? ' active' : ''}`}>{locale === 'en' ? 'Platform' : 'प्लेटफर्म'}</a></li>
-          <li><a href={`/${locale}/enterprise/`} class={`nav-link${isEnterprise ? ' active' : ''}`}>{locale === 'en' ? 'Enterprise' : 'इन्टरप्राइज'}</a></li>
+          <li><a href={`/${locale}/features/`} class={`nav-link${isFeatures ? ' active' : ''}`}>{locale === 'en' ? 'Features' : 'सुविधाहरू'}</a></li>
           <li><a href={`/${locale}/pricing/`} class={`nav-link${isPricing ? ' active' : ''}`}>{locale === 'en' ? 'Pricing' : 'मूल्य निर्धारण'}</a></li>
+          <li><a href={`/${locale}/contact/`} class={`nav-link${isContact ? ' active' : ''}`}>{locale === 'en' ? 'Contact' : 'सम्पर्क'}</a></li>
         </ul>
 
         <div class="nav-right">
+          <div class="navbar-theme-toggle">
+            <ThemeToggle client:load locale={locale} />
+          </div>
           <a href={locale === 'ne' ? enPath : nePath} class="lang-toggle-btn" data-astro-scroll="false" title={locale === 'ne' ? 'Switch to English' : 'नेपालीमा स्विच गर्नुहोस्'}>
             {locale === 'ne' ? 'ENG' : 'नेप'}
           </a>
           <div class="nav-auth-buttons">
             <a href={`/${locale}/login/`} class={`btn-signin`}>Sign In</a>
-            <a href={`/${locale}/demo/`} class={`btn-book-demo`}>Book a Demo</a>
+            <a href={`/${locale}/contact/`} class={`btn-book-demo`}>Book a Demo</a>
           </div>
         </div>
 
@@ -91,9 +115,16 @@ const isRegister = pathWithoutLocale.startsWith('/register');
     <!-- Mobile Nav Drawer -->
     <div class="mobile-nav-drawer" id="mobile-nav-drawer" aria-hidden="true">
       <nav>
+        <ul class="mobile-nav-links">
+          <li><a href={`/${locale}/`} class={`mobile-nav-link${isHome ? ' active' : ''}`}>{locale === 'en' ? 'Home' : 'गृह'}</a></li>
+          <li><a href={`/${locale}/about/`} class={`mobile-nav-link${isAbout ? ' active' : ''}`}>{locale === 'en' ? 'About Us' : 'हाम्रोबारे'}</a></li>
+          <li><a href={`/${locale}/features/`} class={`mobile-nav-link${isFeatures ? ' active' : ''}`}>{locale === 'en' ? 'Features' : 'सुविधाहरू'}</a></li>
+          <li><a href={`/${locale}/pricing/`} class={`mobile-nav-link${isPricing ? ' active' : ''}`}>{locale === 'en' ? 'Pricing' : 'मूल्य निर्धारण'}</a></li>
+          <li><a href={`/${locale}/contact/`} class={`mobile-nav-link${isContact ? ' active' : ''}`}>{locale === 'en' ? 'Contact' : 'सम्पर्क'}</a></li>
+        </ul>
         <div class="mobile-nav-auth">
-          <a href={`/${locale}/login/`} class={`btn-login${isLogin ? ' active' : ''}`}>{locale === 'en' ? 'Login' : 'प्रवेश गर्नुहोस्'}</a>
-          <a href={`/${locale}/register/`} class={`btn-register${isRegister ? ' active' : ''}`}>{locale === 'en' ? 'Register' : 'दर्ता गर्नुहोस्'}</a>
+          <a href={`/${locale}/login/`} class={`mobile-btn-signin${isLogin ? ' active' : ''}`}>{locale === 'en' ? 'Sign In' : 'प्रवेश गर्नुहोस्'}</a>
+          <a href={`/${locale}/contact/`} class={`mobile-btn-demo${isContact ? ' active' : ''}`}>{locale === 'en' ? 'Book a Demo' : 'डेमो बुक गर्नुहोस्'}</a>
         </div>
       </nav>
     </div>
@@ -194,12 +225,10 @@ const isRegister = pathWithoutLocale.startsWith('/register');
         });
       }
 
-      initLayout();
       document.addEventListener('astro:page-load', initLayout);
     </script>
 
     <footer class="site-footer">
-      <div class="footer-grid-bg"></div>
       <div class="footer-inner">
 
         <!-- Brand column -->
@@ -218,9 +247,9 @@ const isRegister = pathWithoutLocale.startsWith('/register');
         <div class="footer-col">
           <span class="footer-col-heading">{locale === 'en' ? 'PLATFORM' : 'प्लेटफर्म'}</span>
           <ul>
-            <li><a href={`/${locale}/platform/`}>{locale === 'en' ? 'Features' : 'सुविधाहरू'}</a></li>
-            <li><a href={`/${locale}/platform/`}>{locale === 'en' ? 'Architecture' : 'आर्किटेक्चर'}</a></li>
-            <li><a href={`/${locale}/platform/`}>{locale === 'en' ? 'Roadmap' : 'रोडम्याप'}</a></li>
+            <li><a href={`/${locale}/features/`}>{locale === 'en' ? 'Features' : 'सुविधाहरू'}</a></li>
+            <li><a href={`/${locale}/features/`}>{locale === 'en' ? 'Architecture' : 'आर्किटेक्चर'}</a></li>
+            <li><a href={`/${locale}/features/`}>{locale === 'en' ? 'Roadmap' : 'रोडम्याप'}</a></li>
             <li><a href={`/${locale}/pricing/`}>{locale === 'en' ? 'Pricing' : 'मूल्य निर्धारण'}</a></li>
           </ul>
         </div>
@@ -239,8 +268,8 @@ const isRegister = pathWithoutLocale.startsWith('/register');
         <div class="footer-col">
           <span class="footer-col-heading">{locale === 'en' ? 'RESOURCES' : 'स्रोतहरू'}</span>
           <ul>
-            <li><a href={`/${locale}/demo/`}>{locale === 'en' ? 'Request a Demo' : 'डेमो अनुरोध'}</a></li>
-            <li><a href={`/${locale}/demo/`}>{locale === 'en' ? 'Download Proposal' : 'प्रस्ताव डाउनलोड'}</a></li>
+            <li><a href={`/${locale}/contact/`}>{locale === 'en' ? 'Request a Demo' : 'डेमो अनुरोध'}</a></li>
+            <li><a href={`/${locale}/contact/`}>{locale === 'en' ? 'Download Proposal' : 'प्रस्ताव डाउनलोड'}</a></li>
             <li><a href={`/${locale}/pricing/`}>{locale === 'en' ? 'SLA & Terms' : 'SLA र सर्तहरू'}</a></li>
           </ul>
         </div>
@@ -248,8 +277,7 @@ const isRegister = pathWithoutLocale.startsWith('/register');
       </div>
 
       <div class="footer-bottom">
-        <span>{locale === 'en' ? '© 2026 Smart IVR & AI Cloud Voice Broadcasting Platform. All rights reserved.' : '© २०२६ स्मार्ट IVR र AI क्लाउड भ्वाइस ब्रोडकास्टिङ प्लेटफर्म। सर्वाधिकार सुरक्षित।'}</span>
-        <span>{locale === 'en' ? 'All NPR pricing excludes VAT.' : 'सबै NPR मूल्यमा VAT समावेश छैन।'}</span>
+        <span>{locale === 'en' ? '© 2026 Smart IVR & AI Cloud Voice Broadcasting Platform. All rights reserved.  ·  All NPR pricing excludes VAT.' : '© २०२६ स्मार्ट IVR र AI क्लाउड भ्वाइस ब्रोडकास्टिङ प्लेटफर्म। सर्वाधिकार सुरक्षित।  ·  सबै NPR मूल्यमा VAT समावेश छैन।'}</span>
       </div>
     </footer>
   </body>
@@ -274,6 +302,9 @@ const isRegister = pathWithoutLocale.startsWith('/register');
     --border-color: #C8E6C9;
     --card-bg: #0D2010;
     --card-border: rgba(61, 181, 81, 0.2);
+
+    /* Height of the fixed navbar — used to position the mobile drawer below it */
+    --nav-height: 92px;
   }
 
   html[data-theme="light"] {
@@ -285,6 +316,20 @@ const isRegister = pathWithoutLocale.startsWith('/register');
     --border-color: #C8E6C9;
     --card-bg: #FFFFFF;
     --card-border: #C8E6C9;
+  }
+
+  /* Dark mode — deep green + medium green sections with readable text */
+  html[data-theme="dark"] {
+    color-scheme: dark;
+    --bg-primary: #081F0F;        /* darkest green — hero / base sections */
+    --bg-secondary: #0F2E1A;      /* dark green — alternating sections */
+    --bg-tertiary: #163B21;       /* medium green — card-on-dark blocks */
+    --text-primary: #EAF6EC;
+    --text-secondary: #B9D6C0;
+    --border-color: rgba(109, 192, 64, 0.22);
+    --card-bg: #12331C;           /* medium green card surface */
+    --card-border: rgba(109, 192, 64, 0.18);
+    --primary-dark: #6DC040;      /* brighter green for text/icons on dark */
   }
 
   * { box-sizing: border-box; }
@@ -301,7 +346,7 @@ const isRegister = pathWithoutLocale.startsWith('/register');
 
   body {
     color: var(--text-primary);
-    background: #FFFFFF;
+    background: var(--bg-primary);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -322,6 +367,19 @@ const isRegister = pathWithoutLocale.startsWith('/register');
 
   .skip { position: absolute; left: -9999px; }
   .skip:focus { left: 1rem; top: 1rem; background: #fff; color: #000; padding: 0.75rem 1rem; z-index: 1000; outline: 2px solid #000; }
+
+  /* Dark-mode form controls */
+  html[data-theme="dark"] input,
+  html[data-theme="dark"] select,
+  html[data-theme="dark"] textarea {
+    background: var(--card-bg);
+    border-color: var(--card-border);
+    color: var(--text-primary);
+  }
+  html[data-theme="dark"] input::placeholder,
+  html[data-theme="dark"] textarea::placeholder {
+    color: rgba(185, 214, 192, 0.6);
+  }
 
   /* Navbar */
   .navbar {
@@ -436,10 +494,70 @@ const isRegister = pathWithoutLocale.startsWith('/register');
     background: rgba(61, 181, 81, 0.15);
   }
 
+  /* Dark-mode navbar — deep green bar with readable text */
+  html[data-theme="dark"] .navbar {
+    background: rgba(8, 31, 15, 0.96);
+    border-bottom-color: rgba(109, 192, 64, 0.15);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  html[data-theme="dark"] .navbar.scrolled,
+  html[data-theme="dark"] .navbar.solid-nav {
+    background: rgba(8, 31, 15, 0.98);
+    border-bottom-color: rgba(109, 192, 64, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  html[data-theme="dark"] .brand-logo {
+    filter: brightness(0) invert(1);
+  }
+
+  html[data-theme="dark"] .nav-link {
+    color: var(--text-primary);
+  }
+
+  html[data-theme="dark"] .nav-link:hover {
+    color: #6DC040;
+  }
+
+  html[data-theme="dark"] .nav-link.active {
+    color: #6DC040 !important;
+  }
+
+  html[data-theme="dark"] .btn-signin {
+    color: var(--text-primary);
+  }
+
+  html[data-theme="dark"] .btn-signin:hover {
+    color: #6DC040;
+  }
+
+  html[data-theme="dark"] .lang-toggle-btn {
+    color: var(--text-primary);
+    border-color: rgba(109, 192, 64, 0.35);
+    background: rgba(109, 192, 64, 0.04);
+  }
+
+  html[data-theme="dark"] .lang-toggle-btn:hover {
+    color: #FFFFFF;
+    border-color: #3DB551;
+    background: #3DB551;
+  }
+
+  html[data-theme="dark"] .navbar-theme-toggle .theme-toggle {
+    background: rgba(109, 192, 64, 0.1);
+    border-color: rgba(109, 192, 64, 0.25);
+    color: #6DC040;
+  }
+
+  html[data-theme="dark"] .hamburger span {
+    background: var(--text-primary);
+  }
+
   .navbar-inner {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 0.4rem 2rem;
+    padding: 0 2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -459,15 +577,17 @@ const isRegister = pathWithoutLocale.startsWith('/register');
 
   /* AirFone logo image in navbar */
   .brand-logo {
-    height: 120px;
+    height: 132px;
     width: auto;
     display: block;
     object-fit: contain;
+    margin-top: -20px;
+    margin-bottom: -20px;
   }
 
   .nav-links {
     position: absolute;
-    left: 50%;
+    left: 46%;
     transform: translateX(-50%);
     display: flex;
     align-items: center;
@@ -554,6 +674,16 @@ const isRegister = pathWithoutLocale.startsWith('/register');
   .navbar-theme-toggle .theme-icon {
     width: 16px;
     height: 16px;
+  }
+
+  html[data-theme="light"] .navbar-theme-toggle .theme-toggle {
+    width: 34px;
+    height: 34px;
+    border-radius: 2px;
+    box-shadow: none;
+    background: rgba(61, 181, 81, 0.08);
+    border: 1.5px solid rgba(61, 181, 81, 0.25);
+    color: #2A8A3C;
   }
 
   /* Lang toggle button */
@@ -664,17 +794,6 @@ const isRegister = pathWithoutLocale.startsWith('/register');
     font-family: "Tiro Devanagari Hindi", serif, system-ui, sans-serif !important;
   }
 
-  /* Grid texture behind footer */
-  .footer-grid-bg {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-    background-size: 48px 48px;
-    pointer-events: none;
-  }
-
   .footer-inner {
     max-width: 1280px;
     margin: 0 auto;
@@ -684,7 +803,6 @@ const isRegister = pathWithoutLocale.startsWith('/register');
     gap: 3rem;
     position: relative;
     z-index: 1;
-    border-bottom: 1px solid rgba(255,255,255,0.07);
   }
 
   /* Brand column */
@@ -698,17 +816,20 @@ const isRegister = pathWithoutLocale.startsWith('/register');
     display: inline-flex;
     align-items: center;
     text-decoration: none;
-    margin-bottom: 1.25rem;
+    margin-bottom: 0.75rem;
     transition: opacity 0.2s;
   }
 
   .footer-brand:hover { opacity: 0.85; }
 
   .footer-brand-logo {
-    height: 80px;
+    height: 150px;
     width: auto;
     display: block;
     object-fit: contain;
+    filter: brightness(0) invert(1);
+    margin-top: -32px;
+    margin-bottom: -32px;
   }
 
   .footer-tagline {
@@ -731,7 +852,7 @@ const isRegister = pathWithoutLocale.startsWith('/register');
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(232,233,235,0.35);
+    color: #FFFFFF;
     margin-bottom: 1.25rem;
   }
 
@@ -766,9 +887,8 @@ const isRegister = pathWithoutLocale.startsWith('/register');
     padding: 1.25rem 2.5rem;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
     position: relative;
     z-index: 1;
   }
@@ -893,7 +1013,7 @@ const isRegister = pathWithoutLocale.startsWith('/register');
   .mobile-nav-drawer {
     display: none;
     position: fixed;
-    top: 70px;
+    top: var(--nav-height, 70px);
     left: 0;
     right: 0;
     background: rgba(10, 31, 13, 0.98);
@@ -936,6 +1056,21 @@ const isRegister = pathWithoutLocale.startsWith('/register');
 
   .mobile-nav-link:hover { color: #6DC040; }
 
+  .mobile-nav-links {
+    list-style: none;
+    margin: 0 0 1.5rem;
+    padding: 0;
+  }
+
+  .mobile-nav-links .mobile-nav-link.active {
+    color: #6DC040;
+    font-weight: 700;
+  }
+
+  html[data-theme="light"] .mobile-nav-links .mobile-nav-link.active {
+    color: #2A8A3C;
+  }
+
   .mobile-nav-divider {
     height: 1px;
     background: rgba(255,255,255,0.12);
@@ -972,49 +1107,71 @@ const isRegister = pathWithoutLocale.startsWith('/register');
     display: flex;
     gap: 0.75rem;
     flex-wrap: wrap;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
   }
 
-  .mobile-nav-auth .btn-register {
+  html[data-theme="light"] .mobile-nav-auth {
+    border-top-color: rgba(0, 33, 71, 0.1);
+  }
+
+  .mobile-nav-auth .mobile-btn-demo,
+  .mobile-nav-auth .mobile-btn-signin {
     flex: 1;
     text-align: center;
-    padding: 0.65rem 1rem;
+    padding: 0.75rem 1rem;
     font-size: 1rem;
-    background: #3DB551;
-    border-color: #3DB551;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    transition: all 0.25s ease;
+  }
+
+  .mobile-nav-auth .mobile-btn-demo {
+    background: linear-gradient(135deg, #6DC040, #2A8A3C);
+    border: 1px solid #3DB551;
     color: #FFFFFF;
+    font-weight: 700;
   }
 
-  .mobile-nav-auth .btn-register:hover {
-    background: #2A8A3C;
-    border-color: #2A8A3C;
+  .mobile-nav-auth .mobile-btn-demo:hover {
+    background: linear-gradient(135deg, #3DB551, #1B7A2F);
   }
 
-  .mobile-nav-auth .btn-login {
-    flex: 1;
-    text-align: center;
-    padding: 0.65rem 1rem;
-    font-size: 1rem;
+  .mobile-nav-auth .mobile-btn-signin {
     background: transparent;
     color: #FFFFFF;
-    border-color: rgba(255, 255, 255, 0.5);
+    border: 1.5px solid rgba(255, 255, 255, 0.5);
+    font-weight: 600;
   }
 
-  .mobile-nav-auth .btn-login:hover {
+  .mobile-nav-auth .mobile-btn-signin:hover {
     background: rgba(255, 255, 255, 0.1);
     border-color: #FFFFFF;
   }
 
-  html[data-theme="light"] .mobile-nav-auth .btn-login {
+  .mobile-nav-auth .mobile-btn-demo.active {
+    box-shadow: 0 0 0 2px rgba(109, 192, 64, 0.5);
+  }
+
+  html[data-theme="light"] .mobile-nav-auth .mobile-btn-signin {
     color: #1A3A1A;
     border-color: rgba(26, 58, 26, 0.4);
   }
 
-  html[data-theme="light"] .mobile-nav-auth .btn-login:hover {
+  html[data-theme="light"] .mobile-nav-auth .mobile-btn-signin:hover {
     background: rgba(26, 58, 26, 0.08);
     border-color: #1A3A1A;
   }
 
   /* ── Responsive Media Queries ────────────────────────────────────────── */
+  @media (max-width: 1280px) {
+    .nav-links { gap: 1.5rem; }
+  }
+
   @media (max-width: 1024px) {
     /* Show hamburger, hide desktop nav elements on iPad */
     .hamburger { display: flex; }
@@ -1022,8 +1179,11 @@ const isRegister = pathWithoutLocale.startsWith('/register');
     .nav-links { display: none; }
     .nav-auth-buttons { display: none; }
 
+    :root { --nav-height: 64px; }
+    .brand-logo { height: 88px; margin-top: -12px; margin-bottom: -12px; }
+
     .navbar-inner {
-      padding: 0.5rem 1.5rem;
+      padding: 0 1.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -1062,7 +1222,7 @@ const isRegister = pathWithoutLocale.startsWith('/register');
   @media (max-width: 768px) {
 
     .navbar-inner {
-      padding: 0.5rem 1rem;
+      padding: 0 1rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -1095,7 +1255,7 @@ const isRegister = pathWithoutLocale.startsWith('/register');
       flex-shrink: 0;
     }
 
-    .brand-logo { height: 80px; }
+    .brand-logo { height: 88px; margin-top: -12px; margin-bottom: -12px; }
 
     /* Footer */
     .footer-inner {
@@ -1129,10 +1289,12 @@ const isRegister = pathWithoutLocale.startsWith('/register');
   }
 
   @media (max-width: 480px) {
-    .brand-logo { height: 64px; }
+    :root { --nav-height: 54px; }
+    .brand-logo { height: 70px; margin-top: -8px; margin-bottom: -8px; }
   }
 
   @media (max-width: 360px) {
-    .brand-logo { height: 56px; }
+    :root { --nav-height: 50px; }
+    .brand-logo { height: 62px; margin-top: -6px; margin-bottom: -6px; }
   }
 </style>
