@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@astrojs/react": "^3.6.0",
-    "@eshasan/sdk": "workspace:*",
     "astro": "^4.16.0",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
