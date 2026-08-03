@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { Clock, Bot, Radio, Brain, Plug2, BarChart3, ShieldCheck, Zap, Headphones, Megaphone, PhoneMissed } from 'lucide-react';
+import { Clock, Bot, Radio, Brain, Plug2, BarChart3, ShieldCheck, Zap, Headphones, Megaphone, PhoneMissed, Phone } from 'lucide-react';
 
 const locale = 'ne';
 ---
@@ -8,6 +8,7 @@ const locale = 'ne';
 <BaseLayout title="स्मार्ट IVR AI — गृहपृष्ठ">
   <!-- Hero Section -->
   <section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
     <div class="hero-content">
       <div class="hero-text">
         <div class="hero-badge">
@@ -50,8 +51,15 @@ const locale = 'ne';
           <div class="hero-stat-icon"><ShieldCheck size={24} /></div>
           <div class="hero-stat-num">९९.९५%</div>
           <div class="hero-stat-label">कोर अपटाइम SLA</div>
-        </div>
       </div>
+    </div>
+
+    <!-- Subtle call-ring motif -->
+    <div class="hero-ring" aria-hidden="true">
+      <div class="hero-ring-circle hero-ring-c1"></div>
+      <div class="hero-ring-circle hero-ring-c2"></div>
+      <div class="hero-ring-circle hero-ring-c3"></div>
+      <div class="hero-ring-phone"><Phone size={42} /></div>
     </div>
   </section>
 
@@ -169,6 +177,61 @@ const locale = 'ne';
     position: relative;
     overflow: hidden;
     background: #FFFFFF;
+  }
+
+  /* Hero background: soft green wash behind the incoming-call mockup */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse at 78% 30%, rgba(109, 192, 64, 0.12), transparent 55%),
+      linear-gradient(180deg, #FFFFFF 0%, #F6FBF4 100%);
+  }
+
+  /* ── Subtle call-ring motif ──────────────────────────────────────────── */
+  .hero-ring {
+    position: absolute;
+    right: 3%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 0;
+    width: 340px;
+    height: 340px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .hero-ring-circle {
+    position: absolute;
+    border-radius: 50%;
+    border: 1.5px solid rgba(61, 181, 81, 0.18);
+  }
+
+  .hero-ring-c1 { width: 340px; height: 340px; }
+  .hero-ring-c2 { width: 248px; height: 248px; }
+  .hero-ring-c3 { width: 156px; height: 156px; }
+
+  .hero-ring-phone {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6DC040, #2A8A3C);
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 16px 32px rgba(42, 138, 60, 0.28);
+    animation: heroRingPulse 3.2s ease-in-out infinite;
+  }
+
+  @keyframes heroRingPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 16px 32px rgba(42, 138, 60, 0.28); }
+    50% { transform: scale(1.06); box-shadow: 0 18px 40px rgba(42, 138, 60, 0.36); }
   }
 
   .hero-content {
@@ -1190,6 +1253,8 @@ const locale = 'ne';
   .hero-title { font-size: clamp(2.2rem, 6vw, 3.2rem); }
   .hero-description { font-size: 1.05rem; }
 
+  .hero-ring { transform: translateY(-50%) scale(0.8); }
+
   .section-container {
     grid-template-columns: 1fr;   /* stack "Our Mission" text + stats on tablets */
     gap: 2.5rem;
@@ -1217,6 +1282,8 @@ const locale = 'ne';
       min-height: auto;
       align-items: flex-start;
     }
+
+    .hero-ring { display: none; }
 
     .hero-content {
       grid-template-columns: 1fr;
@@ -1269,6 +1336,8 @@ const locale = 'ne';
     /* Hero text */
     .hero-title { font-size: clamp(1.4rem, 6vw, 1.8rem); }
     .hero-description { font-size: 0.9rem; line-height: 1.7; }
+
+    .hero-ring { display: none; }
 
     /* Section headings — all scaled for small phones */
     .about-text h2 { font-size: 1.5rem; }
@@ -1545,6 +1614,22 @@ const locale = 'ne';
   /* Dark mode: hero + capabilities + CTA (deep/medium green) */
   html[data-theme="dark"] .hero {
     background: var(--bg-primary);
+  }
+
+  html[data-theme="dark"] .hero-bg {
+    background:
+      radial-gradient(ellipse at 80% 28%, rgba(109, 192, 64, 0.14), transparent 52%),
+      var(--bg-primary);
+  }
+
+  html[data-theme="dark"] .hero-bg {
+    background:
+      radial-gradient(ellipse at 78% 30%, rgba(109, 192, 64, 0.14), transparent 55%),
+      var(--bg-primary);
+  }
+
+  html[data-theme="dark"] .hero-ring-circle {
+    border-color: rgba(109, 192, 64, 0.3);
   }
 
   html[data-theme="dark"] .hero-title {

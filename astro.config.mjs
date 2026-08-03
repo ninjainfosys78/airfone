@@ -53,8 +53,8 @@ export default defineConfig({
   base: '/',
   devToolbar: { enabled: false },
   i18n: {
-    defaultLocale: 'ne',
-    locales: ['ne', 'en'],
+    defaultLocale: 'en',
+    locales: ['en', 'ne'],
     routing: { prefixDefaultLocale: true, redirectToDefaultLocale: true },
   },
   integrations: [react()],
