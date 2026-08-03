@@ -1,18 +1,44 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { Phone, Mail, MapPin } from 'lucide-react';
+import { Phone, Mail, MapPin, Check } from 'lucide-react';
 const locale = 'en';
 ---
 <BaseLayout title="Contact — AirFone" solidNav={true}>
 
   <!-- ============ HERO ============ -->
-  <section class="contact-hero">
-    <div class="section-container">
-      <h1 class="contact-hero-title">Let's put this on a live line.</h1>
-      <p class="contact-hero-lede">
-        Tell us about your call volume and we'll schedule a live demo, or reach out
-        directly using the details below.
-      </p>
+  <section class="page-hero">
+    <div class="page-hero-bg" aria-hidden="true"></div>
+    <div class="page-hero-inner">
+      <div class="page-hero-text">
+        <h1 class="page-hero-title">
+          Let's put this on a <span class="page-hero-highlight">live line.</span>
+        </h1>
+        <p class="page-hero-lede">
+          Tell us about your call volume and we'll schedule a live demo, or reach out
+          directly using the details below.
+        </p>
+        <div class="page-hero-chips">
+          <span class="page-hero-chip"><Check size={14} /> Response within one business day</span>
+          <span class="page-hero-chip"><Check size={14} /> Live demo on your line</span>
+          <span class="page-hero-chip"><Check size={14} /> English, Nepali &amp; Hindi</span>
+        </div>
+      </div>
+
+      <div class="page-hero-visual" aria-hidden="true">
+        <div class="page-hero-ring">
+          <div class="page-hero-ring-circle page-hero-ring-c1"></div>
+          <div class="page-hero-ring-circle page-hero-ring-c2"></div>
+          <div class="page-hero-ring-circle page-hero-ring-c3"></div>
+          <div class="page-hero-ring-phone"><Phone size={42} /></div>
+        </div>
+        <div class="page-hero-float-card">
+          <div class="page-hero-float-icon"><Mail size={18} /></div>
+          <div>
+            <div class="page-hero-float-num">24/7</div>
+            <div class="page-hero-float-label">Demo requests answered fast</div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -117,11 +143,6 @@ const locale = 'en';
     letter-spacing: 0.1em; text-transform: uppercase; color: var(--primary-dark); margin-bottom: 1rem;
   }
 
-  /* ============ HERO ============ */
-  .contact-hero { background: var(--bg-secondary); padding: 11rem 0 3.5rem; border-bottom: 1px solid var(--border-color); }
-  .contact-hero-title { font-size: clamp(1.9rem, 4vw, 2.6rem); font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em; margin: 0 0 1rem; max-width: 640px; }
-  .contact-hero-lede { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.65; max-width: 560px; margin: 0; }
-
   /* ============ LAYOUT ============ */
   .contact-main { background: #FFFFFF; padding: 4.5rem 0; }
   .contact-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 2rem; align-items: start; }
@@ -190,7 +211,6 @@ const locale = 'en';
     .contact-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 600px) {
-    .contact-hero { padding: 9rem 0 2.5rem; }
     .form-row { grid-template-columns: 1fr; gap: 0; }
     .contact-form-card, .contact-info-card, .contact-doc-card { padding: 1.5rem; }
   }
