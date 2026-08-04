@@ -5,7 +5,7 @@ import { Clock, Bot, Radio, Brain, Plug2, BarChart3, ShieldCheck, Zap, Globe, He
 const locale = 'en';
 ---
 
-<BaseLayout title="SmartIVRAI — Home">
+<BaseLayout title="Airfone — Home">
   <!-- Hero Section -->
   <section class="hero">
     <div class="hero-bg" aria-hidden="true"></div>
@@ -562,6 +562,48 @@ const locale = 'en';
   @media (max-width: 480px) {
     .cap-grid { grid-template-columns: 1fr; }
   }
+@media (max-width: 900px) {
+  .hero-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .hero-stat {
+    border-right-color: transparent;
+  }
+  .hero-stat:nth-child(odd) {
+    border-right: 1px solid #C8E6C9;
+    padding-right: 1.5rem;
+  }
+  .hero-stat:nth-child(even) {
+    padding-left: 1.5rem;
+  }
+  .hero-stat:nth-child(-n+2) {
+    border-bottom: 1px solid #C8E6C9;
+    padding-bottom: 1.5rem;
+  }
+  .hero-stat:nth-child(n+3) {
+    padding-top: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-stats {
+    grid-template-columns: 1fr;
+  }
+  .hero-stat {
+    border-right: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    border-bottom: 1px solid #C8E6C9;
+    padding-bottom: 1.5rem;
+    padding-top: 1.5rem;
+    min-height: auto;
+  }
+  .hero-stat:last-child {
+    border-bottom: none;
+  }
+}
+
+
 
   /* About Section */
   .about-section {
@@ -868,8 +910,8 @@ const locale = 'en';
     color: rgba(255, 255, 255, 0.9);
     font-weight: 700;
     font-size: 0.95rem;
-    text-decoration: underline;
-    text-underline-offset: 4px;
+    text-decoration: none;
+    border-bottom: none;
     transition: color 0.2s ease;
   }
   .cta-link:hover { color: #8FE07C; }
@@ -1298,6 +1340,11 @@ const locale = 'en';
   html[data-theme="dark"] .hero-stat {
     border-right-color: var(--border-color);
   }
+  html[data-theme="dark"] .hero-stat:nth-child(-n+2),
+html[data-theme="dark"] .hero-stat {
+  border-right-color: var(--border-color);
+  border-bottom-color: var(--border-color);
+}
 
   html[data-theme="dark"] .hero-stat-label {
     color: var(--text-secondary);
