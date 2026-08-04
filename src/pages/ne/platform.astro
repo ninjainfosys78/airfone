@@ -6,10 +6,10 @@ const locale = 'ne';
 <BaseLayout title="प्लेटफर्म आर्किटेक्चर — AirFone" solidNav={true}>
   <section class="page-hero">
     <div class="page-hero-inner">
-      <h1 class="page-hero-title">
+      <h1 class="page-hero-title reveal">
         SIM कार्डदेखि CRM सम्म<br />एउटा क्लाउड-नेटिभ स्ट्याक।
       </h1>
-      <p class="page-hero-lede">
+      <p class="page-hero-lede reveal">
         उच्च उपलब्धता, सब-सेकेन्ड अडियो विलम्बता र लचिलो स्केलेबिलिटीका लागि माइक्रोसर्भिस
         आर्किटेक्चरमा निर्मित — SIP ट्रंक र WebRTC गेटवेमार्फत मानक टेलिकम PSTN/PLMN
         नेटवर्कहरूलाई आधुनिक AI माइक्रोसर्भिसहरूसँग जोड्दै।
@@ -21,12 +21,12 @@ const locale = 'ne';
   <section class="layers-section">
     <div class="layers-inner">
       <div class="layers-header">
-        <span class="layers-tag">मुख्य आर्किटेक्चरल तहहरू</span>
-        <h2 class="layers-title">चार तहहरू, प्रत्येकले एउटा काम कुशलतापूर्वक गर्दै।</h2>
+        <span class="layers-tag reveal">मुख्य आर्किटेक्चरल तहहरू</span>
+        <h2 class="layers-title reveal">चार तहहरू, प्रत्येकले एउटा काम कुशलतापूर्वक गर्दै।</h2>
       </div>
 
       <div class="layers-timeline">
-        <div class="layer-card">
+        <div class="layer-card reveal">
           <div class="layer-num">०१</div>
           <div class="layer-title">टेलिफोनी र एज तह</div>
           <div class="layer-desc">
@@ -36,7 +36,7 @@ const locale = 'ne';
 
         <div class="layer-connector"></div>
 
-        <div class="layer-card">
+        <div class="layer-card reveal">
           <div class="layer-num">०२</div>
           <div class="layer-title">AI भ्वाइस अर्केस्ट्रेशन इन्जिन</div>
           <div class="layer-desc">
@@ -46,7 +46,7 @@ const locale = 'ne';
 
         <div class="layer-connector"></div>
 
-        <div class="layer-card">
+        <div class="layer-card reveal">
           <div class="layer-num">०३</div>
           <div class="layer-title">एप्लिकेसन र डाटाबेस तह</div>
           <div class="layer-desc">
@@ -56,7 +56,7 @@ const locale = 'ne';
 
         <div class="layer-connector"></div>
 
-        <div class="layer-card">
+        <div class="layer-card reveal">
           <div class="layer-num">०४</div>
           <div class="layer-title">इन्टिग्रेसन गेटवे</div>
           <div class="layer-desc">
@@ -70,9 +70,10 @@ const locale = 'ne';
 
 <style>
   .page-hero {
-    background: var(--bg-secondary);      /* #F4FAF5 — matches your light-green sections */
+    background: var(--bg-secondary);
     border-bottom: 1px solid var(--border-color);
-    padding: 9rem 0 3.5rem;                /* extra top padding clears the fixed navbar */
+    padding: 9rem 0 3.5rem;
+    overflow: clip;
   }
 
   .page-hero-inner {
@@ -94,11 +95,13 @@ const locale = 'ne';
   .page-hero-title {
     font-size: clamp(1.9rem, 4vw, 2.6rem);
     font-weight: 800;
-    line-height: 1.15;
+    line-height: 1.38;
     color: var(--text-primary);
     margin: 0 0 1rem;
     max-width: 760px;
-    letter-spacing: -0.02em;
+    letter-spacing: normal;
+    padding-top: 0.15em;
+    padding-bottom: 0.15em;
   }
 
   .page-hero-lede {

@@ -64,7 +64,7 @@ const isRegister = pathWithoutLocale.startsWith('/register');
         }
       })();
     </script>
-    <link rel="icon" type="image/png" href="/images/hero/image.png" />
+    <link rel="icon" type="image/png" href="/images/image.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -232,7 +232,7 @@ const isRegister = pathWithoutLocale.startsWith('/register');
       <div class="footer-inner">
 
         <!-- Brand column -->
-        <div class="footer-brand-col">
+        <div class="footer-brand-col reveal">
           <a href={`/${locale}/`} class="footer-brand">
             <img src="/airfone-logo-transparent.png" alt="AirFone" class="footer-brand-logo" />
           </a>
@@ -244,7 +244,7 @@ const isRegister = pathWithoutLocale.startsWith('/register');
         </div>
 
         <!-- Platform links -->
-        <div class="footer-col">
+        <div class="footer-col reveal">
           <span class="footer-col-heading">{locale === 'en' ? 'PLATFORM' : 'प्लेटफर्म'}</span>
           <ul>
             <li><a href={`/${locale}/features/`}>{locale === 'en' ? 'Features' : 'सुविधाहरू'}</a></li>
@@ -255,7 +255,7 @@ const isRegister = pathWithoutLocale.startsWith('/register');
         </div>
 
         <!-- Company links -->
-        <div class="footer-col">
+        <div class="footer-col reveal">
           <span class="footer-col-heading">{locale === 'en' ? 'COMPANY' : 'कम्पनी'}</span>
           <ul>
             <li><a href={`/${locale}/about/`}>{locale === 'en' ? 'About Us' : 'हाम्रोबारे'}</a></li>
@@ -265,7 +265,7 @@ const isRegister = pathWithoutLocale.startsWith('/register');
         </div>
 
         <!-- Resources links -->
-        <div class="footer-col">
+        <div class="footer-col reveal">
           <span class="footer-col-heading">{locale === 'en' ? 'RESOURCES' : 'स्रोतहरू'}</span>
           <ul>
             <li><a href={`/${locale}/contact/`}>{locale === 'en' ? 'Request a Demo' : 'डेमो अनुरोध'}</a></li>
@@ -276,7 +276,7 @@ const isRegister = pathWithoutLocale.startsWith('/register');
 
       </div>
 
-      <div class="footer-bottom">
+      <div class="footer-bottom reveal">
         <span>{locale === 'en' ? '© 2026 Smart IVR & AI Cloud Voice Broadcasting Platform. All rights reserved.  ·  All NPR pricing excludes VAT.' : '© २०२६ स्मार्ट IVR र AI क्लाउड भ्वाइस ब्रोडकास्टिङ प्लेटफर्म। सर्वाधिकार सुरक्षित।  ·  सबै NPR मूल्यमा VAT समावेश छैन।'}</span>
       </div>
     </footer>
@@ -1302,7 +1302,7 @@ const isRegister = pathWithoutLocale.startsWith('/register');
   /* ============ SHARED PAGE HERO (features / pricing / contact) ============ */
   .page-hero {
     position: relative;
-    overflow: hidden;
+    overflow: clip;
     background: #FFFFFF;
     padding: 10rem 0 4rem;
   }
@@ -1353,10 +1353,12 @@ const isRegister = pathWithoutLocale.startsWith('/register');
   .page-hero-title {
     font-size: clamp(1.9rem, 4.2vw, 2.9rem);
     font-weight: 800;
-    line-height: 1.22;
+    line-height: 1.38;
     color: var(--text-primary);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
     margin: 0 0 1.25rem;
+    padding-top: 0.15em;
+    padding-bottom: 0.1em;
   }
 
   .page-hero-highlight {
@@ -1364,6 +1366,34 @@ const isRegister = pathWithoutLocale.startsWith('/register');
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    display: inline-block;
+    padding: 0.14em 0.05em;
+    margin-top: -0.14em;
+    margin-bottom: -0.14em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  /* Devanagari / Nepali typography fixes for non-clipping hero titles */
+  html[lang="ne"] .page-hero-title,
+  html[lang="ne"] .about-hero-title,
+  html[lang="ne"] .hero-title {
+    line-height: 1.4;
+    letter-spacing: normal;
+    padding-top: 0.15em;
+    padding-bottom: 0.15em;
+  }
+
+  html[lang="ne"] .page-hero-highlight,
+  html[lang="ne"] .about-highlight,
+  html[lang="ne"] .highlight-green,
+  html[lang="ne"] .text-airfone-gradient {
+    display: inline-block;
+    padding: 0.14em 0.05em;
+    margin-top: -0.14em;
+    margin-bottom: -0.14em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
   }
 
   .page-hero-lede {
@@ -1609,4 +1639,60 @@ const isRegister = pathWithoutLocale.startsWith('/register');
     .cta-actions { flex-direction: column; }
     .cta-btn { width: 100%; justify-content: center; }
   }
+
+  /* ── Scroll-reveal animation system ────────────────────────────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
 </style>
+
+<script>
+  function initReveal() {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const els = document.querySelectorAll('.reveal');
+    if (prefersReduced) {
+      els.forEach(el => el.classList.add('is-visible'));
+      return;
+    }
+
+    const STAGGER = 200;
+
+    function revealGroup(siblings) {
+      siblings.forEach((el, i) => {
+        setTimeout(() => el.classList.add('is-visible'), i * STAGGER);
+      });
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      const groups = new Map();
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        const parent = entry.target.parentElement;
+        const key = parent ? parent : entry.target;
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key).push(entry.target);
+      });
+      groups.forEach(siblings => revealGroup(siblings));
+    }, { threshold: 0.15, rootMargin: '0px 0px -150px 0px' });
+
+    els.forEach(el => observer.observe(el));
+  }
+  initReveal();
+  document.addEventListener('astro:page-load', initReveal);
+</script>

@@ -11,43 +11,43 @@ const locale = 'en';
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="hero-content">
       <div class="hero-text">
-        <div class="hero-badge">
+        <div class="hero-badge reveal">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hero-badge-icon">
              <path d="M12 2v20M17 5v14M22 10v4M7 5v14M2 10v4"/>
           </svg>
           Smart IVR & AI Cloud Voice Broadcasting Platform
         </div>
-        <h1 class="hero-title">
+        <h1 class="hero-title reveal">
           Turn every phone call into an <br />
           <span class="highlight-green">intelligent</span>, data-driven <br />
           interaction.
         </h1>
-        <p class="hero-description">
+        <p class="hero-description reveal">
           A cloud-native voice platform that combines telephony resilience with Natural Language Processing, Neural Text-to-Speech, and real-time sentiment analysis — managing high-volume inbound support and targeted outbound campaigns from one system.
         </p>
-        <div class="hero-ctas">
+        <div class="hero-ctas reveal">
           <a href="/en/contact/" class="btn btn-green">Request a Live Demo</a>
           <a href="/en/pricing/" class="btn btn-outline">See Pricing</a>
         </div>
       </div>
 
       <div class="hero-stats">
-        <div class="hero-stat">
+        <div class="hero-stat reveal">
           <div class="hero-stat-icon"><PhoneMissed size={24} /></div>
           <div class="hero-stat-num">0</div>
           <div class="hero-stat-label">Abandoned call rate at scale</div>
         </div>
-        <div class="hero-stat">
+        <div class="hero-stat reveal">
           <div class="hero-stat-icon"><Bot size={24} /></div>
           <div class="hero-stat-num">60%</div>
           <div class="hero-stat-label">Of support volume automated</div>
         </div>
-        <div class="hero-stat">
+        <div class="hero-stat reveal">
           <div class="hero-stat-icon"><Zap size={24} /></div>
           <div class="hero-stat-num">&lt;700ms</div>
           <div class="hero-stat-label">AI voice response latency</div>
         </div>
-        <div class="hero-stat">
+        <div class="hero-stat reveal">
           <div class="hero-stat-icon"><ShieldCheck size={24} /></div>
           <div class="hero-stat-num">99.95%</div>
           <div class="hero-stat-label">Core uptime SLA</div>
@@ -66,13 +66,13 @@ const locale = 'en';
   <!-- Platform Capabilities Section -->
   <section class="capabilities-section">
     <div class="capabilities-inner">
-      <div class="cap-header">
+      <div class="cap-header reveal">
         <span class="cap-tag">Platform Capabilities</span>
         <h2 class="cap-title">Everything you need to run <span class="cap-highlight">intelligent voice</span> at scale</h2>
       </div>
       <div class="cap-grid">
 
-        <div class="cap-card">
+        <div class="cap-card reveal">
           <div class="cap-icon-wrap">
             <Clock size={28} class="cap-icon" />
           </div>
@@ -80,7 +80,7 @@ const locale = 'en';
           <p>Every caller answered instantly by an AI voicebot or dynamic menu.</p>
         </div>
 
-        <div class="cap-card">
+        <div class="cap-card reveal">
           <div class="cap-icon-wrap">
             <Bot size={28} class="cap-icon" />
           </div>
@@ -88,7 +88,7 @@ const locale = 'en';
           <p>Resolve routine queries via Conversational AI and database integrations.</p>
         </div>
 
-        <div class="cap-card">
+        <div class="cap-card reveal">
           <div class="cap-icon-wrap">
             <Radio size={28} class="cap-icon" />
           </div>
@@ -96,7 +96,7 @@ const locale = 'en';
           <p>Hyper-personalized campaigns using Neural TTS at scale.</p>
         </div>
 
-        <div class="cap-card">
+        <div class="cap-card reveal">
           <div class="cap-icon-wrap">
             <Brain size={28} class="cap-icon" />
           </div>
@@ -104,7 +104,7 @@ const locale = 'en';
           <p>Transcribe and score 100% of calls: positive, neutral, negative.</p>
         </div>
 
-        <div class="cap-card">
+        <div class="cap-card reveal">
           <div class="cap-icon-wrap">
             <Plug2 size={28} class="cap-icon" />
           </div>
@@ -121,26 +121,26 @@ const locale = 'en';
   <!-- Platform Modules Section -->
   <section class="modules-section">
     <div class="modules-inner">
-      <div class="modules-header">
+      <div class="modules-header reveal">
         <span class="modules-eyebrow">PLATFORM MODULES</span>
         <h2 class="modules-title">Three engines, one control room.</h2>
         <p class="modules-subtitle">A full breakdown lives on the Features page.</p>
       </div>
       <div class="modules-grid">
 
-        <div class="module-card">
+        <div class="module-card reveal">
           <div class="module-icon module-icon-a"><Headphones size={22} /></div>
           <h3>Smart IVR System</h3>
           <p>Conversational voice AI, dynamic menus, predictive routing, self-service.</p>
         </div>
 
-        <div class="module-card">
+        <div class="module-card reveal">
           <div class="module-icon module-icon-b"><Megaphone size={22} /></div>
           <h3>Voice Broadcasting</h3>
           <p>Mass campaigns, DTMF responses, predictive dialer, compliance filtering.</p>
         </div>
 
-        <div class="module-card">
+        <div class="module-card reveal">
           <div class="module-icon module-icon-c"><BarChart3 size={22} /></div>
           <h3>Analytics &amp; Supervision</h3>
           <p>Live wallboard, sentiment analysis, call recording, CRM integrations.</p>
@@ -154,7 +154,7 @@ const locale = 'en';
   </section>
 
   <!-- Live Demo CTA -->
-  <section class="cta-section">
+  <section class="cta-section reveal">
     <div class="cta-card">
       <div class="cta-glow" aria-hidden="true"></div>
       <div class="cta-content">
@@ -190,7 +190,7 @@ const locale = 'en';
     align-items: center;
     padding: 0;
     position: relative;
-    overflow: hidden;
+    overflow: clip;
     background: #FFFFFF;
   }
 

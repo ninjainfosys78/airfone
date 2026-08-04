@@ -11,15 +11,15 @@ const locale = 'en';
     <div class="page-hero-bg" aria-hidden="true"></div>
     <div class="page-hero-inner">
       <div class="page-hero-text">
-        <h1 class="page-hero-title">
+        <h1 class="page-hero-title reveal">
           Transparent tiers.<br />
           <span class="page-hero-highlight">No surprise minutes.</span>
         </h1>
-        <p class="page-hero-lede">
+        <p class="page-hero-lede reveal">
           One-time setup, a monthly subscription that fits your call volume, and pay-as-you-go
           rates for broadcast minutes.
         </p>
-        <div class="page-hero-chips">
+        <div class="page-hero-chips reveal">
           <span class="page-hero-chip"><Check size={14} /> Transparent NPR pricing</span>
           <span class="page-hero-chip"><Check size={14} /> Pay-as-you-go minutes</span>
           <span class="page-hero-chip"><Check size={14} /> No hidden fees</span>
@@ -47,9 +47,10 @@ const locale = 'en';
   <!-- ============ SETUP FEE ============ -->
   <section class="setup-section">
     <div class="section-container">
-      <h2 class="section-title">One-Time Setup Fee</h2>
+      <span class="section-eyebrow reveal">One-Time Setup Fee</span>
+      <h2 class="section-title reveal">One-Time Setup Fee</h2>
 
-      <div class="setup-table">
+      <div class="setup-table reveal">
         <div class="setup-row setup-head">
           <span>Package</span><span>Includes</span><span>Fee</span>
         </div>
@@ -70,11 +71,11 @@ const locale = 'en';
   <!-- ============ PLANS ============ -->
   <section class="plans-section">
     <div class="section-container">
-      <span class="section-eyebrow">Subscription</span>
-      <h2 class="section-title">Monthly Plans</h2>
+      <span class="section-eyebrow reveal">Subscription</span>
+      <h2 class="section-title reveal">Monthly Plans</h2>
 
       <div class="plans-grid">
-        <div class="plan-card">
+        <div class="plan-card reveal">
           <span class="plan-name">Starter</span>
           <div class="plan-price">NPR 4,500<span>/mo</span></div>
           <ul class="plan-specs">
@@ -89,7 +90,7 @@ const locale = 'en';
           <a href={`/${locale}/demo/`} class="plan-btn plan-btn-outline">Choose Starter</a>
         </div>
 
-        <div class="plan-card plan-featured">
+        <div class="plan-card plan-featured reveal">
           <span class="plan-ribbon">Recommended</span>
           <span class="plan-name">Growth</span>
           <div class="plan-price">NPR 9,500<span>/mo</span></div>
@@ -105,7 +106,7 @@ const locale = 'en';
           <a href={`/${locale}/demo/`} class="plan-btn plan-btn-filled">Choose Growth</a>
         </div>
 
-        <div class="plan-card">
+        <div class="plan-card reveal">
           <span class="plan-name">AI Enterprise</span>
           <div class="plan-price">NPR 22,500<span>/mo</span></div>
           <ul class="plan-specs">
@@ -126,10 +127,10 @@ const locale = 'en';
   <!-- ============ PAYG RATES ============ -->
   <section class="payg-section">
     <div class="section-container">
-      <span class="section-eyebrow">Pay-As-You-Go</span>
-      <h2 class="section-title">Outbound Broadcast &amp; TTS Rates</h2>
+      <span class="section-eyebrow reveal">Pay-As-You-Go</span>
+      <h2 class="section-title reveal">Outbound Broadcast &amp; TTS Rates</h2>
 
-      <div class="payg-table">
+      <div class="payg-table reveal">
         <div class="payg-row payg-head">
           <span>Usage Tier</span><span>Monthly Minutes</span><span>Broadcast Rate</span><span>Dynamic TTS Rate</span>
         </div>
@@ -156,7 +157,7 @@ const locale = 'en';
   </section>
 
   <!-- ============ CTA ============ -->
-  <section class="cta-section">
+  <section class="cta-section reveal">
     <div class="cta-card">
       <div class="cta-glow" aria-hidden="true"></div>
       <div class="cta-content">
