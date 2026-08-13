@@ -98,7 +98,7 @@ const isRegister = pathWithoutLocale.startsWith('/register');
             {locale === 'ne' ? 'ENG' : 'नेप'}
           </a>
           <div class="nav-auth-buttons">
-            <a href={`/${locale}/login/`} class={`btn-signin`}>Sign In</a>
+            <a href="https://sip.mylunago.com/" class={`btn-signin`} data-astro-reload>Sign In</a>
             <a href={`/${locale}/contact/`} class={`btn-book-demo`}>Book a Demo</a>
           </div>
         </div>
@@ -123,7 +123,7 @@ const isRegister = pathWithoutLocale.startsWith('/register');
           <li><a href={`/${locale}/contact/`} class={`mobile-nav-link${isContact ? ' active' : ''}`}>{locale === 'en' ? 'Contact' : 'सम्पर्क'}</a></li>
         </ul>
         <div class="mobile-nav-auth">
-          <a href={`/${locale}/login/`} class={`mobile-btn-signin${isLogin ? ' active' : ''}`}>{locale === 'en' ? 'Sign In' : 'प्रवेश गर्नुहोस्'}</a>
+          <a href="https://sip.mylunago.com/" class={`mobile-btn-signin${isLogin ? ' active' : ''}`} data-astro-reload>{locale === 'en' ? 'Sign In' : 'प्रवेश गर्नुहोस्'}</a>
           <a href={`/${locale}/contact/`} class={`mobile-btn-demo${isContact ? ' active' : ''}`}>{locale === 'en' ? 'Book a Demo' : 'डेमो बुक गर्नुहोस्'}</a>
         </div>
       </nav>
