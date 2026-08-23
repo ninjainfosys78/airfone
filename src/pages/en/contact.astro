@@ -101,14 +101,18 @@ const locale = 'en';
             <div class="contact-info-icon"><Phone size={18} /></div>
             <div>
               <h4>Sales &amp; Support</h4>
-              <p>+977 1-4XXXXXX · Mon–Sat, 9AM–7PM NPT</p>
+              <ul class="contact-phone-list">
+                <li><a href="tel:+9779851343348">Mobile: 985-1343348</a></li>
+                <li><a href="tel:+977015971548">Office: 01-5971548</a></li>
+              </ul>
+              <p class="contact-hours">Mon–Sat, 9AM–7PM NPT</p>
             </div>
           </div>
           <div class="contact-info-row">
             <div class="contact-info-icon"><Mail size={18} /></div>
             <div>
               <h4>Email</h4>
-              <p>hello@airfone.example · sales@airfone.example</p>
+              <p>info@airfone.app</p>
             </div>
           </div>
           <div class="contact-info-row">
@@ -187,6 +191,20 @@ const locale = 'en';
   }
   .contact-info-row h4 { font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin: 0 0 0.3rem; }
   .contact-info-row p { font-size: 0.85rem; color: var(--text-secondary); margin: 0; line-height: 1.5; }
+
+  /* Phone numbers inherit the same value styling as the email/city rows below */
+  .contact-phone-list { list-style: none; margin: 0; padding: 0; }
+  .contact-phone-list a {
+    font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;
+    text-decoration: none; transition: color 0.15s ease;
+  }
+  .contact-phone-list a:hover { color: var(--primary-dark); }
+
+  /* Hours — quiet caption, aligned with the numbers above it */
+  .contact-info-row .contact-hours {
+    margin-top: 0.45rem; font-size: 0.74rem; letter-spacing: 0.01em;
+    color: var(--text-secondary); opacity: 0.8;
+  }
 
   .contact-map-placeholder {
     height: 140px; border-radius: 14px; border: 1px dashed var(--border-color);
