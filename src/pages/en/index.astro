@@ -1,8 +1,19 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { Clock, Bot, Radio, Brain, Plug2, BarChart3, ShieldCheck, Zap, Globe, Headphones, Megaphone, PhoneMissed, Phone, ArrowRight } from 'lucide-react';
+import { Clock, Bot, Radio, Brain, Plug2, BarChart3, ShieldCheck, Zap, Globe, Headphones, Megaphone, PhoneMissed, Phone, ArrowRight, PhoneCall, Sparkles, Check } from 'lucide-react';
 
 const locale = 'en';
+
+// Client/partner logos for the trust carousel.
+const trustedLogos = [
+  { name: 'Client logo', src: '/images/emblem.png' },
+  { name: 'Client logo', src: '/images/logo-partner.png' },
+  { name: 'Client logo', src: '/images/logo-baijanath-rural-municipality.png' },
+];
+
+// Repeat the logo set so one lap is always wider than the carousel viewport —
+// otherwise, with only a few logos, the track runs out before it can loop and the scroll visibly stalls/resets.
+const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
 ---
 
 <BaseLayout title="Airfone — Home">
@@ -11,26 +22,30 @@ const locale = 'en';
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="hero-content">
       <div class="hero-text">
+        <!--
         <div class="hero-badge reveal">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hero-badge-icon">
              <path d="M12 2v20M17 5v14M22 10v4M7 5v14M2 10v4"/>
           </svg>
           Smart IVR & AI Cloud Voice Broadcasting Platform
         </div>
+        -->
         <h1 class="hero-title reveal">
-          Turn every phone call into an <br />
-          <span class="highlight-green">intelligent</span>, data-driven <br />
-          interaction.
+          The AI Voice Platform <br />
+          for Every <span class="highlight-green">Customer Call</span>
         </h1>
+        <!--
         <p class="hero-description reveal">
           A cloud-native voice platform that combines telephony resilience with Natural Language Processing, Neural Text-to-Speech, and real-time sentiment analysis — managing high-volume inbound support and targeted outbound campaigns from one system.
         </p>
+        -->
         <div class="hero-ctas reveal">
           <a href="/en/contact/" class="btn btn-green">Request a Live Demo</a>
           <a href="/en/pricing/" class="btn btn-outline">See Pricing</a>
         </div>
       </div>
 
+      <!--
       <div class="hero-stats">
         <div class="hero-stat reveal">
           <div class="hero-stat-icon"><PhoneMissed size={24} /></div>
@@ -53,17 +68,95 @@ const locale = 'en';
           <div class="hero-stat-label">Core uptime SLA</div>
       </div>
     </div>
+    -->
 
-    <!-- Subtle call-ring motif -->
+    <!-- Subtle call-ring motif
     <div class="hero-ring" aria-hidden="true">
       <div class="hero-ring-circle hero-ring-c1"></div>
       <div class="hero-ring-circle hero-ring-c2"></div>
       <div class="hero-ring-circle hero-ring-c3"></div>
       <div class="hero-ring-phone"><Phone size={42} /></div>
     </div>
+    -->
+  </section>
+
+  <!-- Trusted By / Logo Carousel Section -->
+  <section class="logo-carousel-section">
+    <div class="logo-carousel-inner">
+      <div class="logo-carousel-track-wrap">
+        <div class="logo-carousel-track">
+          {carouselLogos.map((logo) => (
+            <div class="logo-item">
+              {logo.src ? (
+                <img src={logo.src} alt={logo.name} loading="lazy" />
+              ) : (
+                <span class="logo-placeholder">{logo.name}</span>
+              )}
+            </div>
+          ))}
+          {carouselLogos.map((logo) => (
+            <div class="logo-item" aria-hidden="true">
+              {logo.src ? (
+                <img src={logo.src} alt="" loading="lazy" />
+              ) : (
+                <span class="logo-placeholder">{logo.name}</span>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="how-it-works-section">
+    <div class="how-it-works-inner">
+      <div class="how-it-works-header reveal">
+        <span class="how-it-works-tag">How it works</span>
+        <h2 class="how-it-works-title">Three steps, start to resolution.</h2>
+      </div>
+
+      <div class="how-it-works-steps">
+        <div class="steps-connecting-line" aria-hidden="true"></div>
+
+        <div class="step-card reveal">
+          <div class="step-icon-wrapper">
+            <div class="step-icon-circle">
+              <PhoneCall size={26} class="step-icon" />
+            </div>
+            <span class="step-badge">1</span>
+          </div>
+          <h3 class="step-title">Call comes in or goes out</h3>
+          <p class="step-description">A customer dials in, or Airfone launches an outbound campaign — every call is answered instantly, with zero wait time.</p>
+        </div>
+
+        <div class="step-card reveal">
+          <div class="step-icon-wrapper">
+            <div class="step-icon-circle">
+              <Sparkles size={26} class="step-icon" />
+            </div>
+            <span class="step-badge">2</span>
+          </div>
+          <h3 class="step-title">AI understands and decides</h3>
+          <p class="step-description">Natural language AI recognizes intent, pulls live data from your CRM or database, and decides how to route or respond.</p>
+        </div>
+
+        <div class="step-card reveal">
+          <div class="step-icon-wrapper">
+            <div class="step-icon-circle">
+              <Check size={26} class="step-icon" />
+            </div>
+            <span class="step-badge">3</span>
+          </div>
+          <h3 class="step-title">Query resolved, instantly</h3>
+          <p class="step-description">Most queries are resolved automatically. If a human is needed, the agent picks up with full context already in hand.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- Platform Capabilities Section -->
+  <!--
   <section class="capabilities-section">
     <div class="capabilities-inner">
       <div class="cap-header reveal">
@@ -112,13 +205,15 @@ const locale = 'en';
           <p>Native REST API &amp; webhook sync with CRM/ERP systems.</p>
         </div>
 
-       
+
 
       </div>
     </div>
   </section>
+  -->
 
   <!-- Platform Modules Section -->
+  <!--
   <section class="modules-section">
     <div class="modules-inner">
       <div class="modules-header reveal">
@@ -152,6 +247,7 @@ const locale = 'en';
       </div>
     </div>
   </section>
+  -->
 
   <!-- Live Demo CTA -->
   <section class="cta-section reveal">
@@ -183,6 +279,163 @@ const locale = 'en';
 </BaseLayout>
 
 <style>
+  /* ── How It Works Section ────────────────────────────────────────── */
+  .how-it-works-section {
+    padding: 6rem 1.5rem;
+    background: var(--bg-primary);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .how-it-works-inner {
+    max-width: 1140px;
+    margin: 0 auto;
+  }
+
+  .how-it-works-header {
+    text-align: left;
+    margin-bottom: 4rem;
+  }
+
+  .how-it-works-tag {
+    display: inline-block;
+    color: #10733A;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  :global([data-theme='dark']) .how-it-works-tag {
+    color: #4ADE80;
+  }
+
+  .how-it-works-title {
+    font-size: clamp(2.2rem, 4vw, 3.25rem);
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    max-width: 800px;
+  }
+
+  .how-it-works-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3.5rem;
+    position: relative;
+  }
+
+  .steps-connecting-line {
+    position: absolute;
+    top: 40px;
+    left: calc(16.666% + 40px);
+    right: calc(16.666% + 40px);
+    height: 2px;
+    background: #10733A;
+    z-index: 1;
+    opacity: 0.7;
+  }
+
+  :global([data-theme='dark']) .steps-connecting-line {
+    background: #2A8A3C;
+    opacity: 0.8;
+  }
+
+  .step-card {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .step-icon-wrapper {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1.75rem;
+  }
+
+  .step-icon-circle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid #10733A;
+    background: var(--bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #10733A;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  :global([data-theme='dark']) .step-icon-circle {
+    border-color: #2A8A3C;
+    color: #4ADE80;
+    background: var(--bg-primary);
+  }
+
+  .step-card:hover .step-icon-circle {
+    transform: translateY(-4px) scale(1.04);
+    border-color: #2A8A3C;
+    box-shadow: 0 10px 25px -5px rgba(42, 138, 60, 0.25);
+  }
+
+  .step-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #10733A;
+    color: #FFFFFF;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--bg-primary);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+
+  :global([data-theme='dark']) .step-badge {
+    background: #2A8A3C;
+  }
+
+  .step-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+  }
+
+  .step-description {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 900px) {
+    .how-it-works-steps {
+      grid-template-columns: 1fr;
+      gap: 3.5rem;
+      padding-left: 1rem;
+    }
+
+    .steps-connecting-line {
+      top: 40px;
+      bottom: 40px;
+      left: calc(1rem + 40px);
+      width: 2px;
+      height: auto;
+      right: auto;
+    }
+  }
+
   /* Hero Section */
   .hero {
     min-height: 100vh;
@@ -191,10 +444,10 @@ const locale = 'en';
     padding: 0;
     position: relative;
     overflow: clip;
-    background: #FFFFFF;
+    background: #081F0F;
   }
 
-  /* Hero background: soft green wash behind the incoming-call mockup */
+  /* Hero background: near-black base with a soft deep-green ambient glow */
   .hero-bg {
     position: absolute;
     inset: 0;
@@ -202,8 +455,9 @@ const locale = 'en';
     overflow: hidden;
     pointer-events: none;
     background:
-      radial-gradient(ellipse at 78% 30%, rgba(109, 192, 64, 0.12), transparent 55%),
-      linear-gradient(180deg, #FFFFFF 0%, #F6FBF4 100%);
+      radial-gradient(ellipse 70% 55% at 50% 62%, rgba(61, 181, 81, 0.16), transparent 65%),
+      radial-gradient(ellipse 50% 40% at 14% 12%, rgba(16, 115, 58, 0.14), transparent 60%),
+      #081F0F;
   }
 
   /* ── Subtle call-ring motif ──────────────────────────────────────────── */
@@ -256,7 +510,8 @@ const locale = 'en';
     padding: 8.5rem 2rem 0;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
     position: relative;
     z-index: 1;
   }
@@ -285,7 +540,7 @@ const locale = 'en';
     line-height: 1.15;
     margin: 0 0 1.5rem;
     letter-spacing: -0.02em;
-    color: #1A1A1A;
+    color: #EAF6EC;
   }
 
   .highlight-green {
@@ -297,7 +552,7 @@ const locale = 'en';
 
   .hero-description {
     font-size: 1.15rem;
-    color: #4B5563;
+    color: #B9D6C0;
     line-height: 1.6;
     margin-bottom: 2.5rem;
     max-width: 800px;
@@ -307,6 +562,7 @@ const locale = 'en';
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+    justify-content: center;
     margin-bottom: 5rem;
   }
 
@@ -337,13 +593,13 @@ const locale = 'en';
 
   .btn-outline {
     background: transparent;
-    color: #1A1A1A;
-    border: 1px solid #D1D5DB;
+    color: #EAF6EC;
+    border: 1px solid rgba(234, 246, 236, 0.3);
   }
 
   .btn-outline:hover {
-    border-color: #1A1A1A;
-    background: rgba(0,0,0,0.02);
+    border-color: #6DC040;
+    background: rgba(109, 192, 64, 0.08);
   }
 
   .hero-stats {
@@ -400,6 +656,96 @@ const locale = 'en';
     font-size: 0.85rem;
     color: #6B7280;
     font-weight: 500;
+  }
+
+  /* ── Trusted By / Logo Carousel Section ──────────────────────────────── */
+  .logo-carousel-section {
+    position: relative;
+    padding: 3.5rem 0;
+    background: #F4FAF5;
+    overflow: hidden;
+  }
+
+  .logo-carousel-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .logo-carousel-track-wrap {
+    position: relative;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .logo-carousel-track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    gap: 4rem;
+    animation: logo-scroll 22s linear infinite;
+  }
+
+  .logo-carousel-track-wrap:hover .logo-carousel-track {
+    animation-play-state: paused;
+  }
+
+  .logo-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    height: 104px;
+    transition: transform 0.25s ease;
+  }
+
+  .logo-item:hover {
+    transform: translateY(-2px);
+  }
+
+  .logo-item img {
+    height: 100%;
+    width: auto;
+    max-width: 240px;
+    object-fit: contain;
+  }
+
+  .logo-placeholder {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #6B7280;
+    white-space: nowrap;
+    transition: color 0.25s ease;
+  }
+
+  .logo-item:hover .logo-placeholder {
+    color: #1A1A1A;
+  }
+
+  @keyframes logo-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-carousel-track {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .logo-carousel-track {
+      gap: 2.5rem;
+      animation-duration: 16s;
+    }
+    .logo-item {
+      height: 68px;
+    }
+    .logo-placeholder {
+      font-size: 0.9rem;
+    }
   }
 
   /* Divider */
@@ -1294,43 +1640,9 @@ const locale = 'en';
     border-color: #6DC040;
   }
 
-  /* ── Dark mode: hero + capabilities + CTA (deep/medium green) ───────── */
-  html[data-theme="dark"] .hero {
-    background: var(--bg-primary);
-  }
-
-  html[data-theme="dark"] .hero-bg {
-    background:
-      radial-gradient(ellipse at 80% 28%, rgba(109, 192, 64, 0.14), transparent 52%),
-      var(--bg-primary);
-  }
-
-  html[data-theme="dark"] .hero-bg {
-    background:
-      radial-gradient(ellipse at 78% 30%, rgba(109, 192, 64, 0.14), transparent 55%),
-      var(--bg-primary);
-  }
-
+  /* ── Dark mode: capabilities + CTA (hero is always dark) ─────────────── */
   html[data-theme="dark"] .hero-ring-circle {
     border-color: rgba(109, 192, 64, 0.3);
-  }
-
-  html[data-theme="dark"] .hero-title {
-    color: var(--text-primary);
-  }
-
-  html[data-theme="dark"] .hero-description {
-    color: var(--text-secondary);
-  }
-
-  html[data-theme="dark"] .btn-outline {
-    color: var(--text-primary);
-    border-color: var(--border-color);
-  }
-
-  html[data-theme="dark"] .btn-outline:hover {
-    border-color: #6DC040;
-    background: rgba(109, 192, 64, 0.08);
   }
 
   html[data-theme="dark"] .hero-stats {
@@ -1352,6 +1664,18 @@ html[data-theme="dark"] .hero-stat {
 
   html[data-theme="dark"] .divider {
     background: var(--border-color);
+  }
+
+  html[data-theme="dark"] .logo-carousel-section {
+    background: var(--bg-secondary);
+  }
+
+  html[data-theme="dark"] .logo-placeholder {
+    color: var(--text-secondary);
+  }
+
+  html[data-theme="dark"] .logo-item:hover .logo-placeholder {
+    color: var(--text-primary);
   }
 
   html[data-theme="dark"] .capabilities-section {
