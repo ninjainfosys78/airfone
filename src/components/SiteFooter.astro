@@ -1,0 +1,427 @@
+---
+import { Globe, ChevronDown, Check } from 'lucide-react';
+
+interface Props {
+  locale: string;
+}
+
+const { locale } = Astro.props;
+
+// Preserve the current page when switching languages (mirrors BaseLayout's own logic).
+const currentPath = Astro.url.pathname;
+const pathWithoutLocale = currentPath.replace(/^\/(en|ne)(\/|$)/, '/');
+const nePath = `/ne${pathWithoutLocale}`;
+const enPath = `/en${pathWithoutLocale}`;
+---
+
+<!--
+  Previous footer (brand column + Platform / Company / Resources link columns).
+  Kept here for reference — replaced below with a brand / quick-links / contact-us
+  layout per request.
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand-col reveal">
+        <a href={`/${locale}/`} class="footer-brand">
+          <img src="/airfone-logo-transparent.png" alt="AirFone" class="footer-brand-logo" />
+        </a>
+        <p class="footer-tagline">
+          {locale === 'en'
+            ? 'Turning every phone call into an intelligent, data-driven interaction — built for the Nepali market and beyond.'
+            : 'हरेक फोन कललाई एउटा बौद्धिक, डाटा-संचालित अन्तरक्रियामा बदल्दै — नेपाली बजार र त्यसभन्दा परका लागि।'}
+        </p>
+      </div>
+
+      <div class="footer-col reveal">
+        <span class="footer-col-heading">{locale === 'en' ? 'PLATFORM' : 'प्लेटफर्म'}</span>
+        <ul>
+          <li><a href={`/${locale}/features/`}>{locale === 'en' ? 'Features' : 'सुविधाहरू'}</a></li>
+          <li><a href={`/${locale}/features/`}>{locale === 'en' ? 'Architecture' : 'आर्किटेक्चर'}</a></li>
+          <li><a href={`/${locale}/features/`}>{locale === 'en' ? 'Roadmap' : 'रोडम्याप'}</a></li>
+          <li><a href={`/${locale}/pricing/`}>{locale === 'en' ? 'Pricing' : 'मूल्य निर्धारण'}</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col reveal">
+        <span class="footer-col-heading">{locale === 'en' ? 'COMPANY' : 'कम्पनी'}</span>
+        <ul>
+          <li><a href={`/${locale}/about/`}>{locale === 'en' ? 'About Us' : 'हाम्रोबारे'}</a></li>
+          <li><a href={`/${locale}/about/`}>{locale === 'en' ? 'Our Values' : 'हाम्रा मूल्यहरू'}</a></li>
+          <li><a href={`/${locale}/contact/`}>{locale === 'en' ? 'Contact' : 'सम्पर्क'}</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col reveal">
+        <span class="footer-col-heading">{locale === 'en' ? 'RESOURCES' : 'स्रोतहरू'}</span>
+        <ul>
+          <li><a href={`/${locale}/contact/`}>{locale === 'en' ? 'Request a Demo' : 'डेमो अनुरोध'}</a></li>
+          <li><a href={`/${locale}/contact/`}>{locale === 'en' ? 'Download Proposal' : 'प्रस्ताव डाउनलोड'}</a></li>
+          <li><a href={`/${locale}/pricing/`}>{locale === 'en' ? 'SLA & Terms' : 'SLA र सर्तहरू'}</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom reveal">
+      <span>{locale === 'en' ? '© 2026 Smart IVR & AI Cloud Voice Broadcasting Platform. All rights reserved.  ·  All NPR pricing excludes VAT.' : '© २०२६ स्मार्ट IVR र AI क्लाउड भ्वाइस ब्रोडकास्टिङ प्लेटफर्म। सर्वाधिकार सुरक्षित।  ·  सबै NPR मूल्यमा VAT समावेश छैन।'}</span>
+    </div>
+  </footer>
+-->
+
+<!--
+  Previous footer (brand + tagline + social icon-circles, Quick Links, and a
+  Contact Us column with colored icon chips + a gradient WhatsApp button, plus
+  a separate bordered bottom bar for the copyright line). Kept here for
+  reference — replaced below with a minimal, Palantir-style layout: a legal/
+  social column on the left and plain text link columns on the right, no
+  icons or colored chips.
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand-col reveal">
+        <a href={`/${locale}/`} class="footer-brand">
+          <img src="/airfone-logo-transparent.png" alt="AirFone" class="footer-brand-logo" />
+        </a>
+        <p class="footer-tagline">
+          {locale === 'en'
+            ? 'Turning every phone call into an intelligent, data-driven interaction — built for the Nepali market and beyond.'
+            : 'हरेक फोन कललाई एउटा बौद्धिक, डाटा-संचालित अन्तरक्रियामा बदल्दै — नेपाली बजार र त्यसभन्दा परका लागि।'}
+        </p>
+        <span class="footer-social-heading">{locale === 'en' ? 'FOLLOW US' : 'हामीलाई फलो गर्नुहोस्'}</span>
+        <div class="footer-social-row">
+          <a href="#" class="footer-social-icon" aria-label="Facebook"><Facebook size={18} /></a>
+          <a href="#" class="footer-social-icon" aria-label="LinkedIn"><Linkedin size={18} /></a>
+          <a href="#" class="footer-social-icon" aria-label="YouTube"><Youtube size={18} /></a>
+        </div>
+      </div>
+
+      <div class="footer-col footer-contact-col reveal">
+        <span class="footer-col-heading footer-col-heading--contact">{locale === 'en' ? 'Contact Us' : 'सम्पर्क गर्नुहोस्'}</span>
+        <div class="footer-contact-row">
+          <span class="footer-contact-icon footer-contact-icon--green-light"><Phone size={16} /></span>
+          <a href="tel:+9779851343348">+977 985-1343348</a>
+        </div>
+        <div class="footer-contact-row">
+          <span class="footer-contact-icon footer-contact-icon--green-light"><Mail size={16} /></span>
+          <a href="mailto:info@airfone.app">info@airfone.app</a>
+        </div>
+        <div class="footer-contact-row">
+          <span class="footer-contact-icon footer-contact-icon--green"><MapPin size={16} /></span>
+          <span>{locale === 'en' ? 'Kathmandu, Nepal' : 'काठमाडौं, नेपाल'}</span>
+        </div>
+        <a href="https://wa.me/9779851343348" class="footer-whatsapp-btn" target="_blank" rel="noopener noreferrer">
+          <MessageCircle size={16} />
+          {locale === 'en' ? 'WhatsApp Us' : 'WhatsApp मार्फत सम्पर्क'}
+          <ArrowRight size={16} />
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>{locale === 'en' ? '© 2026 Smart IVR & AI Cloud Voice Broadcasting Platform. All rights reserved.  ·  All NPR pricing excludes VAT.' : '© २०२६ स्मार्ट IVR र AI क्लाउड भ्वाइस ब्रोडकास्टिङ प्लेटफर्म। सर्वाधिकार सुरक्षित।  ·  सबै NPR मूल्यमा VAT समावेश छैन।'}</span>
+    </div>
+  </footer>
+-->
+
+<footer class="site-footer">
+  <div class="footer-inner">
+
+    <!-- Legal / social column -->
+    <div class="footer-legal-col reveal">
+      <a href={`/${locale}/`} class="footer-brand">
+        <img src="/airfone-logo-transparent.png" alt="AirFone" class="footer-brand-logo" />
+      </a>
+
+      <p class="footer-tagline">
+        {locale === 'en'
+          ? 'Turning every phone call into an intelligent, data-driven interaction — built for the Nepali market and beyond.'
+          : 'हरेक फोन कललाई एउटा बौद्धिक, डाटा-संचालित अन्तरक्रियामा बदल्दै — नेपाली बजार र त्यसभन्दा परका लागि।'}
+      </p>
+
+      <div class="footer-divider"></div>
+
+      <div class="footer-social-row">
+        <a href="#" class="footer-social-pill">Facebook</a>
+        <a href="#" class="footer-social-pill">LinkedIn</a>
+        <a href="#" class="footer-social-pill">YouTube</a>
+      </div>
+    </div>
+
+    <!-- Contact column -->
+    <div class="footer-col reveal">
+      <span class="footer-col-heading">{locale === 'en' ? 'Contact' : 'सम्पर्क'}</span>
+      <ul>
+        <li><a href="tel:+9779851343348">+977 985-1343348</a></li>
+        <li><a href="mailto:info@airfone.app">info@airfone.app</a></li>
+        <li><span class="footer-static-item">{locale === 'en' ? 'Kathmandu, Nepal' : 'काठमाडौं, नेपाल'}</span></li>
+        <li><a href="https://wa.me/9779851343348" target="_blank" rel="noopener noreferrer">{locale === 'en' ? 'WhatsApp Us' : 'WhatsApp मार्फत सम्पर्क'}</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <span class="footer-copyright">
+      {locale === 'en'
+        ? '© 2026 AirFone. All rights reserved.'
+        : '© २०२६ AirFone. सर्वाधिकार सुरक्षित।'}
+    </span>
+
+    <div class="footer-lang-wrap">
+      <button type="button" class="footer-lang-btn" id="footer-lang-toggle" aria-haspopup="listbox" aria-expanded="false">
+        <Globe size={14} />
+        {locale === 'en' ? 'English' : 'नेपाली'}
+        <ChevronDown size={14} class="footer-lang-chevron" />
+      </button>
+      <ul class="footer-lang-menu" id="footer-lang-menu" role="listbox">
+        <li role="option" aria-selected={locale === 'en'}>
+          <a href={enPath} data-astro-scroll="false" class={locale === 'en' ? 'active' : ''}>
+            English
+            {locale === 'en' && <Check size={14} />}
+          </a>
+        </li>
+        <li role="option" aria-selected={locale === 'ne'}>
+          <a href={nePath} data-astro-scroll="false" class={locale === 'ne' ? 'active' : ''}>
+            नेपाली
+            {locale === 'ne' && <Check size={14} />}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function initFooterLangMenu() {
+    const toggle = document.getElementById('footer-lang-toggle');
+    const menu = document.getElementById('footer-lang-menu');
+    if (!toggle || !menu || toggle.dataset.bound) return;
+    toggle.dataset.bound = 'true';
+
+    const close = () => {
+      toggle.setAttribute('aria-expanded', 'false');
+      menu.classList.remove('open');
+    };
+    const open = () => {
+      toggle.setAttribute('aria-expanded', 'true');
+      menu.classList.add('open');
+    };
+
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      isOpen ? close() : open();
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!menu.contains(e.target) && e.target !== toggle) close();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') close();
+    });
+  }
+
+  initFooterLangMenu();
+  document.addEventListener('astro:page-load', initFooterLangMenu);
+</script>
+
+<style>
+  /* Minimal, Palantir-style footer: plain-white canvas, small tracked-out
+     gray section labels, flat text links, thin hairline dividers, and
+     outlined pill buttons instead of colored icon chips. */
+  .site-footer {
+    background: #FFFFFF;
+    color: #111827;
+    padding: 0;
+    margin-top: 0;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid #E5E7EB;
+    font-family: "Noto Sans", "Noto Sans Devanagari", system-ui, sans-serif !important;
+  }
+
+  .site-footer * {
+    font-family: "Noto Sans", "Noto Sans Devanagari", system-ui, sans-serif !important;
+  }
+
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 4.5rem 2.5rem;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 3rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Legal / social column */
+  .footer-legal-col { display: flex; flex-direction: column; max-width: 300px; }
+
+  .footer-brand { display: inline-block; margin-bottom: 1.25rem; transition: opacity 0.2s; }
+  .footer-brand:hover { opacity: 0.8; }
+  .footer-brand-logo { height: 34px; width: auto; display: block; object-fit: contain; }
+
+  .footer-copyright { font-size: 0.85rem; color: #374151; line-height: 1.6; margin: 0; }
+
+  .footer-tagline { font-size: 0.85rem; color: #6B7280; line-height: 1.6; margin: 0 0 1.5rem; }
+
+  .footer-divider { height: 1px; background: #E5E7EB; margin: 1.5rem 0; }
+
+  .footer-social-row { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+
+  .footer-social-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1.1rem;
+    border: 1px solid #D1D5DB;
+    border-radius: 9999px;
+    color: #111827;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .footer-social-pill:hover { border-color: #3DB551; color: #2A8A3C; }
+
+  /* Link column */
+  .footer-col { display: flex; flex-direction: column; }
+
+  .footer-col-heading {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #9CA3AF;
+    margin-bottom: 1.25rem;
+  }
+
+  .footer-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.9rem; }
+
+  .footer-col a, .footer-static-item {
+    font-size: 0.9rem;
+    color: #1F2937;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    display: inline-block;
+  }
+
+  .footer-col a::before { display: none !important; }
+  .footer-col a:hover { color: #2A8A3C; transform: none; }
+
+  /* Bottom bar: copyright + language switcher */
+  .footer-bottom {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    border-top: 1px solid #E5E7EB;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-bottom .footer-copyright { font-size: 0.8rem; color: #6B7280; }
+
+  .footer-lang-wrap { position: relative; }
+
+  .footer-lang-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.9rem;
+    background: #FFFFFF;
+    border: 1px solid #D1D5DB;
+    border-radius: 9999px;
+    color: #111827;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .footer-lang-btn:hover { border-color: #3DB551; color: #2A8A3C; }
+
+  .footer-lang-chevron { transition: transform 0.2s ease; }
+  .footer-lang-btn[aria-expanded="true"] .footer-lang-chevron { transform: rotate(180deg); }
+
+  .footer-lang-menu {
+    position: absolute;
+    bottom: calc(100% + 0.5rem);
+    right: 0;
+    min-width: 160px;
+    margin: 0;
+    padding: 0.4rem;
+    list-style: none;
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.18);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(4px);
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+    z-index: 20;
+  }
+
+  .footer-lang-menu.open { opacity: 1; visibility: visible; transform: translateY(0); }
+
+  .footer-lang-menu a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.55rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #1F2937;
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+
+  .footer-lang-menu a:hover { background: #F3F4F6; }
+  .footer-lang-menu a.active { font-weight: 700; color: #2A8A3C; }
+
+  /* Dark-mode footer — matches the dark navbar's deep-green palette */
+  html[data-theme="dark"] .site-footer {
+    background: #0F2E1A;
+    color: #EAF6EC;
+    border-top: 1px solid rgba(109,192,64,0.2);
+  }
+
+  html[data-theme="dark"] .footer-brand-logo { filter: brightness(0) invert(1); }
+  html[data-theme="dark"] .footer-copyright { color: rgba(234,246,236,0.6); }
+  html[data-theme="dark"] .footer-tagline { color: rgba(234,246,236,0.55); }
+  html[data-theme="dark"] .footer-divider { background: rgba(234,246,236,0.15); }
+  html[data-theme="dark"] .footer-social-pill { border-color: rgba(234,246,236,0.25); color: #EAF6EC; }
+  html[data-theme="dark"] .footer-social-pill:hover { border-color: #6DC040; color: #6DC040; }
+  html[data-theme="dark"] .footer-col-heading { color: rgba(234,246,236,0.5); }
+  html[data-theme="dark"] .footer-col a, html[data-theme="dark"] .footer-static-item { color: rgba(234,246,236,0.85); }
+  html[data-theme="dark"] .footer-col a:hover { color: #6DC040; }
+  html[data-theme="dark"] .footer-bottom { border-top-color: rgba(109,192,64,0.2); }
+  html[data-theme="dark"] .footer-bottom .footer-copyright { color: rgba(234,246,236,0.5); }
+  html[data-theme="dark"] .footer-lang-btn { background: #0F2E1A; border-color: rgba(234,246,236,0.25); color: #EAF6EC; }
+  html[data-theme="dark"] .footer-lang-btn:hover { border-color: #6DC040; color: #6DC040; }
+  html[data-theme="dark"] .footer-lang-menu { background: #0F2E1A; border-color: rgba(234,246,236,0.15); box-shadow: 0 12px 32px -8px rgba(0,0,0,0.5); }
+  html[data-theme="dark"] .footer-lang-menu a { color: rgba(234,246,236,0.85); }
+  html[data-theme="dark"] .footer-lang-menu a:hover { background: rgba(234,246,236,0.08); }
+  html[data-theme="dark"] .footer-lang-menu a.active { color: #6DC040; }
+
+  @media (max-width: 900px) {
+    .footer-inner { grid-template-columns: 1fr 1fr; padding: 3.5rem 1.5rem; gap: 2rem; }
+    .footer-legal-col { max-width: none; }
+  }
+
+  @media (max-width: 576px) {
+    .footer-inner { grid-template-columns: 1fr; padding: 2.5rem 1.25rem; gap: 2.5rem; }
+    .footer-bottom { padding: 1.25rem 1.25rem; justify-content: center; text-align: center; }
+  }
+</style>
