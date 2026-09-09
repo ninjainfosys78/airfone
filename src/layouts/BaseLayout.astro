@@ -8,12 +8,16 @@ interface Props {
   title: string;
   description?: string;
   solidNav?: boolean;
+  image?: string;
+  ogType?: string;
 }
 
 const {
   title,
   description = 'SmartIVRAI — Digital Service Portal | स्मार्ट IVR AI',
   solidNav = false,
+  image = '/airfone-logo-transparent.png',
+  ogType = 'website',
 } = Astro.props;
 
 const locale = Astro.currentLocale ?? 'ne';
@@ -26,6 +30,12 @@ const normalizedPath = (pathWithoutLocale.endsWith('/') && pathWithoutLocale !==
 
 const nePath = `/ne${pathWithoutLocale}`;
 const enPath = `/en${pathWithoutLocale}`;
+
+const SITE_URL = Astro.site ?? new URL('https://airfone.app');
+const canonicalURL = new URL(currentPath, SITE_URL);
+const enCanonicalURL = new URL(enPath, SITE_URL);
+const neCanonicalURL = new URL(nePath, SITE_URL);
+const ogImageURL = new URL(image, SITE_URL);
 
 const isHome       = normalizedPath === '/';
 const isAbout      = normalizedPath.startsWith('/about');
@@ -45,6 +55,24 @@ const isRegister = pathWithoutLocale.startsWith('/register');
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <title>{title}</title>
+
+    <link rel="canonical" href={canonicalURL.href} />
+    <link rel="alternate" hreflang="en" href={enCanonicalURL.href} />
+    <link rel="alternate" hreflang="ne" href={neCanonicalURL.href} />
+    <link rel="alternate" hreflang="x-default" href={enCanonicalURL.href} />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="Airfone" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL.href} />
+    <meta property="og:image" content={ogImageURL.href} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL.href} />
+
     <script is:inline>
       // Apply saved theme before the first paint and re-apply it after every
       // View Transition swap. Astro restores the root <html> attributes from the

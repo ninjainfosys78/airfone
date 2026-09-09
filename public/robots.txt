@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+Disallow: /*/login/
+Disallow: /*/register/
+Disallow: /*/forgot-password/
+Disallow: /*/reset-password/
+Disallow: /*/verify/
+Disallow: /*/verify-otp/
+Disallow: /*/verify-email-otp/
+Disallow: /*/verify-phone-otp/
+Disallow: /*/verify-password-reset-otp/
+Disallow: /*/verify-password-reset-phone/
+
+Sitemap: https://airfone.app/sitemap-index.xml

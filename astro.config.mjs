@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
+import sitemap from '@astrojs/sitemap';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
@@ -8,6 +9,26 @@ import path from 'node:path';
 const HMR_PORT = Number.parseInt(process.env.ASTRO_DEV_PORT ?? '4321', 10);
 
 const REPO_ROOT = path.resolve(fileURLToPath(import.meta.url), '../../../../..');
+
+// Auth-flow routes disallowed in public/robots.txt — kept out of the sitemap
+// too, so we're not asking crawlers to index pages we've told them to skip.
+const NOINDEX_PATH_STEMS = [
+  'login',
+  'register',
+  'forgot-password',
+  'reset-password',
+  'verify',
+  'verify-otp',
+  'verify-email-otp',
+  'verify-phone-otp',
+  'verify-password-reset-otp',
+  'verify-password-reset-phone',
+];
+const isNoindexPage = (pageUrl) => {
+  const { pathname } = new URL(pageUrl);
+  const [, , stem] = pathname.split('/'); // '', '<locale>', '<stem>', ...
+  return NOINDEX_PATH_STEMS.includes(stem);
+};
 
 const SDK_EXTERNALS = [
   '@radix-ui/react-accordion',
@@ -48,6 +69,7 @@ const SDK_EXTERNALS = [
 ];
 
 export default defineConfig({
+  site: 'https://airfone.app',
   output: 'static',
   trailingSlash: 'always',
   base: '/',
@@ -57,7 +79,15 @@ export default defineConfig({
     locales: ['en', 'ne'],
     routing: { prefixDefaultLocale: true, redirectToDefaultLocale: true },
   },
-  integrations: [react()],
+  integrations: [
+    react(),
+    sitemap({
+      filter: (page) =>
+        // src/pages/index.astro only exists to 302 "/" → "/en/"; it renders no
+        // content of its own, so it shouldn't get its own sitemap entry.
+        page !== 'https://airfone.app/' && !isNoindexPage(page),
+    }),
+  ],
   build: {
     assets: 'assets',
     inlineStylesheets: 'auto',

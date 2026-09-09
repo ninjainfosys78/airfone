@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import HomepageStructuredData from '../../components/seo/HomepageStructuredData.astro';
 import { Phone, Building2, Bot, Rocket } from 'lucide-react';
 
 const locale = 'en';
@@ -17,6 +18,7 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
 ---
 
 <BaseLayout title="Airfone — Home">
+  <HomepageStructuredData locale="en" />
   <!-- Hero Section -->
   <section class="hero">
     <div class="hero-bg" aria-hidden="true"></div>
