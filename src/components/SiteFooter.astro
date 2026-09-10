@@ -1,5 +1,5 @@
 ---
-import { Globe, ChevronDown, Check } from 'lucide-react';
+import { Globe, ChevronDown, Check, Facebook, Linkedin, Youtube } from 'lucide-react';
 
 interface Props {
   locale: string;
@@ -140,9 +140,9 @@ const enPath = `/en${pathWithoutLocale}`;
       <div class="footer-divider"></div>
 
       <div class="footer-social-row">
-        <a href="#" class="footer-social-pill">Facebook</a>
-        <a href="#" class="footer-social-pill">LinkedIn</a>
-        <a href="#" class="footer-social-pill">YouTube</a>
+        <a href="#" class="footer-social-icon" aria-label="Facebook"><Facebook size={16} /></a>
+        <a href="#" class="footer-social-icon" aria-label="LinkedIn"><Linkedin size={16} /></a>
+        <a href="#" class="footer-social-icon" aria-label="YouTube"><Youtube size={16} /></a>
       </div>
     </div>
 
@@ -270,22 +270,20 @@ const enPath = `/en${pathWithoutLocale}`;
 
   .footer-social-row { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 
-  .footer-social-pill {
+  .footer-social-icon {
     display: inline-flex;
     align-items: center;
-    padding: 0.5rem 1.1rem;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
     border: 1px solid #D1D5DB;
     border-radius: 9999px;
     color: #111827;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
     text-decoration: none;
     transition: border-color 0.2s ease, color 0.2s ease;
   }
 
-  .footer-social-pill:hover { border-color: #3DB551; color: #2A8A3C; }
+  .footer-social-icon:hover { border-color: #3DB551; color: #2A8A3C; }
 
   /* Link column */
   .footer-col { display: flex; flex-direction: column; }
@@ -401,8 +399,8 @@ const enPath = `/en${pathWithoutLocale}`;
   html[data-theme="dark"] .footer-copyright { color: rgba(234,246,236,0.6); }
   html[data-theme="dark"] .footer-tagline { color: rgba(234,246,236,0.55); }
   html[data-theme="dark"] .footer-divider { background: rgba(234,246,236,0.15); }
-  html[data-theme="dark"] .footer-social-pill { border-color: rgba(234,246,236,0.25); color: #EAF6EC; }
-  html[data-theme="dark"] .footer-social-pill:hover { border-color: #6DC040; color: #6DC040; }
+  html[data-theme="dark"] .footer-social-icon { border-color: rgba(234,246,236,0.25); color: #EAF6EC; }
+  html[data-theme="dark"] .footer-social-icon:hover { border-color: #6DC040; color: #6DC040; }
   html[data-theme="dark"] .footer-col-heading { color: rgba(234,246,236,0.5); }
   html[data-theme="dark"] .footer-col a, html[data-theme="dark"] .footer-static-item { color: rgba(234,246,236,0.85); }
   html[data-theme="dark"] .footer-col a:hover { color: #6DC040; }
