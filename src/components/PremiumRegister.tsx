@@ -138,7 +138,7 @@ const PremiumRegister: React.FC<PremiumRegisterProps> = ({ locale = 'ne' }) => {
           {/* Header */}
           <div className="login-header register-header">
             <div className="logo-circle center-logo">
-              <Smartphone size={30} color="#3DB551" />
+              <Smartphone size={30} color="#3DB1B5" />
             </div>
             <h1 className="register-title">
               {isNepali ? 'नयाँ दर्ता' : 'New Registration'}
@@ -368,7 +368,7 @@ const PremiumRegister: React.FC<PremiumRegisterProps> = ({ locale = 'ne' }) => {
           <div className="login-link-footer">
             <p>
               {isNepali ? 'पहिले नै खाता छ?' : 'Already have an account?'}
-              <a href={`/${locale}/login/`}>
+              <a href={isNepali ? '/ne/login/' : '/login/'}>
                 {isNepali ? 'लगइन गर्नुहोस्' : 'Login'}
               </a>
             </p>

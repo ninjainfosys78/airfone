@@ -26,7 +26,8 @@ const NOINDEX_PATH_STEMS = [
 ];
 const isNoindexPage = (pageUrl) => {
   const { pathname } = new URL(pageUrl);
-  const [, , stem] = pathname.split('/'); // '', '<locale>', '<stem>', ...
+  const segments = pathname.split('/').filter(Boolean); // ['login'] or ['ne', 'login']
+  const stem = segments[0] === 'ne' ? segments[1] : segments[0];
   return NOINDEX_PATH_STEMS.includes(stem);
 };
 
@@ -77,15 +78,15 @@ export default defineConfig({
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'ne'],
-    routing: { prefixDefaultLocale: true, redirectToDefaultLocale: true },
+    // English (the default locale) is unprefixed and lives directly at "/" —
+    // no redirect page, so the site opens straight into content instead of
+    // flashing through a client-side "/" → "/en/" hop. Nepali stays under "/ne/".
+    routing: { prefixDefaultLocale: false },
   },
   integrations: [
     react(),
     sitemap({
-      filter: (page) =>
-        // src/pages/index.astro only exists to 302 "/" → "/en/"; it renders no
-        // content of its own, so it shouldn't get its own sitemap entry.
-        page !== 'https://airfone.app/' && !isNoindexPage(page),
+      filter: (page) => !isNoindexPage(page),
     }),
   ],
   build: {

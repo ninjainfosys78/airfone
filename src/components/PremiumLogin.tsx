@@ -38,7 +38,7 @@ const PremiumLogin: React.FC<PremiumLoginProps> = ({ locale = 'ne' }) => {
           {/* Header */}
           <div className="login-header">
             <div className="logo-circle">
-              <Smartphone size={30} color="#3DB551" />
+              <Smartphone size={30} color="#3DB1B5" />
             </div>
             <h1 className="login-title">
               {isNepali ? 'लग्इन गर्नुहोस्' : 'Login'}
@@ -123,7 +123,7 @@ const PremiumLogin: React.FC<PremiumLoginProps> = ({ locale = 'ne' }) => {
           <div className="signup-link">
             <p>
               {isNepali ? 'खाता छैन?' : "Don't have an account?"}
-              <a href={`/${locale}/register/`}>{isNepali ? 'यहाँ दर्ता गर्नुहोस्' : 'Register here'}</a>
+              <a href={isNepali ? '/ne/register/' : '/register/'}>{isNepali ? 'यहाँ दर्ता गर्नुहोस्' : 'Register here'}</a>
             </p>
           </div>
         </div>

@@ -1,8 +1,8 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import HomepageStructuredData from '../../components/seo/HomepageStructuredData.astro';
-import AnswersEveryCallSection from '../../components/home/AnswersEveryCallSection.astro';
-import { Phone, Building2, Bot, Rocket, ArrowRight } from 'lucide-react';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HomepageStructuredData from '../components/seo/HomepageStructuredData.astro';
+import AnswersEveryCallSection from '../components/home/AnswersEveryCallSection.astro';
+import { Phone, LogIn, Mic, PlayCircle, Rocket, ArrowRight } from 'lucide-react';
 
 const locale = 'en';
 
@@ -27,12 +27,16 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
     <div class="hero-content">
       <div class="hero-text">
         <h1 class="hero-title reveal">
-          The AI Voice Platform <br />
-          for Every <span class="highlight-green">Customer Call</span>
+          Every Customer Question, <br />
+          Answered <span class="highlight-green">Automatically.</span>
         </h1>
+        <p class="hero-lede reveal">
+          Airfone is a self-serve AI agent for Nepali businesses — it answers pricing, stock, and
+          hours questions over the phone, so you never lose a customer to a missed call.
+        </p>
         <div class="hero-ctas reveal">
           <a href="https://sip.mylunago.com/" class="btn btn-green" data-astro-reload>Get Started</a>
-          <a href="/en/pricing/" class="btn btn-outline">See Pricing</a>
+          <a href="/pricing/" class="btn btn-outline">See Pricing</a>
         </div>
       </div>
     </div>
@@ -80,7 +84,7 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
   <section class="get-started-section">
     <div class="get-started-inner">
       <div class="get-started-header reveal">
-        <h2 class="get-started-title">Three steps to a live AI agent.</h2>
+        <h2 class="get-started-title">Four steps to your own AI agent.</h2>
       </div>
 
       <div class="get-started-steps">
@@ -95,10 +99,10 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
         <!-- Step 01 — card above the line -->
         <div class="step-card step-col-1 reveal">
           <div class="step-heading">
-            <Building2 size={18} class="step-icon" />
-            <h3 class="step-title">Enter Your Business Details</h3>
+            <LogIn size={18} class="step-icon" />
+            <h3 class="step-title">Sign Up in Seconds</h3>
           </div>
-          <p class="step-description">Tell us about your business, including industry, use case, and expected call volume, so your agent is configured to fit from the start.</p>
+          <p class="step-description">Create your account with Google — no forms, no waiting.</p>
         </div>
         <div class="step-node step-col-1 reveal"><span class="step-dot"></span></div>
         <span class="step-index step-col-1 reveal">01</span>
@@ -108,22 +112,33 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
         <div class="step-node step-col-2 reveal"><span class="step-dot"></span></div>
         <div class="step-card step-col-2 step-invert reveal">
           <div class="step-heading">
-            <Bot size={18} class="step-icon" />
-            <h3 class="step-title">Choose Your Agent</h3>
+            <Mic size={18} class="step-icon" />
+            <h3 class="step-title">Teach It About Your Business</h3>
           </div>
-          <p class="step-description">Pick a ready-made AI voice agent or customize one to match your exact workflow.</p>
+          <p class="step-description">Speak it, paste your website link, connect your Facebook page, or show us around with a photo or video. Airfone builds your AI's knowledge automatically.</p>
         </div>
 
         <!-- Step 03 — card above the line -->
         <div class="step-card step-col-3 reveal">
           <div class="step-heading">
-            <Rocket size={18} class="step-icon" />
-            <h3 class="step-title">Deploy Your Agent</h3>
+            <PlayCircle size={18} class="step-icon" />
+            <h3 class="step-title">Try It, Free</h3>
           </div>
-          <p class="step-description">Go live in minutes. Your agent starts handling calls immediately, no engineering required.</p>
+          <p class="step-description">Call your own demo number with your PIN and talk to your AI agent. First 100 minutes are free.</p>
         </div>
         <div class="step-node step-col-3 reveal"><span class="step-dot"></span></div>
         <span class="step-index step-col-3 reveal">03</span>
+
+        <!-- Step 04 — card below the line -->
+        <span class="step-index step-col-4 step-invert reveal">04</span>
+        <div class="step-node step-col-4 reveal"><span class="step-dot"></span></div>
+        <div class="step-card step-col-4 step-invert reveal">
+          <div class="step-heading">
+            <Rocket size={18} class="step-icon" />
+            <h3 class="step-title">Go Live</h3>
+          </div>
+          <p class="step-description">Happy with it? Get your own dedicated AI phone number and start taking real customer calls.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -137,7 +152,7 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
       <div class="cta-content">
         <h2 class="cta-title">See Airfone answer a real call.</h2>
         <p class="cta-lede">Watch a live AI agent handle a real conversation in real time — no setup, no waiting.</p>
-        <a href="/en/pricing/" class="cta-button">
+        <a href="/pricing/" class="cta-button">
           See Pricing
           <ArrowRight size={18} />
         </a>
@@ -153,6 +168,13 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
 </BaseLayout>
 
 <style>
+  /* Looser word spacing across the landing page's own sections (hero,
+     trust carousel, "three steps") — the display heading font tracks
+     tight by default, so this opens the copy back up. */
+  section {
+    word-spacing: 0.12em;
+  }
+
   /* ── Hero Section ─────────────────────────────────────────────────────
      Palantir-inspired: sharp corners, hairline borders, tight-tracked
      bold type, an adjoined two-button "toolbar" CTA group. */
@@ -163,24 +185,26 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
     padding: 0;
     position: relative;
     overflow: clip;
-    background: transparent;
+    /* Solid fallback so the light hero text stays readable even if the
+       background image is slow/blocked or the page background is light. */
+    background-color: #081E1F;
   }
 
-  /* Hero background: brand gradient artwork with a soft green ambient glow on top,
-     over a transparent base so the hero blends into the page's own backdrop. */
+  /* Hero background: a bold, confident vertical gradient (dark near-black at
+     the top, ramping up to a vivid saturated brand cyan at the bottom) —
+     ScyllaDB-style: a clean, punchy color block, not a muted glow. */
   .hero-bg {
     position: absolute;
     inset: 0;
     z-index: 0;
     overflow: hidden;
     pointer-events: none;
-    background:
-      radial-gradient(ellipse 70% 55% at 50% 62%, rgba(61, 181, 81, 0.16), transparent 65%),
-      radial-gradient(ellipse 50% 40% at 14% 12%, rgba(16, 115, 58, 0.14), transparent 60%),
-      url('/images/airfone_hero_bg_scylla_style_gradient.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background: linear-gradient(180deg,
+      #041213 0%,
+      #0A2D2F 35%,
+      #115255 60%,
+      #1C8487 80%,
+      #28BDC3 100%);
   }
 
   .hero-content {
@@ -200,13 +224,21 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
     font-size: clamp(2.5rem, 6vw, 4.25rem);
     font-weight: 700;
     line-height: 1.15;
-    margin: 0 0 2.75rem;
+    margin: 0 0 1.5rem;
     letter-spacing: -0.03em;
-    color: #EAF6EC;
+    color: #EAF6F6;
+  }
+
+  .hero-lede {
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    line-height: 1.6;
+    max-width: 640px;
+    margin: 0 auto 2.75rem;
+    color: #B9D5D6;
   }
 
   .highlight-green {
-    background: linear-gradient(135deg, #6DC040, #1B7A2F);
+    background: linear-gradient(135deg, #40BBC0, #1B777A);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -214,7 +246,7 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
 
   .hero-ctas {
     display: inline-flex;
-    border: 1px solid rgba(234, 246, 236, 0.3);
+    border: 1px solid rgba(234, 246, 246, 0.3);
     margin: 0 auto 6rem;
   }
 
@@ -233,16 +265,16 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
     white-space: nowrap;
   }
 
-  .btn-green { background: #3DB551; color: #06170B; }
-  .btn-green:hover { background: #6DC040; }
+  .btn-green { background: #3DB1B5; color: #061617; }
+  .btn-green:hover { background: #40BBC0; }
 
   .btn-outline {
     background: transparent;
-    color: #EAF6EC;
-    border-left: 1px solid rgba(234, 246, 236, 0.3);
+    color: #EAF6F6;
+    border-left: 1px solid rgba(234, 246, 246, 0.3);
   }
 
-  .btn-outline:hover { background: rgba(234, 246, 236, 0.08); }
+  .btn-outline:hover { background: rgba(234, 246, 246, 0.08); }
 
   /* ── Trusted By / Logo Carousel Section ──────────────────────────────── */
   .logo-carousel-section {
@@ -304,17 +336,14 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
     font-size: 0.7rem;
     font-weight: 600;
     letter-spacing: 0.05em;
-    text-transform: uppercase;
     color: var(--text-secondary);
-    opacity: 0.6;
     text-align: center;
     max-width: 200px;
     line-height: 1.35;
-    transition: opacity 0.35s ease, color 0.35s ease;
+    transition: color 0.35s ease;
   }
 
   .logo-item:hover .logo-name {
-    opacity: 1;
     color: var(--text-primary);
   }
 
@@ -325,11 +354,10 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
     text-transform: uppercase;
     color: var(--text-secondary);
     white-space: nowrap;
-    opacity: 0.6;
-    transition: color 0.25s ease, opacity 0.25s ease;
+    transition: color 0.25s ease;
   }
 
-  .logo-item:hover .logo-placeholder { color: var(--text-primary); opacity: 1; }
+  .logo-item:hover .logo-placeholder { color: var(--text-primary); }
 
   @keyframes logo-scroll {
     from { transform: translateX(0); }
@@ -384,7 +412,7 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
   .get-started-steps {
     position: relative;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-template-rows: auto auto auto;
     column-gap: 2.5rem;
     align-items: center;
@@ -410,7 +438,7 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
     width: 0;
     height: 2px;
     transform: translateY(-50%);
-    background: linear-gradient(90deg, #2A8A3C, #6DC040);
+    background: linear-gradient(90deg, #2A868A, #40BBC0);
     border-radius: 2px;
     transition: width 0.9s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.35s ease;
   }
@@ -426,9 +454,9 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: linear-gradient(135deg, #6DC040, #1B7A2F);
+    background: linear-gradient(135deg, #40BBC0, #1B777A);
     color: #FFFFFF;
-    box-shadow: 0 8px 18px -6px rgba(27, 122, 47, 0.6), 0 0 0 4px var(--bg-primary);
+    box-shadow: 0 8px 18px -6px rgba(27, 119, 122, 0.6), 0 0 0 4px var(--bg-primary);
     opacity: 0;
     transition: left 0.9s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.35s ease;
   }
@@ -440,7 +468,7 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    border: 2px solid rgba(109, 192, 64, 0.6);
+    border: 2px solid rgba(64, 187, 192, 0.6);
     opacity: 0;
   }
 
@@ -470,6 +498,7 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
   .step-col-1 { grid-column: 1; }
   .step-col-2 { grid-column: 2; }
   .step-col-3 { grid-column: 3; }
+  .step-col-4 { grid-column: 4; }
 
   .step-card { grid-row: 1; align-self: end; margin-bottom: 1.5rem; }
   .step-node { grid-row: 2; }
@@ -507,7 +536,7 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
     width: 11px;
     height: 11px;
     border-radius: 50%;
-    background: #3DB551;
+    background: #3DB1B5;
     box-shadow: 0 0 0 5px var(--bg-primary);
     transform: scale(0);
     transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s;
@@ -515,11 +544,11 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
 
   .step-node.is-visible .step-dot { transform: scale(1); }
 
-  :global([data-theme='dark']) .step-dot { background: #4ADE80; }
+  :global([data-theme='dark']) .step-dot { background: #4AD9DE; }
 
   .step-node.step-active .step-dot {
     transform: scale(1.35);
-    box-shadow: 0 0 0 5px var(--bg-primary), 0 0 14px 4px rgba(61, 181, 81, 0.55);
+    box-shadow: 0 0 0 5px var(--bg-primary), 0 0 14px 4px rgba(61, 177, 181, 0.55);
     transition: transform 0.35s ease, box-shadow 0.35s ease;
   }
 
@@ -532,9 +561,9 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
     transition: color 0.4s ease;
   }
 
-  .step-index.step-active { color: #3DB551; }
+  .step-index.step-active { color: #3DB1B5; }
 
-  :global([data-theme='dark']) .step-index.step-active { color: #4ADE80; }
+  :global([data-theme='dark']) .step-index.step-active { color: #4AD9DE; }
 
   .step-card {
     background: var(--bg-secondary);
@@ -546,18 +575,18 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
 
   .step-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 16px 32px -16px rgba(42, 138, 60, 0.35);
+    box-shadow: 0 16px 32px -16px rgba(42, 134, 138, 0.35);
   }
 
   :global([data-theme='dark']) .step-card:hover { box-shadow: 0 16px 32px -16px rgba(0, 0, 0, 0.5); }
 
   .step-card.step-active {
-    border-color: #3DB551;
-    box-shadow: 0 16px 32px -16px rgba(42, 138, 60, 0.45);
+    border-color: #3DB1B5;
+    box-shadow: 0 16px 32px -16px rgba(42, 134, 138, 0.45);
     transform: translateY(-4px);
   }
 
-  :global([data-theme='dark']) .step-card.step-active { border-color: #4ADE80; }
+  :global([data-theme='dark']) .step-card.step-active { border-color: #4AD9DE; }
 
   .step-heading {
     display: flex;
@@ -566,9 +595,9 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
     margin-bottom: 0.6rem;
   }
 
-  .step-icon { color: #3DB551; flex-shrink: 0; }
+  .step-icon { color: #3DB1B5; flex-shrink: 0; }
 
-  :global([data-theme='dark']) .step-icon { color: #4ADE80; }
+  :global([data-theme='dark']) .step-icon { color: #4AD9DE; }
 
   .step-title {
     font-size: 1.1rem;
@@ -589,7 +618,7 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
   /* ── Pre-footer CTA Section ───────────────────────────────────────────── */
   .cta-section {
     position: relative;
-    background: radial-gradient(ellipse 60% 60% at 50% 0%, rgba(61, 181, 81, 0.14), transparent 65%), var(--bg-primary);
+    background: radial-gradient(ellipse 60% 60% at 50% 0%, rgba(61, 177, 181, 0.14), transparent 65%), var(--bg-primary);
     padding: 6rem 1.5rem 8rem;
     overflow: hidden;
   }
@@ -599,12 +628,12 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
     overflow: visible;
     max-width: 880px;
     margin: 0 auto;
-    background: linear-gradient(135deg, #0B3318 0%, #16612B 55%, #2A8A3C 100%);
+    background: linear-gradient(135deg, #0B3233 0%, #165E61 55%, #2A868A 100%);
     border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 0;
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.25),
-      0 40px 90px -45px rgba(16, 115, 58, 0.55);
+      0 40px 90px -45px rgba(16, 111, 115, 0.55);
     padding: 4rem 3rem;
     text-align: center;
   }
@@ -631,7 +660,7 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
     margin: 0 0 1rem;
   }
 
-  .cta-accent { color: #8FE07C; }
+  .cta-accent { color: #7CDCE0; }
 
   .cta-lede {
     font-size: 1rem;
@@ -644,10 +673,10 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
-    border: 1px solid rgba(234, 246, 236, 0.4);
+    border: 1px solid rgba(234, 246, 246, 0.4);
     border-radius: 6px;
     padding: 0.9rem 1.75rem;
-    color: #EAF6EC;
+    color: #EAF6F6;
     font-weight: 700;
     font-size: 0.95rem;
     text-decoration: none;
@@ -673,8 +702,8 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #1B7A2F;
-    background: linear-gradient(135deg, #FFFFFF, #EAF6EC);
+    color: #1B777A;
+    background: linear-gradient(135deg, #FFFFFF, #EAF6F6);
     border-radius: 58% 42% 55% 45% / 45% 55% 45% 55%;
     box-shadow: 0 16px 34px -12px rgba(0, 0, 0, 0.35);
     animation: mascotFloat 4s ease-in-out infinite;
@@ -717,10 +746,10 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
     .hero-title { font-size: clamp(1.8rem, 8vw, 2.6rem); }
     .hero-ctas { flex-direction: column; align-items: stretch; width: 100%; }
     .btn { width: 100%; text-align: center; }
-    .btn-outline { border-left: none; border-top: 1px solid rgba(234, 246, 236, 0.3); }
+    .btn-outline { border-left: none; border-top: 1px solid rgba(234, 246, 246, 0.3); }
     /* Collapse the horizontal timeline to a simple vertical stack */
     .get-started-steps { grid-template-columns: 1fr; row-gap: 1.5rem; }
-    .step-col-1, .step-col-2, .step-col-3 { grid-column: 1; }
+    .step-col-1, .step-col-2, .step-col-3, .step-col-4 { grid-column: 1; }
     .step-card, .step-index, .step-invert.step-card, .step-invert.step-index {
       grid-row: auto;
       align-self: auto;
@@ -738,6 +767,8 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
     .step-col-2.step-card { order: 4; }
     .step-col-3.step-index { order: 5; }
     .step-col-3.step-card { order: 6; }
+    .step-col-4.step-index { order: 7; }
+    .step-col-4.step-card { order: 8; }
   }
 
   @media (max-width: 480px) {

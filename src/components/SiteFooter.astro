@@ -1,5 +1,6 @@
 ---
 import { Globe, ChevronDown, Check, Facebook, Linkedin, Youtube } from 'lucide-react';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 interface Props {
   locale: string;
@@ -7,11 +8,15 @@ interface Props {
 
 const { locale } = Astro.props;
 
+// path(): build a link to `p` in the CURRENT locale (unprefixed for the
+// default locale 'en', "/ne/..." for 'ne') via Astro's i18n routing table.
+const path = (p: string) => getRelativeLocaleUrl(locale, p);
+
 // Preserve the current page when switching languages (mirrors BaseLayout's own logic).
 const currentPath = Astro.url.pathname;
-const pathWithoutLocale = currentPath.replace(/^\/(en|ne)(\/|$)/, '/');
-const nePath = `/ne${pathWithoutLocale}`;
-const enPath = `/en${pathWithoutLocale}`;
+const pathWithoutLocale = currentPath.replace(/^\/ne(\/|$)/, '/');
+const nePath = getRelativeLocaleUrl('ne', pathWithoutLocale);
+const enPath = getRelativeLocaleUrl('en', pathWithoutLocale);
 ---
 
 <!--
@@ -22,7 +27,7 @@ const enPath = `/en${pathWithoutLocale}`;
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-brand-col reveal">
-        <a href={`/${locale}/`} class="footer-brand">
+        <a href={path('/')} class="footer-brand">
           <img src="/airfone-logo-transparent.png" alt="AirFone" class="footer-brand-logo" />
         </a>
         <p class="footer-tagline">
@@ -35,28 +40,28 @@ const enPath = `/en${pathWithoutLocale}`;
       <div class="footer-col reveal">
         <span class="footer-col-heading">{locale === 'en' ? 'PLATFORM' : 'प्लेटफर्म'}</span>
         <ul>
-          <li><a href={`/${locale}/features/`}>{locale === 'en' ? 'Features' : 'सुविधाहरू'}</a></li>
-          <li><a href={`/${locale}/features/`}>{locale === 'en' ? 'Architecture' : 'आर्किटेक्चर'}</a></li>
-          <li><a href={`/${locale}/features/`}>{locale === 'en' ? 'Roadmap' : 'रोडम्याप'}</a></li>
-          <li><a href={`/${locale}/pricing/`}>{locale === 'en' ? 'Pricing' : 'मूल्य निर्धारण'}</a></li>
+          <li><a href={path('/features/')}>{locale === 'en' ? 'Features' : 'सुविधाहरू'}</a></li>
+          <li><a href={path('/features/')}>{locale === 'en' ? 'Architecture' : 'आर्किटेक्चर'}</a></li>
+          <li><a href={path('/features/')}>{locale === 'en' ? 'Roadmap' : 'रोडम्याप'}</a></li>
+          <li><a href={path('/pricing/')}>{locale === 'en' ? 'Pricing' : 'मूल्य निर्धारण'}</a></li>
         </ul>
       </div>
 
       <div class="footer-col reveal">
         <span class="footer-col-heading">{locale === 'en' ? 'COMPANY' : 'कम्पनी'}</span>
         <ul>
-          <li><a href={`/${locale}/about/`}>{locale === 'en' ? 'About Us' : 'हाम्रोबारे'}</a></li>
-          <li><a href={`/${locale}/about/`}>{locale === 'en' ? 'Our Values' : 'हाम्रा मूल्यहरू'}</a></li>
-          <li><a href={`/${locale}/contact/`}>{locale === 'en' ? 'Contact' : 'सम्पर्क'}</a></li>
+          <li><a href={path('/about/')}>{locale === 'en' ? 'About Us' : 'हाम्रोबारे'}</a></li>
+          <li><a href={path('/about/')}>{locale === 'en' ? 'Our Values' : 'हाम्रा मूल्यहरू'}</a></li>
+          <li><a href={path('/contact/')}>{locale === 'en' ? 'Contact' : 'सम्पर्क'}</a></li>
         </ul>
       </div>
 
       <div class="footer-col reveal">
         <span class="footer-col-heading">{locale === 'en' ? 'RESOURCES' : 'स्रोतहरू'}</span>
         <ul>
-          <li><a href={`/${locale}/contact/`}>{locale === 'en' ? 'Request a Demo' : 'डेमो अनुरोध'}</a></li>
-          <li><a href={`/${locale}/contact/`}>{locale === 'en' ? 'Download Proposal' : 'प्रस्ताव डाउनलोड'}</a></li>
-          <li><a href={`/${locale}/pricing/`}>{locale === 'en' ? 'SLA & Terms' : 'SLA र सर्तहरू'}</a></li>
+          <li><a href={path('/contact/')}>{locale === 'en' ? 'Request a Demo' : 'डेमो अनुरोध'}</a></li>
+          <li><a href={path('/contact/')}>{locale === 'en' ? 'Download Proposal' : 'प्रस्ताव डाउनलोड'}</a></li>
+          <li><a href={path('/pricing/')}>{locale === 'en' ? 'SLA & Terms' : 'SLA र सर्तहरू'}</a></li>
         </ul>
       </div>
     </div>
@@ -78,7 +83,7 @@ const enPath = `/en${pathWithoutLocale}`;
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-brand-col reveal">
-        <a href={`/${locale}/`} class="footer-brand">
+        <a href={path('/')} class="footer-brand">
           <img src="/airfone-logo-transparent.png" alt="AirFone" class="footer-brand-logo" />
         </a>
         <p class="footer-tagline">
@@ -127,7 +132,7 @@ const enPath = `/en${pathWithoutLocale}`;
 
     <!-- Legal / social column -->
     <div class="footer-legal-col reveal">
-      <a href={`/${locale}/`} class="footer-brand">
+      <a href={path('/')} class="footer-brand">
         <img src="/airfone-logo-transparent.png" alt="AirFone" class="footer-brand-logo" />
       </a>
 
@@ -237,11 +242,11 @@ const enPath = `/en${pathWithoutLocale}`;
     position: relative;
     overflow: hidden;
     border-top: 1px solid #E5E7EB;
-    font-family: "Noto Sans", "Noto Sans Devanagari", system-ui, sans-serif !important;
+    font-family: "Inter", "Noto Sans Devanagari", system-ui, sans-serif !important;
   }
 
   .site-footer * {
-    font-family: "Noto Sans", "Noto Sans Devanagari", system-ui, sans-serif !important;
+    font-family: "Inter", "Noto Sans Devanagari", system-ui, sans-serif !important;
   }
 
   .footer-inner {
@@ -283,7 +288,7 @@ const enPath = `/en${pathWithoutLocale}`;
     transition: border-color 0.2s ease, color 0.2s ease;
   }
 
-  .footer-social-icon:hover { border-color: #3DB551; color: #2A8A3C; }
+  .footer-social-icon:hover { border-color: #3DB1B5; color: #2A868A; }
 
   /* Link column */
   .footer-col { display: flex; flex-direction: column; }
@@ -294,7 +299,7 @@ const enPath = `/en${pathWithoutLocale}`;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #9CA3AF;
+    color: #4B5563;
     margin-bottom: 1.25rem;
   }
 
@@ -309,7 +314,7 @@ const enPath = `/en${pathWithoutLocale}`;
   }
 
   .footer-col a::before { display: none !important; }
-  .footer-col a:hover { color: #2A8A3C; transform: none; }
+  .footer-col a:hover { color: #2A868A; transform: none; }
 
   /* Bottom bar: copyright + language switcher */
   .footer-bottom {
@@ -345,7 +350,7 @@ const enPath = `/en${pathWithoutLocale}`;
     transition: border-color 0.2s ease, color 0.2s ease;
   }
 
-  .footer-lang-btn:hover { border-color: #3DB551; color: #2A8A3C; }
+  .footer-lang-btn:hover { border-color: #3DB1B5; color: #2A868A; }
 
   .footer-lang-chevron { transition: transform 0.2s ease; }
   .footer-lang-btn[aria-expanded="true"] .footer-lang-chevron { transform: rotate(180deg); }
@@ -386,32 +391,32 @@ const enPath = `/en${pathWithoutLocale}`;
   }
 
   .footer-lang-menu a:hover { background: #F3F4F6; }
-  .footer-lang-menu a.active { font-weight: 700; color: #2A8A3C; }
+  .footer-lang-menu a.active { font-weight: 700; color: #2A868A; }
 
   /* Dark-mode footer — matches the dark navbar's deep-green palette */
   html[data-theme="dark"] .site-footer {
-    background: #0F2E1A;
-    color: #EAF6EC;
-    border-top: 1px solid rgba(109,192,64,0.2);
+    background: #0F2D2E;
+    color: #EAF6F6;
+    border-top: 1px solid rgba(64, 187, 192,0.2);
   }
 
   html[data-theme="dark"] .footer-brand-logo { filter: brightness(0) invert(1); }
-  html[data-theme="dark"] .footer-copyright { color: rgba(234,246,236,0.6); }
-  html[data-theme="dark"] .footer-tagline { color: rgba(234,246,236,0.55); }
-  html[data-theme="dark"] .footer-divider { background: rgba(234,246,236,0.15); }
-  html[data-theme="dark"] .footer-social-icon { border-color: rgba(234,246,236,0.25); color: #EAF6EC; }
-  html[data-theme="dark"] .footer-social-icon:hover { border-color: #6DC040; color: #6DC040; }
-  html[data-theme="dark"] .footer-col-heading { color: rgba(234,246,236,0.5); }
-  html[data-theme="dark"] .footer-col a, html[data-theme="dark"] .footer-static-item { color: rgba(234,246,236,0.85); }
-  html[data-theme="dark"] .footer-col a:hover { color: #6DC040; }
-  html[data-theme="dark"] .footer-bottom { border-top-color: rgba(109,192,64,0.2); }
-  html[data-theme="dark"] .footer-bottom .footer-copyright { color: rgba(234,246,236,0.5); }
-  html[data-theme="dark"] .footer-lang-btn { background: #0F2E1A; border-color: rgba(234,246,236,0.25); color: #EAF6EC; }
-  html[data-theme="dark"] .footer-lang-btn:hover { border-color: #6DC040; color: #6DC040; }
-  html[data-theme="dark"] .footer-lang-menu { background: #0F2E1A; border-color: rgba(234,246,236,0.15); box-shadow: 0 12px 32px -8px rgba(0,0,0,0.5); }
-  html[data-theme="dark"] .footer-lang-menu a { color: rgba(234,246,236,0.85); }
-  html[data-theme="dark"] .footer-lang-menu a:hover { background: rgba(234,246,236,0.08); }
-  html[data-theme="dark"] .footer-lang-menu a.active { color: #6DC040; }
+  html[data-theme="dark"] .footer-copyright { color: rgba(234, 246, 246,0.6); }
+  html[data-theme="dark"] .footer-tagline { color: rgba(234, 246, 246,0.55); }
+  html[data-theme="dark"] .footer-divider { background: rgba(234, 246, 246,0.15); }
+  html[data-theme="dark"] .footer-social-icon { border-color: rgba(234, 246, 246,0.25); color: #EAF6F6; }
+  html[data-theme="dark"] .footer-social-icon:hover { border-color: #40BBC0; color: #40BBC0; }
+  html[data-theme="dark"] .footer-col-heading { color: rgba(234, 246, 246,0.65); }
+  html[data-theme="dark"] .footer-col a, html[data-theme="dark"] .footer-static-item { color: rgba(234, 246, 246,0.85); }
+  html[data-theme="dark"] .footer-col a:hover { color: #40BBC0; }
+  html[data-theme="dark"] .footer-bottom { border-top-color: rgba(64, 187, 192,0.2); }
+  html[data-theme="dark"] .footer-bottom .footer-copyright { color: rgba(234, 246, 246,0.65); }
+  html[data-theme="dark"] .footer-lang-btn { background: #0F2D2E; border-color: rgba(234, 246, 246,0.25); color: #EAF6F6; }
+  html[data-theme="dark"] .footer-lang-btn:hover { border-color: #40BBC0; color: #40BBC0; }
+  html[data-theme="dark"] .footer-lang-menu { background: #0F2D2E; border-color: rgba(234, 246, 246,0.15); box-shadow: 0 12px 32px -8px rgba(0,0,0,0.5); }
+  html[data-theme="dark"] .footer-lang-menu a { color: rgba(234, 246, 246,0.85); }
+  html[data-theme="dark"] .footer-lang-menu a:hover { background: rgba(234, 246, 246,0.08); }
+  html[data-theme="dark"] .footer-lang-menu a.active { color: #40BBC0; }
 
   @media (max-width: 900px) {
     .footer-inner { grid-template-columns: 1fr 1fr; padding: 3.5rem 1.5rem; gap: 2rem; }
