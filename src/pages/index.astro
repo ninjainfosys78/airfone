@@ -27,13 +27,9 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
     <div class="hero-content">
       <div class="hero-text">
         <h1 class="hero-title reveal">
-          Every Customer Question, <br />
-          Answered <span class="highlight-green">Automatically.</span>
+          The AI Voice Platform <br />
+          for Every <span class="highlight-green">Customer Call</span>
         </h1>
-        <p class="hero-lede reveal">
-          Airfone is a self-serve AI agent for Nepali businesses — it answers pricing, stock, and
-          hours questions over the phone, so you never lose a customer to a missed call.
-        </p>
         <div class="hero-ctas reveal">
           <a href="https://sip.mylunago.com/" class="btn btn-green" data-astro-reload>Get Started</a>
           <a href="/pricing/" class="btn btn-outline">See Pricing</a>
@@ -179,6 +175,7 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
      Palantir-inspired: sharp corners, hairline borders, tight-tracked
      bold type, an adjoined two-button "toolbar" CTA group. */
   .hero {
+    word-spacing: 0.5em;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -224,17 +221,9 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
     font-size: clamp(2.5rem, 6vw, 4.25rem);
     font-weight: 700;
     line-height: 1.15;
-    margin: 0 0 1.5rem;
+    margin: 0 0 2.75rem;
     letter-spacing: -0.03em;
     color: #EAF6F6;
-  }
-
-  .hero-lede {
-    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
-    line-height: 1.6;
-    max-width: 640px;
-    margin: 0 auto 2.75rem;
-    color: #B9D5D6;
   }
 
   .highlight-green {

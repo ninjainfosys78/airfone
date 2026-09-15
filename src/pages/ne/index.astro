@@ -27,13 +27,9 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
     <div class="hero-content">
       <div class="hero-text">
         <h1 class="hero-title reveal">
-          हरेक ग्राहकको प्रश्नको जवाफ, <br />
-          <span class="highlight-green">स्वतः रूपमा।</span>
+          हरेक ग्राहक कलका लागि <br />
+          <span class="highlight-green">AI भ्वाइस प्लेटफर्म</span>
         </h1>
-        <p class="hero-lede reveal">
-          Airfone नेपाली व्यवसायहरूका लागि एक सेल्फ-सर्भ AI एजेन्ट हो — यसले मूल्य, स्टक, र खुल्ने
-          समयसम्बन्धी प्रश्नहरूको फोनमै जवाफ दिन्छ, ताकि तपाईंले कहिल्यै छुटेको कलका कारण ग्राहक नगुमाउनुहोस्।
-        </p>
         <div class="hero-ctas reveal">
           <a href="https://sip.mylunago.com/" class="btn btn-green" data-astro-reload>सुरु गर्नुहोस्</a>
           <a href="/ne/pricing/" class="btn btn-outline">मूल्य निर्धारण हेर्नुहोस्</a>
@@ -179,6 +175,7 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
      Palantir-inspired: sharp corners, hairline borders, tight-tracked
      bold type, an adjoined two-button "toolbar" CTA group. */
   .hero {
+    word-spacing: 0.5em;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -226,19 +223,11 @@ const carouselLogos = Array.from({ length: 4 }, () => trustedLogos).flat();
     font-size: clamp(2.5rem, 6vw, 4.25rem);
     font-weight: 700;
     line-height: 1.35;
-    margin: 0 0 1.5rem;
+    margin: 0 0 2.75rem;
     letter-spacing: normal;
     color: #EAF6F6;
     padding-top: 0.15em;
     padding-bottom: 0.15em;
-  }
-
-  .hero-lede {
-    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
-    line-height: 1.8;
-    max-width: 640px;
-    margin: 0 auto 2.75rem;
-    color: #B9D5D6;
   }
 
   .highlight-green {
