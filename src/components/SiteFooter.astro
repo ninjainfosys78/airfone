@@ -5,9 +5,12 @@ import { APP_URL, CONTACT_EMAIL, CONTACT_PHONE_TEL, CONTACT_PHONE_DISPLAY, TEASE
 export interface Props {
   locale: Locale;
   path?: string;
+  preview?: boolean;
 }
 
-const { locale, path = '/' } = Astro.props;
+const { locale, path = '/', preview = false } = Astro.props;
+const teaser = TEASER && !preview;
+const base = preview ? '/preview' : '';
 const other = otherLocalePath(locale, path);
 const copy = t[locale];
 
@@ -18,7 +21,7 @@ const groups = {
 const g = groups[locale];
 const here = { locale, href: localePath(locale, path), label: locale === 'ne' ? 'नेपाली' : 'English' };
 ---
-{TEASER ? (
+{teaser ? (
 <footer class="site-footer slim on-night">
   <div class="wrap slim-row">
     <p>{copy.copyright}</p>
@@ -29,7 +32,7 @@ const here = { locale, href: localePath(locale, path), label: locale === 'ne' ? 
 <footer class="site-footer on-night">
   <div class="wrap">
     <div class="top">
-      <a class="lockup" href={localePath(locale, '/')} aria-label="AirFone">
+      <a class="lockup" href={localePath(locale, `${base}/`)} aria-label="AirFone">
         <img src="/brand/airfone-lockup-light.svg" alt="AirFone" width="200" height="41" />
       </a>
 
@@ -37,7 +40,7 @@ const here = { locale, href: localePath(locale, path), label: locale === 'ne' ? 
         <div class="col">
           <p class="col-title">{g.product}</p>
           <ul>
-            <li><a href={localePath(locale, '/pricing/')}>{copy.pricing}</a></li>
+            <li><a href={localePath(locale, `${base}/pricing/`)}>{copy.pricing}</a></li>
             <li><a href={APP_URL}>{g.signIn}</a></li>
             <li><a href={localePath(locale, '/privacy/')}>{copy.privacy}</a></li>
           </ul>

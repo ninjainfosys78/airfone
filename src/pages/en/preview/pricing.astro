@@ -1,0 +1,15 @@
+---
+// Team preview of the full site while the teaser is public. Not indexed.
+// After launch (PUBLIC_SITE_MODE=full) it forwards to the real page.
+import Layout from '../../../layouts/Layout.astro';
+import PricingBody from '../../../components/PricingBody.astro';
+import Redirect from '../../../components/Redirect.astro';
+import { TEASER } from '../../../config/site';
+---
+{TEASER ? (
+<Layout locale="en" path="/preview/pricing/" title="Pricing | AirFone" description="AirFone's pricing is announced on 28 September." noindex preview>
+  <PricingBody locale="en" />
+</Layout>
+) : (
+<Redirect to="/en/pricing/" locale="en" label="AirFone" />
+)}

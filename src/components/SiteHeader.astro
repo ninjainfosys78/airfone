@@ -5,28 +5,32 @@ import { LAUNCHED, APP_URL, TEASER } from '../config/site';
 export interface Props {
   locale: Locale;
   path?: string;
+  preview?: boolean;
 }
 
-const { locale, path = '/' } = Astro.props;
+const { locale, path = '/', preview = false } = Astro.props;
+// Preview pages show the full site chrome with links kept inside /preview/.
+const teaser = TEASER && !preview;
+const base = preview ? '/preview' : '';
 const other = otherLocalePath(locale, path);
 const copy = t[locale];
-const ctaHref = LAUNCHED ? APP_URL : `${localePath(locale, '/')}#waitlist`;
+const ctaHref = LAUNCHED ? APP_URL : `${localePath(locale, `${base}/`)}#waitlist`;
 const ctaLabel = LAUNCHED ? copy.ctaLaunched : copy.cta;
 const signIn = locale === 'ne' ? 'साइन इन' : 'Sign in';
 
 const links = [
-  { href: localePath(locale, '/'), label: locale === 'ne' ? 'गृहपृष्ठ' : 'Home', match: '/' },
-  { href: localePath(locale, '/pricing/'), label: copy.pricing, match: '/pricing/' },
-  { href: localePath(locale, '/contact/'), label: copy.contact, match: '/contact/' },
+  { href: localePath(locale, `${base}/`), label: locale === 'ne' ? 'गृहपृष्ठ' : 'Home', match: `${base}/` },
+  { href: localePath(locale, `${base}/pricing/`), label: copy.pricing, match: `${base}/pricing/` },
+  { href: localePath(locale, `${base}/contact/`), label: copy.contact, match: `${base}/contact/` },
 ];
 ---
 <header class="site-header on-night">
   <div class="wrap bar">
-    <a class="lockup" href={localePath(locale, '/')} aria-label="AirFone">
+    <a class="lockup" href={localePath(locale, `${base}/`)} aria-label="AirFone">
       <img src="/brand/airfone-lockup-light.svg" alt="AirFone" width="146" height="30" />
     </a>
 
-    {TEASER ? (
+    {teaser ? (
       <div class="right teaser-right">
         <a class="lang" href={other.href} hreflang={other.locale} lang={other.locale}>{copy.langSwitchLabel}</a>
       </div>

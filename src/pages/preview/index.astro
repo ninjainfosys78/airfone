@@ -1,0 +1,15 @@
+---
+// Team preview of the full site while the teaser is public. Not indexed.
+// After launch (PUBLIC_SITE_MODE=full) it forwards to the real page.
+import Layout from '../../layouts/Layout.astro';
+import HomeBody from '../../components/HomeBody.astro';
+import Redirect from '../../components/Redirect.astro';
+import { TEASER } from '../../config/site';
+---
+{TEASER ? (
+<Layout locale="ne" path="/preview/" title="AirFone | नेपाली व्यवसायका लागि AI कल सेन्टर" description="AirFone को AI एजेन्टले तपाईंका ग्राहकका फोनमा मूल्य, समय र सेवाबारेका प्रश्नको जवाफ नेपालीमा, दिनरात दिन्छ।" noindex preview>
+  <HomeBody locale="ne" />
+</Layout>
+) : (
+<Redirect to="/" locale="ne" label="AirFone" />
+)}

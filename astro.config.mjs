@@ -97,7 +97,7 @@ export default defineConfig({
   integrations: [
     react(),
     sitemap({
-      filter: (page) => !isNoindexPage(page) && !(TEASER && /\/(pricing|contact)\/$/.test(new URL(page).pathname)),
+      filter: (page) => !isNoindexPage(page) && !/\/(preview|upcoming)\//.test(new URL(page).pathname) && !(TEASER && /\/(pricing|contact)\/$/.test(new URL(page).pathname)),
       i18n: { defaultLocale: 'ne', locales: { ne: 'ne', en: 'en' } },
       changefreq: 'weekly',
       lastmod: new Date(),

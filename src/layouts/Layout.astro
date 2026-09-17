@@ -20,9 +20,11 @@ export interface Props {
   description: string;
   path: string; // locale-relative path with leading/trailing slash, e.g. "/pricing/"
   noindex?: boolean;
+  /** Full-site pages served under /preview/ while the teaser is public. */
+  preview?: boolean;
 }
 
-const { locale, title, description, path, noindex = false } = Astro.props;
+const { locale, title, description, path, noindex = false, preview = false } = Astro.props;
 
 const canonical = `${SITE_URL}${localePath(locale, path)}`;
 const neUrl = `${SITE_URL}${localePath('ne', path)}`;
@@ -89,11 +91,11 @@ const breadcrumb = !noindex && path !== '/'
     <slot name="head" />
   </head>
   <body>
-    <SiteHeader locale={locale} path={path} />
+    <SiteHeader locale={locale} path={path} preview={preview} />
     <main>
       <slot />
     </main>
-    <SiteFooter locale={locale} path={path} />
+    <SiteFooter locale={locale} path={path} preview={preview} />
     <script>
       import '../scripts/motion';
     </script>

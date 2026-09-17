@@ -3,16 +3,26 @@ export interface Props {
   to: string; // absolute URL or absolute path to redirect to
   locale?: 'ne' | 'en';
   label?: string; // visible link text; defaults to the target URL
+  /** Carry the visitor's query string across, adding these params when absent. */
+  query?: Record<string, string>;
 }
 
-const { to, locale = 'en', label } = Astro.props;
+const { to, locale = 'en', label, query } = Astro.props;
+const fallback = query ? `${to}?${new URLSearchParams(query).toString()}` : to;
 const linkLabel = label ?? to;
 ---
 <!doctype html>
 <html lang={locale}>
   <head>
     <meta charset="utf-8" />
-    <meta http-equiv="refresh" content={`0; url=${to}`} />
+    {query && (
+      <script is:inline define:vars={{ to, query }}>
+        var params = new URLSearchParams(location.search);
+        Object.keys(query).forEach(function (k) { if (!params.has(k)) params.set(k, query[k]); });
+        location.replace(to + '?' + params.toString() + location.hash);
+      </script>
+    )}
+    <meta http-equiv="refresh" content={`0; url=${fallback}`} />
     <link rel="canonical" href={to} />
     <meta name="robots" content="noindex" />
     <title>AirFone</title>
@@ -20,7 +30,7 @@ const linkLabel = label ?? to;
   <body>
     <p>
       {locale === 'ne' ? 'यो पृष्ठ सारिएको छ।' : 'This page has moved.'}
-      <a href={to}>{linkLabel}</a>
+      <a href={fallback}>{linkLabel}</a>
     </p>
   </body>
 </html>

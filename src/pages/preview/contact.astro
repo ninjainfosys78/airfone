@@ -1,0 +1,15 @@
+---
+// Team preview of the full site while the teaser is public. Not indexed.
+// After launch (PUBLIC_SITE_MODE=full) it forwards to the real page.
+import Layout from '../../layouts/Layout.astro';
+import ContactBody from '../../components/ContactBody.astro';
+import Redirect from '../../components/Redirect.astro';
+import { TEASER } from '../../config/site';
+---
+{TEASER ? (
+<Layout locale="ne" path="/preview/contact/" title="सम्पर्क | AirFone" description="AirFone सँग सम्पर्क गर्नुहोस्।" noindex preview>
+  <ContactBody locale="ne" />
+</Layout>
+) : (
+<Redirect to="/contact/" locale="ne" label="AirFone" />
+)}

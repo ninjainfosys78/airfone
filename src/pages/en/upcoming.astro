@@ -1,0 +1,6 @@
+---
+// Short link for social posts. Always forwards to the homepage (teaser now,
+// full site after launch), keeping any UTM tags and tagging the source.
+import Redirect from '../../components/Redirect.astro';
+---
+<Redirect to="/en/" locale="en" label="AirFone" query={{ utm_source: 'upcoming' }} />
