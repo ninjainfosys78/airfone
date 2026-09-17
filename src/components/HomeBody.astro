@@ -1,0 +1,294 @@
+---
+import WaitlistForm from './WaitlistForm.astro';
+import DemoCall from './DemoCall.astro';
+import StructuredData from './StructuredData.astro';
+import { LAUNCHED, APP_URL, LAUNCH_DATE } from '../config/site';
+import type { Locale } from '../i18n';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const copy = {
+  ne: {
+    h1: 'ग्राहकका फोन अब छुट्दैनन्।',
+    lede: 'AirFone को AI एजेन्टले मूल्य, खुल्ने समय र सेवाबारेका प्रश्नको जवाफ नेपालीमा, दिनरात फोनमै दिन्छ।',
+    panelHeading: '२८ सेप्टेम्बरमा सुरु हुँदैछ',
+    panelNote: 'सुरु भएपछि हामी तपाईंलाई फोन गर्नेछौं।',
+    tryFree: 'निःशुल्क सुरु गर्नुहोस्',
+    problemH2: 'दिनभरि उही प्रश्न',
+    problemQuotes: ['मूल्य कति हो?', 'स्टकमा छ?', 'कहिले खुल्छ?'],
+    problemLine: 'यिनको जवाफ दिँदा कर्मचारीको घण्टौं समय जान्छ। राति वा व्यस्त बेला फोन नउठ्दा ग्राहक अर्कैकहाँ जान्छन्।',
+    setupH2: 'सेटअप कसरी हुन्छ',
+    steps: [
+      'आफ्नो व्यवसायबारे सिकाउनुहोस्। बोलेर, वेबसाइटको लिंक राखेर, फेसबुक पेज जोडेर वा फोटो र भिडियो देखाएर। AirFone ले त्यसैबाट एजेन्टको जानकारी तयार गर्छ।',
+      'आफैं फोन गरेर जाँच्नुहोस्। आफ्नो डेमो नम्बरमा PIN सहित फोन गर्नुहोस् र एजेन्टसँग कुरा गर्नुहोस्।',
+      'ग्राहकका लागि खोल्नुहोस्। ठीक लागेपछि आफ्नै AirFone नम्बर लिनुहोस् र साँचो कल लिन थाल्नुहोस्।',
+    ],
+    whoH2: 'पसलदेखि विद्यालयसम्म',
+    who: [
+      { type: 'पसल', q: 'यो मोबाइलको मूल्य कति हो?' },
+      { type: 'अनलाइन स्टोर', q: 'काठमाडौं बाहिर डेलिभरी हुन्छ?' },
+      { type: 'क्लिनिक र अस्पताल', q: 'आज डाक्टर कति बजेसम्म बस्नुहुन्छ?' },
+      { type: 'विद्यालय', q: 'कक्षा ११ को भर्ना कहिलेदेखि खुल्छ?' },
+      { type: 'रेस्टुरेन्ट', q: 'शनिबार खुला हुन्छ?' },
+    ],
+    faqH2: 'प्रायः सोधिने प्रश्न',
+    faq: [
+      { q: 'एजेन्टलाई जवाफ थाहा नभए के हुन्छ?', a: 'त्यो जानकारी आफूसँग छैन भन्छ। जवाफ आफैं बनाएर दिँदैन।' },
+      { q: 'सेटअप गर्न प्राविधिक ज्ञान चाहिन्छ?', a: 'चाहिँदैन। व्यवसायबारे बोलेर वा लिंक राखेर सिकाउन सकिन्छ।' },
+      { q: 'मूल्य कति पर्छ?', a: 'मूल्य २८ सेप्टेम्बरमा सुरुवातसँगै सार्वजनिक गर्नेछौं। सूचीमा नाम लेखाउनेलाई पहिले जानकारी दिनेछौं।' },
+      { q: 'WhatsApp मा पनि चल्छ?', a: 'अहिले फोन कलमा चल्छ। WhatsApp छिट्टै थपिँदैछ।' },
+    ],
+    closingH2: 'सुरुवातमै सुरु गर्नुहोस्',
+    cta: 'सूचीमा नाम लेखाउनुहोस्',
+  },
+  en: {
+    h1: 'Stop missing customer calls.',
+    lede: "AirFone's AI agent answers questions about your prices, opening hours and services in Nepali, on the phone, day and night.",
+    panelHeading: 'Launching 28 September',
+    panelNote: "We'll call you when it's live.",
+    tryFree: 'Try it free',
+    problemH2: 'The same questions, all day',
+    problemQuotes: ['How much is it?', 'Is it in stock?', 'When are you open?'],
+    problemLine: 'Answering them takes hours of staff time. Miss a call at night or during a rush, and the customer calls someone else.',
+    setupH2: 'How setup works',
+    steps: [
+      "Teach it your business. Talk to it, paste your website link, connect your Facebook page, or show photos and videos. AirFone builds the agent's knowledge from that.",
+      'Call it yourself. Call your demo number with your PIN and talk to your agent.',
+      "Go live. When you're happy, get your own AirFone number and start taking real calls.",
+    ],
+    whoH2: 'From shops to schools',
+    who: [
+      { type: 'Shops', q: 'How much is this phone?' },
+      { type: 'Online stores', q: 'Do you deliver outside Kathmandu?' },
+      { type: 'Clinics and hospitals', q: 'Until what time is the doctor in today?' },
+      { type: 'Schools', q: 'When does Grade 11 admission open?' },
+      { type: 'Restaurants', q: 'Are you open on Saturday?' },
+    ],
+    faqH2: 'Common questions',
+    faq: [
+      { q: "What if the agent doesn't know an answer?", a: "It says it doesn't have that information. It doesn't make one up." },
+      { q: 'Do I need technical skills?', a: 'No. You teach it by talking or pasting a link.' },
+      { q: 'How much does it cost?', a: "We'll publish pricing at launch on 28 September. People on the waitlist hear first." },
+      { q: 'Does it work on WhatsApp?', a: 'It works on phone calls today. WhatsApp is coming soon.' },
+    ],
+    closingH2: 'Be ready on launch day.',
+    cta: 'Join the waitlist',
+  },
+} as const;
+
+const c = copy[locale];
+---
+<StructuredData locale={locale} home faq={c.faq} />
+
+<section class="hero">
+  <div class="wrap hero-stack">
+    <h1>{c.h1}</h1>
+    <p class="lede">{c.lede}</p>
+    <div class="hero-panel panel" id="waitlist">
+      {LAUNCHED ? (
+        <a class="btn btn-primary" href={APP_URL}>{c.tryFree}</a>
+      ) : (
+        <>
+          <h2>{c.panelHeading}</h2>
+          <WaitlistForm locale={locale} id="hero" source="hero" />
+          <p class="secondary-text panel-note">{c.panelNote}</p>
+        </>
+      )}
+    </div>
+  </div>
+</section>
+
+<DemoCall locale={locale} />
+
+<section class="problem">
+  <div class="wrap">
+    <h2>{c.problemH2}</h2>
+    <div class="quotes">
+      {c.problemQuotes.map((q) => <p class="quote">&ldquo;{q}&rdquo;</p>)}
+    </div>
+    <p class="secondary-text">{c.problemLine}</p>
+  </div>
+</section>
+
+<section class="setup">
+  <div class="wrap">
+    <h2>{c.setupH2}</h2>
+    <ol class="steps">
+      {c.steps.map((step, i) => (
+        <li>
+          <span class="step-number" aria-hidden="true">{i + 1}</span>
+          <p>{step}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<section class="who">
+  <div class="wrap">
+    <h2>{c.whoH2}</h2>
+    <div class="who-rows">
+      {c.who.map((row) => (
+        <div class="who-row">
+          <h3>{row.type}</h3>
+          <p class="secondary-text">&ldquo;{row.q}&rdquo;</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="wrap">
+    <h2>{c.faqH2}</h2>
+    <div class="faq-list">
+      {c.faq.map((item) => (
+        <details>
+          <summary>{item.q}</summary>
+          <p class="secondary-text">{item.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap closing-inner">
+    <h2>{c.closingH2}</h2>
+    {LAUNCHED ? (
+      <a class="btn btn-primary" href={APP_URL}>{c.tryFree}</a>
+    ) : (
+      <button type="button" class="btn btn-primary" data-scroll-to-waitlist>{c.cta}</button>
+    )}
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-scroll-to-waitlist]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const panel = document.getElementById('waitlist');
+      panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const firstField = panel?.querySelector<HTMLElement>('input, button, a');
+      firstField?.focus();
+    });
+  });
+</script>
+
+<style>
+  .hero {
+    padding: 72px 0;
+  }
+  .hero-stack {
+    max-width: 640px;
+  }
+  .hero-stack .lede {
+    color: var(--ink-muted);
+    font-size: 18px;
+    margin-top: 16px;
+  }
+  .hero-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 40px;
+  }
+  .panel-note {
+    margin: 0;
+  }
+  .problem, .setup, .who, .faq {
+    padding: 96px 0;
+    border-top: 1px solid var(--line);
+  }
+  .quotes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin: 32px 0;
+  }
+  .quote {
+    font-family: 'Anek Devanagari', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    margin: 0;
+  }
+  .steps {
+    list-style: none;
+    margin: 32px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .steps li {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .step-number {
+    font-family: 'Anek Devanagari', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--brand-ink);
+  }
+  .steps p {
+    margin: 0;
+  }
+  .who-rows {
+    margin-top: 32px;
+  }
+  .who-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 16px;
+    padding: 20px 0;
+    border-top: 1px solid var(--line);
+  }
+  .who-row:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  .who-row p {
+    margin: 0;
+  }
+  .faq-list {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+  }
+  .faq-list details {
+    border-top: 1px solid var(--line);
+    padding: 20px 0;
+  }
+  .faq-list details:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  .faq-list summary {
+    cursor: pointer;
+    font-family: 'Anek Devanagari', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+  }
+  .faq-list p {
+    margin: 12px 0 0;
+  }
+  .closing {
+    padding: 120px 0;
+    border-top: 1px solid var(--line);
+  }
+  .closing-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  @media (min-width: 900px) {
+    .who-row {
+      grid-template-columns: 320px 1fr;
+    }
+  }
+</style>
