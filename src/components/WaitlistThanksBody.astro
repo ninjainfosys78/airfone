@@ -6,34 +6,43 @@ export interface Props {
 }
 const { locale } = Astro.props;
 
+// The API redirects here with ?status=. The page is static, so the heading
+// is picked in the browser; without JS the generic heading stays.
 const copy = {
   ne: {
-    created: { h1: 'धन्यवाद।', line: 'सूचीमा नाम दर्ता भयो। सुरु भएपछि हामी तपाईंलाई फोन गर्नेछौं।' },
-    already_on_list: { h1: 'तपाईं पहिले नै सूचीमा हुनुहुन्छ।', line: 'धन्यवाद, थप केही गर्नु पर्दैन।' },
-    default: { h1: 'धन्यवाद।', line: 'तपाईंको जानकारी प्राप्त भयो।' },
+    created: 'सूचीमा तपाईंको नाम दर्ता भयो',
+    already_on_list: 'तपाईं पहिले नै सूचीमा हुनुहुन्छ',
+    fallback: 'धन्यवाद',
     home: 'गृहपृष्ठमा फर्कनुहोस्',
   },
   en: {
-    created: { h1: 'Thank you.', line: "You're on the waitlist. We'll call you when it's live." },
-    already_on_list: { h1: "You're already on the list.", line: 'Thanks, nothing else to do.' },
-    default: { h1: 'Thank you.', line: 'Your details were received.' },
+    created: "You're on the waitlist",
+    already_on_list: "You're already on the list",
+    fallback: 'Thank you',
     home: 'Back to the homepage',
   },
 } as const;
-
 const c = copy[locale];
-const status = Astro.url.searchParams.get('status');
-const state = status === 'already_on_list' ? c.already_on_list : status === 'created' ? c.created : c.default;
 ---
 <section class="page-hero">
   <div class="wrap">
-    <h1>{state.h1}</h1>
-    <p class="secondary-text">{state.line}</p>
-    <p><a href={localePath(locale, '/')}>{c.home}</a></p>
+    <h1 data-thanks data-created={c.created} data-already={c.already_on_list}>{c.fallback}</h1>
+    <a class="btn btn-primary" href={localePath(locale, '/')}>{c.home}</a>
   </div>
 </section>
 <style>
   .page-hero {
-    padding: 72px 0 96px;
+    padding: 104px 0 120px;
+  }
+  .btn {
+    margin-top: 40px;
+    height: 52px;
+    padding: 0 24px;
   }
 </style>
+<script>
+  const h1 = document.querySelector<HTMLElement>('[data-thanks]');
+  const status = new URLSearchParams(location.search).get('status');
+  if (h1 && status === 'created') h1.textContent = h1.dataset.created || h1.textContent;
+  if (h1 && status === 'already_on_list') h1.textContent = h1.dataset.already || h1.textContent;
+</script>

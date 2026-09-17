@@ -18,12 +18,6 @@ const copy = {
     write: 'इमेल पठाउनुहोस्',
     copy: 'कपी',
     copied: 'कपी भयो',
-    topicsH2: 'यी कुरामा फोन गर्नुहोस्',
-    topics: [
-      { title: 'आफ्नो व्यवसायमा AirFone', body: 'पसल, क्लिनिक, विद्यालय वा अनलाइन स्टोरमा एजेन्टले के गर्न सक्छ भनेर सोध्नुहोस्।' },
-      { title: 'सुरुवात र मूल्य', body: '२८ सेप्टेम्बरको सुरुवात र मूल्यबारे।' },
-      { title: 'प्रतीक्षा सूची', body: 'सूचीमा नाम थप्न वा हटाउन।' },
-    ],
   },
   en: {
     h1: 'Contact us',
@@ -33,12 +27,6 @@ const copy = {
     write: 'Send an email',
     copy: 'Copy',
     copied: 'Copied',
-    topicsH2: 'Good reasons to call',
-    topics: [
-      { title: 'AirFone for your business', body: 'Ask what the agent can do for your shop, clinic, school or online store.' },
-      { title: 'Launch and pricing', body: 'About the 28 September launch and pricing.' },
-      { title: 'The waitlist', body: 'To add your number to the list or remove it.' },
-    ],
   },
 } as const;
 const c = copy[locale];
@@ -69,19 +57,6 @@ const c = copy[locale];
   </div>
 </section>
 
-<section class="topics on-tint">
-  <div class="wrap split">
-    <h2>{c.topicsH2}</h2>
-    <ol class="list">
-      {c.topics.map((t) => (
-        <li>
-          <h3>{t.title}</h3>
-          <p>{t.body}</p>
-        </li>
-      ))}
-    </ol>
-  </div>
-</section>
 
 <LaunchBand locale={locale} source="contact-band" />
 
@@ -138,42 +113,6 @@ const c = copy[locale];
     }
   }
 
-  h2 {
-    font-size: clamp(2rem, 4vw, 3rem);
-    line-height: 1.15;
-  }
-  .topics {
-    padding: 112px 0;
-  }
-  .split {
-    display: grid;
-    gap: 40px;
-  }
-  @media (min-width: 900px) {
-    .split {
-      grid-template-columns: 4fr 8fr;
-      gap: 64px;
-      align-items: start;
-    }
-  }
-  .list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    border-top: 1px solid var(--line);
-  }
-  .list li {
-    padding: 24px 0;
-    border-bottom: 1px solid var(--line);
-  }
-  .list h3 {
-    font-size: 22px;
-  }
-  .list p {
-    margin: 6px 0 0;
-    font-size: 17px;
-    color: var(--ink-muted);
-  }
 </style>
 
 <script>

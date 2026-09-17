@@ -19,9 +19,9 @@ const copy = {
       { title: 'नेपालीमा फोन उठाउने AI एजेन्ट', body: 'मूल्य, खुल्ने समय, सेवा र उपलब्धताबारे ग्राहकका प्रश्नको जवाफ, दिनरात।' },
       { title: 'बोलेर वा लिंक राखेर सिकाउने', body: 'वेबसाइटको लिंक, फेसबुक पेज, फोटो र भिडियोबाट एजेन्टको जानकारी तयार हुन्छ।' },
       { title: 'सुरु गर्नुअघि आफैं जाँच', body: 'डेमो नम्बरमा PIN सहित फोन गरेर ग्राहकले झैं प्रश्न सोध्न मिल्छ।' },
-      { title: 'आफ्नै AirFone नम्बर', body: 'ठीक लागेपछि ग्राहकले फोन गर्ने आफ्नै नम्बर।' },
-      { title: 'थाहा नभएको कुरा नबनाउने', body: 'जानकारी नभए एजेन्टले छैन भन्छ, जवाफ बनाएर दिँदैन।' },
-      { title: 'WhatsApp', body: 'छिट्टै थपिँदैछ।', soon: true },
+      { title: 'आफ्नै AirFone नम्बर' },
+      { title: 'थाहा नभएको कुरा नबनाउने' },
+      { title: 'WhatsApp', soon: true },
     ],
     soon: 'छिट्टै',
     askH2: 'मूल्यबारे सोध्नु छ?',
@@ -36,9 +36,9 @@ const copy = {
       { title: 'An AI agent that answers calls in Nepali', body: 'Answers customer questions about prices, opening hours, services and stock, day and night.' },
       { title: 'Teach it by talking or pasting a link', body: 'Builds its knowledge from your website, Facebook page, photos and videos.' },
       { title: 'Test it yourself first', body: 'Call your demo number with your PIN and ask what your customers ask.' },
-      { title: 'Your own AirFone number', body: 'The number your customers call once you go live.' },
-      { title: "It doesn't make things up", body: "When it doesn't know, it says so instead of inventing an answer." },
-      { title: 'WhatsApp', body: 'Coming soon.', soon: true },
+      { title: 'Your own AirFone number' },
+      { title: "It doesn't make things up" },
+      { title: 'WhatsApp', soon: true },
     ],
     soon: 'Soon',
     askH2: 'Questions about pricing?',
@@ -80,7 +80,7 @@ const c = copy[locale];
               {item.title}
               {'soon' in item && item.soon && <span class="tag">{c.soon}</span>}
             </h3>
-            <p>{item.body}</p>
+            {'body' in item && item.body && <p>{item.body}</p>}
           </div>
         </li>
       ))}
@@ -106,7 +106,7 @@ const c = copy[locale];
   .hero-grid {
     display: grid;
     gap: 48px;
-    align-items: center;
+    align-items: start;
   }
   h1 {
     max-width: 15ch;

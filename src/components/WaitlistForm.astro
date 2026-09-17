@@ -97,10 +97,13 @@ const c = copy[locale];
     <div class="more-fields">
       <div class="field">
         <label for={`${uid}-business`}>{c.businessLabel}</label>
-        <select name="business_type" id={`${uid}-business`}>
-          <option value="">{c.businessChoose}</option>
-          {c.businessOptions.map(([value, label]) => <option value={value}>{label}</option>)}
-        </select>
+        <div class="select">
+          <select name="business_type" id={`${uid}-business`}>
+            <option value="">{c.businessChoose}</option>
+            {c.businessOptions.map(([value, label]) => <option value={value}>{label}</option>)}
+          </select>
+          <span class="chevron" aria-hidden="true"></span>
+        </div>
       </div>
       <div class="field">
         <label for={`${uid}-email`}>{c.emailLabel}</label>
@@ -238,16 +241,39 @@ const c = copy[locale];
     display: none;
   }
   .compact .more[open] summary {
-    margin-bottom: 14px;
+    margin-bottom: 12px;
   }
   .more-fields {
     display: grid;
-    gap: 14px;
+    gap: 12px;
   }
   .more-fields select,
   .more-fields input {
     height: 48px;
     border-radius: 10px;
+    padding: 0 14px;
+    font-size: 16px;
+  }
+  .select {
+    position: relative;
+  }
+  .select select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 44px;
+    cursor: pointer;
+  }
+  .chevron {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    margin-top: -6px;
+    border-right: 2px solid var(--ink-muted);
+    border-bottom: 2px solid var(--ink-muted);
+    transform: rotate(45deg);
+    pointer-events: none;
   }
   @media (min-width: 560px) {
     .more-fields {

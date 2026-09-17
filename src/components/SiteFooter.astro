@@ -12,8 +12,8 @@ const other = otherLocalePath(locale, path);
 const copy = t[locale];
 
 const groups = {
-  ne: { product: 'AirFone', talk: 'सम्पर्क', language: 'भाषा', signIn: 'साइन इन' },
-  en: { product: 'AirFone', talk: 'Contact', language: 'Language', signIn: 'Sign in' },
+  ne: { product: 'पृष्ठ', talk: 'सम्पर्क', language: 'भाषा', signIn: 'साइन इन' },
+  en: { product: 'Pages', talk: 'Contact', language: 'Language', signIn: 'Sign in' },
 } as const;
 const g = groups[locale];
 const here = { locale, href: localePath(locale, path), label: locale === 'ne' ? 'नेपाली' : 'English' };
@@ -53,7 +53,6 @@ const here = { locale, href: localePath(locale, path), label: locale === 'ne' ? 
 
     <div class="bottom">
       <p>{copy.copyright}</p>
-      <a href="https://airfone.app/">airfone.app</a>
     </div>
   </div>
 </footer>
