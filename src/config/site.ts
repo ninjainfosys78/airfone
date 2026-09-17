@@ -26,9 +26,9 @@ export const LAUNCH_DATE = '2026-09-28';
 
 export const CONTACT_EMAIL = 'info@airfone.app';
 
-export const CONTACT_PHONE = '+9779858042433';
-export const CONTACT_PHONE_TEL = 'tel:+9779858042433';
-export const CONTACT_PHONE_DISPLAY = { ne: '९८५८०४२४३३', en: '985-8042433' } as const;
-export const CONTACT_PHONE_JSONLD = '+977-9858042433';
+export const CONTACT_PHONE = '+9779851343348';
+export const CONTACT_PHONE_TEL = 'tel:+9779851343348';
+export const CONTACT_PHONE_DISPLAY = { ne: '९८५१३४३३४८', en: '985-1343348' } as const;
+export const CONTACT_PHONE_JSONLD = '+977-9851343348';
 
 export const SITE_URL = 'https://airfone.app';

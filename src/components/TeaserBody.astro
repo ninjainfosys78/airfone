@@ -2,6 +2,7 @@
 // Pre-launch page: one line and the waitlist. Shown while SITE_MODE is 'teaser'.
 import WaitlistForm from './WaitlistForm.astro';
 import StructuredData from './StructuredData.astro';
+import { CONTACT_EMAIL, CONTACT_PHONE_TEL, CONTACT_PHONE_DISPLAY } from '../config/site';
 import type { Locale } from '../i18n';
 
 export interface Props {
@@ -29,6 +30,17 @@ const { locale } = Astro.props;
     <div class="form" id="waitlist">
       <WaitlistForm locale={locale} id="teaser" source="teaser" compact />
     </div>
+
+    <ul class="contact" aria-label={locale === 'ne' ? 'सम्पर्क' : 'Contact'}>
+      <li>
+        <span class="label">{locale === 'ne' ? 'फोन' : 'Phone'}</span>
+        <a href={CONTACT_PHONE_TEL}>{CONTACT_PHONE_DISPLAY[locale]}</a>
+      </li>
+      <li>
+        <span class="label">{locale === 'ne' ? 'इमेल' : 'Email'}</span>
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+      </li>
+    </ul>
   </div>
   <span class="cloud" aria-hidden="true"></span>
 </section>
@@ -89,6 +101,36 @@ const { locale } = Astro.props;
     border-radius: var(--radius-panel);
     padding: 24px;
   }
+  .contact {
+    list-style: none;
+    margin: 32px 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 48px;
+  }
+  .contact li {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .contact .label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .contact a {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .contact a:hover {
+    text-decoration-thickness: 2px;
+  }
   .cloud {
     position: absolute;
     z-index: -1;
@@ -116,6 +158,9 @@ const { locale } = Astro.props;
     }
     .form {
       animation: hero-in 900ms 220ms var(--ease-out-expo) both;
+    }
+    .contact {
+      animation: hero-in 900ms 320ms var(--ease-out-expo) both;
     }
     .cloud {
       animation: cloud-in 1600ms var(--ease-out-expo) both;

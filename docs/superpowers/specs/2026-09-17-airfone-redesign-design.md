@@ -25,7 +25,7 @@ All build-time, from `import.meta.env`:
 | `PUBLIC_DEMO_AUDIO_URL` | empty | Recording URL (hosted outside the bundle, which rejects audio) |
 | `PUBLIC_DEMO_FIXTURE` | `false` | Dev only: renders the demo band with the planned script and no audio |
 
-Constants: launch date `2026-09-28`, contact email `info@airfone.app`, contact phone `+9779858042433` (display ne: `९८५८०४२४३३`, en: `985-8042433`, link `tel:+9779858042433`).
+Constants: launch date `2026-09-28`, contact email `info@airfone.app`, contact phone `+9779851343348` (display ne: `९८५१३४३३४८`, en: `985-1343348`, link `tel:+9779851343348`).
 
 ## Routing and redirects
 
@@ -147,7 +147,7 @@ CTA label ne: सूचीमा नाम लेखाउनुहोस् / e
 ## Other pages
 
 - **Pricing**: h1 ne: मूल्य २८ सेप्टेम्बरमा सार्वजनिक हुँदैछ / en: Pricing is announced on 28 September. One line: waitlist hears first. Waitlist form.
-- **Contact**: h1 ne: सम्पर्क गर्नुहोस् / en: Contact us. Email link (`mailto:info@airfone.app`) and phone link (`tel:+9779858042433`). No map, no form.
+- **Contact**: h1 ne: सम्पर्क गर्नुहोस् / en: Contact us. Email link (`mailto:info@airfone.app`) and phone link (`tel:+9779851343348`). No map, no form.
 - **Privacy**: plain statement of what the waitlist collects (mobile number, optional email, business type, page, language), why (launch contact), where (AirFone servers), how to be removed (email). `noindex` is not set; it is a real page.
 - **Waitlist thanks**: reads `?status=`; `noindex`.
 - **404**: bilingual, links home in both languages.
