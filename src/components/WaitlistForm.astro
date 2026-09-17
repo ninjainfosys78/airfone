@@ -94,7 +94,7 @@ const c = copy[locale];
 
     <div class="field">
       <label for={`${uid}-email`}>{c.emailLabel}</label>
-      <input type="email" autocomplete="email" name="email" id={`${uid}-email`} placeholder={c.emailLabel} />
+      <input type="email" autocomplete="email" name="email" id={`${uid}-email`} placeholder="name@example.com" />
     </div>
   </div>
 
@@ -201,14 +201,12 @@ const c = copy[locale];
     .compact .row-two .field {
       flex: 1;
     }
-    .compact .row-phone label,
-    .compact .row-two label {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      clip: rect(0 0 0 0);
-      white-space: nowrap;
+    .compact .row-phone .submit-btn {
+      /* label line (14px x 1.55) + field gap, so the button lines up with the input */
+      margin-top: calc(14px * 1.55 + 6px);
+    }
+    .compact .field label {
+      font-size: 14px;
     }
   }
 </style>
