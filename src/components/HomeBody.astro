@@ -77,18 +77,16 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
 
 <section class="hero on-night">
   <div class="wrap hero-grid">
-    <div class="hero-text" id="waitlist">
-      <h1>{c.h1}</h1>
+    <h1 class="hero-title">{c.h1}</h1>
+    <div class="hero-visual">
+      <CallCard locale={locale} />
+    </div>
+    <div class="hero-form" id="waitlist">
       {LAUNCHED ? (
         <a class="btn btn-primary btn-large" href={APP_URL}>{c.tryFree}</a>
       ) : (
-        <div class="hero-form">
-          <WaitlistForm locale={locale} id="hero" source="hero" compact />
-        </div>
+        <WaitlistForm locale={locale} id="hero" source="hero" compact />
       )}
-    </div>
-    <div class="hero-visual">
-      <CallCard locale={locale} />
     </div>
   </div>
 </section>
@@ -176,25 +174,28 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
     }
   }
 
-  /* Hero: dark stage, headline and form left, the live call right */
+  /* Hero: dark stage. Phones: headline, call, form. Desktop: headline and form left, call right. */
   .hero {
-    padding: 56px 0 72px;
+    padding: 48px 0 72px;
   }
   .hero-grid {
     display: grid;
-    gap: 56px;
-    align-items: start;
+    grid-template-areas: 'title' 'call' 'form';
+    gap: 40px;
   }
-  .hero h1 {
+  .hero-title {
+    grid-area: title;
     color: var(--night-ink);
     max-width: 13ch;
   }
+  .hero-visual {
+    grid-area: call;
+  }
   .hero-form {
-    margin-top: 40px;
+    grid-area: form;
     max-width: 520px;
   }
   .btn-large {
-    margin-top: 40px;
     padding: 16px 28px;
     font-size: 18px;
   }
@@ -204,7 +205,11 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
     }
     .hero-grid {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 88px;
+      grid-template-areas: 'title call' 'form call';
+      grid-template-rows: auto 1fr;
+      column-gap: 88px;
+      row-gap: 40px;
+      align-items: start;
     }
   }
 

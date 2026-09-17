@@ -20,19 +20,19 @@ Light (default):
 | `--paper` | `#FCFCF9` |
 | `--surface` | `#FFFFFF` |
 | `--ink` | `#16190F` |
-| `--ink-muted` | `#4A5042` |
+| `--ink-muted` | `#363B2F` |
 | `--line` | `#E1E4D9` |
 | `--brand` | `#8BC53E` |
-| `--on-brand` | `#1B2A06` |
-| `--brand-ink` | `#40680B` |
+| `--on-brand` | `#0D1502` |
+| `--brand-ink` | `#2F4D07` |
 | `--night` | `#141A0D` |
 | `--night-ink` | `#EEF2E6` |
-| `--night-muted` | `#B6BEA8` |
+| `--night-muted` | `#CDD4C2` |
 | `--night-line` | `#2C3520` |
 | `--night-brand-ink` | `#A6D86A` |
 
 Dark scheme overrides: `--paper #10140B`, `--surface #171D10`, `--ink
-#EEF2E6`, `--ink-muted #B3BBA6`, `--line #2A3220`, `--brand-ink #A6D86A`,
+#EEF2E6`, `--ink-muted #CDD4C2`, `--line #2A3220`, `--brand-ink #A6D86A`,
 `--night #0A0D07`. `--brand`, `--on-brand` and all `--night-*` tokens stay
 the same in both schemes.
 

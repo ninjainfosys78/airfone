@@ -19,7 +19,7 @@ const copy = {
     businessLabel: 'व्यवसायको प्रकार (वैकल्पिक)',
     businessChoose: 'छान्नुहोस्',
     businessOptions: [['shop', 'पसल'], ['online_store', 'अनलाइन स्टोर'], ['clinic', 'क्लिनिक वा अस्पताल'], ['school', 'विद्यालय'], ['restaurant', 'रेस्टुरेन्ट'], ['other', 'अन्य']],
-    moreLabel: 'व्यवसायको प्रकार वा इमेल थप्नुहोस् (वैकल्पिक)',
+    moreLabel: 'व्यवसाय र इमेल थप्नुहोस्',
     emailLabel: 'इमेल (वैकल्पिक)',
     consentLabel: 'सुरु भएपछि सम्पर्क गर्न मन्जुर छु।',
     submit: 'सूचीमा नाम लेखाउनुहोस्',
@@ -39,7 +39,7 @@ const copy = {
     businessLabel: 'Business type (optional)',
     businessChoose: 'Choose one',
     businessOptions: [['shop', 'Shop'], ['online_store', 'Online store'], ['clinic', 'Clinic or hospital'], ['school', 'School'], ['restaurant', 'Restaurant'], ['other', 'Other']],
-    moreLabel: 'Add business type or email (optional)',
+    moreLabel: 'Add business type and email',
     emailLabel: 'Email (optional)',
     consentLabel: "I agree to be contacted when AirFone launches.",
     submit: 'Join the waitlist',
@@ -130,7 +130,7 @@ const c = copy[locale];
   .waitlist-form {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 16px;
     width: 100%;
   }
   .field {
@@ -139,9 +139,9 @@ const c = copy[locale];
     gap: 8px;
   }
   .field label {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
-    color: var(--ink-muted);
+    color: var(--ink);
   }
 
   /* One bar: +977 prefix, number, button */
@@ -212,8 +212,8 @@ const c = copy[locale];
   }
   .field-checkbox label {
     font-weight: 400;
-    font-size: 14px;
-    color: var(--ink-muted);
+    font-size: 15px;
+    color: var(--ink);
     cursor: pointer;
   }
   .field-checkbox .field-error {
@@ -228,24 +228,49 @@ const c = copy[locale];
   .more summary {
     display: none;
   }
+  .compact .more {
+    margin-top: 4px;
+    border-top: 1px solid var(--line);
+  }
   .compact .more summary {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 52px;
     cursor: pointer;
-    font-size: 14px;
-    color: var(--ink-muted);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    width: fit-content;
+    list-style: none;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
   }
   .compact .more summary::-webkit-details-marker {
     display: none;
   }
-  .compact .more[open] summary {
-    margin-bottom: 12px;
+  .compact .more summary::after {
+    content: '';
+    flex: 0 0 8px;
+    width: 8px;
+    height: 8px;
+    margin: -4px 6px 0 0;
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    transform: rotate(45deg);
+    transition: transform 150ms ease-out;
+  }
+  .compact .more[open] summary::after {
+    margin-top: 4px;
+    transform: rotate(-135deg);
+  }
+  .compact .more summary:hover {
+    color: var(--brand-ink);
+  }
+  .compact .more[open] .more-fields {
+    padding: 4px 0 8px;
   }
   .more-fields {
     display: grid;
-    gap: 12px;
+    gap: 16px;
   }
   .more-fields select,
   .more-fields input {

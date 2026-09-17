@@ -23,6 +23,20 @@ const copy = {
 } as const;
 const c = copy[locale];
 
+type TimedWord = { w: string; t: number };
+const timed = (l: (typeof call.lines)[number]): TimedWord[] => {
+  if (locale === 'ne') return l.ne.split(' ').map((w, i) => ({ w, t: l.words[i] }));
+  const tokens = l.en.split(' ');
+  const total = tokens.reduce((n, w) => n + w.length + 1, 0);
+  let acc = 0;
+  return tokens.map((w) => {
+    const t = l.start + ((l.end - l.start) * acc) / total;
+    acc += w.length + 1;
+    return { w, t: Math.round(t * 100) / 100 };
+  });
+};
+const firstWords = timed(first);
+
 const BAR = 6;
 const HEIGHT = 96;
 const bars = demoWaveform.peaks.map((peak, i) => {
@@ -41,7 +55,7 @@ const bars = demoWaveform.peaks.map((peak, i) => {
 
     <div class="caption" aria-live="off">
       <p class="speaker" data-call-speaker data-who={first.speaker}>{first.speaker === 'caller' ? c.caller : 'AirFone'}</p>
-      <p class="text" data-call-text>{locale === 'ne' ? first.ne : first.en}</p>
+      <p class="text" data-call-text>{firstWords.map((x, i) => <>{i > 0 && ' '}<span class="w" data-t={x.t}>{x.w}</span></>)}</p>
     </div>
 
     <div class="deck">
@@ -65,7 +79,7 @@ const bars = demoWaveform.peaks.map((peak, i) => {
     {DEMO_AUDIO_URL && <audio preload="auto" src={DEMO_AUDIO_URL} data-call-audio></audio>}
 
     <script type="application/json" data-call-lines set:html={JSON.stringify(
-      call.lines.map((l) => ({ start: l.start, who: l.speaker, speaker: l.speaker === 'caller' ? c.caller : 'AirFone', text: locale === 'ne' ? l.ne : l.en })),
+      call.lines.map((l) => ({ start: l.start, who: l.speaker, speaker: l.speaker === 'caller' ? c.caller : 'AirFone', words: timed(l) })),
     )} />
   </div>
 )}
@@ -108,6 +122,17 @@ const bars = demoWaveform.peaks.map((peak, i) => {
   }
   .speaker[data-who='agent'] {
     color: var(--brand);
+  }
+  /* Word spans are rebuilt in the browser, so these rules must be global. */
+  .text :global(.w) {
+    transition: color 150ms ease-out;
+  }
+  /* While the call plays, words not yet spoken are dimmed (4.9:1 on --night). */
+  .call:global(.is-started) .text :global(.w) {
+    color: #808A72;
+  }
+  .call:global(.is-started) .text :global(.w.spoken) {
+    color: var(--night-ink);
   }
   .text {
     margin: 0;
@@ -180,7 +205,7 @@ const bars = demoWaveform.peaks.map((peak, i) => {
 </style>
 
 <script>
-  type Line = { start: number; who: string; speaker: string; text: string };
+  type Line = { start: number; who: string; speaker: string; words: { w: string; t: number }[] };
 
   function initCall(card: HTMLElement) {
     const audio = card.querySelector<HTMLAudioElement>('[data-call-audio]');
@@ -196,6 +221,7 @@ const bars = demoWaveform.peaks.map((peak, i) => {
     const format = (sec: number) => `${Math.floor(sec / 60)}:${String(Math.floor(sec % 60)).padStart(2, '0')}`;
 
     let shown = -1;
+    let wordEls = Array.from(card.querySelectorAll<HTMLElement>('[data-call-text] .w'));
     function show(t: number, duration: number) {
       let idx = 0;
       lines.forEach((l, i) => {
@@ -207,12 +233,24 @@ const bars = demoWaveform.peaks.map((peak, i) => {
           speakerEl.textContent = lines[idx].speaker;
           speakerEl.dataset.who = lines[idx].who;
         }
-        if (textEl) textEl.textContent = lines[idx].text;
+        if (textEl) {
+          textEl.replaceChildren();
+          lines[idx].words.forEach((word, i) => {
+            if (i > 0) textEl.append(' ');
+            const span = document.createElement('span');
+            span.className = 'w';
+            span.dataset.t = String(word.t);
+            span.textContent = word.w;
+            textEl.append(span);
+          });
+          wordEls = Array.from(textEl.querySelectorAll<HTMLElement>('.w'));
+        }
         listItems.forEach((li, i) => {
           if (i === idx) li.setAttribute('aria-current', 'true');
           else li.removeAttribute('aria-current');
         });
       }
+      wordEls.forEach((el) => el.classList.toggle('spoken', Number(el.dataset.t) <= t));
       if (duration > 0) {
         const played = Math.floor((t / duration) * rects.length);
         rects.forEach((r, i) => r.classList.toggle('played', i < played));
@@ -242,7 +280,7 @@ const bars = demoWaveform.peaks.map((peak, i) => {
 
     audio.addEventListener('error', () => card.classList.add('no-audio'));
     audio.addEventListener('play', () => {
-      card.classList.add('is-playing');
+      card.classList.add('is-playing', 'is-started');
       wave?.classList.add('is-started');
       playBtn?.setAttribute('aria-label', card.dataset.labelPause || 'Pause');
     });
@@ -251,6 +289,15 @@ const bars = demoWaveform.peaks.map((peak, i) => {
       playBtn?.setAttribute('aria-label', card.dataset.labelPlay || 'Play');
     });
     audio.addEventListener('timeupdate', () => show(audio.currentTime, audio.duration || 0));
+    let frame = 0;
+    const tick = () => {
+      show(audio.currentTime, audio.duration || 0);
+      if (!audio.paused) frame = requestAnimationFrame(tick);
+    };
+    audio.addEventListener('play', () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(tick);
+    });
 
     playBtn?.addEventListener('click', () => {
       if (audio.paused) {
