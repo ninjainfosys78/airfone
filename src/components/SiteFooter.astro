@@ -1,6 +1,6 @@
 ---
 import { t, localePath, otherLocalePath, type Locale } from '../i18n';
-import { CONTACT_EMAIL, CONTACT_PHONE_TEL, CONTACT_PHONE_DISPLAY } from '../config/site';
+import { APP_URL, CONTACT_EMAIL, CONTACT_PHONE_TEL, CONTACT_PHONE_DISPLAY } from '../config/site';
 
 export interface Props {
   locale: Locale;
@@ -10,80 +10,134 @@ export interface Props {
 const { locale, path = '/' } = Astro.props;
 const other = otherLocalePath(locale, path);
 const copy = t[locale];
+
+const groups = {
+  ne: { product: 'AirFone', talk: 'सम्पर्क', language: 'भाषा', signIn: 'साइन इन' },
+  en: { product: 'AirFone', talk: 'Contact', language: 'Language', signIn: 'Sign in' },
+} as const;
+const g = groups[locale];
+const here = { locale, href: localePath(locale, path), label: locale === 'ne' ? 'नेपाली' : 'English' };
 ---
-<footer class="site-footer">
-  <div class="wrap grid">
-    <a class="lockup" href={localePath(locale, '/')} aria-label="AirFone">
-      <img class="lockup-light-bg" src="/brand/airfone-lockup.svg" alt="AirFone" width="140" height="29" />
-      <img class="lockup-dark-bg" src="/brand/airfone-lockup-light.svg" alt="AirFone" width="140" height="29" />
-    </a>
+<footer class="site-footer on-night">
+  <div class="wrap">
+    <div class="top">
+      <a class="lockup" href={localePath(locale, '/')} aria-label="AirFone">
+        <img src="/brand/airfone-lockup-light.svg" alt="AirFone" width="200" height="41" />
+      </a>
 
-    <nav class="links" aria-label={locale === 'ne' ? 'फुटर नेभिगेसन' : 'Footer navigation'}>
-      <a href={localePath(locale, '/pricing/')}>{copy.pricing}</a>
-      <a href={localePath(locale, '/contact/')}>{copy.contact}</a>
-      <a href={localePath(locale, '/privacy/')}>{copy.privacy}</a>
-    </nav>
-
-    <div class="meta">
-      <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
-      <a href={CONTACT_PHONE_TEL}>{CONTACT_PHONE_DISPLAY[locale]}</a>
-      <a href={other.href} hreflang={other.locale} lang={other.locale}>{copy.langSwitchLabel}</a>
+      <nav class="cols" aria-label={locale === 'ne' ? 'फुटर नेभिगेसन' : 'Footer navigation'}>
+        <div class="col">
+          <p class="col-title">{g.product}</p>
+          <ul>
+            <li><a href={localePath(locale, '/pricing/')}>{copy.pricing}</a></li>
+            <li><a href={APP_URL}>{g.signIn}</a></li>
+            <li><a href={localePath(locale, '/privacy/')}>{copy.privacy}</a></li>
+          </ul>
+        </div>
+        <div class="col">
+          <p class="col-title">{g.talk}</p>
+          <ul>
+            <li><a class="big" href={CONTACT_PHONE_TEL}>{CONTACT_PHONE_DISPLAY[locale]}</a></li>
+            <li><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></li>
+          </ul>
+        </div>
+        <div class="col">
+          <p class="col-title">{g.language}</p>
+          <ul>
+            <li><a href={here.href} aria-current="page" lang={here.locale}>{here.label}</a></li>
+            <li><a href={other.href} hreflang={other.locale} lang={other.locale}>{copy.langSwitchLabel}</a></li>
+          </ul>
+        </div>
+      </nav>
     </div>
 
-    <p class="copyright">{copy.copyright}</p>
+    <div class="bottom">
+      <p>{copy.copyright}</p>
+      <a href="https://airfone.app/">airfone.app</a>
+    </div>
   </div>
 </footer>
 
 <style>
   .site-footer {
-    border-top: 1px solid var(--line);
-    margin-top: 96px;
+    border-top: 1px solid var(--night-line);
+    padding: 88px 0 40px;
   }
-  .grid {
-    padding-top: 40px;
-    padding-bottom: 40px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 24px;
-    justify-content: space-between;
+  .top {
+    display: grid;
+    gap: 56px;
   }
   .lockup {
     display: block;
+    width: fit-content;
   }
   .lockup img {
-    height: 24px;
+    display: block;
+    height: 40px;
     width: auto;
   }
-  .lockup-dark-bg {
-    display: none;
+  .cols {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 40px 24px;
   }
-  @media (prefers-color-scheme: dark) {
-    .lockup-light-bg {
-      display: none;
-    }
-    .lockup-dark-bg {
-      display: block;
-    }
+  .col-title {
+    margin: 0 0 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--night-muted);
   }
-  .links, .meta {
+  .col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 12px;
   }
-  .links a, .meta a {
-    color: var(--ink-muted);
+  .col a {
+    color: var(--night-ink);
     text-decoration: none;
     font-size: 16px;
   }
-  .links a:hover, .meta a:hover {
-    color: var(--brand-ink);
+  .col a.big {
+    font-size: 22px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
   }
-  .copyright {
-    width: 100%;
-    color: var(--ink-muted);
-    font-size: 14px;
+  .col a:hover {
+    color: var(--brand);
+  }
+  .col a[aria-current='page'] {
+    color: var(--brand);
+  }
+  .bottom {
+    margin-top: 72px;
+    padding-top: 24px;
+    border-top: 1px solid var(--night-line);
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .bottom p,
+  .bottom a {
     margin: 0;
-    max-width: none;
+    font-size: 14px;
+    color: var(--night-muted);
+    text-decoration: none;
+  }
+  .bottom a:hover {
+    color: var(--night-ink);
+  }
+  @media (min-width: 900px) {
+    .top {
+      grid-template-columns: 4fr 8fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .cols {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
 </style>
