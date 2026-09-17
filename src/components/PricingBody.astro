@@ -1,7 +1,7 @@
 ---
 import WaitlistForm from './WaitlistForm.astro';
 import StructuredData from './StructuredData.astro';
-import { LAUNCHED, APP_URL } from '../config/site';
+import { LAUNCHED, APP_URL, CONTACT_PHONE_TEL, CONTACT_PHONE_DISPLAY } from '../config/site';
 import type { Locale } from '../i18n';
 
 export interface Props {
@@ -12,36 +12,242 @@ const { locale } = Astro.props;
 const copy = {
   ne: {
     h1: 'मूल्य २८ सेप्टेम्बरमा सार्वजनिक हुँदैछ',
-    line: 'सूचीमा नाम लेखाउनेले पहिले जानकारी पाउनेछन्।',
     tryFree: 'निःशुल्क सुरु गर्नुहोस्',
+    date: { day: '२८', month: 'सेप्टेम्बर', year: '२०२६' },
+    includedH2: 'हरेक योजनामा',
+    included: [
+      { title: 'नेपालीमा फोन उठाउने AI एजेन्ट', body: 'मूल्य, खुल्ने समय, सेवा र उपलब्धताबारे ग्राहकका प्रश्नको जवाफ, दिनरात।' },
+      { title: 'बोलेर वा लिंक राखेर सिकाउने', body: 'वेबसाइटको लिंक, फेसबुक पेज, फोटो र भिडियोबाट एजेन्टको जानकारी तयार हुन्छ।' },
+      { title: 'सुरु गर्नुअघि आफैं जाँच', body: 'डेमो नम्बरमा PIN सहित फोन गरेर ग्राहकले झैं प्रश्न सोध्न मिल्छ।' },
+      { title: 'आफ्नै AirFone नम्बर', body: 'ठीक लागेपछि ग्राहकले फोन गर्ने आफ्नै नम्बर।' },
+      { title: 'थाहा नभएको कुरा नबनाउने', body: 'जानकारी नभए एजेन्टले छैन भन्छ, जवाफ बनाएर दिँदैन।' },
+      { title: 'WhatsApp', body: 'छिट्टै थपिँदैछ।', soon: true },
+    ],
+    soon: 'छिट्टै',
+    askH2: 'मूल्यबारे सोध्नु छ?',
+    call: 'फोन गर्नुहोस्',
   },
   en: {
-    h1: 'Pricing is announced on 28 September.',
-    line: 'People on the waitlist hear first.',
+    h1: 'Pricing is announced on 28 September',
     tryFree: 'Try it free',
+    date: { day: '28', month: 'September', year: '2026' },
+    includedH2: 'In every plan',
+    included: [
+      { title: 'An AI agent that answers calls in Nepali', body: 'Answers customer questions about prices, opening hours, services and stock, day and night.' },
+      { title: 'Teach it by talking or pasting a link', body: 'Builds its knowledge from your website, Facebook page, photos and videos.' },
+      { title: 'Test it yourself first', body: 'Call your demo number with your PIN and ask what your customers ask.' },
+      { title: 'Your own AirFone number', body: 'The number your customers call once you go live.' },
+      { title: "It doesn't make things up", body: "When it doesn't know, it says so instead of inventing an answer." },
+      { title: 'WhatsApp', body: 'Coming soon.', soon: true },
+    ],
+    soon: 'Soon',
+    askH2: 'Questions about pricing?',
+    call: 'Call us',
   },
 } as const;
 const c = copy[locale];
 ---
 <StructuredData locale={locale} />
-<section class="page-hero">
-  <div class="wrap">
-    <h1>{c.h1}</h1>
-    <div class="panel form-panel">
-      {LAUNCHED ? (
-        <a class="btn btn-primary" href={APP_URL}>{c.tryFree}</a>
-      ) : (
-        <WaitlistForm locale={locale} id="pricing" source="pricing" />
-      )}
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>{c.h1}</h1>
+      <div class="form" id="waitlist">
+        {LAUNCHED ? (
+          <a class="btn btn-primary" href={APP_URL}>{c.tryFree}</a>
+        ) : (
+          <WaitlistForm locale={locale} id="pricing" source="pricing" compact />
+        )}
+      </div>
+    </div>
+    <div class="date on-night" aria-hidden="true">
+      <span class="day">{c.date.day}</span>
+      <span class="month">{c.date.month} {c.date.year}</span>
     </div>
   </div>
 </section>
+
+<section class="included on-tint">
+  <div class="wrap split">
+    <h2>{c.includedH2}</h2>
+    <ul class="list">
+      {c.included.map((item) => (
+        <li>
+          <span class={`check${'soon' in item && item.soon ? ' soon' : ''}`} aria-hidden="true"></span>
+          <div>
+            <h3>
+              {item.title}
+              {'soon' in item && item.soon && <span class="tag">{c.soon}</span>}
+            </h3>
+            <p>{item.body}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<section class="ask">
+  <div class="wrap ask-row">
+    <h2>{c.askH2}</h2>
+    <a class="phone" href={CONTACT_PHONE_TEL}>
+      <span class="phone-number">{CONTACT_PHONE_DISPLAY[locale]}</span>
+      <span class="btn btn-secondary">{c.call}</span>
+    </a>
+  </div>
+</section>
+
+
 <style>
-  .page-hero {
-    padding: 72px 0 96px;
+  .hero {
+    padding: 88px 0 104px;
   }
-  .form-panel {
-    margin-top: 32px;
-    max-width: 480px;
+  .hero-grid {
+    display: grid;
+    gap: 48px;
+    align-items: center;
+  }
+  h1 {
+    max-width: 15ch;
+  }
+  .form {
+    margin-top: 40px;
+    max-width: 520px;
+  }
+  .date {
+    border-radius: var(--radius-panel);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 320px;
+  }
+  .day {
+    font-family: 'Instrument Sans', 'Noto Serif Devanagari', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(7rem, 16vw, 12rem);
+    line-height: 0.9;
+    color: var(--brand);
+    font-variant-numeric: tabular-nums;
+  }
+  .month {
+    margin-top: 16px;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--night-ink);
+  }
+  @media (min-width: 900px) {
+    .hero-grid {
+      grid-template-columns: 7fr 5fr;
+      gap: 72px;
+    }
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.15;
+  }
+  .included {
+    padding: 112px 0;
+  }
+  .split {
+    display: grid;
+    gap: 40px;
+  }
+  @media (min-width: 900px) {
+    .split {
+      grid-template-columns: 4fr 8fr;
+      gap: 64px;
+      align-items: start;
+    }
+  }
+  .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+  .list li {
+    display: grid;
+    grid-template-columns: 24px minmax(0, 1fr);
+    gap: 16px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .check {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--brand);
+    position: relative;
+    margin-top: 2px;
+  }
+  .check.soon {
+    background: transparent;
+    border: 2px solid var(--line);
+  }
+  .check.soon::after {
+    display: none;
+  }
+  .check::after {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 5px;
+    width: 6px;
+    height: 11px;
+    border: solid var(--on-brand);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  .list h3 {
+    font-size: 20px;
+    line-height: 1.35;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .list p {
+    margin: 6px 0 0;
+    font-size: 17px;
+    color: var(--ink-muted);
+  }
+  .tag {
+    font-family: 'Instrument Sans', 'Mukta', system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 2px 10px;
+  }
+
+  .ask {
+    padding: 96px 0;
+  }
+  .ask-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px 48px;
+  }
+  .phone {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .phone-number {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .phone:hover .btn-secondary {
+    border-color: var(--ink);
   }
 </style>

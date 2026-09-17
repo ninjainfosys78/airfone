@@ -67,47 +67,47 @@ const c = copy[locale];
   data-app-url={import.meta.env.PUBLIC_APP_URL || 'https://app.airfone.app'}
   novalidate
 >
-  <div class="row row-phone">
-    <div class="field">
-      <label for={`${uid}-phone`}>{c.phoneLabel}</label>
+  <div class="field">
+    <label class="phone-label" for={`${uid}-phone`}>{c.phoneLabel}</label>
+    <div class="group">
+      <span class="prefix" aria-hidden="true">+977</span>
       <input
         type="tel"
         inputmode="tel"
-        autocomplete="tel"
+        autocomplete="tel-national"
         name="phone"
         id={`${uid}-phone`}
         placeholder={c.phonePlaceholder}
         required
         aria-describedby={`${uid}-phone-error`}
       />
-      <p class="field-error" id={`${uid}-phone-error`} role="alert" hidden></p>
+      <button type="submit" class="btn btn-primary submit-btn">{c.submit}</button>
     </div>
-    <button type="submit" class="btn btn-primary submit-btn">{c.submit}</button>
+    <p class="field-error" id={`${uid}-phone-error`} role="alert" hidden></p>
   </div>
-
-  <details class="more" open={!compact}>
-    <summary>{c.moreLabel}</summary>
-  <div class="row row-two">
-    <div class="field">
-      <label for={`${uid}-business`}>{c.businessLabel}</label>
-      <select name="business_type" id={`${uid}-business`}>
-        <option value="">{c.businessChoose}</option>
-        {c.businessOptions.map(([value, label]) => <option value={value}>{label}</option>)}
-      </select>
-    </div>
-
-    <div class="field">
-      <label for={`${uid}-email`}>{c.emailLabel}</label>
-      <input type="email" autocomplete="email" name="email" id={`${uid}-email`} placeholder="name@example.com" />
-    </div>
-  </div>
-  </details>
 
   <div class="field field-checkbox">
     <input type="checkbox" name="consent" id={`${uid}-consent`} value="true" required aria-describedby={`${uid}-consent-error`} />
     <label for={`${uid}-consent`}>{c.consentLabel}</label>
     <p class="field-error" id={`${uid}-consent-error`} role="alert" hidden></p>
   </div>
+
+  <details class="more" open={!compact}>
+    <summary>{c.moreLabel}</summary>
+    <div class="more-fields">
+      <div class="field">
+        <label for={`${uid}-business`}>{c.businessLabel}</label>
+        <select name="business_type" id={`${uid}-business`}>
+          <option value="">{c.businessChoose}</option>
+          {c.businessOptions.map(([value, label]) => <option value={value}>{label}</option>)}
+        </select>
+      </div>
+      <div class="field">
+        <label for={`${uid}-email`}>{c.emailLabel}</label>
+        <input type="email" autocomplete="email" name="email" id={`${uid}-email`} placeholder="name@example.com" />
+      </div>
+    </div>
+  </details>
 
   <div class="honeypot" aria-hidden="true">
     <label for={`${uid}-website`}>Website</label>
@@ -127,32 +127,90 @@ const c = copy[locale];
   .waitlist-form {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
+    width: 100%;
   }
   .field {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
   }
   .field label {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
+    color: var(--ink-muted);
   }
+
+  /* One bar: +977 prefix, number, button */
+  .group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    transition: border-color 150ms ease-out;
+  }
+  .group:focus-within {
+    border-color: var(--brand);
+  }
+  .prefix {
+    padding-left: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink-muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .group input {
+    flex: 1;
+    min-width: 0;
+    height: 48px;
+    padding: 0 4px;
+    border: 0;
+    background: transparent;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+  }
+  .group input::placeholder {
+    color: var(--ink-muted);
+    font-weight: 400;
+  }
+  .group input:focus {
+    outline: none;
+  }
+  .submit-btn {
+    height: 48px;
+    padding: 0 22px;
+    border-radius: 8px;
+    font-size: 16px;
+    white-space: nowrap;
+  }
+  .submit-btn:disabled {
+    opacity: 0.7;
+    cursor: default;
+  }
+
   .field-checkbox {
     display: grid;
-    grid-template-columns: 20px 1fr;
+    grid-template-columns: 18px minmax(0, 1fr);
     align-items: start;
     column-gap: 10px;
-    row-gap: 6px;
+    row-gap: 4px;
   }
   .field-checkbox input {
-    width: 20px;
-    height: 20px;
-    margin: 2px 0 0;
+    width: 18px;
+    height: 18px;
+    margin: 3px 0 0;
+    accent-color: var(--brand);
   }
   .field-checkbox label {
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
+    color: var(--ink-muted);
     cursor: pointer;
   }
   .field-checkbox .field-error {
@@ -163,20 +221,7 @@ const c = copy[locale];
     font-size: 14px;
     margin: 0;
   }
-  .honeypot {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-  }
-  .row {
-    display: contents;
-  }
-  .submit-btn {
-    width: 100%;
-  }
+
   .more summary {
     display: none;
   }
@@ -188,51 +233,51 @@ const c = copy[locale];
     text-decoration: underline;
     text-underline-offset: 3px;
     width: fit-content;
-    padding: 4px 0;
+  }
+  .compact .more summary::-webkit-details-marker {
+    display: none;
   }
   .compact .more[open] summary {
-    margin-bottom: 12px;
+    margin-bottom: 14px;
   }
-  .more .row-two {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+  .more-fields {
+    display: grid;
+    gap: 14px;
   }
-  .submit-btn:disabled {
-    opacity: 0.7;
-    cursor: default;
+  .more-fields select,
+  .more-fields input {
+    height: 48px;
+    border-radius: 10px;
+  }
+  @media (min-width: 560px) {
+    .more-fields {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+  }
+
+  .honeypot {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
   }
   .form-message {
     font-size: 16px;
     margin: 0;
   }
 
-  @media (min-width: 960px) {
-    .waitlist-form.compact {
-      gap: 10px;
+  /* Narrow phones: button drops under the number */
+  @media (max-width: 519px) {
+    .group {
+      flex-wrap: wrap;
     }
-    .compact .row-phone,
-    .compact .row-two {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
+    .group input {
+      flex: 1 1 60%;
     }
-    .compact .row-phone .field {
-      flex: 1;
-    }
-    .compact .row-phone .submit-btn {
-      width: auto;
-      white-space: nowrap;
-    }
-    .compact .row-two .field {
-      flex: 1;
-    }
-    .compact .row-phone .submit-btn {
-      /* label line (14px x 1.55) + field gap, so the button lines up with the input */
-      margin-top: calc(14px * 1.55 + 6px);
-    }
-    .compact .field label {
-      font-size: 14px;
+    .submit-btn {
+      flex: 1 1 100%;
     }
   }
 </style>
@@ -397,6 +442,8 @@ const c = copy[locale];
         business_type: (form.querySelector<HTMLSelectElement>('select[name="business_type"]'))?.value || undefined,
         email: (form.querySelector<HTMLInputElement>('input[name="email"]'))?.value || undefined,
         locale,
+        consent: true,
+        website: (form.querySelector<HTMLInputElement>('input[name="website"]'))?.value || '',
         source: (form.querySelector<HTMLInputElement>('input[name="source"]'))?.value,
         utm_source: (form.querySelector<HTMLInputElement>('input[name="utm_source"]'))?.value || undefined,
         utm_medium: (form.querySelector<HTMLInputElement>('input[name="utm_medium"]'))?.value || undefined,
@@ -421,13 +468,11 @@ const c = copy[locale];
         if (res.status === 422 || res.status === 400) {
           let body: any = null;
           try { body = await res.json(); } catch { /* ignore */ }
-          const code = body?.error ?? body?.code;
-          if (code === 'has_account') {
-            setStatus('has_account');
-          } else {
-            setStatus('idle');
-            showFieldError(phoneError, phoneInput, msgs.invalidPhone);
-          }
+          // API shape: { status: 'invalid', errors: { phone?: code, consent?: code, email?: code } }
+          const errors = body?.errors ?? {};
+          setStatus('idle');
+          if (errors.consent) showFieldError(consentError, consentInput, msgs.invalidConsent);
+          if (errors.phone || !errors.consent) showFieldError(phoneError, phoneInput, msgs.invalidPhone);
           return;
         }
 

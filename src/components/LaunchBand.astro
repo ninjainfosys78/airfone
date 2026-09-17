@@ -1,0 +1,57 @@
+---
+// Dark closing band with the waitlist form (or the app link after launch).
+import WaitlistForm from './WaitlistForm.astro';
+import { LAUNCHED, APP_URL } from '../config/site';
+import type { Locale } from '../i18n';
+
+export interface Props {
+  locale: Locale;
+  source: string;
+}
+const { locale, source } = Astro.props;
+
+const copy = {
+  ne: { h2: '२८ सेप्टेम्बरमा पहिलो पालोमा हुनुहोस्', tryFree: 'निःशुल्क सुरु गर्नुहोस्' },
+  en: { h2: 'Be first in line on 28 September', tryFree: 'Try it free' },
+} as const;
+const c = copy[locale];
+---
+<section class="launch-band on-night">
+  <div class="wrap grid">
+    <h2>{c.h2}</h2>
+    {LAUNCHED ? (
+      <a class="btn btn-primary big" href={APP_URL}>{c.tryFree}</a>
+    ) : (
+      <WaitlistForm locale={locale} id={`${source}-band`} source={source} compact />
+    )}
+  </div>
+</section>
+
+<style>
+  .launch-band {
+    padding: 112px 0;
+  }
+  .grid {
+    display: grid;
+    gap: 40px;
+    align-items: end;
+  }
+  h2 {
+    color: var(--night-ink);
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    line-height: 1.15;
+    max-width: 16ch;
+  }
+  .big {
+    height: 56px;
+    padding: 0 28px;
+    font-size: 18px;
+    width: fit-content;
+  }
+  @media (min-width: 900px) {
+    .grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 88px;
+    }
+  }
+</style>

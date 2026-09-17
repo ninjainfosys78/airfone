@@ -1,5 +1,6 @@
 ---
 import WaitlistForm from './WaitlistForm.astro';
+import LaunchBand from './LaunchBand.astro';
 import CallCard from './CallCard.astro';
 import CallTranscript from './CallTranscript.astro';
 import StructuredData from './StructuredData.astro';
@@ -39,7 +40,6 @@ const copy = {
       { q: 'मूल्य कति पर्छ?', a: 'मूल्य २८ सेप्टेम्बरमा सुरुवातसँगै सार्वजनिक गर्नेछौं। सूचीमा नाम लेखाउनेलाई पहिले जानकारी दिनेछौं।' },
       { q: 'WhatsApp मा पनि चल्छ?', a: 'अहिले फोन कलमा चल्छ। WhatsApp छिट्टै थपिँदैछ।' },
     ],
-    closingH2: '२८ सेप्टेम्बरमा पहिलो पालोमा हुनुहोस्',
   },
   en: {
     h1: 'Your customer calls, answered by AI in Nepali.',
@@ -67,7 +67,6 @@ const copy = {
       { q: 'How much does it cost?', a: "We'll publish pricing at launch on 28 September. People on the waitlist hear first." },
       { q: 'Does it work on WhatsApp?', a: 'It works on phone calls today. WhatsApp is coming soon.' },
     ],
-    closingH2: 'Be first in line on 28 September',
   },
 } as const;
 
@@ -157,18 +156,7 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
   </div>
 </section>
 
-<section class="closing on-night">
-  <div class="wrap closing-grid">
-    <div>
-      <h2>{c.closingH2}</h2>
-    </div>
-    {LAUNCHED ? (
-      <a class="btn btn-primary btn-large" href={APP_URL}>{c.tryFree}</a>
-    ) : (
-      <WaitlistForm locale={locale} id="closing" source="closing" compact />
-    )}
-  </div>
-</section>
+<LaunchBand locale={locale} source="closing" />
 
 <style>
   h2 {
@@ -380,22 +368,4 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
     max-width: 60ch;
   }
 
-  /* Closing */
-  .closing {
-    padding: 120px 0;
-  }
-  .closing h2 {
-    color: var(--night-ink);
-  }
-  .closing-grid {
-    display: grid;
-    gap: 40px;
-    align-items: end;
-  }
-  @media (min-width: 900px) {
-    .closing-grid {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 88px;
-    }
-  }
 </style>

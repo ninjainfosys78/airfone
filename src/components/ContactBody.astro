@@ -1,4 +1,5 @@
 ---
+import LaunchBand from './LaunchBand.astro';
 import StructuredData from './StructuredData.astro';
 import { CONTACT_EMAIL, CONTACT_PHONE_TEL, CONTACT_PHONE_DISPLAY } from '../config/site';
 import type { Locale } from '../i18n';
@@ -11,43 +12,181 @@ const { locale } = Astro.props;
 const copy = {
   ne: {
     h1: 'सम्पर्क गर्नुहोस्',
-    line: 'प्रश्न वा सुझावका लागि हामीलाई फोन वा इमेल गर्नुहोस्।',
-    waitlist: 'AirFone सुरु हुँदा सूचना पाउन सूचीमा नाम लेखाउनुहोस्।',
-    waitlistHref: '/#waitlist',
+    phone: 'फोन',
+    email: 'इमेल',
+    call: 'फोन गर्नुहोस्',
+    write: 'इमेल पठाउनुहोस्',
+    copy: 'कपी',
+    copied: 'कपी भयो',
+    topicsH2: 'यी कुरामा फोन गर्नुहोस्',
+    topics: [
+      { title: 'आफ्नो व्यवसायमा AirFone', body: 'पसल, क्लिनिक, विद्यालय वा अनलाइन स्टोरमा एजेन्टले के गर्न सक्छ भनेर सोध्नुहोस्।' },
+      { title: 'सुरुवात र मूल्य', body: '२८ सेप्टेम्बरको सुरुवात र मूल्यबारे।' },
+      { title: 'प्रतीक्षा सूची', body: 'सूचीमा नाम थप्न वा हटाउन।' },
+    ],
   },
   en: {
     h1: 'Contact us',
-    line: 'Call or email us with questions or feedback.',
-    waitlist: 'Join the waitlist to hear when AirFone launches.',
-    waitlistHref: '/en/#waitlist',
+    phone: 'Phone',
+    email: 'Email',
+    call: 'Call',
+    write: 'Send an email',
+    copy: 'Copy',
+    copied: 'Copied',
+    topicsH2: 'Good reasons to call',
+    topics: [
+      { title: 'AirFone for your business', body: 'Ask what the agent can do for your shop, clinic, school or online store.' },
+      { title: 'Launch and pricing', body: 'About the 28 September launch and pricing.' },
+      { title: 'The waitlist', body: 'To add your number to the list or remove it.' },
+    ],
   },
 } as const;
 const c = copy[locale];
 ---
 <StructuredData locale={locale} />
-<section class="page-hero">
+
+<section class="hero">
   <div class="wrap">
     <h1>{c.h1}</h1>
-    <p class="email"><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
-    <p class="phone"><a href={CONTACT_PHONE_TEL}>{CONTACT_PHONE_DISPLAY[locale]}</a></p>
+    <div class="channels">
+      <div class="channel">
+        <p class="label">{c.phone}</p>
+        <a class="value" href={CONTACT_PHONE_TEL}>{CONTACT_PHONE_DISPLAY[locale]}</a>
+        <div class="actions">
+          <a class="btn btn-primary" href={CONTACT_PHONE_TEL}>{c.call}</a>
+          <button type="button" class="btn btn-secondary" data-copy={CONTACT_PHONE_DISPLAY.en.replace('-', '')} data-copied={c.copied}>{c.copy}</button>
+        </div>
+      </div>
+      <div class="channel">
+        <p class="label">{c.email}</p>
+        <a class="value" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+        <div class="actions">
+          <a class="btn btn-primary" href={`mailto:${CONTACT_EMAIL}`}>{c.write}</a>
+          <button type="button" class="btn btn-secondary" data-copy={CONTACT_EMAIL} data-copied={c.copied}>{c.copy}</button>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
+
+<section class="topics on-tint">
+  <div class="wrap split">
+    <h2>{c.topicsH2}</h2>
+    <ol class="list">
+      {c.topics.map((t) => (
+        <li>
+          <h3>{t.title}</h3>
+          <p>{t.body}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<LaunchBand locale={locale} source="contact-band" />
+
 <style>
-  .page-hero {
-    padding: 72px 0 96px;
+  .hero {
+    padding: 88px 0 104px;
   }
-  .email, .phone {
-    margin-top: 24px;
-    font-size: 22px;
+  .channels {
+    margin-top: 56px;
+    display: grid;
+    border-top: 1px solid var(--line);
   }
-  .phone {
+  .channel {
+    display: grid;
+    gap: 8px 32px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: center;
+  }
+  .label {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink-muted);
+  }
+  .value {
+    font-size: clamp(1.75rem, 4.5vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--ink);
+    text-decoration: none;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+  }
+  .value:hover {
+    color: var(--brand-ink);
+  }
+  .actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
     margin-top: 8px;
   }
-  .email a, .phone a {
-    font-weight: 600;
+  .actions .btn {
+    height: 44px;
+    padding: 0 18px;
   }
-  .waitlist-line {
-    margin-top: 32px;
-    font-size: 18px;
+  @media (min-width: 900px) {
+    .channel {
+      grid-template-columns: 160px minmax(0, 1fr) auto;
+    }
+    .actions {
+      margin-top: 0;
+    }
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.15;
+  }
+  .topics {
+    padding: 112px 0;
+  }
+  .split {
+    display: grid;
+    gap: 40px;
+  }
+  @media (min-width: 900px) {
+    .split {
+      grid-template-columns: 4fr 8fr;
+      gap: 64px;
+      align-items: start;
+    }
+  }
+  .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+  .list li {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .list h3 {
+    font-size: 22px;
+  }
+  .list p {
+    margin: 6px 0 0;
+    font-size: 17px;
+    color: var(--ink-muted);
   }
 </style>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
+    const original = btn.textContent;
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy || '');
+        btn.textContent = btn.dataset.copied || original;
+        setTimeout(() => (btn.textContent = original), 1500);
+      } catch {
+        /* Clipboard blocked: the value is still selectable on the page. */
+      }
+    });
+  });
+</script>

@@ -198,7 +198,9 @@ input:focus, select:focus, a:focus-visible, button:focus-visible {
 
 /* Dark band surfaces: remap the light tokens so shared components
    (forms, links, secondary text) read correctly on --night. */
+
 .on-night {
+  color-scheme: dark;
   background: var(--night);
   color: var(--night-ink);
   --ink: var(--night-ink);
