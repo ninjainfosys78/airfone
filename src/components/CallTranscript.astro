@@ -22,6 +22,16 @@ const copy = {
   },
 } as const;
 const c = copy[locale];
+
+// Show the opening exchange; the rest stays in the HTML (for search and
+// screen readers) behind a disclosure.
+const PREVIEW = 4;
+const first = call.lines.slice(0, PREVIEW);
+const rest = call.lines.slice(PREVIEW);
+const toDevanagari = (n: number) => String(n).replace(/\d/g, (d) => '०१२३४५६७८९'[Number(d)]);
+const count = locale === 'ne' ? toDevanagari(rest.length) : String(rest.length);
+const more = locale === 'ne' ? `बाँकी ${count} लाइन हेर्नुहोस्` : `Show the other ${count} lines`;
+const less = locale === 'ne' ? 'कम देखाउनुहोस्' : 'Show less';
 ---
 {call.lines.length > 0 && (
   <section class="transcript-section" id="call">
@@ -29,14 +39,33 @@ const c = copy[locale];
       <div class="intro">
         <h2>{c.h2}</h2>
       </div>
-      <ol class="lines">
-        {call.lines.map((line) => (
-          <li data-call-line data-start={line.start} tabindex="0" class={line.speaker}>
-            <span class="speaker">{line.speaker === 'caller' ? c.caller : 'AirFone'}</span>
-            <span class="text">{locale === 'ne' ? line.ne : line.en}</span>
-          </li>
-        ))}
-      </ol>
+      <div class="body">
+        <ol class="lines">
+          {first.map((line) => (
+            <li data-call-line data-start={line.start} tabindex="0" class={line.speaker}>
+              <span class="speaker">{line.speaker === 'caller' ? c.caller : 'AirFone'}</span>
+              <span class="text">{locale === 'ne' ? line.ne : line.en}</span>
+            </li>
+          ))}
+        </ol>
+        {rest.length > 0 && (
+          <details class="rest">
+            <summary>
+              <span class="when-closed">{more}</span>
+              <span class="when-open">{less}</span>
+              <span class="chev" aria-hidden="true"></span>
+            </summary>
+            <ol class="lines lines-rest" start={PREVIEW + 1}>
+              {rest.map((line) => (
+                <li data-call-line data-start={line.start} tabindex="0" class={line.speaker}>
+                  <span class="speaker">{line.speaker === 'caller' ? c.caller : 'AirFone'}</span>
+                  <span class="text">{locale === 'ne' ? line.ne : line.en}</span>
+                </li>
+              ))}
+            </ol>
+          </details>
+        )}
+      </div>
     </div>
   </section>
 )}
@@ -58,6 +87,53 @@ const c = copy[locale];
     margin: 0;
     padding: 0;
     border-top: 1px solid var(--line);
+  }
+  .lines-rest {
+    border-top: 0;
+  }
+  .rest summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 56px;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--line);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--brand-ink);
+  }
+  .rest summary::-webkit-details-marker {
+    display: none;
+  }
+  .rest summary:hover {
+    background: var(--tint);
+  }
+  .when-open,
+  .rest[open] .when-closed {
+    display: none;
+  }
+  .rest[open] .when-open {
+    display: inline;
+  }
+  .chev {
+    width: 8px;
+    height: 8px;
+    margin-top: -4px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 150ms ease-out;
+  }
+  .rest[open] .chev {
+    margin-top: 4px;
+    transform: rotate(-135deg);
+  }
+  /* 'Show less' moves below the full list once opened. */
+  .rest[open] {
+    display: flex;
+    flex-direction: column-reverse;
   }
   .lines li {
     display: grid;
