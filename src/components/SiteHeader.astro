@@ -1,6 +1,6 @@
 ---
 import { t, localePath, otherLocalePath, type Locale } from '../i18n';
-import { LAUNCHED, APP_URL } from '../config/site';
+import { LAUNCHED, APP_URL, TEASER } from '../config/site';
 
 export interface Props {
   locale: Locale;
@@ -26,6 +26,11 @@ const links = [
       <img src="/brand/airfone-lockup-light.svg" alt="AirFone" width="146" height="30" />
     </a>
 
+    {TEASER ? (
+      <div class="right teaser-right">
+        <a class="lang" href={other.href} hreflang={other.locale} lang={other.locale}>{copy.langSwitchLabel}</a>
+      </div>
+    ) : (<>
     <nav class="links" aria-label={locale === 'ne' ? 'मुख्य नेभिगेसन' : 'Main navigation'}>
       {links.map((l) => (
         <a href={l.href} aria-current={path === l.match ? 'page' : undefined}>{l.label}</a>
@@ -53,6 +58,7 @@ const links = [
         <a class="btn btn-primary sheet-cta" href={ctaHref}>{ctaLabel}</a>
       </div>
     </details>
+    </>)}
   </div>
 </header>
 
@@ -193,6 +199,9 @@ const links = [
     font-size: 17px;
   }
 
+  .teaser-right {
+    display: flex;
+  }
   @media (min-width: 900px) {
     .links,
     .right {

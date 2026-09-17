@@ -1,0 +1,128 @@
+---
+// Pre-launch page: one line and the waitlist. Shown while SITE_MODE is 'teaser'.
+import WaitlistForm from './WaitlistForm.astro';
+import StructuredData from './StructuredData.astro';
+import type { Locale } from '../i18n';
+
+export interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+---
+<StructuredData locale={locale} />
+
+<section class="teaser">
+  <div class="wrap inner">
+    <h1>
+      {locale === 'ne' ? (
+        <>तपाईंको <strong>AI कल एजेन्ट</strong> <span class="keep">आउँदैछ</span></>
+      ) : (
+        <>Your <strong>AI Call Agent</strong> <span class="keep">is on its way</span></>
+      )}
+      <svg class="signal" viewBox="0 0 48 48" aria-hidden="true">
+        <circle cx="10" cy="38" r="6" />
+        <path d="M6 20a22 22 0 0 1 22 22" />
+        <path d="M6 6a36 36 0 0 1 36 36" />
+      </svg>
+    </h1>
+
+    <div class="form" id="waitlist">
+      <WaitlistForm locale={locale} id="teaser" source="teaser" compact />
+    </div>
+  </div>
+  <span class="cloud" aria-hidden="true"></span>
+</section>
+
+<style>
+  /* Flat brand green (white text 5:1). The logo cloud sits in the corner
+     like the campaign banner. */
+  .teaser {
+    --teaser-green: #4F7F14;
+    --teaser-deep: #3A5F0D;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    background: var(--teaser-green);
+    color: #fff;
+    min-height: calc(100svh - 68px - 62px);
+    display: flex;
+    align-items: center;
+  }
+  .inner {
+    width: 100%;
+    padding-top: 72px;
+    padding-bottom: 96px;
+  }
+  h1 {
+    margin: 0;
+    max-width: 18ch;
+    color: #fff;
+    font-weight: 400;
+    font-size: clamp(2.25rem, 6vw, 4.5rem);
+    line-height: 1.1;
+  }
+  h1 strong {
+    font-weight: 700;
+  }
+  .keep {
+    white-space: nowrap;
+  }
+  .signal {
+    display: inline-block;
+    width: 0.8em;
+    height: 0.8em;
+    margin-left: 0.2em;
+    vertical-align: -0.02em;
+    fill: var(--teaser-deep);
+  }
+  .signal path {
+    fill: none;
+    stroke: var(--teaser-deep);
+    stroke-width: 7;
+    stroke-linecap: round;
+  }
+  .form {
+    margin-top: 48px;
+    max-width: 560px;
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: var(--radius-panel);
+    padding: 24px;
+  }
+  .cloud {
+    position: absolute;
+    z-index: -1;
+    right: -6vw;
+    bottom: -14vw;
+    width: min(48vw, 640px);
+    aspect-ratio: 1240 / 759;
+    background: var(--teaser-deep);
+    -webkit-mask: url('/brand/cloud-outline.svg') center / contain no-repeat;
+    mask: url('/brand/cloud-outline.svg') center / contain no-repeat;
+  }
+  @media (max-width: 600px) {
+    .form {
+      padding: 18px;
+    }
+    .cloud {
+      width: 80vw;
+      bottom: -22vw;
+      right: -18vw;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    h1 {
+      animation: hero-in 900ms 60ms var(--ease-out-expo) both;
+    }
+    .form {
+      animation: hero-in 900ms 220ms var(--ease-out-expo) both;
+    }
+    .cloud {
+      animation: cloud-in 1600ms var(--ease-out-expo) both;
+    }
+    @keyframes cloud-in {
+      from { transform: translate(4vw, 4vw); }
+      to { transform: none; }
+    }
+  }
+</style>

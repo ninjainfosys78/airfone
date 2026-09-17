@@ -1,7 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PricingBody from '../components/PricingBody.astro';
+import Redirect from '../components/Redirect.astro';
+import { TEASER } from '../config/site';
 ---
+{TEASER ? <Redirect to="/" locale="ne" label="AirFone" /> : (
 <Layout
   locale="ne"
   path="/pricing/"
@@ -10,3 +13,4 @@ import PricingBody from '../components/PricingBody.astro';
 >
   <PricingBody locale="ne" />
 </Layout>
+)}

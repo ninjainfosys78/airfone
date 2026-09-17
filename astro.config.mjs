@@ -1,6 +1,9 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
+
+// Site mode flag (see src/config/site.ts). Set PUBLIC_SITE_MODE=full at build time for the full site.
+const TEASER = process.env.PUBLIC_SITE_MODE !== 'full';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
@@ -94,7 +97,7 @@ export default defineConfig({
   integrations: [
     react(),
     sitemap({
-      filter: (page) => !isNoindexPage(page),
+      filter: (page) => !isNoindexPage(page) && !(TEASER && /\/(pricing|contact)\/$/.test(new URL(page).pathname)),
       i18n: { defaultLocale: 'ne', locales: { ne: 'ne', en: 'en' } },
       changefreq: 'weekly',
       lastmod: new Date(),

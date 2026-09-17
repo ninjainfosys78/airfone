@@ -1,12 +1,14 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import HomeBody from '../../components/HomeBody.astro';
+import TeaserBody from '../../components/TeaserBody.astro';
+import { TEASER } from '../../config/site';
 ---
 <Layout
   locale="en"
   path="/"
-  title="AirFone | AI call center for Nepali businesses"
+  title={TEASER ? "AirFone | Your AI call agent is on its way" : "AirFone | AI call center for Nepali businesses"}
   description="AirFone's AI agent answers your customers' calls about prices, hours and services in Nepali, day and night. Launching 28 September."
 >
-  <HomeBody locale="en" />
+  {TEASER ? <TeaserBody locale="en" /> : <HomeBody locale="en" />}
 </Layout>

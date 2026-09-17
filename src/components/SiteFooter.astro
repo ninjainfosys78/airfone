@@ -1,6 +1,6 @@
 ---
 import { t, localePath, otherLocalePath, type Locale } from '../i18n';
-import { APP_URL, CONTACT_EMAIL, CONTACT_PHONE_TEL, CONTACT_PHONE_DISPLAY } from '../config/site';
+import { APP_URL, CONTACT_EMAIL, CONTACT_PHONE_TEL, CONTACT_PHONE_DISPLAY, TEASER } from '../config/site';
 
 export interface Props {
   locale: Locale;
@@ -18,6 +18,14 @@ const groups = {
 const g = groups[locale];
 const here = { locale, href: localePath(locale, path), label: locale === 'ne' ? 'नेपाली' : 'English' };
 ---
+{TEASER ? (
+<footer class="site-footer slim on-night">
+  <div class="wrap slim-row">
+    <p>{copy.copyright}</p>
+    <a href={localePath(locale, '/privacy/')}>{copy.privacy}</a>
+  </div>
+</footer>
+) : (
 <footer class="site-footer on-night">
   <div class="wrap">
     <div class="top">
@@ -56,8 +64,27 @@ const here = { locale, href: localePath(locale, path), label: locale === 'ne' ? 
     </div>
   </div>
 </footer>
+)}
 
 <style>
+  .site-footer.slim {
+    padding: 20px 0;
+  }
+  .slim-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .slim-row p,
+  .slim-row a {
+    margin: 0;
+    font-size: 14px;
+    color: var(--night-muted);
+    text-decoration: none;
+  }
+  .slim-row a:hover {
+    color: var(--night-ink);
+  }
   .site-footer {
     border-top: 1px solid var(--night-line);
     padding: 88px 0 40px;

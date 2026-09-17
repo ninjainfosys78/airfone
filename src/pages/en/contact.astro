@@ -1,7 +1,10 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import ContactBody from '../../components/ContactBody.astro';
+import Redirect from '../../components/Redirect.astro';
+import { TEASER } from '../../config/site';
 ---
+{TEASER ? <Redirect to="/en/" locale="en" label="AirFone" /> : (
 <Layout
   locale="en"
   path="/contact/"
@@ -10,3 +13,4 @@ import ContactBody from '../../components/ContactBody.astro';
 >
   <ContactBody locale="en" />
 </Layout>
+)}
