@@ -1,7 +1,7 @@
 ---
-// Hero product visual: the real recorded call with its waveform.
-// Owns the single <audio> element for the page; CallTranscript lines
-// (data-call-line) anywhere on the page stay in sync with it.
+// Hero product visual: the real recorded call, shown as live captions over
+// its waveform. Owns the page's single <audio>; CallTranscript lines
+// (data-call-line) stay in sync with it.
 import { demoCall } from '../data/demo-call';
 import { demoWaveform } from '../data/demo-waveform';
 import { DEMO_AUDIO_URL } from '../config/site';
@@ -18,96 +18,71 @@ const first = call.lines[0];
 const format = (sec: number) => `${Math.floor(sec / 60)}:${String(Math.floor(sec % 60)).padStart(2, '0')}`;
 
 const copy = {
-  ne: {
-    sub: 'साँचो कल, सम्पादन नगरिएको',
-    caller: 'ग्राहक',
-    play: 'कल सुन्नुहोस्',
-    pause: 'रोक्नुहोस्',
-    readAll: 'पूरा कल पढ्नुहोस्',
-  },
-  en: {
-    sub: 'Real call, not edited',
-    caller: 'Caller',
-    play: 'Play the call',
-    pause: 'Pause',
-    readAll: 'Read the full call',
-  },
+  ne: { caller: 'ग्राहक', play: 'कल बजाउनुहोस्', pause: 'रोक्नुहोस्' },
+  en: { caller: 'Caller', play: 'Play the call', pause: 'Pause' },
 } as const;
 const c = copy[locale];
 
-const BAR = 5;
-const HEIGHT = 56;
+const BAR = 6;
+const HEIGHT = 96;
 const bars = demoWaveform.peaks.map((peak, i) => {
-  const h = Math.max(3, Math.round(peak * HEIGHT));
+  const h = Math.max(4, Math.round(peak * HEIGHT));
   const code = demoWaveform.speakers[i];
   const who = code === 'a' ? 'agent' : code === 'c' ? 'caller' : 'silence';
   return { x: i * BAR, y: Math.round((HEIGHT - h) / 2), h, who };
 });
 ---
 {call.lines.length > 0 && (
-  <div class="call-card on-night" data-call-card data-audio-src={DEMO_AUDIO_URL} data-label-play={c.play} data-label-pause={c.pause}>
-    <div class="card-top">
-      <img class="mark" src="/brand/airfone-mark.svg" alt="" width="36" height="36" />
-      <div class="who">
-        <p class="business">{locale === 'ne' ? call.business.ne : call.business.en}</p>
-        <p class="sub">{c.sub}</p>
-      </div>
+  <div class="call" data-call-card data-label-play={c.play} data-label-pause={c.pause}>
+    <div class="top">
+      <p class="business">{locale === 'ne' ? call.business.ne : call.business.en}</p>
       <p class="time" data-call-time>0:00 / {format(call.duration)}</p>
     </div>
 
-    <svg
-      class="wave"
-      viewBox={`0 0 ${demoWaveform.peaks.length * BAR} ${HEIGHT}`}
-      preserveAspectRatio="none"
-      role="presentation"
-      data-call-wave
-    >
-      {bars.map((b) => (
-        <rect x={b.x} y={b.y} width="3" height={b.h} rx="1.5" class={b.who} />
-      ))}
-    </svg>
+    <div class="caption" aria-live="off">
+      <p class="speaker" data-call-speaker data-who={first.speaker}>{first.speaker === 'caller' ? c.caller : 'AirFone'}</p>
+      <p class="text" data-call-text>{locale === 'ne' ? first.ne : first.en}</p>
+    </div>
 
-    <div class="now">
+    <div class="deck">
       <button type="button" class="play" data-call-play aria-label={c.play}>
         <svg class="icon-play" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 4.2v11.6a.8.8 0 0 0 1.2.7l9.3-5.8a.8.8 0 0 0 0-1.4L7.2 3.5A.8.8 0 0 0 6 4.2Z" /></svg>
         <svg class="icon-pause" viewBox="0 0 20 20" aria-hidden="true"><rect x="5" y="4" width="3.5" height="12" rx="1" /><rect x="11.5" y="4" width="3.5" height="12" rx="1" /></svg>
       </button>
-      <div class="line" aria-live="off">
-        <p class="speaker" data-call-speaker>{first.speaker === 'caller' ? c.caller : 'AirFone'}</p>
-        <p class="text" data-call-text>{locale === 'ne' ? first.ne : first.en}</p>
-      </div>
+      <svg
+        class="wave"
+        viewBox={`0 0 ${demoWaveform.peaks.length * BAR} ${HEIGHT}`}
+        preserveAspectRatio="none"
+        role="presentation"
+        data-call-wave
+      >
+        {bars.map((b) => (
+          <rect x={b.x} y={b.y} width="4" height={b.h} rx="2" class={b.who} />
+        ))}
+      </svg>
     </div>
 
-    <a class="read-all" href="#call">{c.readAll}</a>
-
-    {DEMO_AUDIO_URL && <audio preload="none" src={DEMO_AUDIO_URL} data-call-audio></audio>}
+    {DEMO_AUDIO_URL && <audio preload="auto" src={DEMO_AUDIO_URL} data-call-audio></audio>}
 
     <script type="application/json" data-call-lines set:html={JSON.stringify(
-      call.lines.map((l) => ({ start: l.start, speaker: l.speaker === 'caller' ? c.caller : 'AirFone', text: locale === 'ne' ? l.ne : l.en })),
+      call.lines.map((l) => ({ start: l.start, who: l.speaker, speaker: l.speaker === 'caller' ? c.caller : 'AirFone', text: locale === 'ne' ? l.ne : l.en })),
     )} />
   </div>
 )}
 
 <style>
-  .call-card {
-    border-radius: var(--radius-panel);
-    padding: 24px;
+  .call {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 32px;
   }
-  .card-top {
-    display: grid;
-    grid-template-columns: 36px minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 12px;
-  }
-  .mark {
-    width: 36px;
-    height: 36px;
-    border-radius: var(--radius-control);
-    background: var(--night-ink);
-    padding: 4px;
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--night-line);
   }
   .business {
     margin: 0;
@@ -115,46 +90,42 @@ const bars = demoWaveform.peaks.map((peak, i) => {
     font-size: 16px;
     color: var(--night-ink);
   }
-  .sub {
-    margin: 0;
-    font-size: 14px;
-    color: var(--night-muted);
-  }
   .time {
     margin: 0;
     font-size: 14px;
     color: var(--night-muted);
     font-variant-numeric: tabular-nums;
   }
-  .wave {
-    width: 100%;
-    height: 56px;
-    display: block;
+  .caption {
+    /* Fixed room for the longest line so nothing below moves mid-call. */
+    min-height: calc(4 * 1.35em * 1.45 + 30px);
   }
-  .wave rect {
-    transition: opacity 150ms ease-out;
+  .speaker {
+    margin: 0 0 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--night-muted);
   }
-  .wave .agent {
-    fill: var(--brand);
+  .speaker[data-who='agent'] {
+    color: var(--brand);
   }
-  .wave .caller {
-    fill: var(--night-muted);
+  .text {
+    margin: 0;
+    font-family: 'Instrument Sans', 'Noto Serif Devanagari', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.375rem, 2.2vw, 1.875rem);
+    line-height: 1.35;
+    color: var(--night-ink);
   }
-  .wave .silence {
-    fill: var(--night-line);
-  }
-  .wave.is-started rect:not(.played) {
-    opacity: 0.35;
-  }
-  .now {
+  .deck {
     display: grid;
-    grid-template-columns: 56px minmax(0, 1fr);
-    gap: 16px;
-    align-items: start;
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 20px;
+    align-items: center;
   }
   .play {
-    width: 56px;
-    height: 56px;
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
     border: 0;
     background: var(--brand);
@@ -168,8 +139,8 @@ const bars = demoWaveform.peaks.map((peak, i) => {
     background: var(--night-brand-ink);
   }
   .play svg {
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
     fill: currentColor;
   }
   .icon-pause,
@@ -179,41 +150,37 @@ const bars = demoWaveform.peaks.map((peak, i) => {
   .is-playing .icon-pause {
     display: block;
   }
-  .line {
-    /* Room for the longest line so the card never changes height mid-call. */
-    min-height: calc(3 * 1.5em + 22px);
+  .wave {
+    width: 100%;
+    height: 72px;
+    display: block;
+    cursor: pointer;
   }
-  .speaker {
-    margin: 0 0 2px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--night-brand-ink);
+  .wave .agent {
+    fill: var(--brand);
   }
-  .text {
-    margin: 0;
-    font-size: 18px;
-    line-height: 1.5;
-    color: var(--night-ink);
+  .wave .caller {
+    fill: var(--night-muted);
   }
-  .read-all {
-    font-size: 14px;
-    color: var(--night-muted);
-    text-underline-offset: 3px;
-    width: fit-content;
+  .wave .silence {
+    fill: var(--night-line);
   }
-  .read-all:hover {
-    color: var(--night-ink);
+  .wave rect {
+    transition: opacity 150ms ease-out;
+  }
+  .wave.is-started rect:not(.played) {
+    opacity: 0.3;
   }
   .no-audio .play {
     display: none;
   }
-  .no-audio .now {
+  .no-audio .deck {
     grid-template-columns: minmax(0, 1fr);
   }
 </style>
 
 <script>
-  type Line = { start: number; speaker: string; text: string };
+  type Line = { start: number; who: string; speaker: string; text: string };
 
   function initCall(card: HTMLElement) {
     const audio = card.querySelector<HTMLAudioElement>('[data-call-audio]');
@@ -228,26 +195,24 @@ const bars = demoWaveform.peaks.map((peak, i) => {
 
     const format = (sec: number) => `${Math.floor(sec / 60)}:${String(Math.floor(sec % 60)).padStart(2, '0')}`;
 
-    let lastIndex = 0;
-    function lineIndexAt(t: number) {
+    let shown = -1;
+    function show(t: number, duration: number) {
       let idx = 0;
       lines.forEach((l, i) => {
         if (l.start <= t) idx = i;
       });
-      return idx;
-    }
-
-    function show(t: number, duration: number) {
-      const idx = lineIndexAt(t);
-      if (idx !== lastIndex || t === 0) {
-        lastIndex = idx;
-        if (speakerEl) speakerEl.textContent = lines[idx].speaker;
+      if (idx !== shown) {
+        shown = idx;
+        if (speakerEl) {
+          speakerEl.textContent = lines[idx].speaker;
+          speakerEl.dataset.who = lines[idx].who;
+        }
         if (textEl) textEl.textContent = lines[idx].text;
+        listItems.forEach((li, i) => {
+          if (i === idx) li.setAttribute('aria-current', 'true');
+          else li.removeAttribute('aria-current');
+        });
       }
-      listItems.forEach((li, i) => {
-        if (i === idx && t > 0) li.setAttribute('aria-current', 'true');
-        else li.removeAttribute('aria-current');
-      });
       if (duration > 0) {
         const played = Math.floor((t / duration) * rects.length);
         rects.forEach((r, i) => r.classList.toggle('played', i < played));
@@ -260,13 +225,22 @@ const bars = demoWaveform.peaks.map((peak, i) => {
       return;
     }
 
+    // Set once the visitor pauses, so autoplay never overrides their choice.
+    let userPaused = false;
+
+    const play = () => audio.play();
+
+    function seekAndPlay(seconds: number) {
+      const go = () => {
+        audio.currentTime = seconds;
+        userPaused = false;
+        play().catch(() => {});
+      };
+      if (audio.readyState >= 1) go();
+      else audio.addEventListener('loadedmetadata', go, { once: true });
+    }
+
     audio.addEventListener('error', () => card.classList.add('no-audio'));
-
-    playBtn?.addEventListener('click', () => {
-      if (audio.paused) audio.play().catch(() => card.classList.add('no-audio'));
-      else audio.pause();
-    });
-
     audio.addEventListener('play', () => {
       card.classList.add('is-playing');
       wave?.classList.add('is-started');
@@ -278,35 +252,24 @@ const bars = demoWaveform.peaks.map((peak, i) => {
     });
     audio.addEventListener('timeupdate', () => show(audio.currentTime, audio.duration || 0));
 
-    // Click on the waveform to seek.
-    wave?.addEventListener('click', (e) => {
-      const box = wave.getBoundingClientRect();
-      const ratio = Math.min(1, Math.max(0, (e.clientX - box.left) / box.width));
-      const seekTo = () => {
-        audio.currentTime = ratio * audio.duration;
-        if (audio.paused) audio.play().catch(() => {});
-      };
-      if (audio.duration) seekTo();
-      else {
-        audio.addEventListener('loadedmetadata', seekTo, { once: true });
-        audio.load();
+    playBtn?.addEventListener('click', () => {
+      if (audio.paused) {
+        userPaused = false;
+        play().catch(() => {});
+      } else {
+        userPaused = true;
+        audio.pause();
       }
     });
 
-    // Transcript lines elsewhere on the page seek the same audio.
+    wave?.addEventListener('click', (e) => {
+      const box = wave.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (e.clientX - box.left) / box.width));
+      seekAndPlay(ratio * (audio.duration || 0));
+    });
+
     listItems.forEach((li) => {
-      const go = () => {
-        const start = Number(li.dataset.start);
-        const seekTo = () => {
-          audio.currentTime = start;
-          if (audio.paused) audio.play().catch(() => {});
-        };
-        if (audio.duration) seekTo();
-        else {
-          audio.addEventListener('loadedmetadata', seekTo, { once: true });
-          audio.load();
-        }
-      };
+      const go = () => seekAndPlay(Number(li.dataset.start));
       li.addEventListener('click', go);
       li.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -314,6 +277,21 @@ const bars = demoWaveform.peaks.map((peak, i) => {
           go();
         }
       });
+    });
+
+    // Autoplay. Browsers only allow sound after the visitor has interacted
+    // with the page, so try right away and otherwise start on the first
+    // tap, click or key press anywhere (except on the call's own controls,
+    // which handle themselves).
+    const events = ['pointerdown', 'keydown'] as const;
+    const onFirstInteraction = (e: Event) => {
+      const target = e.target as Element | null;
+      if (target && target.closest('[data-call-play], [data-call-wave], [data-call-line]')) return;
+      if (!userPaused && audio.paused && audio.currentTime === 0) play().catch(() => {});
+      events.forEach((name) => document.removeEventListener(name, onFirstInteraction, true));
+    };
+    play().catch(() => {
+      events.forEach((name) => document.addEventListener(name, onFirstInteraction, true));
     });
   }
 

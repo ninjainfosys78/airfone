@@ -3,7 +3,7 @@ import WaitlistForm from './WaitlistForm.astro';
 import CallCard from './CallCard.astro';
 import CallTranscript from './CallTranscript.astro';
 import StructuredData from './StructuredData.astro';
-import { LAUNCHED, APP_URL, CONTACT_PHONE_TEL, CONTACT_PHONE_DISPLAY } from '../config/site';
+import { LAUNCHED, APP_URL } from '../config/site';
 import type { Locale } from '../i18n';
 
 export interface Props {
@@ -14,22 +14,17 @@ const { locale } = Astro.props;
 
 const copy = {
   ne: {
-    h1: 'ग्राहकका फोन अब छुट्दैनन्।',
-    lede: 'AirFone को AI एजेन्टले मूल्य, खुल्ने समय र सेवाबारेका प्रश्नको जवाफ नेपालीमा, दिनरात फोनमै दिन्छ।',
-    launch: '२८ सेप्टेम्बरमा सुरु हुँदैछ। सुरु भएपछि हामी फोन गर्नेछौं।',
+    h1: 'ग्राहकका फोन AI ले उठाउँछ, नेपालीमा।',
     tryFree: 'निःशुल्क सुरु गर्नुहोस्',
     problemH2: 'दिनभरि उही प्रश्न, उही जवाफ',
-    problemLine: 'यिनको जवाफ दिँदा कर्मचारीको घण्टौं समय जान्छ। राति वा व्यस्त बेला फोन नउठ्दा ग्राहक अर्कैकहाँ जान्छन्।',
     problemQuotes: ['मूल्य कति हो?', 'स्टकमा छ?', 'अफिस कहिले खुल्छ?', 'डेलिभरी हुन्छ?'],
     setupH2: 'तीन चरणमा तयार',
-    setupLine: 'कोड लेख्नु पर्दैन। ग्राहकलाई जे भन्नुहुन्छ, त्यही सिकाए पुग्छ।',
     steps: [
       { title: 'व्यवसायबारे सिकाउनुहोस्', body: 'बोलेर, वेबसाइटको लिंक राखेर, फेसबुक पेज जोडेर वा फोटो र भिडियो देखाएर। AirFone ले त्यसैबाट एजेन्टको जानकारी तयार गर्छ।' },
       { title: 'आफैं फोन गरेर जाँच्नुहोस्', body: 'आफ्नो डेमो नम्बरमा PIN सहित फोन गर्नुहोस् र ग्राहकले झैं प्रश्न सोध्नुहोस्।' },
       { title: 'ग्राहकका लागि खोल्नुहोस्', body: 'ठीक लागेपछि आफ्नै AirFone नम्बर लिनुहोस् र साँचो कल लिन थाल्नुहोस्।' },
     ],
     whoH2: 'पसलदेखि विद्यालयसम्म',
-    whoLine: 'ग्राहकले फोनमा जे सोध्छन्, त्यही सिकाउनुहोस्।',
     who: [
       { type: 'पसल', q: 'यो मोबाइलको मूल्य कति हो?' },
       { type: 'अनलाइन स्टोर', q: 'काठमाडौं बाहिर डेलिभरी हुन्छ?' },
@@ -38,33 +33,26 @@ const copy = {
       { type: 'रेस्टुरेन्ट', q: 'शनिबार खुला हुन्छ?' },
     ],
     faqH2: 'प्रायः सोधिने प्रश्न',
-    faqLine: 'अरू केही सोध्नु छ भने फोन गर्नुहोस्:',
     faq: [
-      { q: 'एजेन्टलाई जवाफ थाहा नभए के हुन्छ?', a: 'त्यो जानकारी आफूसँग छैन भन्छ। जवाफ आफैं बनाएर दिँदैन। माथिको कलमा डेलिभरीको प्रश्नमा यही भएको छ।' },
+      { q: 'एजेन्टलाई जवाफ थाहा नभए के हुन्छ?', a: 'त्यो जानकारी आफूसँग छैन भन्छ। जवाफ आफैं बनाएर दिँदैन।' },
       { q: 'सेटअप गर्न प्राविधिक ज्ञान चाहिन्छ?', a: 'चाहिँदैन। व्यवसायबारे बोलेर वा लिंक राखेर सिकाउन सकिन्छ।' },
       { q: 'मूल्य कति पर्छ?', a: 'मूल्य २८ सेप्टेम्बरमा सुरुवातसँगै सार्वजनिक गर्नेछौं। सूचीमा नाम लेखाउनेलाई पहिले जानकारी दिनेछौं।' },
       { q: 'WhatsApp मा पनि चल्छ?', a: 'अहिले फोन कलमा चल्छ। WhatsApp छिट्टै थपिँदैछ।' },
     ],
     closingH2: '२८ सेप्टेम्बरमा पहिलो पालोमा हुनुहोस्',
-    closingLine: 'मोबाइल नम्बर छाड्नुहोस्। सुरु भएको दिन हामी फोन गर्छौं।',
   },
   en: {
-    h1: 'Stop missing customer calls.',
-    lede: "AirFone's AI agent answers questions about your prices, opening hours and services in Nepali, on the phone, day and night.",
-    launch: "Launching 28 September. We'll call you when it's live.",
+    h1: 'Your customer calls, answered by AI in Nepali.',
     tryFree: 'Try it free',
     problemH2: 'The same questions, all day',
-    problemLine: 'Answering them takes hours of staff time. Miss a call at night or during a rush, and the customer calls someone else.',
     problemQuotes: ['How much is it?', 'Is it in stock?', 'When is the office open?', 'Do you deliver?'],
     setupH2: 'Ready in three steps',
-    setupLine: 'No code. Teach it what you already tell your customers.',
     steps: [
       { title: 'Teach it your business', body: "Talk to it, paste your website link, connect your Facebook page, or show photos and videos. AirFone builds the agent's knowledge from that." },
       { title: 'Call it yourself', body: 'Call your demo number with your PIN and ask what your customers ask.' },
       { title: 'Go live', body: "When you're happy, get your own AirFone number and start taking real calls." },
     ],
     whoH2: 'From shops to schools',
-    whoLine: 'Teach it whatever your customers ask on the phone.',
     who: [
       { type: 'Shops', q: 'How much is this phone?' },
       { type: 'Online stores', q: 'Do you deliver outside Kathmandu?' },
@@ -73,15 +61,13 @@ const copy = {
       { type: 'Restaurants', q: 'Are you open on Saturday?' },
     ],
     faqH2: 'Common questions',
-    faqLine: 'Something else? Call us at',
     faq: [
-      { q: "What if the agent doesn't know an answer?", a: "It says it doesn't have that information. It doesn't make one up. You can hear this in the call above, on the delivery question." },
+      { q: "What if the agent doesn't know an answer?", a: "It says it doesn't have that information. It doesn't make one up." },
       { q: 'Do I need technical skills?', a: 'No. You teach it by talking or pasting a link.' },
       { q: 'How much does it cost?', a: "We'll publish pricing at launch on 28 September. People on the waitlist hear first." },
       { q: 'Does it work on WhatsApp?', a: 'It works on phone calls today. WhatsApp is coming soon.' },
     ],
     closingH2: 'Be first in line on 28 September',
-    closingLine: "Leave your mobile number. We'll call you on launch day.",
   },
 } as const;
 
@@ -90,17 +76,15 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
 ---
 <StructuredData locale={locale} home faq={c.faq} />
 
-<section class="hero">
+<section class="hero on-night">
   <div class="wrap hero-grid">
     <div class="hero-text" id="waitlist">
       <h1>{c.h1}</h1>
-      <p class="lede">{c.lede}</p>
       {LAUNCHED ? (
         <a class="btn btn-primary btn-large" href={APP_URL}>{c.tryFree}</a>
       ) : (
         <div class="hero-form">
           <WaitlistForm locale={locale} id="hero" source="hero" compact />
-          <p class="launch">{c.launch}</p>
         </div>
       )}
     </div>
@@ -114,7 +98,6 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
   <div class="wrap split">
     <div>
       <h2>{c.problemH2}</h2>
-      <p class="section-line">{c.problemLine}</p>
     </div>
     <ul class="asks">
       {c.problemQuotes.map((q) => <li>{q}</li>)}
@@ -124,12 +107,9 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
 
 <CallTranscript locale={locale} />
 
-<section class="setup on-tint">
+<section class="setup on-brand">
   <div class="wrap">
-    <div class="section-head">
-      <h2>{c.setupH2}</h2>
-      <p class="section-line">{c.setupLine}</p>
-    </div>
+    <h2>{c.setupH2}</h2>
     <ol class="steps">
       {c.steps.map((step, i) => (
         <li>
@@ -142,11 +122,10 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
   </div>
 </section>
 
-<section class="who">
+<section class="who on-tint">
   <div class="wrap split">
     <div>
       <h2>{c.whoH2}</h2>
-      <p class="section-line">{c.whoLine}</p>
     </div>
     <dl class="who-list">
       {c.who.map((row) => (
@@ -159,13 +138,10 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
   </div>
 </section>
 
-<section class="faq on-tint">
+<section class="faq">
   <div class="wrap split">
     <div>
       <h2>{c.faqH2}</h2>
-      <p class="section-line">
-        {c.faqLine} <a href={CONTACT_PHONE_TEL}>{CONTACT_PHONE_DISPLAY[locale]}</a>
-      </p>
     </div>
     <div class="faq-list">
       {c.faq.map((item) => (
@@ -185,7 +161,6 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
   <div class="wrap closing-grid">
     <div>
       <h2>{c.closingH2}</h2>
-      <p class="section-line">{c.closingLine}</p>
     </div>
     {LAUNCHED ? (
       <a class="btn btn-primary btn-large" href={APP_URL}>{c.tryFree}</a>
@@ -197,14 +172,9 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
 
 <style>
   h2 {
-    font-size: clamp(1.875rem, 3.2vw, 2.625rem);
-    line-height: 1.2;
-  }
-  .section-line {
-    margin: 16px 0 0;
-    font-size: 18px;
-    color: var(--ink-muted);
-    max-width: 44ch;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    line-height: 1.15;
+    max-width: 18ch;
   }
   .split {
     display: grid;
@@ -218,52 +188,41 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
     }
   }
 
-  /* Hero */
+  /* Hero: dark stage, headline and form left, the live call right */
   .hero {
-    padding: 56px 0 88px;
+    padding: 56px 0 72px;
   }
   .hero-grid {
     display: grid;
-    gap: 48px;
+    gap: 56px;
     align-items: center;
   }
   .hero h1 {
-    max-width: 14ch;
-  }
-  .lede {
-    margin: 20px 0 0;
-    font-size: 20px;
-    line-height: 1.5;
-    color: var(--ink-muted);
-    max-width: 38ch;
+    color: var(--night-ink);
+    max-width: 13ch;
   }
   .hero-form {
-    margin-top: 32px;
+    margin-top: 40px;
     max-width: 520px;
   }
-  .launch {
-    margin: 12px 0 0;
-    font-size: 14px;
-    color: var(--ink-muted);
-  }
   .btn-large {
-    margin-top: 32px;
+    margin-top: 40px;
     padding: 16px 28px;
     font-size: 18px;
   }
   @media (min-width: 1000px) {
     .hero {
-      padding: 88px 0 120px;
+      padding: 104px 0 120px;
     }
     .hero-grid {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 72px;
+      gap: 88px;
     }
   }
 
-  /* Problem */
+  /* Problem: the questions themselves, set large */
   .problem {
-    padding: 96px 0;
+    padding: 120px 0;
   }
   .asks {
     list-style: none;
@@ -272,53 +231,57 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
     border-top: 1px solid var(--line);
   }
   .asks li {
-    font-family: 'IBM Plex Serif', 'Noto Serif Devanagari', Georgia, serif;
+    font-family: 'Instrument Sans', 'Noto Serif Devanagari', system-ui, sans-serif;
     font-weight: 600;
-    font-size: clamp(1.5rem, 2.6vw, 2rem);
-    line-height: 1.3;
-    padding: 20px 0;
+    font-size: clamp(1.75rem, 3.4vw, 2.75rem);
+    line-height: 1.25;
+    padding: 24px 0;
     border-bottom: 1px solid var(--line);
   }
 
-  /* Setup */
+  /* Setup: solid brand band */
   .setup {
     padding: 120px 0;
+    background: var(--brand);
+    color: var(--on-brand);
   }
-  .section-head {
-    max-width: 640px;
+  .setup h2 {
+    color: var(--on-brand);
   }
   .steps {
     list-style: none;
-    margin: 56px 0 0;
+    margin: 72px 0 0;
     padding: 0;
     display: grid;
-    gap: 40px;
+    gap: 48px;
   }
   .steps li {
-    border-top: 1px solid var(--ink);
+    border-top: 2px solid var(--on-brand);
     padding-top: 24px;
   }
   .numeral {
     display: block;
-    font-family: 'IBM Plex Serif', 'Noto Serif Devanagari', Georgia, serif;
-    font-weight: 600;
-    font-size: 48px;
+    font-family: 'Instrument Sans', 'Noto Serif Devanagari', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(4rem, 7vw, 6rem);
     line-height: 1;
-    color: var(--brand-ink);
+    color: var(--on-brand);
   }
   .steps h3 {
-    margin-top: 24px;
-    font-size: 22px;
+    margin-top: 28px;
+    font-size: 24px;
+    color: var(--on-brand);
   }
   .steps p {
-    margin: 8px 0 0;
+    margin: 10px 0 0;
     font-size: 17px;
-    color: var(--ink-muted);
+    line-height: 1.55;
+    color: var(--on-brand);
   }
   @media (min-width: 900px) {
     .steps {
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 48px;
+      gap: 56px;
     }
   }
 
@@ -332,8 +295,8 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
   }
   .who-row {
     display: grid;
-    gap: 4px;
-    padding: 20px 0;
+    gap: 6px;
+    padding: 24px 0;
     border-bottom: 1px solid var(--line);
   }
   .who-row dt {
@@ -343,9 +306,10 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
   }
   .who-row dd {
     margin: 0;
-    font-family: 'IBM Plex Serif', 'Noto Serif Devanagari', Georgia, serif;
-    font-size: 22px;
-    line-height: 1.35;
+    font-family: 'Instrument Sans', 'Noto Serif Devanagari', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.375rem, 2.2vw, 1.75rem);
+    line-height: 1.3;
   }
   @media (min-width: 700px) {
     .who-row {
@@ -357,7 +321,7 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
 
   /* FAQ */
   .faq {
-    padding: 96px 0;
+    padding: 120px 0;
   }
   .faq-list {
     border-top: 1px solid var(--line);
@@ -371,11 +335,11 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
     justify-content: space-between;
     align-items: center;
     gap: 16px;
-    min-height: 64px;
-    padding: 16px 0;
+    min-height: 72px;
+    padding: 18px 0;
     cursor: pointer;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 20px;
   }
   .faq-list summary::-webkit-details-marker {
     display: none;
@@ -410,28 +374,28 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
     transform: scaleY(0);
   }
   .faq-list p {
-    margin: 0 0 20px;
-    font-size: 17px;
+    margin: 0 0 24px;
+    font-size: 18px;
     color: var(--ink-muted);
     max-width: 60ch;
   }
 
   /* Closing */
   .closing {
-    padding: 96px 0;
+    padding: 120px 0;
   }
   .closing h2 {
     color: var(--night-ink);
   }
   .closing-grid {
     display: grid;
-    gap: 32px;
+    gap: 40px;
     align-items: end;
   }
   @media (min-width: 900px) {
     .closing-grid {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 72px;
+      gap: 88px;
     }
   }
 </style>

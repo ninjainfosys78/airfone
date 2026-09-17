@@ -13,13 +13,11 @@ const call = demoCall;
 
 const copy = {
   ne: {
-    h2: 'पूरा कल पढ्नुहोस्',
-    line: `${call.business.ne}मा आएको कल, जवाफ AirFone को एजेन्टले दिएको। कुनै लाइनमा थिच्दा त्यहीँबाट सुनिन्छ।`,
+    h2: 'पूरा कल',
     caller: 'ग्राहक',
   },
   en: {
-    h2: 'Read the full call',
-    line: `A call to ${call.business.en}, answered by AirFone's agent in Nepali. The transcript is translated. Tap any line to hear it.`,
+    h2: 'The full call',
     caller: 'Caller',
   },
 } as const;
@@ -30,7 +28,6 @@ const c = copy[locale];
     <div class="wrap grid">
       <div class="intro">
         <h2>{c.h2}</h2>
-        <p class="secondary-text">{c.line}</p>
       </div>
       <ol class="lines">
         {call.lines.map((line) => (

@@ -5,8 +5,9 @@ code isn't listed here, that's a bug — fix the code or extend this file.
 
 ## Fonts
 
-- Headings: **IBM Plex Serif** (Latin) + **Noto Serif Devanagari** (Nepali), weights 600 and 700, self-hosted via `@fontsource/ibm-plex-serif` (latin subset) and `@fontsource/noto-serif-devanagari` (devanagari subset). Stack: `'IBM Plex Serif', 'Noto Serif Devanagari', Georgia, serif`.
-- Body: **Mukta**, weights 400 and 600, self-hosted via `@fontsource/mukta`.
+- Latin text (English words, digits, times): **Instrument Sans** 400/600/700 via `@fontsource/instrument-sans` (latin subset). It comes first in every stack, so Latin glyphs always render in it.
+- Nepali headings: **Noto Serif Devanagari** 600/700 (devanagari subset). Stack: `'Instrument Sans', 'Noto Serif Devanagari', system-ui, sans-serif`.
+- Nepali body: **Mukta** 400/600. Stack: `'Instrument Sans', 'Mukta', system-ui, sans-serif`.
 - No other `font-family` values appear in `src/` besides the `system-ui,
   sans-serif` fallback stack.
 

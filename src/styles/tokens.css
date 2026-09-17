@@ -59,7 +59,7 @@ body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
-  font-family: 'Mukta', system-ui, sans-serif;
+  font-family: 'Instrument Sans', 'Mukta', system-ui, sans-serif;
   font-size: 18px;
   line-height: 1.55;
   letter-spacing: 0;
@@ -81,7 +81,7 @@ input, select, textarea, button {
 }
 
 h1, h2, h3, h4 {
-  font-family: 'IBM Plex Serif', 'Noto Serif Devanagari', Georgia, serif;
+  font-family: 'Instrument Sans', 'Noto Serif Devanagari', system-ui, sans-serif;
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0;
@@ -146,7 +146,7 @@ a, button, .btn, [role="button"] {
   border-radius: var(--radius-control);
   border: 1px solid transparent;
   padding: 12px 20px;
-  font-family: 'Mukta', system-ui, sans-serif;
+  font-family: 'Instrument Sans', 'Mukta', system-ui, sans-serif;
   font-weight: 600;
   font-size: 16px;
   text-decoration: none;
@@ -182,7 +182,7 @@ input, select {
   background: var(--surface);
   color: var(--ink);
   padding: 10px 12px;
-  font-family: 'Mukta', system-ui, sans-serif;
+  font-family: 'Instrument Sans', 'Mukta', system-ui, sans-serif;
   font-size: 16px;
   width: 100%;
   box-sizing: border-box;
