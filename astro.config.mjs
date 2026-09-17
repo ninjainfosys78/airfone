@@ -10,8 +10,9 @@ const HMR_PORT = Number.parseInt(process.env.ASTRO_DEV_PORT ?? '4321', 10);
 
 const REPO_ROOT = path.resolve(fileURLToPath(import.meta.url), '../../../../..');
 
-// Auth-flow routes disallowed in public/robots.txt — kept out of the sitemap
-// too, so we're not asking crawlers to index pages we've told them to skip.
+// Redirect pages, thanks pages and 404 are all `noindex` (and most old
+// stems are meta-refresh redirects now, not real content) — kept out of the
+// sitemap so we're not asking crawlers to index pages we've told them to skip.
 const NOINDEX_PATH_STEMS = [
   'login',
   'register',
@@ -23,11 +24,19 @@ const NOINDEX_PATH_STEMS = [
   'verify-phone-otp',
   'verify-password-reset-otp',
   'verify-password-reset-phone',
+  'features',
+  'platform',
+  'services',
+  'about',
+  '404',
+  'ne', // /ne/ itself is a redirect to /
 ];
 const isNoindexPage = (pageUrl) => {
   const { pathname } = new URL(pageUrl);
-  const segments = pathname.split('/').filter(Boolean); // ['login'] or ['ne', 'login']
-  const stem = segments[0] === 'ne' ? segments[1] : segments[0];
+  const segments = pathname.split('/').filter(Boolean); // ['pricing'] or ['en', 'pricing']
+  const stem = segments[0] === 'en' ? segments[1] : segments[0];
+  if (stem === undefined) return false; // "/" and "/en/" are real pages
+  if (segments.join('/').includes('waitlist')) return true; // thanks pages
   return NOINDEX_PATH_STEMS.includes(stem);
 };
 
@@ -76,11 +85,10 @@ export default defineConfig({
   base: '/',
   devToolbar: { enabled: false },
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'ne'],
-    // English (the default locale) is unprefixed and lives directly at "/" —
-    // no redirect page, so the site opens straight into content instead of
-    // flashing through a client-side "/" → "/en/" hop. Nepali stays under "/ne/".
+    defaultLocale: 'ne',
+    locales: ['ne', 'en'],
+    // Nepali (the default locale) is unprefixed and lives directly at "/".
+    // English stays under "/en/".
     routing: { prefixDefaultLocale: false },
   },
   integrations: [

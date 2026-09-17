@@ -1,0 +1,188 @@
+:root {
+  --paper: #FCFCF9;
+  --surface: #FFFFFF;
+  --ink: #16190F;
+  --ink-muted: #4A5042;
+  --line: #E1E4D9;
+  --brand: #8BC53E;
+  --on-brand: #1B2A06;
+  --brand-ink: #40680B;
+  --night: #141A0D;
+  --night-ink: #EEF2E6;
+  --night-muted: #B6BEA8;
+  --night-line: #2C3520;
+  --night-brand-ink: #A6D86A;
+
+  --radius-control: 8px;
+  --radius-panel: 12px;
+  --max-width: 1120px;
+  --gutter: 16px;
+
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #10140B;
+    --surface: #171D10;
+    --ink: #EEF2E6;
+    --ink-muted: #B3BBA6;
+    --line: #2A3220;
+    --brand-ink: #A6D86A;
+    --night: #0A0D07;
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: 32px;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--paper);
+  color-scheme: light dark;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Mukta', system-ui, sans-serif;
+  font-size: 18px;
+  line-height: 1.55;
+  letter-spacing: 0;
+  overflow-x: hidden;
+}
+
+img, svg {
+  max-width: 100%;
+}
+
+input, select, textarea, button {
+  max-width: 100%;
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 16px;
+  }
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Anek Devanagari', system-ui, sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0;
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(1.75rem, 4.5vw, 3rem);
+}
+
+h2 {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+h3 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+p {
+  max-width: 62ch;
+}
+
+a {
+  color: var(--brand-ink);
+}
+
+.secondary-text {
+  font-size: 16px;
+  color: var(--ink-muted);
+}
+
+a, button, .btn, [role="button"] {
+  transition: color 150ms ease-out, background-color 150ms ease-out, border-color 150ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
+
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+/* Flex/grid items default to min-width:auto, which lets long unbroken
+   content force a container wider than its track and overflow the
+   viewport. Nothing on this site needs that; reset it everywhere. */
+.wrap, .wrap * {
+  min-width: 0;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--radius-control);
+  border: 1px solid transparent;
+  padding: 12px 20px;
+  font-family: 'Mukta', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--brand);
+  color: var(--on-brand);
+}
+
+.btn-primary:hover {
+  background: var(--brand-ink);
+  color: #fff;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  padding: 24px;
+}
+
+input, select {
+  border-radius: var(--radius-control);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  padding: 10px 12px;
+  font-family: 'Mukta', system-ui, sans-serif;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input:focus, select:focus, a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--brand-ink);
+  outline-offset: 2px;
+}
