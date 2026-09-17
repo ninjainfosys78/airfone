@@ -1,0 +1,18 @@
+# AirFone
+
+> AirFone is a self-serve AI call center for Nepali businesses. A business teaches an AI agent about itself (by talking, pasting a website link, connecting a Facebook page, or showing photos and videos), tests it by calling a demo number, then takes real customer calls. The agent answers questions about prices, availability, opening hours and services in Nepali. When it doesn't know an answer, it says so instead of making one up.
+
+- Launch date: 28 September 2026
+- Channels: phone calls today; WhatsApp coming soon
+- For: shops, online stores, clinics and hospitals, schools, restaurants
+- Pricing: announced at launch
+- Contact: info@airfone.app, +977 985-8042433
+- App: https://app.airfone.app
+
+## Pages
+
+- [Home (Nepali)](https://airfone.app/): product overview, a real recorded call with transcript, setup steps, FAQ, launch waitlist
+- [Home (English)](https://airfone.app/en/)
+- [Pricing](https://airfone.app/en/pricing/)
+- [Contact](https://airfone.app/en/contact/)
+- [Privacy](https://airfone.app/en/privacy/)

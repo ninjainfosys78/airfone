@@ -95,6 +95,9 @@ export default defineConfig({
     react(),
     sitemap({
       filter: (page) => !isNoindexPage(page),
+      i18n: { defaultLocale: 'ne', locales: { ne: 'ne', en: 'en' } },
+      changefreq: 'weekly',
+      lastmod: new Date(),
     }),
   ],
   build: {

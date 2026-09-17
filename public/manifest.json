@@ -1,0 +1,14 @@
+{
+  "name": "AirFone",
+  "short_name": "AirFone",
+  "description": "AI call center for Nepali businesses",
+  "lang": "ne",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#FCFCF9",
+  "theme_color": "#8BC53E",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

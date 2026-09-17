@@ -1,5 +1,6 @@
 ---
-import { SITE_URL, CONTACT_EMAIL, CONTACT_PHONE_JSONLD } from '../config/site';
+import { SITE_URL, CONTACT_EMAIL, CONTACT_PHONE_JSONLD, DEMO_AUDIO_URL } from '../config/site';
+import { demoCall } from '../data/demo-call';
 import type { Locale } from '../i18n';
 
 export interface Props {
@@ -13,30 +14,64 @@ const { locale, home = false, faq = [] } = Astro.props;
 const org = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
+  '@id': `${SITE_URL}/#organization`,
   name: 'AirFone',
   url: SITE_URL,
-  logo: `${SITE_URL}/brand/airfone-mark.svg`,
+  logo: `${SITE_URL}/apple-touch-icon.png`,
+  image: `${SITE_URL}/og.png`,
   email: CONTACT_EMAIL,
   telephone: CONTACT_PHONE_JSONLD,
-  areaServed: 'NP',
+  areaServed: { '@type': 'Country', name: 'Nepal' },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'customer support',
+    telephone: CONTACT_PHONE_JSONLD,
+    email: CONTACT_EMAIL,
+    areaServed: 'NP',
+    availableLanguage: ['ne', 'en'],
+  },
 };
 
 const website = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
+  '@id': `${SITE_URL}/#website`,
   name: 'AirFone',
   url: SITE_URL,
-  inLanguage: locale,
+  inLanguage: ['ne', 'en'],
+  publisher: { '@id': `${SITE_URL}/#organization` },
 };
 
 const softwareApp = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
   name: 'AirFone',
+  description:
+    locale === 'ne'
+      ? 'नेपाली व्यवसायका लागि AI कल सेन्टर। AI एजेन्टले ग्राहकका फोनमा मूल्य, समय र सेवाबारेका प्रश्नको जवाफ नेपालीमा दिन्छ।'
+      : 'AI call center for Nepali businesses. An AI agent answers customer calls about prices, hours and services in Nepali.',
   applicationCategory: 'BusinessApplication',
-  operatingSystem: 'Any',
+  applicationSubCategory: 'AI call center',
+  operatingSystem: 'Web',
+  inLanguage: ['ne', 'en'],
   url: SITE_URL,
+  publisher: { '@id': `${SITE_URL}/#organization` },
 };
+
+// The real demo call, with its transcript, so search engines can read it.
+const audio = DEMO_AUDIO_URL && demoCall.lines.length
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'AudioObject',
+      name: locale === 'ne' ? `${demoCall.business.ne}मा AirFone एजेन्टले उठाएको कल` : `AirFone agent answering a call for ${demoCall.business.en}`,
+      contentUrl: DEMO_AUDIO_URL,
+      encodingFormat: 'audio/mpeg',
+      duration: `PT${Math.floor(demoCall.duration / 60)}M${Math.round(demoCall.duration % 60)}S`,
+      uploadDate: '2026-09-17',
+      inLanguage: 'ne',
+      transcript: demoCall.lines.map((l) => `${l.speaker === 'caller' ? (locale === 'ne' ? 'ग्राहक' : 'Caller') : 'AirFone'}: ${locale === 'ne' ? l.ne : l.en}`).join('\n'),
+    }
+  : null;
 
 const faqPage = faq.length
   ? {
@@ -54,3 +89,4 @@ const faqPage = faq.length
 <script type="application/ld+json" set:html={JSON.stringify(website)} />
 {home && <script type="application/ld+json" set:html={JSON.stringify(softwareApp)} />}
 {home && faqPage && <script type="application/ld+json" set:html={JSON.stringify(faqPage)} />}
+{home && audio && <script type="application/ld+json" set:html={JSON.stringify(audio)} />}

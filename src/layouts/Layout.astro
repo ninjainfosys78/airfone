@@ -11,6 +11,8 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import { SITE_URL } from '../config/site';
 import { localePath } from '../i18n';
+import latin700 from '@fontsource/instrument-sans/files/instrument-sans-latin-700-normal.woff2?url';
+import deva700 from '@fontsource/noto-serif-devanagari/files/noto-serif-devanagari-devanagari-700-normal.woff2?url';
 
 export interface Props {
   locale: 'ne' | 'en';
@@ -25,6 +27,18 @@ const { locale, title, description, path, noindex = false } = Astro.props;
 const canonical = `${SITE_URL}${localePath(locale, path)}`;
 const neUrl = `${SITE_URL}${localePath('ne', path)}`;
 const enUrl = `${SITE_URL}${localePath('en', path)}`;
+
+// Breadcrumbs for inner pages (home is the root and needs none).
+const breadcrumb = !noindex && path !== '/'
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'AirFone', item: `${SITE_URL}${localePath(locale, '/')}` },
+        { '@type': 'ListItem', position: 2, name: title.split(' | ')[0], item: canonical },
+      ],
+    }
+  : null;
 ---
 <!doctype html>
 <html lang={locale}>
@@ -33,15 +47,26 @@ const enUrl = `${SITE_URL}${localePath('en', path)}`;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="ne" href={neUrl} />
-    <link rel="alternate" hreflang="en" href={enUrl} />
-    <link rel="alternate" hreflang="x-default" href={neUrl} />
-    {noindex && <meta name="robots" content="noindex" />}
+    {noindex ? (
+      <meta name="robots" content="noindex, follow" />
+    ) : (
+      <>
+        <meta name="robots" content="index, follow, max-image-preview:large" />
+        <link rel="canonical" href={canonical} />
+        <link rel="alternate" hreflang="ne" href={neUrl} />
+        <link rel="alternate" hreflang="en" href={enUrl} />
+        <link rel="alternate" hreflang="x-default" href={neUrl} />
+      </>
+    )}
+
+    <link rel="preload" href={locale === 'ne' ? deva700 : latin700} as="font" type="font/woff2" crossorigin />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+    <link rel="manifest" href="/manifest.json" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
+    <meta property="og:site_name" content="AirFone" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -53,6 +78,10 @@ const enUrl = `${SITE_URL}${localePath('en', path)}`;
     <meta property="og:locale" content={locale === 'ne' ? 'ne_NP' : 'en_US'} />
     <meta property="og:locale:alternate" content={locale === 'ne' ? 'en_US' : 'ne_NP'} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${SITE_URL}/og.png`} />
+    {breadcrumb && <script type="application/ld+json" set:html={JSON.stringify(breadcrumb)} />}
 
     <meta name="theme-color" content="#FCFCF9" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#10140B" media="(prefers-color-scheme: dark)" />
