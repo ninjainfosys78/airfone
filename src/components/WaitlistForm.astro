@@ -1,0 +1,390 @@
+---
+import { WAITLIST_API_URL } from '../config/site';
+import type { Locale } from '../i18n';
+
+export interface Props {
+  locale: Locale;
+  id?: string;
+  source?: string;
+}
+
+const { locale, id, source = 'homepage' } = Astro.props;
+const uid = id ?? `wf-${Math.random().toString(36).slice(2, 9)}`;
+
+const copy = {
+  ne: {
+    phoneLabel: 'मोबाइल नम्बर',
+    phonePlaceholder: '98XXXXXXXX',
+    businessLabel: 'व्यवसायको प्रकार (वैकल्पिक)',
+    businessChoose: 'छान्नुहोस्',
+    businessOptions: ['पसल', 'अनलाइन स्टोर', 'क्लिनिक वा अस्पताल', 'विद्यालय', 'रेस्टुरेन्ट', 'अन्य'],
+    emailLabel: 'इमेल (वैकल्पिक)',
+    consentLabel: 'सुरु भएपछि सम्पर्क गर्न मन्जुर छु।',
+    submit: 'सूचीमा नाम लेखाउनुहोस्',
+    submitting: 'पठाइँदैछ...',
+    created: 'धन्यवाद। सूचीमा नाम दर्ता भयो। सुरु भएपछि फोन गर्नेछौं।',
+    already_on_list: 'तपाईंको नम्बर पहिले नै सूचीमा छ। धन्यवाद।',
+    has_account: 'तपाईंको खाता पहिले नै छ।',
+    signIn: 'साइन इन गर्नुहोस्',
+    invalidPhone: 'कृपया मान्य मोबाइल नम्बर हाल्नुहोस् (9678 सुरु हुने १० अंक)।',
+    invalidConsent: 'कृपया मन्जुरी दिनुहोस्।',
+    rate_limited: 'धेरै पटक प्रयास भयो। केही बेरपछि फेरि प्रयास गर्नुहोस्।',
+    network: 'पठाउन सकिएन। इन्टरनेट जाँच गरेर फेरि प्रयास गर्नुहोस्।',
+  },
+  en: {
+    phoneLabel: 'Mobile number',
+    phonePlaceholder: '98XXXXXXXX',
+    businessLabel: 'Business type (optional)',
+    businessChoose: 'Choose one',
+    businessOptions: ['Shop', 'Online store', 'Clinic or hospital', 'School', 'Restaurant', 'Other'],
+    emailLabel: 'Email (optional)',
+    consentLabel: "I agree to be contacted when AirFone launches.",
+    submit: 'Join the waitlist',
+    submitting: 'Sending...',
+    created: "Thanks. You're on the list. We'll call you when it's live.",
+    already_on_list: "Your number is already on the list. Thanks.",
+    has_account: 'You already have an account.',
+    signIn: 'Sign in',
+    invalidPhone: 'Enter a valid mobile number (10 digits, starting 9678).',
+    invalidConsent: 'Please agree to be contacted.',
+    rate_limited: 'Too many attempts. Try again in a few minutes.',
+    network: 'Could not send. Check your connection and try again.',
+  },
+} as const;
+
+const c = copy[locale];
+---
+<form
+  class="waitlist-form"
+  id={uid}
+  method="post"
+  action={WAITLIST_API_URL}
+  data-waitlist-form
+  data-locale={locale}
+  data-app-url={import.meta.env.PUBLIC_APP_URL || 'https://app.airfone.app'}
+  novalidate
+>
+  <div class="field">
+    <label for={`${uid}-phone`}>{c.phoneLabel}</label>
+    <input
+      type="tel"
+      inputmode="tel"
+      autocomplete="tel"
+      name="phone"
+      id={`${uid}-phone`}
+      placeholder={c.phonePlaceholder}
+      required
+      aria-describedby={`${uid}-phone-error`}
+    />
+    <p class="field-error" id={`${uid}-phone-error`} role="alert" hidden></p>
+  </div>
+
+  <div class="field">
+    <label for={`${uid}-business`}>{c.businessLabel}</label>
+    <select name="business_type" id={`${uid}-business`}>
+      <option value="">{c.businessChoose}</option>
+      {c.businessOptions.map((opt) => <option value={opt}>{opt}</option>)}
+    </select>
+  </div>
+
+  <div class="field">
+    <label for={`${uid}-email`}>{c.emailLabel}</label>
+    <input type="email" autocomplete="email" name="email" id={`${uid}-email`} />
+  </div>
+
+  <div class="field field-checkbox">
+    <input type="checkbox" name="consent" id={`${uid}-consent`} value="true" required aria-describedby={`${uid}-consent-error`} />
+    <label for={`${uid}-consent`}>{c.consentLabel}</label>
+    <p class="field-error" id={`${uid}-consent-error`} role="alert" hidden></p>
+  </div>
+
+  <div class="honeypot" aria-hidden="true">
+    <label for={`${uid}-website`}>Website</label>
+    <input type="text" name="website" id={`${uid}-website`} tabindex="-1" autocomplete="off" />
+  </div>
+
+  <input type="hidden" name="locale" value={locale} />
+  <input type="hidden" name="source" value={source} />
+  <input type="hidden" name="utm_source" data-utm="utm_source" value="" />
+  <input type="hidden" name="utm_medium" data-utm="utm_medium" value="" />
+  <input type="hidden" name="utm_campaign" data-utm="utm_campaign" value="" />
+
+  <button type="submit" class="btn btn-primary submit-btn">{c.submit}</button>
+
+  <p class="form-message" role="status" aria-live="polite" hidden></p>
+</form>
+
+<style>
+  .waitlist-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .field label {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .field-checkbox {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    align-items: start;
+    column-gap: 10px;
+    row-gap: 6px;
+  }
+  .field-checkbox input {
+    width: 20px;
+    height: 20px;
+    margin: 2px 0 0;
+  }
+  .field-checkbox label {
+    font-weight: 400;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .field-checkbox .field-error {
+    grid-column: 2;
+  }
+  .field-error {
+    color: #B3261E;
+    font-size: 14px;
+    margin: 0;
+  }
+  .honeypot {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .submit-btn {
+    width: 100%;
+  }
+  .submit-btn:disabled {
+    opacity: 0.7;
+    cursor: default;
+  }
+  .form-message {
+    font-size: 16px;
+    margin: 0;
+  }
+</style>
+
+<script>
+  type Status = 'idle' | 'submitting' | 'created' | 'already_on_list' | 'has_account' | 'invalid' | 'rate_limited' | 'network';
+
+  const MESSAGES: Record<'ne' | 'en', Record<string, string>> = {
+    ne: {
+      created: 'धन्यवाद। सूचीमा नाम दर्ता भयो। सुरु भएपछि फोन गर्नेछौं।',
+      already_on_list: 'तपाईंको नम्बर पहिले नै सूचीमा छ। धन्यवाद।',
+      has_account: 'तपाईंको खाता पहिले नै छ।',
+      invalidFromLink: 'हाल भरिएको जानकारी मान्य भएन। कृपया मोबाइल नम्बर जाँचेर फेरि पठाउनुहोस्।',
+      invalidPhone: 'कृपया मान्य मोबाइल नम्बर हाल्नुहोस् (9678 सुरु हुने १० अंक)।',
+      invalidConsent: 'कृपया मन्जुरी दिनुहोस्।',
+      rate_limited: 'धेरै पटक प्रयास भयो। केही बेरपछि फेरि प्रयास गर्नुहोस्।',
+      network: 'पठाउन सकिएन। इन्टरनेट जाँच गरेर फेरि प्रयास गर्नुहोस्।',
+      submitting: 'पठाइँदैछ...',
+      submit: 'सूचीमा नाम लेखाउनुहोस्',
+    },
+    en: {
+      created: "Thanks. You're on the list. We'll call you when it's live.",
+      already_on_list: 'Your number is already on the list. Thanks.',
+      has_account: 'You already have an account.',
+      invalidFromLink: 'That submission was not valid. Check your mobile number and send it again.',
+      invalidPhone: 'Enter a valid mobile number (10 digits, starting 9678).',
+      invalidConsent: 'Please agree to be contacted.',
+      rate_limited: 'Too many attempts. Try again in a few minutes.',
+      network: 'Could not send. Check your connection and try again.',
+      submitting: 'Sending...',
+      submit: 'Join the waitlist',
+    },
+  };
+
+  const DEVANAGARI_DIGITS: Record<string, string> = {
+    '०': '0', '१': '1', '२': '2', '३': '3', '४': '4',
+    '५': '5', '६': '6', '७': '7', '८': '8', '९': '9',
+  };
+
+  function normalizePhone(raw: string): string {
+    let s = raw.trim();
+    s = s.replace(/[०-९]/g, (d) => DEVANAGARI_DIGITS[d] ?? d);
+    s = s.replace(/[\s\-().]/g, '');
+    s = s.replace(/^\+?977/, '');
+    s = s.replace(/^00977/, '');
+    return s;
+  }
+
+  function isValidPhone(raw: string): boolean {
+    const n = normalizePhone(raw);
+    return /^9[678]\d{8}$/.test(n);
+  }
+
+  function initForm(form: HTMLFormElement) {
+    const locale = (form.dataset.locale === 'en' ? 'en' : 'ne') as 'ne' | 'en';
+    const msgs = MESSAGES[locale];
+    const phoneInput = form.querySelector<HTMLInputElement>('input[name="phone"]');
+    const consentInput = form.querySelector<HTMLInputElement>('input[name="consent"]');
+    const submitBtn = form.querySelector<HTMLButtonElement>('.submit-btn');
+    const message = form.querySelector<HTMLParagraphElement>('.form-message');
+    const phoneError = form.querySelector<HTMLElement>('[id$="-phone-error"]');
+    const consentError = form.querySelector<HTMLElement>('[id$="-consent-error"]');
+
+    // Fill UTM params + phone normalization on submit.
+    try {
+      const params = new URLSearchParams(window.location.search);
+      form.querySelectorAll<HTMLInputElement>('input[data-utm]').forEach((el) => {
+        const key = el.dataset.utm;
+        if (key) el.value = params.get(key) ?? '';
+      });
+    } catch {
+      // URLSearchParams unsupported or blocked, hidden fields stay empty.
+    }
+
+    function setStatus(status: Status) {
+      if (!submitBtn || !message) return;
+      submitBtn.disabled = status === 'submitting';
+      submitBtn.textContent = status === 'submitting' ? msgs.submitting : msgs.submit;
+
+      const shownMessages: Partial<Record<Status, string>> = {
+        created: msgs.created,
+        already_on_list: msgs.already_on_list,
+        has_account: msgs.has_account,
+        rate_limited: msgs.rate_limited,
+        network: msgs.network,
+      };
+
+      const text = shownMessages[status];
+      if (text) {
+        message.textContent = text;
+        message.hidden = false;
+        if (status === 'has_account') {
+          const link = document.createElement('a');
+          link.href = form.dataset.appUrl || 'https://app.airfone.app';
+          link.textContent = locale === 'ne' ? 'साइन इन गर्नुहोस्' : 'Sign in';
+          message.append(' ', link);
+        }
+      } else if (status === 'idle' || status === 'submitting') {
+        message.hidden = true;
+      }
+
+      if (status === 'created' || status === 'already_on_list') {
+        form.querySelectorAll('input, select, button').forEach((el) => {
+          (el as HTMLInputElement).disabled = true;
+        });
+      }
+    }
+
+    function clearFieldErrors() {
+      if (phoneError) { phoneError.hidden = true; phoneError.textContent = ''; }
+      if (consentError) { consentError.hidden = true; consentError.textContent = ''; }
+    }
+
+    function showFieldError(el: HTMLElement | null, input: HTMLInputElement | null, text: string) {
+      if (!el || !input) return;
+      el.textContent = text;
+      el.hidden = false;
+      input.setAttribute('aria-invalid', 'true');
+      input.focus();
+    }
+
+    // No-JS submissions land back here with ?waitlist=invalid#waitlist. Show
+    // the message even though this form re-renders fresh (no JS required to
+    // see it: the query check below only adds the extra explanatory text).
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('waitlist') === 'invalid') {
+        if (message) {
+          message.textContent = msgs.invalidFromLink;
+          message.hidden = false;
+        }
+        phoneInput?.setAttribute('aria-invalid', 'true');
+      }
+    } catch {
+      // ignore
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      clearFieldErrors();
+
+      // Honeypot: if filled, silently pretend success.
+      const honeypot = form.querySelector<HTMLInputElement>('input[name="website"]');
+      if (honeypot && honeypot.value.trim() !== '') {
+        setStatus('created');
+        return;
+      }
+
+      if (!phoneInput || !isValidPhone(phoneInput.value)) {
+        showFieldError(phoneError, phoneInput, msgs.invalidPhone);
+        return;
+      }
+      if (!consentInput || !consentInput.checked) {
+        showFieldError(consentError, consentInput, msgs.invalidConsent);
+        return;
+      }
+
+      setStatus('submitting');
+
+      const payload = {
+        phone: normalizePhone(phoneInput.value),
+        business_type: (form.querySelector<HTMLSelectElement>('select[name="business_type"]'))?.value || undefined,
+        email: (form.querySelector<HTMLInputElement>('input[name="email"]'))?.value || undefined,
+        locale,
+        source: (form.querySelector<HTMLInputElement>('input[name="source"]'))?.value,
+        utm_source: (form.querySelector<HTMLInputElement>('input[name="utm_source"]'))?.value || undefined,
+        utm_medium: (form.querySelector<HTMLInputElement>('input[name="utm_medium"]'))?.value || undefined,
+        utm_campaign: (form.querySelector<HTMLInputElement>('input[name="utm_campaign"]'))?.value || undefined,
+      };
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (res.status === 429) {
+          setStatus('rate_limited');
+          return;
+        }
+        if (res.status === 403 || res.status >= 500) {
+          setStatus('network');
+          return;
+        }
+        if (res.status === 422 || res.status === 400) {
+          let body: any = null;
+          try { body = await res.json(); } catch { /* ignore */ }
+          const code = body?.error ?? body?.code;
+          if (code === 'has_account') {
+            setStatus('has_account');
+          } else {
+            setStatus('idle');
+            showFieldError(phoneError, phoneInput, msgs.invalidPhone);
+          }
+          return;
+        }
+
+        let body: any = null;
+        try { body = await res.json(); } catch { /* ignore */ }
+        const status: string | undefined = body?.status ?? body?.code;
+
+        if (res.ok) {
+          if (status === 'already_on_list') setStatus('already_on_list');
+          else if (status === 'has_account') setStatus('has_account');
+          else setStatus('created');
+        } else {
+          setStatus('network');
+        }
+      } catch {
+        setStatus('network');
+      }
+    });
+  }
+
+  document.querySelectorAll<HTMLFormElement>('form[data-waitlist-form]').forEach(initForm);
+</script>

@@ -1,0 +1,172 @@
+---
+import { t, localePath, otherLocalePath, type Locale } from '../i18n';
+import { LAUNCHED } from '../config/site';
+import { APP_URL } from '../config/site';
+
+export interface Props {
+  locale: Locale;
+  path?: string;
+}
+
+const { locale, path = '/' } = Astro.props;
+const other = otherLocalePath(locale, path);
+const copy = t[locale];
+const ctaHref = LAUNCHED ? APP_URL : `${localePath(locale, '/')}#waitlist`;
+const ctaLabel = LAUNCHED ? copy.ctaLaunched : copy.cta;
+---
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="lockup" href={localePath(locale, '/')} aria-label="AirFone">
+      <img class="lockup-light-bg" src="/brand/airfone-lockup.svg" alt="AirFone" width="160" height="33" />
+      <img class="lockup-dark-bg" src="/brand/airfone-lockup-light.svg" alt="AirFone" width="160" height="33" />
+    </a>
+
+    <nav class="links" aria-label={locale === 'ne' ? 'मुख्य नेभिगेसन' : 'Main navigation'}>
+      <a href={localePath(locale, '/pricing/')}>{copy.pricing}</a>
+      <a href={localePath(locale, '/contact/')}>{copy.contact}</a>
+    </nav>
+
+    <div class="right">
+      <a class="lang-switch" href={other.href} hreflang={other.locale} lang={other.locale}>
+        {copy.langSwitchLabel}
+      </a>
+      <a class="btn btn-primary" href={ctaHref}>{ctaLabel}</a>
+    </div>
+
+    <details class="mobile-menu">
+      <summary aria-label={copy.menu}>
+        <span class="menu-icon" aria-hidden="true"></span>
+      </summary>
+      <div class="mobile-menu-panel">
+        <a href={localePath(locale, '/pricing/')}>{copy.pricing}</a>
+        <a href={localePath(locale, '/contact/')}>{copy.contact}</a>
+      </div>
+    </details>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  .lockup {
+    display: block;
+  }
+  .lockup img {
+    height: 28px;
+    width: auto;
+  }
+  .lockup-dark-bg {
+    display: none;
+  }
+  @media (prefers-color-scheme: dark) {
+    .lockup-light-bg {
+      display: none;
+    }
+    .lockup-dark-bg {
+      display: block;
+    }
+  }
+  .links {
+    display: none;
+    gap: 24px;
+    flex: 1;
+  }
+  .links a {
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .links a:hover {
+    color: var(--brand-ink);
+  }
+  .right {
+    display: none;
+    align-items: center;
+    gap: 16px;
+    margin-left: auto;
+  }
+  .lang-switch {
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+  }
+  .mobile-menu {
+    margin-left: auto;
+  }
+  .mobile-menu summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-control);
+  }
+  .mobile-menu summary::-webkit-details-marker {
+    display: none;
+  }
+  .menu-icon,
+  .menu-icon::before,
+  .menu-icon::after {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: var(--ink);
+    position: relative;
+  }
+  .menu-icon::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+  }
+  .menu-icon::after {
+    content: '';
+    position: absolute;
+    top: 6px;
+  }
+  .mobile-menu-panel {
+    position: absolute;
+    right: 16px;
+    margin-top: 8px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-panel);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    min-width: 160px;
+  }
+  .mobile-menu-panel a {
+    color: var(--ink);
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: var(--radius-control);
+    font-weight: 600;
+  }
+  .mobile-menu-panel a:hover {
+    background: var(--paper);
+  }
+  @media (min-width: 768px) {
+    .links {
+      display: flex;
+    }
+    .right {
+      display: flex;
+    }
+    .mobile-menu {
+      display: none;
+    }
+  }
+</style>

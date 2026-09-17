@@ -1,0 +1,66 @@
+---
+import '@fontsource/anek-devanagari/600.css';
+import '@fontsource/anek-devanagari/700.css';
+import '@fontsource/mukta/400.css';
+import '@fontsource/mukta/600.css';
+import '../styles/tokens.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { SITE_URL } from '../config/site';
+import { localePath } from '../i18n';
+
+export interface Props {
+  locale: 'ne' | 'en';
+  title: string;
+  description: string;
+  path: string; // locale-relative path with leading/trailing slash, e.g. "/pricing/"
+  noindex?: boolean;
+}
+
+const { locale, title, description, path, noindex = false } = Astro.props;
+
+const canonical = `${SITE_URL}${localePath(locale, path)}`;
+const neUrl = `${SITE_URL}${localePath('ne', path)}`;
+const enUrl = `${SITE_URL}${localePath('en', path)}`;
+---
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="ne" href={neUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="x-default" href={neUrl} />
+    {noindex && <meta name="robots" content="noindex" />}
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={`${SITE_URL}/og.png`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="AirFone" />
+    <meta property="og:locale" content={locale === 'ne' ? 'ne_NP' : 'en_US'} />
+    <meta property="og:locale:alternate" content={locale === 'ne' ? 'en_US' : 'ne_NP'} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <meta name="theme-color" content="#FCFCF9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#10140B" media="(prefers-color-scheme: dark)" />
+
+    <slot name="head" />
+  </head>
+  <body>
+    <SiteHeader locale={locale} path={path} />
+    <main>
+      <slot />
+    </main>
+    <SiteFooter locale={locale} path={path} />
+  </body>
+</html>

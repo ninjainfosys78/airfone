@@ -1,0 +1,26 @@
+---
+export interface Props {
+  to: string; // absolute URL or absolute path to redirect to
+  locale?: 'ne' | 'en';
+  label?: string; // visible link text; defaults to the target URL
+}
+
+const { to, locale = 'en', label } = Astro.props;
+const linkLabel = label ?? to;
+---
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0; url=${to}`} />
+    <link rel="canonical" href={to} />
+    <meta name="robots" content="noindex" />
+    <title>AirFone</title>
+  </head>
+  <body>
+    <p>
+      {locale === 'ne' ? 'यो पृष्ठ सारिएको छ।' : 'This page has moved.'}
+      <a href={to}>{linkLabel}</a>
+    </p>
+  </body>
+</html>

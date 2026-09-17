@@ -1,0 +1,55 @@
+---
+import { SITE_URL, CONTACT_EMAIL } from '../config/site';
+import type { Locale } from '../i18n';
+
+export interface Props {
+  locale: Locale;
+  home?: boolean;
+  faq?: { q: string; a: string }[];
+}
+
+const { locale, home = false, faq = [] } = Astro.props;
+
+const org = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'AirFone',
+  url: SITE_URL,
+  logo: `${SITE_URL}/brand/airfone-mark.svg`,
+  email: CONTACT_EMAIL,
+  areaServed: 'NP',
+};
+
+const website = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'AirFone',
+  url: SITE_URL,
+  inLanguage: locale,
+};
+
+const softwareApp = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'AirFone',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Any',
+  url: SITE_URL,
+};
+
+const faqPage = faq.length
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faq.map((item) => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a },
+      })),
+    }
+  : null;
+---
+<script type="application/ld+json" set:html={JSON.stringify(org)} />
+<script type="application/ld+json" set:html={JSON.stringify(website)} />
+{home && <script type="application/ld+json" set:html={JSON.stringify(softwareApp)} />}
+{home && faqPage && <script type="application/ld+json" set:html={JSON.stringify(faqPage)} />}
