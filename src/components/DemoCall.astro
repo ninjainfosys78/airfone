@@ -11,6 +11,7 @@ export interface Props {
 const { locale } = Astro.props;
 
 const call = DEMO_FIXTURE ? demoCallFixture : demoCall;
+const totalTime = `${Math.floor(call.duration / 60)}:${String(Math.floor(call.duration % 60)).padStart(2, '0')}`;
 ---
 {call.lines.length > 0 && (
   <section id="demo" class="demo-band" data-demo-fixture={DEMO_FIXTURE ? 'true' : undefined}>
@@ -19,7 +20,7 @@ const call = DEMO_FIXTURE ? demoCallFixture : demoCall;
       <p class="lede">
         {locale === 'ne'
           ? `${call.business.ne}मा ग्राहकले फोन गर्छन्, AirFone को एजेन्टले जवाफ दिन्छ। कल सम्पादन गरिएको छैन।`
-          : `A customer calls ${call.business.en} and AirFone's agent answers. The call is not edited.`}
+          : `A customer calls ${call.business.en} and AirFone's agent answers in Nepali. The transcript is translated, and the call is not edited.`}
       </p>
 
       <div class={`player${DEMO_AUDIO_URL ? '' : ' no-audio'}`} data-demo-player data-audio-src={DEMO_AUDIO_URL}>
@@ -28,7 +29,7 @@ const call = DEMO_FIXTURE ? demoCallFixture : demoCall;
             <span data-play-icon>▶</span>
           </button>
           <input type="range" min="0" max="100" value="0" data-seek aria-label={locale === 'ne' ? 'खोज्नुहोस्' : 'Seek'} />
-          <span class="time" data-time>0:00 / 0:00</span>
+          <span class="time" data-time>0:00 / {totalTime}</span>
         </div>
         <audio preload="none" data-audio>
           {DEMO_AUDIO_URL && <source src={DEMO_AUDIO_URL} />}
@@ -90,6 +91,7 @@ const call = DEMO_FIXTURE ? demoCallFixture : demoCall;
   }
   .controls input[type='range'] {
     flex: 1;
+    accent-color: var(--brand);
   }
   .time {
     font-size: 14px;

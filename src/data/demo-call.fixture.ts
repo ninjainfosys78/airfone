@@ -6,6 +6,7 @@ import type { DemoCall } from './demo-call';
 // (see scripts/make-bundle.mjs and DemoCall.astro).
 export const demoCallFixture: DemoCall = {
   business: { ne: 'पाथिभरा सोलुसन्स', en: 'Pathibhara Solutions' },
+  duration: 60,
   lines: [
     {
       speaker: 'caller',
