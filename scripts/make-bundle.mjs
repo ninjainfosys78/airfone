@@ -17,7 +17,7 @@
 // known-bad file.
 
 import { spawnSync } from 'node:child_process';
-import { mkdirSync, readdirSync, statSync, existsSync } from 'node:fs';
+import { mkdirSync, readdirSync, readFileSync, statSync, existsSync } from 'node:fs';
 import { join, relative, extname, sep, basename, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -76,6 +76,17 @@ for (const f of files) {
 }
 if (!hasIndex) fail('no index.html in dist/');
 if (totalBytes > MAX_UNCOMPRESSED) fail(`uncompressed total ${totalBytes} > ${MAX_UNCOMPRESSED}`);
+
+// The demo band renders with `data-demo-fixture="true"` only when
+// PUBLIC_DEMO_FIXTURE=true — a dev-only planned script, never real audio.
+// A production bundle must never carry it.
+for (const f of files) {
+  if (extname(f).toLowerCase() !== '.html') continue;
+  const html = readFileSync(f, 'utf8');
+  if (html.includes('data-demo-fixture')) {
+    fail(`demo fixture marker found in ${relative(DIST, f)} — rebuild with PUBLIC_DEMO_FIXTURE unset/false`);
+  }
+}
 
 if (VERIFY_ONLY) {
   console.log(`✓ verified: ${files.length} files, ${(totalBytes / 1024).toFixed(1)} KB`);
