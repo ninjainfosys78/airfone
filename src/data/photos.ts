@@ -1,17 +1,24 @@
 // Real photos from Nepal. Unsplash and Pexels licenses allow free commercial
 // use without attribution; credited here out of courtesy. Files are pre-cropped
-// to the ratio they are shown at (call 4:5, shop 3:2, school and restaurant 3:4).
-import shopkeeper from '../assets/photos/shopkeeper-counter.jpg';
+// to the ratio they are shown at (hero background 3:2, call 4:5, shopfront 3:2, school and restaurant 3:4).
+import shopkeeperWide from '../assets/photos/shopkeeper-wide.jpg';
+import shopfront from '../assets/photos/shopfront.jpg';
 import classroom from '../assets/photos/students-classroom.jpg';
 import restaurant from '../assets/photos/restaurant-counter.jpg';
 import kathmanduCall from '../assets/photos/kathmandu-call.jpg';
 
 export const photos = {
-  shopkeeper: {
-    src: shopkeeper,
+  shopkeeperWide: {
+    src: shopkeeperWide,
     credit: 'Jimmy Liu',
     source: 'https://unsplash.com/photos/agaYL7oTPxc',
-    alt: { ne: 'पसलको काउन्टरमा बसेका पसले', en: 'A shopkeeper at the counter of a crowded shop' },
+    alt: { ne: 'पसलको काउन्टरमा बसेका पसले', en: 'A shopkeeper at the counter of his shop in Nepal' },
+  },
+  shopfront: {
+    src: shopfront,
+    credit: 'Jeevan Katel',
+    source: 'https://unsplash.com/photos/0x153_N1c2I',
+    alt: { ne: 'नेपालको एक सानो पसल, अगाडि कुकुर सुतिरहेको', en: 'A small shop in Nepal with a dog resting outside' },
   },
   classroom: {
     src: classroom,

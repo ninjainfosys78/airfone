@@ -88,7 +88,7 @@ const bars = demoWaveform.peaks.map((peak, i) => {
   .call {
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 24px;
   }
   .top {
     display: flex;
@@ -112,7 +112,7 @@ const bars = demoWaveform.peaks.map((peak, i) => {
   }
   .caption {
     /* Fixed room for the longest line so nothing below moves mid-call. */
-    min-height: calc(4 * 1.35em * 1.45 + 30px);
+    min-height: calc(5 * 1.35em + 34px);
   }
   .speaker {
     margin: 0 0 10px;
@@ -138,19 +138,35 @@ const bars = demoWaveform.peaks.map((peak, i) => {
     margin: 0;
     font-family: 'Instrument Sans', 'Noto Serif Devanagari', system-ui, sans-serif;
     font-weight: 600;
-    font-size: clamp(1.375rem, 2.2vw, 1.875rem);
+    font-size: clamp(1.25rem, 1.7vw, 1.5rem);
     line-height: 1.35;
     color: var(--night-ink);
   }
+  /* A new line slides up into place. */
+  @media (prefers-reduced-motion: no-preference) {
+    .text:global(.enter) {
+      animation: line-in 260ms ease-out;
+    }
+    @keyframes line-in {
+      from {
+        transform: translateY(8px);
+        opacity: 0.4;
+      }
+      to {
+        transform: none;
+        opacity: 1;
+      }
+    }
+  }
   .deck {
     display: grid;
-    grid-template-columns: 64px minmax(0, 1fr);
+    grid-template-columns: 56px minmax(0, 1fr);
     gap: 20px;
     align-items: center;
   }
   .play {
-    width: 64px;
-    height: 64px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     border: 0;
     background: var(--brand);
@@ -177,7 +193,7 @@ const bars = demoWaveform.peaks.map((peak, i) => {
   }
   .wave {
     width: 100%;
-    height: 72px;
+    height: 56px;
     display: block;
     cursor: pointer;
   }
@@ -256,6 +272,11 @@ const bars = demoWaveform.peaks.map((peak, i) => {
             textEl.append(span);
           });
           wordEls = Array.from(textEl.querySelectorAll<HTMLElement>('.w'));
+          if (t > 0) {
+            textEl.classList.remove('enter');
+            void textEl.offsetWidth;
+            textEl.classList.add('enter');
+          }
         }
         listItems.forEach((li, i) => {
           if (i === idx) li.setAttribute('aria-current', 'true');

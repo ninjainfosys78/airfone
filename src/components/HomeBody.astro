@@ -78,17 +78,29 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
 <StructuredData locale={locale} home faq={c.faq} />
 
 <section class="hero on-night">
+  <div class="hero-bg" aria-hidden="true">
+    <Image
+      src={photos.shopkeeperWide.src}
+      alt=""
+      widths={[768, 1280, 1920, 2400]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </div>
   <div class="wrap hero-grid">
-    <h1 class="hero-title">{c.h1}</h1>
-    <div class="hero-visual">
-      <CallCard locale={locale} />
+    <div class="hero-copy">
+      <h1 class="hero-title">{c.h1}</h1>
+      <div class="hero-form" id="waitlist">
+        {LAUNCHED ? (
+          <a class="btn btn-primary btn-large" href={APP_URL}>{c.tryFree}</a>
+        ) : (
+          <WaitlistForm locale={locale} id="hero" source="hero" compact />
+        )}
+      </div>
     </div>
-    <div class="hero-form" id="waitlist">
-      {LAUNCHED ? (
-        <a class="btn btn-primary btn-large" href={APP_URL}>{c.tryFree}</a>
-      ) : (
-        <WaitlistForm locale={locale} id="hero" source="hero" compact />
-      )}
+    <div class="hero-call">
+      <CallCard locale={locale} />
     </div>
   </div>
 </section>
@@ -134,7 +146,7 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
     <h2>{c.whoH2}</h2>
     <div class="strip">
       <figure class="f-shop">
-        <Image class="photo" src={photos.shopkeeper.src} alt={photos.shopkeeper.alt[locale]} widths={[640, 960, 1400]} sizes="(min-width: 1120px) 540px, (min-width: 900px) 48vw, 100vw" loading="lazy" />
+        <Image class="photo" src={photos.shopfront.src} alt={photos.shopfront.alt[locale]} widths={[640, 960, 1400]} sizes="(min-width: 1120px) 540px, (min-width: 900px) 48vw, 100vw" loading="lazy" />
         <figcaption>{c.who[0].type}</figcaption>
       </figure>
       <figure class="f-school">
@@ -196,42 +208,82 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
     }
   }
 
-  /* Hero: dark stage. Phones: headline, call, form. Desktop: headline and form left, call right. */
+  /* Hero: the shopkeeper photo fills the background under a flat 88% tint
+     (NN/g: tint for legibility; darkened on request for stronger contrast).
+     Worst case, white in the photo gives the headline 11.2:1. The call sits
+     on a solid panel, the form on its own solid bar. */
   .hero {
-    padding: 48px 0 72px;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
   }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+  .hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 58% 40%;
+  }
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgb(20 26 13 / 0.88);
+  }
+  /* Phones: headline, call, form. Desktop: headline and form left, call right. */
   .hero-grid {
     display: grid;
     grid-template-areas: 'title' 'call' 'form';
-    gap: 40px;
+    gap: 32px;
+    padding-top: 56px;
+    padding-bottom: 64px;
   }
+  .hero-copy {
+    display: contents;
+  }
+  .hero-title { grid-area: title; }
+  .hero-form { grid-area: form; }
+  .hero-call { grid-area: call; }
   .hero-title {
-    grid-area: title;
     color: var(--night-ink);
     max-width: 13ch;
-  }
-  .hero-visual {
-    grid-area: call;
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    line-height: 1.1;
   }
   .hero-form {
-    grid-area: form;
     max-width: 520px;
+  }
+  .hero-call {
+    background: var(--night);
+    border: 1px solid var(--night-line);
+    border-radius: var(--radius-panel);
+    padding: 20px;
   }
   .btn-large {
     padding: 16px 28px;
     font-size: 18px;
   }
   @media (min-width: 1000px) {
-    .hero {
-      padding: 104px 0 120px;
-    }
     .hero-grid {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
       grid-template-areas: 'title call' 'form call';
-      grid-template-rows: auto 1fr;
-      column-gap: 88px;
-      row-gap: 40px;
-      align-items: start;
+      grid-template-rows: auto auto;
+      align-content: center;
+      column-gap: 72px;
+      row-gap: 36px;
+      min-height: min(760px, calc(100vh - 68px));
+      padding-top: 96px;
+      padding-bottom: 96px;
+    }
+    .hero-title { align-self: end; }
+    .hero-form { align-self: start; }
+    .hero-call { align-self: center; }
+    .hero-call {
+      padding: 28px;
     }
   }
 

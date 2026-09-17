@@ -263,3 +263,44 @@ main {
 html {
   scroll-padding-top: 84px;
 }
+
+/* Entrance and scroll motion. Transform only, so text is always readable
+   and nothing is hidden while waiting. Off for reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes rise {
+    from { transform: translateY(24px); }
+    to { transform: none; }
+  }
+  @keyframes settle {
+    from { transform: scale(1.06); }
+    to { transform: none; }
+  }
+
+  .hero-bg img {
+    animation: settle 1400ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .hero-title,
+  .hero-form {
+    animation: rise 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .hero-call {
+    animation: rise 700ms 90ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  @supports (animation-timeline: view()) {
+    main section:not(.hero) h2,
+    .asks li,
+    .lines li,
+    .steps li,
+    .strip figure,
+    .who-row,
+    .faq-list details,
+    .problem-media,
+    .list li,
+    .channel {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+  }
+}
