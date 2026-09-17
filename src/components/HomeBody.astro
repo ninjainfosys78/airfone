@@ -1,8 +1,9 @@
 ---
 import WaitlistForm from './WaitlistForm.astro';
-import DemoCall from './DemoCall.astro';
+import CallCard from './CallCard.astro';
+import CallTranscript from './CallTranscript.astro';
 import StructuredData from './StructuredData.astro';
-import { LAUNCHED, APP_URL, LAUNCH_DATE } from '../config/site';
+import { LAUNCHED, APP_URL, CONTACT_PHONE_TEL, CONTACT_PHONE_DISPLAY } from '../config/site';
 import type { Locale } from '../i18n';
 
 export interface Props {
@@ -15,18 +16,20 @@ const copy = {
   ne: {
     h1: 'ग्राहकका फोन अब छुट्दैनन्।',
     lede: 'AirFone को AI एजेन्टले मूल्य, खुल्ने समय र सेवाबारेका प्रश्नको जवाफ नेपालीमा, दिनरात फोनमै दिन्छ।',
-    panelHeading: '२८ सेप्टेम्बरमा सुरु हुँदैछ',
+    launch: '२८ सेप्टेम्बरमा सुरु हुँदैछ। सुरु भएपछि हामी फोन गर्नेछौं।',
     tryFree: 'निःशुल्क सुरु गर्नुहोस्',
-    problemH2: 'दिनभरि उही प्रश्न',
-    problemQuotes: ['मूल्य कति हो?', 'स्टकमा छ?', 'कहिले खुल्छ?'],
+    problemH2: 'दिनभरि उही प्रश्न, उही जवाफ',
     problemLine: 'यिनको जवाफ दिँदा कर्मचारीको घण्टौं समय जान्छ। राति वा व्यस्त बेला फोन नउठ्दा ग्राहक अर्कैकहाँ जान्छन्।',
-    setupH2: 'सेटअप कसरी हुन्छ',
+    problemQuotes: ['मूल्य कति हो?', 'स्टकमा छ?', 'अफिस कहिले खुल्छ?', 'डेलिभरी हुन्छ?'],
+    setupH2: 'तीन चरणमा तयार',
+    setupLine: 'कोड लेख्नु पर्दैन। ग्राहकलाई जे भन्नुहुन्छ, त्यही सिकाए पुग्छ।',
     steps: [
-      'आफ्नो व्यवसायबारे सिकाउनुहोस्। बोलेर, वेबसाइटको लिंक राखेर, फेसबुक पेज जोडेर वा फोटो र भिडियो देखाएर। AirFone ले त्यसैबाट एजेन्टको जानकारी तयार गर्छ।',
-      'आफैं फोन गरेर जाँच्नुहोस्। आफ्नो डेमो नम्बरमा PIN सहित फोन गर्नुहोस् र एजेन्टसँग कुरा गर्नुहोस्।',
-      'ग्राहकका लागि खोल्नुहोस्। ठीक लागेपछि आफ्नै AirFone नम्बर लिनुहोस् र साँचो कल लिन थाल्नुहोस्।',
+      { title: 'व्यवसायबारे सिकाउनुहोस्', body: 'बोलेर, वेबसाइटको लिंक राखेर, फेसबुक पेज जोडेर वा फोटो र भिडियो देखाएर। AirFone ले त्यसैबाट एजेन्टको जानकारी तयार गर्छ।' },
+      { title: 'आफैं फोन गरेर जाँच्नुहोस्', body: 'आफ्नो डेमो नम्बरमा PIN सहित फोन गर्नुहोस् र ग्राहकले झैं प्रश्न सोध्नुहोस्।' },
+      { title: 'ग्राहकका लागि खोल्नुहोस्', body: 'ठीक लागेपछि आफ्नै AirFone नम्बर लिनुहोस् र साँचो कल लिन थाल्नुहोस्।' },
     ],
     whoH2: 'पसलदेखि विद्यालयसम्म',
+    whoLine: 'ग्राहकले फोनमा जे सोध्छन्, त्यही सिकाउनुहोस्।',
     who: [
       { type: 'पसल', q: 'यो मोबाइलको मूल्य कति हो?' },
       { type: 'अनलाइन स्टोर', q: 'काठमाडौं बाहिर डेलिभरी हुन्छ?' },
@@ -35,31 +38,33 @@ const copy = {
       { type: 'रेस्टुरेन्ट', q: 'शनिबार खुला हुन्छ?' },
     ],
     faqH2: 'प्रायः सोधिने प्रश्न',
+    faqLine: 'अरू केही सोध्नु छ भने फोन गर्नुहोस्:',
     faq: [
-      { q: 'एजेन्टलाई जवाफ थाहा नभए के हुन्छ?', a: 'त्यो जानकारी आफूसँग छैन भन्छ। जवाफ आफैं बनाएर दिँदैन।' },
+      { q: 'एजेन्टलाई जवाफ थाहा नभए के हुन्छ?', a: 'त्यो जानकारी आफूसँग छैन भन्छ। जवाफ आफैं बनाएर दिँदैन। माथिको कलमा डेलिभरीको प्रश्नमा यही भएको छ।' },
       { q: 'सेटअप गर्न प्राविधिक ज्ञान चाहिन्छ?', a: 'चाहिँदैन। व्यवसायबारे बोलेर वा लिंक राखेर सिकाउन सकिन्छ।' },
       { q: 'मूल्य कति पर्छ?', a: 'मूल्य २८ सेप्टेम्बरमा सुरुवातसँगै सार्वजनिक गर्नेछौं। सूचीमा नाम लेखाउनेलाई पहिले जानकारी दिनेछौं।' },
       { q: 'WhatsApp मा पनि चल्छ?', a: 'अहिले फोन कलमा चल्छ। WhatsApp छिट्टै थपिँदैछ।' },
     ],
-    closingH2: 'सुरुवातमै सुरु गर्नुहोस्',
-    closingLine: 'सुरु भएपछि हामी तपाईंलाई फोन गर्नेछौं।',
-    cta: 'सूचीमा नाम लेखाउनुहोस्',
+    closingH2: '२८ सेप्टेम्बरमा पहिलो पालोमा हुनुहोस्',
+    closingLine: 'मोबाइल नम्बर छाड्नुहोस्। सुरु भएको दिन हामी फोन गर्छौं।',
   },
   en: {
     h1: 'Stop missing customer calls.',
     lede: "AirFone's AI agent answers questions about your prices, opening hours and services in Nepali, on the phone, day and night.",
-    panelHeading: 'Launching 28 September',
+    launch: "Launching 28 September. We'll call you when it's live.",
     tryFree: 'Try it free',
     problemH2: 'The same questions, all day',
-    problemQuotes: ['How much is it?', 'Is it in stock?', 'When are you open?'],
     problemLine: 'Answering them takes hours of staff time. Miss a call at night or during a rush, and the customer calls someone else.',
-    setupH2: 'How setup works',
+    problemQuotes: ['How much is it?', 'Is it in stock?', 'When is the office open?', 'Do you deliver?'],
+    setupH2: 'Ready in three steps',
+    setupLine: 'No code. Teach it what you already tell your customers.',
     steps: [
-      "Teach it your business. Talk to it, paste your website link, connect your Facebook page, or show photos and videos. AirFone builds the agent's knowledge from that.",
-      'Call it yourself. Call your demo number with your PIN and talk to your agent.',
-      "Go live. When you're happy, get your own AirFone number and start taking real calls.",
+      { title: 'Teach it your business', body: "Talk to it, paste your website link, connect your Facebook page, or show photos and videos. AirFone builds the agent's knowledge from that." },
+      { title: 'Call it yourself', body: 'Call your demo number with your PIN and ask what your customers ask.' },
+      { title: 'Go live', body: "When you're happy, get your own AirFone number and start taking real calls." },
     ],
     whoH2: 'From shops to schools',
+    whoLine: 'Teach it whatever your customers ask on the phone.',
     who: [
       { type: 'Shops', q: 'How much is this phone?' },
       { type: 'Online stores', q: 'Do you deliver outside Kathmandu?' },
@@ -68,61 +73,69 @@ const copy = {
       { type: 'Restaurants', q: 'Are you open on Saturday?' },
     ],
     faqH2: 'Common questions',
+    faqLine: 'Something else? Call us at',
     faq: [
-      { q: "What if the agent doesn't know an answer?", a: "It says it doesn't have that information. It doesn't make one up." },
+      { q: "What if the agent doesn't know an answer?", a: "It says it doesn't have that information. It doesn't make one up. You can hear this in the call above, on the delivery question." },
       { q: 'Do I need technical skills?', a: 'No. You teach it by talking or pasting a link.' },
       { q: 'How much does it cost?', a: "We'll publish pricing at launch on 28 September. People on the waitlist hear first." },
       { q: 'Does it work on WhatsApp?', a: 'It works on phone calls today. WhatsApp is coming soon.' },
     ],
-    closingH2: 'Be ready on launch day.',
-    closingLine: "We'll call you when it's live.",
-    cta: 'Join the waitlist',
+    closingH2: 'Be first in line on 28 September',
+    closingLine: "Leave your mobile number. We'll call you on launch day.",
   },
 } as const;
 
 const c = copy[locale];
+const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
 ---
 <StructuredData locale={locale} home faq={c.faq} />
 
 <section class="hero">
   <div class="wrap hero-grid">
-    <div class="hero-text">
+    <div class="hero-text" id="waitlist">
       <h1>{c.h1}</h1>
       <p class="lede">{c.lede}</p>
-    </div>
-    <div class="hero-panel panel" id="waitlist">
       {LAUNCHED ? (
-        <a class="btn btn-primary" href={APP_URL}>{c.tryFree}</a>
+        <a class="btn btn-primary btn-large" href={APP_URL}>{c.tryFree}</a>
       ) : (
-        <>
-          <h2>{c.panelHeading}</h2>
+        <div class="hero-form">
           <WaitlistForm locale={locale} id="hero" source="hero" compact />
-        </>
+          <p class="launch">{c.launch}</p>
+        </div>
       )}
     </div>
-  </div>
-</section>
-
-<DemoCall locale={locale} />
-
-<section class="problem">
-  <div class="wrap">
-    <h2>{c.problemH2}</h2>
-    <div class="quotes">
-      {c.problemQuotes.map((q) => <p class="quote">&ldquo;{q}&rdquo;</p>)}
+    <div class="hero-visual">
+      <CallCard locale={locale} />
     </div>
-    <p class="secondary-text">{c.problemLine}</p>
   </div>
 </section>
 
-<section class="setup">
+<section class="problem on-tint">
+  <div class="wrap split">
+    <div>
+      <h2>{c.problemH2}</h2>
+      <p class="section-line">{c.problemLine}</p>
+    </div>
+    <ul class="asks">
+      {c.problemQuotes.map((q) => <li>{q}</li>)}
+    </ul>
+  </div>
+</section>
+
+<CallTranscript locale={locale} />
+
+<section class="setup on-tint">
   <div class="wrap">
-    <h2>{c.setupH2}</h2>
+    <div class="section-head">
+      <h2>{c.setupH2}</h2>
+      <p class="section-line">{c.setupLine}</p>
+    </div>
     <ol class="steps">
       {c.steps.map((step, i) => (
         <li>
-          <span class="step-number" aria-hidden="true">{i + 1}</span>
-          <p>{step}</p>
+          <span class="numeral" aria-hidden="true">{numerals[i]}</span>
+          <h3>{step.title}</h3>
+          <p>{step.body}</p>
         </li>
       ))}
     </ol>
@@ -130,22 +143,30 @@ const c = copy[locale];
 </section>
 
 <section class="who">
-  <div class="wrap">
-    <h2>{c.whoH2}</h2>
-    <div class="who-rows">
+  <div class="wrap split">
+    <div>
+      <h2>{c.whoH2}</h2>
+      <p class="section-line">{c.whoLine}</p>
+    </div>
+    <dl class="who-list">
       {c.who.map((row) => (
         <div class="who-row">
-          <h3>{row.type}</h3>
-          <p class="secondary-text">&ldquo;{row.q}&rdquo;</p>
+          <dt>{row.type}</dt>
+          <dd>{row.q}</dd>
         </div>
       ))}
-    </div>
+    </dl>
   </div>
 </section>
 
-<section class="faq">
-  <div class="wrap">
-    <h2>{c.faqH2}</h2>
+<section class="faq on-tint">
+  <div class="wrap split">
+    <div>
+      <h2>{c.faqH2}</h2>
+      <p class="section-line">
+        {c.faqLine} <a href={CONTACT_PHONE_TEL}>{CONTACT_PHONE_DISPLAY[locale]}</a>
+      </p>
+    </div>
     <div class="faq-list">
       {c.faq.map((item) => (
         <details>
@@ -153,214 +174,264 @@ const c = copy[locale];
             <span class="faq-q">{item.q}</span>
             <span class="faq-icon" aria-hidden="true"></span>
           </summary>
-          <p class="secondary-text">{item.a}</p>
+          <p>{item.a}</p>
         </details>
       ))}
     </div>
   </div>
 </section>
 
-<section class="closing">
-  <div class="wrap closing-inner">
-    <h2>{c.closingH2}</h2>
-    <p class="secondary-text closing-line">{c.closingLine}</p>
+<section class="closing on-night">
+  <div class="wrap closing-grid">
+    <div>
+      <h2>{c.closingH2}</h2>
+      <p class="section-line">{c.closingLine}</p>
+    </div>
     {LAUNCHED ? (
-      <a class="btn btn-primary" href={APP_URL}>{c.tryFree}</a>
+      <a class="btn btn-primary btn-large" href={APP_URL}>{c.tryFree}</a>
     ) : (
-      <button type="button" class="btn btn-primary" data-scroll-to-waitlist>{c.cta}</button>
+      <WaitlistForm locale={locale} id="closing" source="closing" compact />
     )}
   </div>
 </section>
 
-<script>
-  document.querySelectorAll<HTMLButtonElement>('[data-scroll-to-waitlist]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const panel = document.getElementById('waitlist');
-      panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      const firstField = panel?.querySelector<HTMLElement>('input, button, a');
-      firstField?.focus();
-    });
-  });
-</script>
-
 <style>
-  .hero {
-    padding: 72px 0;
+  h2 {
+    font-size: clamp(1.875rem, 3.2vw, 2.625rem);
+    line-height: 1.2;
   }
-  .hero-grid {
-    display: flex;
-    flex-direction: column;
+  .section-line {
+    margin: 16px 0 0;
+    font-size: 18px;
+    color: var(--ink-muted);
+    max-width: 44ch;
+  }
+  .split {
+    display: grid;
     gap: 40px;
   }
-  .hero-text {
-    max-width: 640px;
+  @media (min-width: 900px) {
+    .split {
+      grid-template-columns: 5fr 7fr;
+      gap: 64px;
+      align-items: start;
+    }
   }
-  .hero-text .lede {
+
+  /* Hero */
+  .hero {
+    padding: 56px 0 88px;
+  }
+  .hero-grid {
+    display: grid;
+    gap: 48px;
+    align-items: center;
+  }
+  .hero h1 {
+    max-width: 14ch;
+  }
+  .lede {
+    margin: 20px 0 0;
+    font-size: 20px;
+    line-height: 1.5;
     color: var(--ink-muted);
+    max-width: 38ch;
+  }
+  .hero-form {
+    margin-top: 32px;
+    max-width: 520px;
+  }
+  .launch {
+    margin: 12px 0 0;
+    font-size: 14px;
+    color: var(--ink-muted);
+  }
+  .btn-large {
+    margin-top: 32px;
+    padding: 16px 28px;
     font-size: 18px;
-    margin-top: 16px;
   }
-  .hero-panel {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  @media (min-width: 960px) {
-    .hero-panel {
-      padding: 20px 24px;
-      gap: 12px;
+  @media (min-width: 1000px) {
+    .hero {
+      padding: 88px 0 120px;
     }
-    .hero-panel h2 {
-      font-size: 22px;
+    .hero-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 72px;
     }
   }
-  .problem, .setup, .who, .faq {
+
+  /* Problem */
+  .problem {
     padding: 96px 0;
+  }
+  .asks {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     border-top: 1px solid var(--line);
   }
-  .quotes {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px;
-    margin: 32px 0;
-  }
-  @media (min-width: 480px) {
-    .hero-text .lede {
-      font-size: 20px;
-    }
-    .problem .secondary-text,
-    .who-row .secondary-text {
-      font-size: 18px;
-    }
-  }
-  @media (min-width: 960px) {
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      gap: 48px;
-    }
-  }
-  .quote {
+  .asks li {
     font-family: 'IBM Plex Serif', 'Noto Serif Devanagari', Georgia, serif;
     font-weight: 600;
-    font-size: 22px;
-    margin: 0;
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    line-height: 1.3;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* Setup */
+  .setup {
+    padding: 120px 0;
+  }
+  .section-head {
+    max-width: 640px;
   }
   .steps {
     list-style: none;
-    margin: 32px 0 0;
+    margin: 56px 0 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
+    display: grid;
+    gap: 40px;
   }
   .steps li {
-    display: grid;
-    grid-template-columns: 48px 1fr;
-    gap: 16px;
-    align-items: start;
+    border-top: 1px solid var(--ink);
+    padding-top: 24px;
   }
-  .step-number {
+  .numeral {
+    display: block;
     font-family: 'IBM Plex Serif', 'Noto Serif Devanagari', Georgia, serif;
-    font-weight: 700;
-    font-size: 22px;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 1;
     color: var(--brand-ink);
   }
-  .steps p {
-    margin: 0;
+  .steps h3 {
+    margin-top: 24px;
+    font-size: 22px;
   }
-  .who-rows {
-    margin-top: 32px;
+  .steps p {
+    margin: 8px 0 0;
+    font-size: 17px;
+    color: var(--ink-muted);
+  }
+  @media (min-width: 900px) {
+    .steps {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 48px;
+    }
+  }
+
+  /* Who */
+  .who {
+    padding: 120px 0;
+  }
+  .who-list {
+    margin: 0;
+    border-top: 1px solid var(--line);
   }
   .who-row {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 16px;
+    gap: 4px;
     padding: 20px 0;
-    border-top: 1px solid var(--line);
-  }
-  .who-row:last-child {
     border-bottom: 1px solid var(--line);
   }
-  .who-row p {
+  .who-row dt {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--brand-ink);
+  }
+  .who-row dd {
     margin: 0;
+    font-family: 'IBM Plex Serif', 'Noto Serif Devanagari', Georgia, serif;
+    font-size: 22px;
+    line-height: 1.35;
+  }
+  @media (min-width: 700px) {
+    .who-row {
+      grid-template-columns: 180px minmax(0, 1fr);
+      gap: 24px;
+      align-items: baseline;
+    }
+  }
+
+  /* FAQ */
+  .faq {
+    padding: 96px 0;
   }
   .faq-list {
-    margin-top: 32px;
-    display: flex;
-    flex-direction: column;
+    border-top: 1px solid var(--line);
   }
   .faq-list details {
-    border-top: 1px solid var(--line);
-    padding: 20px 0;
-  }
-  .faq-list details:last-child {
     border-bottom: 1px solid var(--line);
   }
   .faq-list summary {
-    cursor: pointer;
-    font-family: 'IBM Plex Serif', 'Noto Serif Devanagari', Georgia, serif;
-    font-weight: 600;
-    font-size: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    min-height: 44px;
     list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    min-height: 64px;
+    padding: 16px 0;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 18px;
   }
   .faq-list summary::-webkit-details-marker {
     display: none;
   }
   .faq-icon {
     position: relative;
+    flex: 0 0 16px;
     width: 16px;
     height: 16px;
-    flex-shrink: 0;
   }
   .faq-icon::before,
   .faq-icon::after {
     content: '';
     position: absolute;
     background: var(--ink-muted);
-    top: 50%;
-    left: 50%;
+    border-radius: 1px;
   }
   .faq-icon::before {
-    width: 16px;
+    left: 0;
+    right: 0;
+    top: 7px;
     height: 2px;
-    transform: translate(-50%, -50%);
   }
   .faq-icon::after {
+    top: 0;
+    bottom: 0;
+    left: 7px;
     width: 2px;
-    height: 16px;
-    transform: translate(-50%, -50%);
     transition: transform 150ms ease-out;
   }
   details[open] .faq-icon::after {
-    transform: translate(-50%, -50%) rotate(90deg);
+    transform: scaleY(0);
   }
   .faq-list p {
-    margin: 12px 0 0;
-  }
-  .closing {
-    padding: 72px 0 96px;
-    border-top: 1px solid var(--line);
-  }
-  .closing-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 24px;
-  }
-  .closing-line {
-    margin: -8px 0 0;
+    margin: 0 0 20px;
+    font-size: 17px;
+    color: var(--ink-muted);
+    max-width: 60ch;
   }
 
+  /* Closing */
+  .closing {
+    padding: 96px 0;
+  }
+  .closing h2 {
+    color: var(--night-ink);
+  }
+  .closing-grid {
+    display: grid;
+    gap: 32px;
+    align-items: end;
+  }
   @media (min-width: 900px) {
-    .who-row {
-      grid-template-columns: 320px 1fr;
+    .closing-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 72px;
     }
   }
 </style>

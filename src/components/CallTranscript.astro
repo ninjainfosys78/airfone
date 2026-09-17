@@ -1,0 +1,111 @@
+---
+// Full transcript of the demo call. Server-rendered so search engines and
+// people without audio can read it. Playback sync lives in CallCard.
+import { demoCall } from '../data/demo-call';
+import type { Locale } from '../i18n';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const call = demoCall;
+
+const copy = {
+  ne: {
+    h2: 'पूरा कल पढ्नुहोस्',
+    line: `${call.business.ne}मा आएको कल, जवाफ AirFone को एजेन्टले दिएको। कुनै लाइनमा थिच्दा त्यहीँबाट सुनिन्छ।`,
+    caller: 'ग्राहक',
+  },
+  en: {
+    h2: 'Read the full call',
+    line: `A call to ${call.business.en}, answered by AirFone's agent in Nepali. The transcript is translated. Tap any line to hear it.`,
+    caller: 'Caller',
+  },
+} as const;
+const c = copy[locale];
+---
+{call.lines.length > 0 && (
+  <section class="transcript-section" id="call">
+    <div class="wrap grid">
+      <div class="intro">
+        <h2>{c.h2}</h2>
+        <p class="secondary-text">{c.line}</p>
+      </div>
+      <ol class="lines">
+        {call.lines.map((line) => (
+          <li data-call-line data-start={line.start} tabindex="0" class={line.speaker}>
+            <span class="speaker">{line.speaker === 'caller' ? c.caller : 'AirFone'}</span>
+            <span class="text">{locale === 'ne' ? line.ne : line.en}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+)}
+
+<style>
+  .transcript-section {
+    padding: 120px 0;
+  }
+  .grid {
+    display: grid;
+    gap: 40px;
+  }
+  .intro .secondary-text {
+    margin-top: 16px;
+    max-width: 44ch;
+  }
+  .lines {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+  .lines li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+    padding: 14px 12px;
+    border-bottom: 1px solid var(--line);
+    cursor: pointer;
+    transition: background-color 150ms ease-out;
+  }
+  .lines li:hover {
+    background: var(--tint);
+  }
+  .lines li[aria-current='true'] {
+    background: var(--tint);
+  }
+  .lines li[aria-current='true'] .text {
+    color: var(--ink);
+  }
+  .speaker {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink-muted);
+  }
+  .agent .speaker {
+    color: var(--brand-ink);
+  }
+  .text {
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .caller .text {
+    color: var(--ink-muted);
+  }
+  @media (min-width: 900px) {
+    .grid {
+      grid-template-columns: 5fr 7fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .lines li {
+      grid-template-columns: 88px minmax(0, 1fr);
+      gap: 16px;
+      align-items: baseline;
+    }
+  }
+</style>

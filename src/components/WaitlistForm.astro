@@ -18,7 +18,8 @@ const copy = {
     phonePlaceholder: '98XXXXXXXX',
     businessLabel: 'व्यवसायको प्रकार (वैकल्पिक)',
     businessChoose: 'छान्नुहोस्',
-    businessOptions: ['पसल', 'अनलाइन स्टोर', 'क्लिनिक वा अस्पताल', 'विद्यालय', 'रेस्टुरेन्ट', 'अन्य'],
+    businessOptions: [['shop', 'पसल'], ['online_store', 'अनलाइन स्टोर'], ['clinic', 'क्लिनिक वा अस्पताल'], ['school', 'विद्यालय'], ['restaurant', 'रेस्टुरेन्ट'], ['other', 'अन्य']],
+    moreLabel: 'व्यवसायको प्रकार वा इमेल थप्नुहोस् (वैकल्पिक)',
     emailLabel: 'इमेल (वैकल्पिक)',
     consentLabel: 'सुरु भएपछि सम्पर्क गर्न मन्जुर छु।',
     submit: 'सूचीमा नाम लेखाउनुहोस्',
@@ -37,7 +38,8 @@ const copy = {
     phonePlaceholder: '98XXXXXXXX',
     businessLabel: 'Business type (optional)',
     businessChoose: 'Choose one',
-    businessOptions: ['Shop', 'Online store', 'Clinic or hospital', 'School', 'Restaurant', 'Other'],
+    businessOptions: [['shop', 'Shop'], ['online_store', 'Online store'], ['clinic', 'Clinic or hospital'], ['school', 'School'], ['restaurant', 'Restaurant'], ['other', 'Other']],
+    moreLabel: 'Add business type or email (optional)',
     emailLabel: 'Email (optional)',
     consentLabel: "I agree to be contacted when AirFone launches.",
     submit: 'Join the waitlist',
@@ -83,12 +85,14 @@ const c = copy[locale];
     <button type="submit" class="btn btn-primary submit-btn">{c.submit}</button>
   </div>
 
+  <details class="more" open={!compact}>
+    <summary>{c.moreLabel}</summary>
   <div class="row row-two">
     <div class="field">
       <label for={`${uid}-business`}>{c.businessLabel}</label>
       <select name="business_type" id={`${uid}-business`}>
         <option value="">{c.businessChoose}</option>
-        {c.businessOptions.map((opt) => <option value={opt}>{opt}</option>)}
+        {c.businessOptions.map(([value, label]) => <option value={value}>{label}</option>)}
       </select>
     </div>
 
@@ -97,6 +101,7 @@ const c = copy[locale];
       <input type="email" autocomplete="email" name="email" id={`${uid}-email`} placeholder="name@example.com" />
     </div>
   </div>
+  </details>
 
   <div class="field field-checkbox">
     <input type="checkbox" name="consent" id={`${uid}-consent`} value="true" required aria-describedby={`${uid}-consent-error`} />
@@ -154,7 +159,7 @@ const c = copy[locale];
     grid-column: 2;
   }
   .field-error {
-    color: #B3261E;
+    color: var(--error);
     font-size: 14px;
     margin: 0;
   }
@@ -171,6 +176,27 @@ const c = copy[locale];
   }
   .submit-btn {
     width: 100%;
+  }
+  .more summary {
+    display: none;
+  }
+  .compact .more summary {
+    display: block;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--ink-muted);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    width: fit-content;
+    padding: 4px 0;
+  }
+  .compact .more[open] summary {
+    margin-bottom: 12px;
+  }
+  .more .row-two {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
   .submit-btn:disabled {
     opacity: 0.7;

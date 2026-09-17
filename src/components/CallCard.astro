@@ -1,0 +1,321 @@
+---
+// Hero product visual: the real recorded call with its waveform.
+// Owns the single <audio> element for the page; CallTranscript lines
+// (data-call-line) anywhere on the page stay in sync with it.
+import { demoCall } from '../data/demo-call';
+import { demoWaveform } from '../data/demo-waveform';
+import { DEMO_AUDIO_URL } from '../config/site';
+import type { Locale } from '../i18n';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const call = demoCall;
+const first = call.lines[0];
+
+const format = (sec: number) => `${Math.floor(sec / 60)}:${String(Math.floor(sec % 60)).padStart(2, '0')}`;
+
+const copy = {
+  ne: {
+    sub: 'साँचो कल, सम्पादन नगरिएको',
+    caller: 'ग्राहक',
+    play: 'कल सुन्नुहोस्',
+    pause: 'रोक्नुहोस्',
+    readAll: 'पूरा कल पढ्नुहोस्',
+  },
+  en: {
+    sub: 'Real call, not edited',
+    caller: 'Caller',
+    play: 'Play the call',
+    pause: 'Pause',
+    readAll: 'Read the full call',
+  },
+} as const;
+const c = copy[locale];
+
+const BAR = 5;
+const HEIGHT = 56;
+const bars = demoWaveform.peaks.map((peak, i) => {
+  const h = Math.max(3, Math.round(peak * HEIGHT));
+  const code = demoWaveform.speakers[i];
+  const who = code === 'a' ? 'agent' : code === 'c' ? 'caller' : 'silence';
+  return { x: i * BAR, y: Math.round((HEIGHT - h) / 2), h, who };
+});
+---
+{call.lines.length > 0 && (
+  <div class="call-card on-night" data-call-card data-audio-src={DEMO_AUDIO_URL} data-label-play={c.play} data-label-pause={c.pause}>
+    <div class="card-top">
+      <img class="mark" src="/brand/airfone-mark.svg" alt="" width="36" height="36" />
+      <div class="who">
+        <p class="business">{locale === 'ne' ? call.business.ne : call.business.en}</p>
+        <p class="sub">{c.sub}</p>
+      </div>
+      <p class="time" data-call-time>0:00 / {format(call.duration)}</p>
+    </div>
+
+    <svg
+      class="wave"
+      viewBox={`0 0 ${demoWaveform.peaks.length * BAR} ${HEIGHT}`}
+      preserveAspectRatio="none"
+      role="presentation"
+      data-call-wave
+    >
+      {bars.map((b) => (
+        <rect x={b.x} y={b.y} width="3" height={b.h} rx="1.5" class={b.who} />
+      ))}
+    </svg>
+
+    <div class="now">
+      <button type="button" class="play" data-call-play aria-label={c.play}>
+        <svg class="icon-play" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 4.2v11.6a.8.8 0 0 0 1.2.7l9.3-5.8a.8.8 0 0 0 0-1.4L7.2 3.5A.8.8 0 0 0 6 4.2Z" /></svg>
+        <svg class="icon-pause" viewBox="0 0 20 20" aria-hidden="true"><rect x="5" y="4" width="3.5" height="12" rx="1" /><rect x="11.5" y="4" width="3.5" height="12" rx="1" /></svg>
+      </button>
+      <div class="line" aria-live="off">
+        <p class="speaker" data-call-speaker>{first.speaker === 'caller' ? c.caller : 'AirFone'}</p>
+        <p class="text" data-call-text>{locale === 'ne' ? first.ne : first.en}</p>
+      </div>
+    </div>
+
+    <a class="read-all" href="#call">{c.readAll}</a>
+
+    {DEMO_AUDIO_URL && <audio preload="none" src={DEMO_AUDIO_URL} data-call-audio></audio>}
+
+    <script type="application/json" data-call-lines set:html={JSON.stringify(
+      call.lines.map((l) => ({ start: l.start, speaker: l.speaker === 'caller' ? c.caller : 'AirFone', text: locale === 'ne' ? l.ne : l.en })),
+    )} />
+  </div>
+)}
+
+<style>
+  .call-card {
+    border-radius: var(--radius-panel);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .card-top {
+    display: grid;
+    grid-template-columns: 36px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+  }
+  .mark {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-control);
+    background: var(--night-ink);
+    padding: 4px;
+  }
+  .business {
+    margin: 0;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--night-ink);
+  }
+  .sub {
+    margin: 0;
+    font-size: 14px;
+    color: var(--night-muted);
+  }
+  .time {
+    margin: 0;
+    font-size: 14px;
+    color: var(--night-muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .wave {
+    width: 100%;
+    height: 56px;
+    display: block;
+  }
+  .wave rect {
+    transition: opacity 150ms ease-out;
+  }
+  .wave .agent {
+    fill: var(--brand);
+  }
+  .wave .caller {
+    fill: var(--night-muted);
+  }
+  .wave .silence {
+    fill: var(--night-line);
+  }
+  .wave.is-started rect:not(.played) {
+    opacity: 0.35;
+  }
+  .now {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+  }
+  .play {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 0;
+    background: var(--brand);
+    color: var(--on-brand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .play:hover {
+    background: var(--night-brand-ink);
+  }
+  .play svg {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+  }
+  .icon-pause,
+  .is-playing .icon-play {
+    display: none;
+  }
+  .is-playing .icon-pause {
+    display: block;
+  }
+  .line {
+    /* Room for the longest line so the card never changes height mid-call. */
+    min-height: calc(3 * 1.5em + 22px);
+  }
+  .speaker {
+    margin: 0 0 2px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--night-brand-ink);
+  }
+  .text {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--night-ink);
+  }
+  .read-all {
+    font-size: 14px;
+    color: var(--night-muted);
+    text-underline-offset: 3px;
+    width: fit-content;
+  }
+  .read-all:hover {
+    color: var(--night-ink);
+  }
+  .no-audio .play {
+    display: none;
+  }
+  .no-audio .now {
+    grid-template-columns: minmax(0, 1fr);
+  }
+</style>
+
+<script>
+  type Line = { start: number; speaker: string; text: string };
+
+  function initCall(card: HTMLElement) {
+    const audio = card.querySelector<HTMLAudioElement>('[data-call-audio]');
+    const playBtn = card.querySelector<HTMLButtonElement>('[data-call-play]');
+    const time = card.querySelector<HTMLElement>('[data-call-time]');
+    const wave = card.querySelector<SVGElement>('[data-call-wave]');
+    const speakerEl = card.querySelector<HTMLElement>('[data-call-speaker]');
+    const textEl = card.querySelector<HTMLElement>('[data-call-text]');
+    const lines: Line[] = JSON.parse(card.querySelector('[data-call-lines]')?.textContent || '[]');
+    const rects = wave ? Array.from(wave.querySelectorAll('rect')) : [];
+    const listItems = Array.from(document.querySelectorAll<HTMLElement>('[data-call-line]'));
+
+    const format = (sec: number) => `${Math.floor(sec / 60)}:${String(Math.floor(sec % 60)).padStart(2, '0')}`;
+
+    let lastIndex = 0;
+    function lineIndexAt(t: number) {
+      let idx = 0;
+      lines.forEach((l, i) => {
+        if (l.start <= t) idx = i;
+      });
+      return idx;
+    }
+
+    function show(t: number, duration: number) {
+      const idx = lineIndexAt(t);
+      if (idx !== lastIndex || t === 0) {
+        lastIndex = idx;
+        if (speakerEl) speakerEl.textContent = lines[idx].speaker;
+        if (textEl) textEl.textContent = lines[idx].text;
+      }
+      listItems.forEach((li, i) => {
+        if (i === idx && t > 0) li.setAttribute('aria-current', 'true');
+        else li.removeAttribute('aria-current');
+      });
+      if (duration > 0) {
+        const played = Math.floor((t / duration) * rects.length);
+        rects.forEach((r, i) => r.classList.toggle('played', i < played));
+        if (time) time.textContent = `${format(t)} / ${format(duration)}`;
+      }
+    }
+
+    if (!audio) {
+      card.classList.add('no-audio');
+      return;
+    }
+
+    audio.addEventListener('error', () => card.classList.add('no-audio'));
+
+    playBtn?.addEventListener('click', () => {
+      if (audio.paused) audio.play().catch(() => card.classList.add('no-audio'));
+      else audio.pause();
+    });
+
+    audio.addEventListener('play', () => {
+      card.classList.add('is-playing');
+      wave?.classList.add('is-started');
+      playBtn?.setAttribute('aria-label', card.dataset.labelPause || 'Pause');
+    });
+    audio.addEventListener('pause', () => {
+      card.classList.remove('is-playing');
+      playBtn?.setAttribute('aria-label', card.dataset.labelPlay || 'Play');
+    });
+    audio.addEventListener('timeupdate', () => show(audio.currentTime, audio.duration || 0));
+
+    // Click on the waveform to seek.
+    wave?.addEventListener('click', (e) => {
+      const box = wave.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (e.clientX - box.left) / box.width));
+      const seekTo = () => {
+        audio.currentTime = ratio * audio.duration;
+        if (audio.paused) audio.play().catch(() => {});
+      };
+      if (audio.duration) seekTo();
+      else {
+        audio.addEventListener('loadedmetadata', seekTo, { once: true });
+        audio.load();
+      }
+    });
+
+    // Transcript lines elsewhere on the page seek the same audio.
+    listItems.forEach((li) => {
+      const go = () => {
+        const start = Number(li.dataset.start);
+        const seekTo = () => {
+          audio.currentTime = start;
+          if (audio.paused) audio.play().catch(() => {});
+        };
+        if (audio.duration) seekTo();
+        else {
+          audio.addEventListener('loadedmetadata', seekTo, { once: true });
+          audio.load();
+        }
+      };
+      li.addEventListener('click', go);
+      li.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          go();
+        }
+      });
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-call-card]').forEach(initCall);
+</script>

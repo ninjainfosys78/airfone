@@ -12,6 +12,9 @@
   --night-muted: #B6BEA8;
   --night-line: #2C3520;
   --night-brand-ink: #A6D86A;
+  --night-surface: #1C2414;
+  --tint: #F2F6E9;
+  --error: #B3261E;
 
   --radius-control: 8px;
   --radius-panel: 12px;
@@ -30,6 +33,9 @@
     --line: #2A3220;
     --brand-ink: #A6D86A;
     --night: #0A0D07;
+    --night-surface: #161C0F;
+    --tint: #151A0E;
+    --error: #FF8A80;
   }
 }
 
@@ -185,4 +191,21 @@ input, select {
 input:focus, select:focus, a:focus-visible, button:focus-visible {
   outline: 2px solid var(--brand-ink);
   outline-offset: 2px;
+}
+
+/* Dark band surfaces: remap the light tokens so shared components
+   (forms, links, secondary text) read correctly on --night. */
+.on-night {
+  background: var(--night);
+  color: var(--night-ink);
+  --ink: var(--night-ink);
+  --ink-muted: var(--night-muted);
+  --line: var(--night-line);
+  --surface: var(--night-surface);
+  --brand-ink: var(--night-brand-ink);
+  --error: #FF8A80;
+}
+
+.on-tint {
+  background: var(--tint);
 }
