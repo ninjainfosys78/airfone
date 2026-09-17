@@ -20,7 +20,7 @@ export type DemoCall = {
 // airfone/landing/demo/2026-09-17). Start times come from the Deepgram
 // transcript. Consecutive segments from the same speaker are merged, and
 // punctuation is added for reading; the words match the recording.
-// Needs Pathibhara Solutions' written permission before going public.
+// Pathibhara Solutions approved using their name, prices and this call.
 export const demoCall: DemoCall = {
   business: { ne: 'पाथिभरा सोलुसन्स', en: 'Pathibhara Solutions' },
   duration: 79.75,

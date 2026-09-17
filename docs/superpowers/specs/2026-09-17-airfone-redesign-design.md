@@ -181,7 +181,7 @@ Dependency cleanup in `package.json` and `astro.config.mjs` (React, Radix, Lingu
 
 ## Open items (not blocking)
 
-- Demo recording, transcript, timestamps, and Pathibhara Solutions' written permission.
+- Done: demo recording, transcript and timestamps; Pathibhara Solutions approved use.
 - Audio hosting URL (R2 or CDN).
 - `/api/waitlist` on `app.airfone.app` (spec given separately).
 - Office hours to publish.
