@@ -1,6 +1,6 @@
 ---
 import StructuredData from './StructuredData.astro';
-import { CONTACT_EMAIL } from '../config/site';
+import { CONTACT_EMAIL, CONTACT_PHONE_TEL, CONTACT_PHONE_DISPLAY } from '../config/site';
 import type { Locale } from '../i18n';
 
 export interface Props {
@@ -9,8 +9,18 @@ export interface Props {
 const { locale } = Astro.props;
 
 const copy = {
-  ne: { h1: 'सम्पर्क गर्नुहोस्', line: 'प्रश्न वा सुझावका लागि हामीलाई इमेल गर्नुहोस्।' },
-  en: { h1: 'Contact us', line: 'Email us with questions or feedback.' },
+  ne: {
+    h1: 'सम्पर्क गर्नुहोस्',
+    line: 'प्रश्न वा सुझावका लागि हामीलाई इमेल गर्नुहोस्।',
+    waitlist: 'AirFone सुरु हुँदा सूचना पाउन सूचीमा नाम लेखाउनुहोस्।',
+    waitlistHref: '/#waitlist',
+  },
+  en: {
+    h1: 'Contact us',
+    line: 'Email us with questions or feedback.',
+    waitlist: 'Join the waitlist to hear when AirFone launches.',
+    waitlistHref: '/en/#waitlist',
+  },
 } as const;
 const c = copy[locale];
 ---
@@ -20,17 +30,26 @@ const c = copy[locale];
     <h1>{c.h1}</h1>
     <p class="secondary-text">{c.line}</p>
     <p class="email"><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
+    <p class="phone"><a href={CONTACT_PHONE_TEL}>{CONTACT_PHONE_DISPLAY[locale]}</a></p>
+    <p class="waitlist-line"><a href={c.waitlistHref}>{c.waitlist}</a></p>
   </div>
 </section>
 <style>
   .page-hero {
     padding: 72px 0 96px;
   }
-  .email {
+  .email, .phone {
     margin-top: 24px;
     font-size: 22px;
   }
-  .email a {
+  .phone {
+    margin-top: 8px;
+  }
+  .email a, .phone a {
     font-weight: 600;
+  }
+  .waitlist-line {
+    margin-top: 32px;
+    font-size: 18px;
   }
 </style>

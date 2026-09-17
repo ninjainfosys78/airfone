@@ -6,9 +6,10 @@ export interface Props {
   locale: Locale;
   id?: string;
   source?: string;
+  compact?: boolean;
 }
 
-const { locale, id, source = 'homepage' } = Astro.props;
+const { locale, id, source = 'homepage', compact = false } = Astro.props;
 const uid = id ?? `wf-${Math.random().toString(36).slice(2, 9)}`;
 
 const copy = {
@@ -55,7 +56,7 @@ const copy = {
 const c = copy[locale];
 ---
 <form
-  class="waitlist-form"
+  class={`waitlist-form${compact ? ' compact' : ''}`}
   id={uid}
   method="post"
   action={WAITLIST_API_URL}
@@ -64,32 +65,37 @@ const c = copy[locale];
   data-app-url={import.meta.env.PUBLIC_APP_URL || 'https://app.airfone.app'}
   novalidate
 >
-  <div class="field">
-    <label for={`${uid}-phone`}>{c.phoneLabel}</label>
-    <input
-      type="tel"
-      inputmode="tel"
-      autocomplete="tel"
-      name="phone"
-      id={`${uid}-phone`}
-      placeholder={c.phonePlaceholder}
-      required
-      aria-describedby={`${uid}-phone-error`}
-    />
-    <p class="field-error" id={`${uid}-phone-error`} role="alert" hidden></p>
+  <div class="row row-phone">
+    <div class="field">
+      <label for={`${uid}-phone`}>{c.phoneLabel}</label>
+      <input
+        type="tel"
+        inputmode="tel"
+        autocomplete="tel"
+        name="phone"
+        id={`${uid}-phone`}
+        placeholder={c.phonePlaceholder}
+        required
+        aria-describedby={`${uid}-phone-error`}
+      />
+      <p class="field-error" id={`${uid}-phone-error`} role="alert" hidden></p>
+    </div>
+    <button type="submit" class="btn btn-primary submit-btn">{c.submit}</button>
   </div>
 
-  <div class="field">
-    <label for={`${uid}-business`}>{c.businessLabel}</label>
-    <select name="business_type" id={`${uid}-business`}>
-      <option value="">{c.businessChoose}</option>
-      {c.businessOptions.map((opt) => <option value={opt}>{opt}</option>)}
-    </select>
-  </div>
+  <div class="row row-two">
+    <div class="field">
+      <label for={`${uid}-business`}>{c.businessLabel}</label>
+      <select name="business_type" id={`${uid}-business`}>
+        <option value="">{c.businessChoose}</option>
+        {c.businessOptions.map((opt) => <option value={opt}>{opt}</option>)}
+      </select>
+    </div>
 
-  <div class="field">
-    <label for={`${uid}-email`}>{c.emailLabel}</label>
-    <input type="email" autocomplete="email" name="email" id={`${uid}-email`} />
+    <div class="field">
+      <label for={`${uid}-email`}>{c.emailLabel}</label>
+      <input type="email" autocomplete="email" name="email" id={`${uid}-email`} placeholder={c.emailLabel} />
+    </div>
   </div>
 
   <div class="field field-checkbox">
@@ -108,8 +114,6 @@ const c = copy[locale];
   <input type="hidden" name="utm_source" data-utm="utm_source" value="" />
   <input type="hidden" name="utm_medium" data-utm="utm_medium" value="" />
   <input type="hidden" name="utm_campaign" data-utm="utm_campaign" value="" />
-
-  <button type="submit" class="btn btn-primary submit-btn">{c.submit}</button>
 
   <p class="form-message" role="status" aria-live="polite" hidden></p>
 </form>
@@ -162,6 +166,9 @@ const c = copy[locale];
     clip: rect(0 0 0 0);
     white-space: nowrap;
   }
+  .row {
+    display: contents;
+  }
   .submit-btn {
     width: 100%;
   }
@@ -172,6 +179,37 @@ const c = copy[locale];
   .form-message {
     font-size: 16px;
     margin: 0;
+  }
+
+  @media (min-width: 960px) {
+    .waitlist-form.compact {
+      gap: 10px;
+    }
+    .compact .row-phone,
+    .compact .row-two {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .compact .row-phone .field {
+      flex: 1;
+    }
+    .compact .row-phone .submit-btn {
+      width: auto;
+      white-space: nowrap;
+    }
+    .compact .row-two .field {
+      flex: 1;
+    }
+    .compact .row-phone label,
+    .compact .row-two label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
   }
 </style>
 

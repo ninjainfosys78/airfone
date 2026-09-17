@@ -1,6 +1,6 @@
 ---
 import { t, localePath, otherLocalePath, type Locale } from '../i18n';
-import { CONTACT_EMAIL } from '../config/site';
+import { CONTACT_EMAIL, CONTACT_PHONE_TEL, CONTACT_PHONE_DISPLAY } from '../config/site';
 
 export interface Props {
   locale: Locale;
@@ -26,6 +26,7 @@ const copy = t[locale];
 
     <div class="meta">
       <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+      <a href={CONTACT_PHONE_TEL}>{CONTACT_PHONE_DISPLAY[locale]}</a>
       <a href={other.href} hreflang={other.locale} lang={other.locale}>{copy.langSwitchLabel}</a>
     </div>
 

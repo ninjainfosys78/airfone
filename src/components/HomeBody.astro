@@ -16,7 +16,6 @@ const copy = {
     h1: 'ग्राहकका फोन अब छुट्दैनन्।',
     lede: 'AirFone को AI एजेन्टले मूल्य, खुल्ने समय र सेवाबारेका प्रश्नको जवाफ नेपालीमा, दिनरात फोनमै दिन्छ।',
     panelHeading: '२८ सेप्टेम्बरमा सुरु हुँदैछ',
-    panelNote: 'सुरु भएपछि हामी तपाईंलाई फोन गर्नेछौं।',
     tryFree: 'निःशुल्क सुरु गर्नुहोस्',
     problemH2: 'दिनभरि उही प्रश्न',
     problemQuotes: ['मूल्य कति हो?', 'स्टकमा छ?', 'कहिले खुल्छ?'],
@@ -43,13 +42,13 @@ const copy = {
       { q: 'WhatsApp मा पनि चल्छ?', a: 'अहिले फोन कलमा चल्छ। WhatsApp छिट्टै थपिँदैछ।' },
     ],
     closingH2: 'सुरुवातमै सुरु गर्नुहोस्',
+    closingLine: 'सुरु भएपछि हामी तपाईंलाई फोन गर्नेछौं।',
     cta: 'सूचीमा नाम लेखाउनुहोस्',
   },
   en: {
     h1: 'Stop missing customer calls.',
     lede: "AirFone's AI agent answers questions about your prices, opening hours and services in Nepali, on the phone, day and night.",
     panelHeading: 'Launching 28 September',
-    panelNote: "We'll call you when it's live.",
     tryFree: 'Try it free',
     problemH2: 'The same questions, all day',
     problemQuotes: ['How much is it?', 'Is it in stock?', 'When are you open?'],
@@ -76,6 +75,7 @@ const copy = {
       { q: 'Does it work on WhatsApp?', a: 'It works on phone calls today. WhatsApp is coming soon.' },
     ],
     closingH2: 'Be ready on launch day.',
+    closingLine: "We'll call you when it's live.",
     cta: 'Join the waitlist',
   },
 } as const;
@@ -85,17 +85,18 @@ const c = copy[locale];
 <StructuredData locale={locale} home faq={c.faq} />
 
 <section class="hero">
-  <div class="wrap hero-stack">
-    <h1>{c.h1}</h1>
-    <p class="lede">{c.lede}</p>
+  <div class="wrap hero-grid">
+    <div class="hero-text">
+      <h1>{c.h1}</h1>
+      <p class="lede">{c.lede}</p>
+    </div>
     <div class="hero-panel panel" id="waitlist">
       {LAUNCHED ? (
         <a class="btn btn-primary" href={APP_URL}>{c.tryFree}</a>
       ) : (
         <>
           <h2>{c.panelHeading}</h2>
-          <WaitlistForm locale={locale} id="hero" source="hero" />
-          <p class="secondary-text panel-note">{c.panelNote}</p>
+          <WaitlistForm locale={locale} id="hero" source="hero" compact />
         </>
       )}
     </div>
@@ -148,7 +149,10 @@ const c = copy[locale];
     <div class="faq-list">
       {c.faq.map((item) => (
         <details>
-          <summary>{item.q}</summary>
+          <summary>
+            <span class="faq-q">{item.q}</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </summary>
           <p class="secondary-text">{item.a}</p>
         </details>
       ))}
@@ -159,6 +163,7 @@ const c = copy[locale];
 <section class="closing">
   <div class="wrap closing-inner">
     <h2>{c.closingH2}</h2>
+    <p class="secondary-text closing-line">{c.closingLine}</p>
     {LAUNCHED ? (
       <a class="btn btn-primary" href={APP_URL}>{c.tryFree}</a>
     ) : (
@@ -182,10 +187,15 @@ const c = copy[locale];
   .hero {
     padding: 72px 0;
   }
-  .hero-stack {
+  .hero-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  .hero-text {
     max-width: 640px;
   }
-  .hero-stack .lede {
+  .hero-text .lede {
     color: var(--ink-muted);
     font-size: 18px;
     margin-top: 16px;
@@ -194,10 +204,15 @@ const c = copy[locale];
     display: flex;
     flex-direction: column;
     gap: 16px;
-    margin-top: 40px;
   }
-  .panel-note {
-    margin: 0;
+  @media (min-width: 960px) {
+    .hero-panel {
+      padding: 20px 24px;
+      gap: 12px;
+    }
+    .hero-panel h2 {
+      font-size: 22px;
+    }
   }
   .problem, .setup, .who, .faq {
     padding: 96px 0;
@@ -208,6 +223,23 @@ const c = copy[locale];
     flex-wrap: wrap;
     gap: 24px;
     margin: 32px 0;
+  }
+  @media (min-width: 480px) {
+    .hero-text .lede {
+      font-size: 20px;
+    }
+    .problem .secondary-text,
+    .who-row .secondary-text {
+      font-size: 18px;
+    }
+  }
+  @media (min-width: 960px) {
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      align-items: center;
+      gap: 48px;
+    }
   }
   .quote {
     font-family: 'Anek Devanagari', system-ui, sans-serif;
@@ -271,12 +303,49 @@ const c = copy[locale];
     font-family: 'Anek Devanagari', system-ui, sans-serif;
     font-weight: 600;
     font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 44px;
+    list-style: none;
+  }
+  .faq-list summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-icon {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+  .faq-icon::before,
+  .faq-icon::after {
+    content: '';
+    position: absolute;
+    background: var(--ink-muted);
+    top: 50%;
+    left: 50%;
+  }
+  .faq-icon::before {
+    width: 16px;
+    height: 2px;
+    transform: translate(-50%, -50%);
+  }
+  .faq-icon::after {
+    width: 2px;
+    height: 16px;
+    transform: translate(-50%, -50%);
+    transition: transform 150ms ease-out;
+  }
+  details[open] .faq-icon::after {
+    transform: translate(-50%, -50%) rotate(90deg);
   }
   .faq-list p {
     margin: 12px 0 0;
   }
   .closing {
-    padding: 120px 0;
+    padding: 72px 0 96px;
     border-top: 1px solid var(--line);
   }
   .closing-inner {
@@ -284,6 +353,9 @@ const c = copy[locale];
     flex-direction: column;
     align-items: flex-start;
     gap: 24px;
+  }
+  .closing-line {
+    margin: -8px 0 0;
   }
 
   @media (min-width: 900px) {
