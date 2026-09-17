@@ -25,7 +25,7 @@ All build-time, from `import.meta.env`:
 | `PUBLIC_DEMO_AUDIO_URL` | empty | Recording URL (hosted outside the bundle, which rejects audio) |
 | `PUBLIC_DEMO_FIXTURE` | `false` | Dev only: renders the demo band with the planned script and no audio |
 
-Constants: launch date `2026-09-28`, contact email `info@airfone.app`.
+Constants: launch date `2026-09-28`, contact email `info@airfone.app`, contact phone `+9779858042433` (display ne: `९८५८०४२४३३`, en: `985-8042433`, link `tel:+9779858042433`).
 
 ## Routing and redirects
 
@@ -92,7 +92,7 @@ Dark scheme (`prefers-color-scheme: dark`): `--paper #10140B`, `--surface #171D1
 
 - `Layout.astro`: head (SEO, fonts, tokens), header, footer. Replaces `BaseLayout.astro`.
 - `SiteHeader.astro`: lockup; links Pricing, Contact; language switch to the same page in the other locale (text "English" / "नेपाली", `hreflang`, `lang` attributes); CTA. Mobile: lockup, language switch, CTA button; Pricing and Contact move to the footer and a simple disclosure menu (`<details>`), no JS.
-- `SiteFooter.astro`: stacked logo, links (Pricing, Contact, Privacy), email, language switch, "© 2026 AirFone".
+- `SiteFooter.astro`: stacked logo, links (Pricing, Contact, Privacy), email, phone, language switch, "© 2026 AirFone".
 - `WaitlistForm.astro`: progressive enhancement. Plain `<form method="post" action={WAITLIST_API_URL}>` works without JS. Inline script sends JSON, shows states. Fields: mobile number (required, `inputmode="tel"`, `autocomplete="tel"`), business type (optional select), email (optional), consent checkbox (required), hidden honeypot `website`, hidden `locale`, `source`, UTM fields from the URL. Client validation mirrors the API: strip separators, drop `+977`/`977`/`00977`, convert Devanagari digits, match `^9[678]\d{8}$`. States: idle, submitting (button disabled, label changes), created, already_on_list, has_account (link to app sign-in), invalid (per-field message under the field, `aria-describedby`, focus first invalid), rate_limited, network/server error (keep input, retry). Messages are localized in the component. Unique ids per instance.
 - `DemoCall.astro` + `DemoPlayer` island (vanilla TS, no React): play/pause button, seek bar (`input type=range`), elapsed/total time, transcript list. Transcript is server-rendered HTML. The script highlights the current line (`aria-current`, brand marker bar at left of the line, no scrolling of the page). Clicking a line seeks to it. Audio `preload="none"`. If `DEMO_AUDIO_URL` is empty or fails, the player hides and the transcript remains.
 - `src/data/demo-call.ts`: `{ business, lines: { speaker: 'caller' | 'agent', start: number, ne: string, en: string }[] }`. Empty until the recording arrives. `PUBLIC_DEMO_FIXTURE=true` uses `demo-call.fixture.ts` for local design review only; the production build fails if the fixture flag is set.
@@ -147,7 +147,7 @@ CTA label ne: सूचीमा नाम लेखाउनुहोस् / e
 ## Other pages
 
 - **Pricing**: h1 ne: मूल्य २८ सेप्टेम्बरमा सार्वजनिक हुँदैछ / en: Pricing is announced on 28 September. One line: waitlist hears first. Waitlist form.
-- **Contact**: h1 ne: सम्पर्क गर्नुहोस् / en: Contact us. Email link. No map, no fake phone number, no form.
+- **Contact**: h1 ne: सम्पर्क गर्नुहोस् / en: Contact us. Email link (`mailto:info@airfone.app`) and phone link (`tel:+9779858042433`). No map, no form.
 - **Privacy**: plain statement of what the waitlist collects (mobile number, optional email, business type, page, language), why (launch contact), where (AirFone servers), how to be removed (email). `noindex` is not set; it is a real page.
 - **Waitlist thanks**: reads `?status=`; `noindex`.
 - **404**: bilingual, links home in both languages.
@@ -184,7 +184,7 @@ Dependency cleanup in `package.json` and `astro.config.mjs` (React, Radix, Lingu
 - Demo recording, transcript, timestamps, and Pathibhara Solutions' written permission.
 - Audio hosting URL (R2 or CDN).
 - `/api/waitlist` on `app.airfone.app` (spec given separately).
-- Contact phone number and office hours to publish.
+- Office hours to publish.
 - Languages the agent supports beyond Nepali (FAQ avoids claiming more).
 - Permission to show municipality logos.
 - nginx 301 rules applied by the hosting owner.
