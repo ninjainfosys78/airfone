@@ -160,6 +160,17 @@ const links = [
     border-bottom: 1px solid var(--night-line);
     padding: 8px var(--gutter) 24px;
   }
+  @media (prefers-reduced-motion: no-preference) {
+    .sheet {
+      transition: opacity 180ms ease-out, transform 180ms ease-out;
+    }
+    @starting-style {
+      .mobile-menu[open] .sheet {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+    }
+  }
   .sheet nav {
     display: flex;
     flex-direction: column;

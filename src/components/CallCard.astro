@@ -191,9 +191,21 @@ const bars = demoWaveform.peaks.map((peak, i) => {
     fill: var(--night-line);
   }
   .wave rect {
-    transition: opacity 150ms ease-out;
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: opacity 150ms ease-out, transform 120ms ease-out;
   }
-  .wave.is-started rect:not(.played) {
+  /* Bars at the playhead lift while the call plays. */
+  .wave :global(rect.live) {
+    transform: scaleY(1.35);
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wave :global(rect.live) {
+      transform: none;
+    }
+  }
+  .wave:global(.is-started) rect:not(:global(.played)) {
     opacity: 0.3;
   }
   .no-audio .play {
@@ -253,7 +265,11 @@ const bars = demoWaveform.peaks.map((peak, i) => {
       wordEls.forEach((el) => el.classList.toggle('spoken', Number(el.dataset.t) <= t));
       if (duration > 0) {
         const played = Math.floor((t / duration) * rects.length);
-        rects.forEach((r, i) => r.classList.toggle('played', i < played));
+        const playing = !audio!.paused;
+        rects.forEach((r, i) => {
+          r.classList.toggle('played', i < played);
+          r.classList.toggle('live', playing && i >= played - 2 && i <= played);
+        });
         if (time) time.textContent = `${format(t)} / ${format(duration)}`;
       }
     }
@@ -285,6 +301,7 @@ const bars = demoWaveform.peaks.map((peak, i) => {
       playBtn?.setAttribute('aria-label', card.dataset.labelPause || 'Pause');
     });
     audio.addEventListener('pause', () => {
+      rects.forEach((r) => r.classList.remove('live'));
       card.classList.remove('is-playing');
       playBtn?.setAttribute('aria-label', card.dataset.labelPlay || 'Play');
     });

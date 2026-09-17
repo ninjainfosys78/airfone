@@ -219,3 +219,47 @@ input:focus, select:focus, a:focus-visible, button:focus-visible {
 main {
   flex: 1 0 auto;
 }
+
+/* Motion. Short, ease-out, transform/opacity only (plus native details
+   height), and nothing ever waits on it: all content is visible without it. */
+@media (prefers-reduced-motion: no-preference) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Cross-page fade (Chromium and Safari 18.2+; others just navigate). */
+  @view-transition {
+    navigation: auto;
+  }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 200ms;
+    animation-timing-function: ease-out;
+  }
+
+  .btn {
+    transition: color 150ms ease-out, background-color 150ms ease-out, border-color 150ms ease-out, transform 120ms ease-out;
+  }
+  .btn:active {
+    transform: translateY(1px);
+  }
+
+  /* Disclosures open and close smoothly where supported. */
+  details::details-content {
+    height: 0;
+    overflow: clip;
+    transition: height 220ms ease-out, content-visibility 220ms allow-discrete;
+  }
+  details[open]::details-content {
+    height: auto;
+  }
+}
+
+/* Anchor targets clear the sticky header. */
+html {
+  scroll-padding-top: 84px;
+}

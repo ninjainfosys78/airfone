@@ -4,6 +4,8 @@ import LaunchBand from './LaunchBand.astro';
 import CallCard from './CallCard.astro';
 import CallTranscript from './CallTranscript.astro';
 import StructuredData from './StructuredData.astro';
+import { Image } from 'astro:assets';
+import { photos } from '../data/photos';
 import { LAUNCHED, APP_URL } from '../config/site';
 import type { Locale } from '../i18n';
 
@@ -92,10 +94,18 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
 </section>
 
 <section class="problem on-tint">
-  <div class="wrap split">
-    <div>
-      <h2>{c.problemH2}</h2>
-    </div>
+  <div class="problem-media">
+    <Image
+      class="problem-photo"
+      src={photos.kathmanduCall.src}
+      alt={photos.kathmanduCall.alt[locale]}
+      widths={[480, 800, 1200, 1600]}
+      sizes="(min-width: 900px) 50vw, 100vw"
+      loading="lazy"
+    />
+  </div>
+  <div class="problem-body">
+    <h2>{c.problemH2}</h2>
     <ul class="asks">
       {c.problemQuotes.map((q) => <li>{q}</li>)}
     </ul>
@@ -119,10 +129,22 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
   </div>
 </section>
 
-<section class="who on-tint">
-  <div class="wrap split">
-    <div>
-      <h2>{c.whoH2}</h2>
+<section class="who">
+  <div class="wrap">
+    <h2>{c.whoH2}</h2>
+    <div class="strip">
+      <figure class="f-shop">
+        <Image class="photo" src={photos.shopkeeper.src} alt={photos.shopkeeper.alt[locale]} widths={[640, 960, 1400]} sizes="(min-width: 1120px) 540px, (min-width: 900px) 48vw, 100vw" loading="lazy" />
+        <figcaption>{c.who[0].type}</figcaption>
+      </figure>
+      <figure class="f-school">
+        <Image class="photo" src={photos.classroom.src} alt={photos.classroom.alt[locale]} widths={[320, 540, 800]} sizes="(min-width: 1120px) 264px, (min-width: 900px) 24vw, 50vw" loading="lazy" />
+        <figcaption>{c.who[3].type}</figcaption>
+      </figure>
+      <figure class="f-food">
+        <Image class="photo" src={photos.restaurant.src} alt={photos.restaurant.alt[locale]} widths={[320, 540, 800]} sizes="(min-width: 1120px) 264px, (min-width: 900px) 24vw, 50vw" loading="lazy" />
+        <figcaption>{c.who[4].type}</figcaption>
+      </figure>
     </div>
     <dl class="who-list">
       {c.who.map((row) => (
@@ -213,23 +235,63 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
     }
   }
 
-  /* Problem: the questions themselves, set large */
+  /* Problem: full-bleed editorial split. Photo runs to the left edge,
+     text aligns to the site container on the right. */
   .problem {
-    padding: 120px 0;
+    display: grid;
+  }
+  .problem-media {
+    aspect-ratio: 4 / 5;
+    max-height: 72vh;
+    overflow: hidden;
+  }
+  .problem-photo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 45%;
+  }
+  .problem-body {
+    padding: 72px var(--gutter) 96px;
   }
   .asks {
     list-style: none;
-    margin: 0;
+    margin: 48px 0 0;
     padding: 0;
     border-top: 1px solid var(--line);
   }
   .asks li {
     font-family: 'Instrument Sans', 'Noto Serif Devanagari', system-ui, sans-serif;
     font-weight: 600;
-    font-size: clamp(1.75rem, 3.4vw, 2.75rem);
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
     line-height: 1.25;
-    padding: 24px 0;
+    padding: 22px 0;
     border-bottom: 1px solid var(--line);
+  }
+  @media (min-width: 900px) {
+    .problem {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      min-height: 760px;
+    }
+    .problem-media {
+      aspect-ratio: auto;
+      max-height: none;
+      height: 100%;
+    }
+    .problem-body {
+      align-self: center;
+      padding: 120px max(var(--gutter), calc((100vw - var(--max-width)) / 2 + var(--gutter))) 120px 72px;
+    }
+  }
+
+  .photo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-panel);
+    background: var(--line);
   }
 
   /* Setup: solid brand band */
@@ -278,12 +340,44 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
     }
   }
 
-  /* Who */
+  /* Who: photos of real businesses, then example questions */
   .who {
     padding: 120px 0;
   }
-  .who-list {
+  /* Every photo is pre-cropped to its frame. Phones: shop full width, then
+     school and restaurant side by side. Desktop: one row of equal height
+     (3:2 + 3:4 + 3:4 at 2fr 1fr 1fr). */
+  .strip {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas: 'shop shop' 'school food';
+    gap: 12px;
+  }
+  .strip figure {
     margin: 0;
+  }
+  .f-shop { grid-area: shop; }
+  .f-school { grid-area: school; }
+  .f-food { grid-area: food; }
+  .f-shop .photo { aspect-ratio: 3 / 2; height: auto; }
+  .f-school .photo,
+  .f-food .photo { aspect-ratio: 3 / 4; height: auto; }
+  .strip figcaption {
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink-muted);
+  }
+  @media (min-width: 900px) {
+    .strip {
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-areas: 'shop school food';
+      gap: 16px;
+    }
+  }
+  .who-list {
+    margin: 64px 0 0;
     border-top: 1px solid var(--line);
   }
   .who-row {
@@ -306,7 +400,7 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
   }
   @media (min-width: 700px) {
     .who-row {
-      grid-template-columns: 180px minmax(0, 1fr);
+      grid-template-columns: minmax(180px, 5fr) 7fr;
       gap: 24px;
       align-items: baseline;
     }
