@@ -68,7 +68,7 @@ Dark scheme (`prefers-color-scheme: dark`): `--paper #10140B`, `--surface #171D1
 
 ### Type
 
-- Headings: **Anek Devanagari** (covers Devanagari and Latin), weights 600 and 700.
+- Headings: **IBM Plex Serif** (Latin) + **Noto Serif Devanagari** (Nepali), weights 600 and 700 (matches chaudandigadhi.digprofile.com, chosen by the user).
 - Body: **Mukta** (covers Devanagari and Latin), weights 400 and 600.
 - Self-hosted via `@fontsource`, `font-display: swap`. No Google Fonts request. No Inter.
 - Scale: body 18px (16px under 480px), secondary 16px, h3 22px, h2 `clamp(1.75rem, 3vw, 2.5rem)`, h1 `clamp(2.25rem, 4.5vw, 3rem)` (impeccable: hero headline <= 48px).
