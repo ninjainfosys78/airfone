@@ -1,0 +1,36 @@
+---
+import StructuredData from './StructuredData.astro';
+import { CONTACT_EMAIL } from '../config/site';
+import type { Locale } from '../i18n';
+
+export interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const copy = {
+  ne: { h1: 'सम्पर्क गर्नुहोस्', line: 'प्रश्न वा सुझावका लागि हामीलाई इमेल गर्नुहोस्।' },
+  en: { h1: 'Contact us', line: 'Email us with questions or feedback.' },
+} as const;
+const c = copy[locale];
+---
+<StructuredData locale={locale} />
+<section class="page-hero">
+  <div class="wrap">
+    <h1>{c.h1}</h1>
+    <p class="secondary-text">{c.line}</p>
+    <p class="email"><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
+  </div>
+</section>
+<style>
+  .page-hero {
+    padding: 72px 0 96px;
+  }
+  .email {
+    margin-top: 24px;
+    font-size: 22px;
+  }
+  .email a {
+    font-weight: 600;
+  }
+</style>

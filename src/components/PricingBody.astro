@@ -1,0 +1,48 @@
+---
+import WaitlistForm from './WaitlistForm.astro';
+import StructuredData from './StructuredData.astro';
+import { LAUNCHED, APP_URL } from '../config/site';
+import type { Locale } from '../i18n';
+
+export interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const copy = {
+  ne: {
+    h1: 'मूल्य २८ सेप्टेम्बरमा सार्वजनिक हुँदैछ',
+    line: 'सूचीमा नाम लेखाउनेले पहिले जानकारी पाउनेछन्।',
+    tryFree: 'निःशुल्क सुरु गर्नुहोस्',
+  },
+  en: {
+    h1: 'Pricing is announced on 28 September.',
+    line: 'People on the waitlist hear first.',
+    tryFree: 'Try it free',
+  },
+} as const;
+const c = copy[locale];
+---
+<StructuredData locale={locale} />
+<section class="page-hero">
+  <div class="wrap">
+    <h1>{c.h1}</h1>
+    <p class="secondary-text">{c.line}</p>
+    <div class="panel form-panel">
+      {LAUNCHED ? (
+        <a class="btn btn-primary" href={APP_URL}>{c.tryFree}</a>
+      ) : (
+        <WaitlistForm locale={locale} id="pricing" source="pricing" />
+      )}
+    </div>
+  </div>
+</section>
+<style>
+  .page-hero {
+    padding: 72px 0 96px;
+  }
+  .form-panel {
+    margin-top: 32px;
+    max-width: 480px;
+  }
+</style>

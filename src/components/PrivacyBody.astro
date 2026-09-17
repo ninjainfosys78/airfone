@@ -1,0 +1,47 @@
+---
+import StructuredData from './StructuredData.astro';
+import { CONTACT_EMAIL } from '../config/site';
+import type { Locale } from '../i18n';
+
+export interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const copy = {
+  ne: {
+    h1: 'गोपनीयता',
+    p1: 'सूचीमा नाम लेखाउँदा हामी तपाईंको मोबाइल नम्बर, वैकल्पिक इमेल, व्यवसायको प्रकार र तपाईंले फाराम भरेको पृष्ठ र भाषा सङ्कलन गर्छौं।',
+    p2: 'सुरु भएपछि तपाईंलाई सम्पर्क गर्नकै लागि यो जानकारी प्रयोग गरिन्छ।',
+    p3: 'यो जानकारी AirFone को सर्भरमा राखिन्छ।',
+    p4: 'सूचीबाट हटाउन चाहनुभएमा हामीलाई इमेल गर्नुहोस्।',
+  },
+  en: {
+    h1: 'Privacy',
+    p1: "When you join the waitlist we collect your mobile number, an optional email, your business type, and the page and language you signed up from.",
+    p2: "We use this only to contact you when AirFone launches.",
+    p3: 'This information is kept on AirFone servers.',
+    p4: 'To be removed from the list, email us.',
+  },
+} as const;
+const c = copy[locale];
+---
+<StructuredData locale={locale} />
+<section class="page-hero">
+  <div class="wrap prose">
+    <h1>{c.h1}</h1>
+    <p>{c.p1}</p>
+    <p>{c.p2}</p>
+    <p>{c.p3}</p>
+    <p>{c.p4} <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
+  </div>
+</section>
+<style>
+  .page-hero {
+    padding: 72px 0 96px;
+  }
+  .prose p {
+    color: var(--ink-muted);
+    margin-top: 16px;
+  }
+</style>
