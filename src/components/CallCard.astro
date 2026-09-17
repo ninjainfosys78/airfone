@@ -76,7 +76,7 @@ const bars = demoWaveform.peaks.map((peak, i) => {
       </svg>
     </div>
 
-    {DEMO_AUDIO_URL && <audio preload="auto" src={DEMO_AUDIO_URL} data-call-audio></audio>}
+    {DEMO_AUDIO_URL && <audio preload="none" src={DEMO_AUDIO_URL} data-call-audio></audio>}
 
     <script type="application/json" data-call-lines set:html={JSON.stringify(
       call.lines.map((l) => ({ start: l.start, who: l.speaker, speaker: l.speaker === 'caller' ? c.caller : 'AirFone', words: timed(l) })),
@@ -300,7 +300,7 @@ const bars = demoWaveform.peaks.map((peak, i) => {
       return;
     }
 
-    // Set once the visitor pauses, so autoplay never overrides their choice.
+    // Sound only ever starts from a click on play, the waveform or a transcript line.
     let userPaused = false;
 
     const play = () => audio.play();
@@ -362,21 +362,6 @@ const bars = demoWaveform.peaks.map((peak, i) => {
           go();
         }
       });
-    });
-
-    // Autoplay. Browsers only allow sound after the visitor has interacted
-    // with the page, so try right away and otherwise start on the first
-    // tap, click or key press anywhere (except on the call's own controls,
-    // which handle themselves).
-    const events = ['pointerdown', 'keydown'] as const;
-    const onFirstInteraction = (e: Event) => {
-      const target = e.target as Element | null;
-      if (target && target.closest('[data-call-play], [data-call-wave], [data-call-line]')) return;
-      if (!userPaused && audio.paused && audio.currentTime === 0) play().catch(() => {});
-      events.forEach((name) => document.removeEventListener(name, onFirstInteraction, true));
-    };
-    play().catch(() => {
-      events.forEach((name) => document.addEventListener(name, onFirstInteraction, true));
     });
   }
 
