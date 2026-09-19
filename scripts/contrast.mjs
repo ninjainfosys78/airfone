@@ -56,6 +56,10 @@ const light = {
   nightInk: '#EEF2E6',
   nightMuted: '#CDD4C2',
   nightLine: '#2C3520',
+  // Not redefined under prefers-color-scheme: dark, so it carries through
+  // the ...light spread below unchanged — only the --night/--night-surface
+  // backdrops it sits on differ between schemes.
+  nightLineControl: '#6B7566',
   nightBrandInk: '#A6D86A',
   nightSurface: '#1C2414',
   tint: '#F2F6E9',
@@ -126,6 +130,8 @@ const rows = (T) => [
   ['panel', 'primary button fill against panel (advisory, satisfied via label text)', T.brand, T.paper, 3, 'boundary'],
   ['panel', 'checkbox checked accent (--brand-ink) against panel', T.brandInk, T.paper, 3, 'boundary'],
   ['panel', ':focus-visible ring (--brand-ink) on panel', T.brandInk, T.paper, 3, 'focus'],
+  ['panel', 'phone input .group:focus-within ring (--brand-ink) on panel', T.brandInk, T.paper, 3, 'focus'],
+  ['panel', 'disclosure summary :focus-visible ring (--brand-ink) on panel', T.brandInk, T.paper, 3, 'focus'],
 
   // --- header and footer, on every page ---
   ['night', 'header nav link (--night-muted) on --night', T.nightMuted, T.night, 4.5, 'body'],
@@ -135,6 +141,8 @@ const rows = (T) => [
   ['night', 'footer copyright 14px (--night-muted) on --night', T.nightMuted, T.night, 4.5, 'body'],
   ['night', 'footer link (--night-brand-ink) on --night', T.nightBrandInk, T.night, 4.5, 'body'],
   ['night', ':focus-visible ring on --night', T.nightBrandInk, T.night, 3, 'focus'],
+  ['night', 'waitlist group/input border (--line-control, .on-night remap) on --night-surface', T.nightLineControl, T.nightSurface, 3, 'boundary'],
+  ['night', 'waitlist group/input border (--line-control, .on-night remap) on --night', T.nightLineControl, T.night, 3, 'boundary'],
 
   // --- full-site surfaces behind PUBLIC_SITE_MODE=full and /preview/ ---
   ['page', 'body text on --paper', T.ink, T.paper, 4.5, 'body'],

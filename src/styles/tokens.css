@@ -12,6 +12,7 @@
   --night-ink: #EEF2E6;
   --night-muted: #CDD4C2;
   --night-line: #2C3520;
+  --night-line-control: #6B7566;
   --night-brand-ink: #A6D86A;
   --night-surface: #1C2414;
   --tint: #F2F6E9;
@@ -193,7 +194,7 @@ input, select {
   box-sizing: border-box;
 }
 
-input:focus, select:focus, a:focus-visible, button:focus-visible {
+input:focus, select:focus, a:focus-visible, button:focus-visible, summary:focus-visible {
   outline: 2px solid var(--brand-ink);
   outline-offset: 2px;
 }
@@ -208,6 +209,7 @@ input:focus, select:focus, a:focus-visible, button:focus-visible {
   --ink: var(--night-ink);
   --ink-muted: var(--night-muted);
   --line: var(--night-line);
+  --line-control: var(--night-line-control);
   --surface: var(--night-surface);
   --brand-ink: var(--night-brand-ink);
   --error: #FF8A80;

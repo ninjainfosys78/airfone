@@ -30,13 +30,17 @@ Light (default):
 | `--night-ink` | `#EEF2E6` |
 | `--night-muted` | `#CDD4C2` |
 | `--night-line` | `#2C3520` |
+| `--night-line-control` | `#6B7566` |
 | `--night-brand-ink` | `#A6D86A` |
 
 `--line` is for decorative separators only (`.site-footer` / `.bottom`
 hairlines) — 1.4.11 doesn't reach those. `--line-control` is for anything
 that identifies a control boundary (`input`, `select`, `.group`, `.compact
 .more`); it's the one that has to clear 3:1 against both the panel and the
-control fill.
+control fill. `.on-night` remaps `--line-control` to `--night-line-control`
+so the waitlist form's control boundary still clears 3:1 where it's embedded
+in a `.on-night` section (`LaunchBand.astro`, `HomeBody.astro`,
+`PricingBody.astro`).
 
 Dark scheme overrides: `--paper #10140B`, `--surface #171D10`, `--ink
 #EEF2E6`, `--ink-muted #CDD4C2`, `--line #2A3220`, `--line-control #62764A`,
@@ -82,9 +86,14 @@ because that colour is not a token, and it closed with "all pairs clear the
 §7.2 exists to prevent, so the numbers now come from the script or not at all.
 
 TEC-42 fixed the three failures the script previously reported (teaser focus
-ring, form control boundaries, checkbox checked state). The primary-button
-fill / panel boundary row stays a deliberate `FAIL` — its label text clears
-4.5:1 so 1.4.11 is satisfied through the text, not the fill.
+ring, form control boundaries, checkbox checked state), plus two focus-ring
+gaps review caught along the way: the phone input's `.group:focus-within`
+border was still `--brand` (2.01:1) even after the resting-state boundary was
+fixed, and `summary` (the disclosure toggle) wasn't in the `:focus-visible`
+selector at all. Both now ring at `--brand-ink` (≥9:1) with the same
+2px/2px-offset outline as every other control. The primary-button fill /
+panel boundary row stays a deliberate `FAIL` — its label text clears 4.5:1 so
+1.4.11 is satisfied through the text, not the fill.
 
 ## Type scale
 

@@ -156,7 +156,9 @@ const c = copy[locale];
     transition: border-color 150ms ease-out;
   }
   .group:focus-within {
-    border-color: var(--brand);
+    border-color: var(--brand-ink);
+    outline: 2px solid var(--brand-ink);
+    outline-offset: 2px;
   }
   .prefix {
     padding-left: 12px;
