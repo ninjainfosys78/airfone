@@ -8,6 +8,6 @@
 
 ## Pages
 
-- [Home (Nepali)](https://airfone.app/): product overview, a real recorded call with transcript, setup steps, FAQ, launch waitlist
+- [Home (Nepali)](https://airfone.app/): product overview and waitlist signup
 - [Home (English)](https://airfone.app/en/)
 - [Privacy](https://airfone.app/en/privacy/)
