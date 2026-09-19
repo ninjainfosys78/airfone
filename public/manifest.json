@@ -1,7 +1,7 @@
 {
   "name": "AirFone",
   "short_name": "AirFone",
-  "description": "AI call center for Nepali businesses",
+  "description": "AI call center for Nepali businesses, in development",
   "lang": "ne",
   "start_url": "/",
   "display": "browser",
