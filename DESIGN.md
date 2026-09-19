@@ -36,26 +36,45 @@ Dark scheme overrides: `--paper #10140B`, `--surface #171D10`, `--ink
 `--night #0A0D07`. `--brand`, `--on-brand` and all `--night-*` tokens stay
 the same in both schemes.
 
-One other hex literal exists outside tokens.css: `#B3261E` (form field error
-text, both light and dark — an error red, not a brand color, kept literal
-since it's a single semantic use).
+Hex literals that live outside `tokens.css` and so are easy to miss when the
+palette is reviewed — all of them are on a public surface:
 
-Contrast (computed against the actual token values):
+| Literal | Where | What |
+|---|---|---|
+| `#4F7F14` / `#3A5F0D` | `TeaserBody.astro` | teaser hero green, and the glyph/cloud on it |
+| `#B3261E` | `WaitlistForm.astro` | form field error text (light; dark uses `#FF8A80`) |
+| `#808A72` | `CallCard.astro` | transcript words not yet spoken |
+| `rgb(20 26 13 / 0.88)` | `HomeBody.astro` | hero scrim over the photo |
 
-| Pair | Ratio |
-|---|---|
-| ink / paper (light) | 17.3:1 |
-| ink-muted / paper (light) | 8.1:1 |
-| brand-ink / paper (light) | 6.4:1 |
-| on-brand / brand (button text) | 7.4:1 |
-| ink / paper (dark) | 16.4:1 |
-| ink-muted / paper (dark) | 9.4:1 |
-| brand-ink / paper (dark) | 11.2:1 |
-| night-ink / night | 15.6:1 |
-| night-muted / night | 9.2:1 |
-| night-brand-ink / night | 10.7:1 |
+## Contrast
 
-All pairs clear the 4.5:1 minimum with margin.
+**Do not hand-maintain a table here.** Run it:
+
+```
+node scripts/contrast.mjs          # failures only, exits 1 if any
+node scripts/contrast.mjs --all    # the full table, both schemes
+node scripts/contrast.mjs --md     # the same as markdown, to paste into an MR
+node scripts/contrast.mjs '#fff' '#4F7F14' [alpha]   # one-off pair
+```
+
+`scripts/contrast.mjs` carries the token values, the surface list and the
+required ratio per row (4.5:1 body, 3:1 large text, 3:1 UI boundary and focus
+indicator), and composites alpha over the real backdrop — including the hero,
+whose backdrop is a photo under an 88% scrim and is therefore measured at both
+the darkest and the lightest photo extreme.
+
+ENGINEERING-STANDARDS §7.2: **any palette or typeface change re-runs the full
+table and records the measured ratios in the MR** — the whole table, not the
+pair that changed. If you change a token in `tokens.css`, change it in
+`contrast.mjs` in the same commit and paste `--md` output into the MR.
+
+The table that used to sit here was hand-computed and had drifted: five of its
+ten rows no longer matched the tokens, it omitted the teaser green entirely
+because that colour is not a token, and it closed with "all pairs clear the
+4.5:1 minimum with margin" while three real pairs did not. That is the failure
+§7.2 exists to prevent, so the numbers now come from the script or not at all.
+
+The failures this script currently reports are tracked in TEC-42.
 
 ## Type scale
 
