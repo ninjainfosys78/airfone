@@ -3,5 +3,7 @@ Allow: /
 
 Disallow: /waitlist/
 Disallow: /en/waitlist/
+Disallow: /preview/
+Disallow: /en/preview/
 
 Sitemap: https://airfone.app/sitemap-index.xml

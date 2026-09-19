@@ -11,9 +11,9 @@ const { locale } = Astro.props;
 
 const copy = {
   ne: {
-    h1: 'मूल्य २८ सेप्टेम्बरमा सार्वजनिक हुँदैछ',
-    tryFree: 'निःशुल्क सुरु गर्नुहोस्',
-    date: { day: '२८', month: 'सेप्टेम्बर', year: '२०२६' },
+    h1: 'मूल्य सुरुवातमा सार्वजनिक हुनेछ',
+    tryFree: 'सुरु गर्नुहोस्',
+    promise: 'सूचीमा नाम लेखाउनेले पहिले थाहा पाउँछन्',
     includedH2: 'हरेक योजनामा',
     included: [
       { title: 'नेपालीमा फोन उठाउने AI एजेन्ट', body: 'मूल्य, खुल्ने समय, सेवा र उपलब्धताबारे ग्राहकका प्रश्नको जवाफ, दिनरात।' },
@@ -23,14 +23,14 @@ const copy = {
       { title: 'थाहा नभएको कुरा नबनाउने' },
       { title: 'WhatsApp', soon: true },
     ],
-    soon: 'छिट्टै',
+    soon: 'विकासक्रममा',
     askH2: 'मूल्यबारे सोध्नु छ?',
     call: 'फोन गर्नुहोस्',
   },
   en: {
-    h1: 'Pricing is announced on 28 September',
-    tryFree: 'Try it free',
-    date: { day: '28', month: 'September', year: '2026' },
+    h1: 'Pricing is announced at launch',
+    tryFree: 'Get started',
+    promise: 'People on the waitlist hear first',
     includedH2: 'In every plan',
     included: [
       { title: 'An AI agent that answers calls in Nepali', body: 'Answers customer questions about prices, opening hours, services and stock, day and night.' },
@@ -40,7 +40,7 @@ const copy = {
       { title: "It doesn't make things up" },
       { title: 'WhatsApp', soon: true },
     ],
-    soon: 'Soon',
+    soon: 'In development',
     askH2: 'Questions about pricing?',
     call: 'Call us',
   },
@@ -61,9 +61,8 @@ const c = copy[locale];
         )}
       </div>
     </div>
-    <div class="date on-night" aria-hidden="true">
-      <span class="day">{c.date.day}</span>
-      <span class="month">{c.date.month} {c.date.year}</span>
+    <div class="promise on-night">
+      <p class="promise-text">{c.promise}</p>
     </div>
   </div>
 </section>
@@ -115,7 +114,7 @@ const c = copy[locale];
     margin-top: 40px;
     max-width: 520px;
   }
-  .date {
+  .promise {
     border-radius: var(--radius-panel);
     padding: 40px;
     display: flex;
@@ -123,18 +122,12 @@ const c = copy[locale];
     justify-content: flex-end;
     min-height: 320px;
   }
-  .day {
+  .promise-text {
+    margin: 0;
     font-family: 'Instrument Sans', 'Noto Serif Devanagari', system-ui, sans-serif;
     font-weight: 700;
-    font-size: clamp(7rem, 16vw, 12rem);
-    line-height: 0.9;
-    color: var(--brand);
-    font-variant-numeric: tabular-nums;
-  }
-  .month {
-    margin-top: 16px;
-    font-size: 24px;
-    font-weight: 600;
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    line-height: 1.2;
     color: var(--night-ink);
   }
   @media (min-width: 900px) {

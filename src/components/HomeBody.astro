@@ -18,7 +18,7 @@ const { locale } = Astro.props;
 const copy = {
   ne: {
     h1: 'ग्राहकका फोन AI ले उठाउँछ, नेपालीमा।',
-    tryFree: 'निःशुल्क सुरु गर्नुहोस्',
+    tryFree: 'सुरु गर्नुहोस्',
     problemH2: 'दिनभरि उही प्रश्न, उही जवाफ',
     problemQuotes: ['मूल्य कति हो?', 'स्टकमा छ?', 'अफिस कहिले खुल्छ?', 'डेलिभरी हुन्छ?'],
     setupH2: 'तीन चरणमा तयार',
@@ -39,13 +39,13 @@ const copy = {
     faq: [
       { q: 'एजेन्टलाई जवाफ थाहा नभए के हुन्छ?', a: 'त्यो जानकारी आफूसँग छैन भन्छ। जवाफ आफैं बनाएर दिँदैन।' },
       { q: 'सेटअप गर्न प्राविधिक ज्ञान चाहिन्छ?', a: 'चाहिँदैन। व्यवसायबारे बोलेर वा लिंक राखेर सिकाउन सकिन्छ।' },
-      { q: 'मूल्य कति पर्छ?', a: 'मूल्य २८ सेप्टेम्बरमा सुरुवातसँगै सार्वजनिक गर्नेछौं। सूचीमा नाम लेखाउनेलाई पहिले जानकारी दिनेछौं।' },
-      { q: 'WhatsApp मा पनि चल्छ?', a: 'अहिले फोन कलमा चल्छ। WhatsApp छिट्टै थपिँदैछ।' },
+      { q: 'मूल्य कति पर्छ?', a: 'मूल्य सुरुवातसँगै सार्वजनिक गर्नेछौं। सूचीमा नाम लेखाउनेलाई पहिले जानकारी दिनेछौं।' },
+      { q: 'WhatsApp मा पनि चल्छ?', a: 'अहिले फोन कलमा चल्छ। WhatsApp विकासक्रममा छ।' },
     ],
   },
   en: {
     h1: 'Your customer calls, answered by AI in Nepali.',
-    tryFree: 'Try it free',
+    tryFree: 'Get started',
     problemH2: 'The same questions, all day',
     problemQuotes: ['How much is it?', 'Is it in stock?', 'When is the office open?', 'Do you deliver?'],
     setupH2: 'Ready in three steps',
@@ -66,8 +66,8 @@ const copy = {
     faq: [
       { q: "What if the agent doesn't know an answer?", a: "It says it doesn't have that information. It doesn't make one up." },
       { q: 'Do I need technical skills?', a: 'No. You teach it by talking or pasting a link.' },
-      { q: 'How much does it cost?', a: "We'll publish pricing at launch on 28 September. People on the waitlist hear first." },
-      { q: 'Does it work on WhatsApp?', a: 'It works on phone calls today. WhatsApp is coming soon.' },
+      { q: 'How much does it cost?', a: "We'll publish pricing at launch. People on the waitlist hear first." },
+      { q: 'Does it work on WhatsApp?', a: 'It works on phone calls today. WhatsApp is in development.' },
     ],
   },
 } as const;

@@ -16,20 +16,23 @@ export type DemoCall = {
   lines: DemoLine[];
 };
 
-// Real call recorded 2026-09-17 (audio: PUBLIC_DEMO_AUDIO_URL, CDN folder
-// airfone/landing/demo/2026-09-17). Start times come from the Deepgram
-// transcript. Consecutive segments from the same speaker are merged, and
-// punctuation is added for reading; the words match the recording.
-// Pathibhara Solutions approved using their name, prices and this call.
+// Real call recorded 2026-09-17 (audio: PUBLIC_DEMO_AUDIO_URL, served from our
+// own origin at /media/demo/). Start times come from the Deepgram transcript.
+// Consecutive segments from the same speaker are merged, and punctuation is
+// added for reading; the words match the recording.
+// The business consented to using its name, prices and this call, but §7.1
+// bans naming a customer regardless of consent, so the transcript below uses
+// a category instead. The underlying audio still speaks the business's real
+// name in the first line before the transcript picks up (see TEC-50).
 export const demoCall: DemoCall = {
-  business: { ne: 'पाथिभरा सोलुसन्स', en: 'Pathibhara Solutions' },
+  business: { ne: 'नेपालको एउटा प्रविधि व्यवसाय', en: 'a technology business in Nepal' },
   duration: 79.75,
   lines: [
     {
       speaker: 'agent',
-      start: 5.2, end: 12.96, words: [5.2, 5.84, 6.56, 6.88, 7.36, 7.68, 8.24, 8.56, 8.96, 9.44, 9.76, 10.08, 10.48],
-      ne: 'पाथिभरा सोलुसनमा स्वागत छ। हामी आधुनिक आइटी सेवा दिन्छौं। के सहयोग गर्न सक्छु?',
-      en: 'Welcome to Pathibhara Solutions. We provide modern IT services. How can I help?',
+      start: 7.36, end: 12.96, words: [7.36, 7.68, 8.24, 8.56, 8.96, 9.44, 9.76, 10.08, 10.48],
+      ne: 'हामी आधुनिक आइटी सेवा दिन्छौं। के सहयोग गर्न सक्छु?',
+      en: 'We provide modern IT services. How can I help?',
     },
     { speaker: 'caller', start: 13.64, end: 15.24, words: [13.64, 14.12, 14.61], ne: 'अफिस कहिले खुल्छ?', en: 'When is the office open?' },
     {

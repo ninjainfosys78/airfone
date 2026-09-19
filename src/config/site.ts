@@ -19,10 +19,7 @@ export const WAITLIST_API_URL =
   import.meta.env.PUBLIC_WAITLIST_API_URL || 'https://app.airfone.app/api/waitlist';
 
 export const DEMO_AUDIO_URL =
-  import.meta.env.PUBLIC_DEMO_AUDIO_URL ||
-  'https://cdn.app.eshasan.com/airfone/landing/demo/2026-09-17/airfone-demo.mp3';
-
-export const LAUNCH_DATE = '2026-09-28';
+  import.meta.env.PUBLIC_DEMO_AUDIO_URL || 'https://airfone.app/media/demo/airfone-demo.mp3';
 
 export const CONTACT_EMAIL = 'info@airfone.app';
 

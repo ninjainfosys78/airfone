@@ -11,8 +11,8 @@ export interface Props {
 const { locale, source } = Astro.props;
 
 const copy = {
-  ne: { h2: '२८ सेप्टेम्बरमा पहिलो पालोमा हुनुहोस्', tryFree: 'निःशुल्क सुरु गर्नुहोस्' },
-  en: { h2: 'Be first in line on 28 September', tryFree: 'Try it free' },
+  ne: { h2: 'सूचीमा नाम लेखाउनेले पहिले थाहा पाउँछन्', tryFree: 'सुरु गर्नुहोस्' },
+  en: { h2: 'People on the waitlist hear first', tryFree: 'Get started' },
 } as const;
 const c = copy[locale];
 ---
