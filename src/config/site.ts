@@ -22,8 +22,6 @@ export const DEMO_AUDIO_URL =
   import.meta.env.PUBLIC_DEMO_AUDIO_URL ||
   'https://cdn.app.eshasan.com/airfone/landing/demo/2026-09-17/airfone-demo.mp3';
 
-export const LAUNCH_DATE = '2026-09-28';
-
 export const CONTACT_EMAIL = 'info@airfone.app';
 
 export const CONTACT_PHONE = '+9779851343348';

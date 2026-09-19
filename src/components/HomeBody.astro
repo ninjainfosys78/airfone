@@ -18,7 +18,7 @@ const { locale } = Astro.props;
 const copy = {
   ne: {
     h1: 'ग्राहकका फोन नेपालीमा टिप्ने AI एजेन्ट, बनिँदैछ।',
-    tryFree: 'निःशुल्क सुरु गर्नुहोस्',
+    cta: 'सुरु गर्नुहोस्',
     problemH2: 'दिनभरि उही प्रश्न, उही जवाफ',
     problemQuotes: ['मूल्य कति हो?', 'स्टकमा छ?', 'अफिस कहिले खुल्छ?', 'डेलिभरी हुन्छ?'],
     setupH2: 'तीन चरणमा तयार हुने गरी डिजाइन गरिँदैछ',
@@ -45,7 +45,7 @@ const copy = {
   },
   en: {
     h1: "An AI agent that will answer your customers' calls in Nepali, is being built.",
-    tryFree: 'Try it free',
+    cta: 'Get started',
     problemH2: 'The same questions, all day',
     problemQuotes: ['How much is it?', 'Is it in stock?', 'When is the office open?', 'Do you deliver?'],
     setupH2: 'Designed to be ready in three steps',
@@ -93,7 +93,7 @@ const numerals = locale === 'ne' ? ['१', '२', '३'] : ['1', '2', '3'];
       <h1 class="hero-title">{c.h1}</h1>
       <div class="hero-form" id="waitlist">
         {LAUNCHED ? (
-          <a class="btn btn-primary btn-large" href={APP_URL}>{c.tryFree}</a>
+          <a class="btn btn-primary btn-large" href={APP_URL}>{c.cta}</a>
         ) : (
           <WaitlistForm locale={locale} id="hero" source="hero" compact />
         )}

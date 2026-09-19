@@ -50,7 +50,7 @@ const breadcrumb = !noindex && path !== '/'
     <title>{title}</title>
     <meta name="description" content={description} />
     {noindex ? (
-      <meta name="robots" content="noindex, follow" />
+      <meta name="robots" content={preview ? 'noindex, nofollow' : 'noindex, follow'} />
     ) : (
       <>
         <meta name="robots" content="index, follow, max-image-preview:large" />

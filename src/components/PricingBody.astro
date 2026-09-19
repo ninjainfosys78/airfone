@@ -12,7 +12,7 @@ const { locale } = Astro.props;
 const copy = {
   ne: {
     h1: 'मूल्य अझै सार्वजनिक गरिएको छैन',
-    tryFree: 'निःशुल्क सुरु गर्नुहोस्',
+    cta: 'सुरु गर्नुहोस्',
     includedH2: 'हरेक योजनामा हुनेछ',
     included: [
       { title: 'नेपालीमा फोन उठाउने AI एजेन्ट', body: 'मूल्य, खुल्ने समय, सेवा र उपलब्धताबारे ग्राहकका प्रश्नको जवाफ दिनरात दिने गरी डिजाइन गरिँदैछ।' },
@@ -28,7 +28,7 @@ const copy = {
   },
   en: {
     h1: 'Pricing has not been announced yet',
-    tryFree: 'Try it free',
+    cta: 'Get started',
     includedH2: 'Planned for every plan',
     included: [
       { title: 'An AI agent for calls in Nepali', body: "It's being designed to answer customer questions about prices, opening hours, services and stock, day and night." },
@@ -52,7 +52,7 @@ const c = copy[locale];
     <h1>{c.h1}</h1>
     <div class="form" id="waitlist">
       {LAUNCHED ? (
-        <a class="btn btn-primary" href={APP_URL}>{c.tryFree}</a>
+        <a class="btn btn-primary" href={APP_URL}>{c.cta}</a>
       ) : (
         <WaitlistForm locale={locale} id="pricing" source="pricing" compact />
       )}
