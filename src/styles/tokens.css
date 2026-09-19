@@ -4,6 +4,7 @@
   --ink: #16190F;
   --ink-muted: #363B2F;
   --line: #E1E4D9;
+  --line-control: #868882;
   --brand: #8BC53E;
   --on-brand: #0D1502;
   --brand-ink: #2F4D07;
@@ -31,6 +32,7 @@
     --ink: #EEF2E6;
     --ink-muted: #CDD4C2;
     --line: #2A3220;
+    --line-control: #62764A;
     --brand-ink: #A6D86A;
     --night: #0A0D07;
     --night-surface: #161C0F;
@@ -181,7 +183,7 @@ a, button, .btn, [role="button"] {
 
 input, select {
   border-radius: var(--radius-control);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-control);
   background: var(--surface);
   color: var(--ink);
   padding: 10px 12px;

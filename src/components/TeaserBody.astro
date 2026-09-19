@@ -131,6 +131,13 @@ const { locale } = Astro.props;
   .contact a:hover {
     text-decoration-thickness: 2px;
   }
+  /* The default outline (--brand-ink) is only 2:1 on this hard-coded green;
+     white clears 3:1 here in both colour schemes since the band itself
+     never changes. Scoped to .contact so it doesn't leak onto the white
+     form panel below, where the default ring already passes. */
+  .contact a:focus-visible {
+    outline-color: #fff;
+  }
   .cloud {
     position: absolute;
     z-index: -1;
