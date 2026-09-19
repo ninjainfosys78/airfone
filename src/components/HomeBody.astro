@@ -17,15 +17,15 @@ const { locale } = Astro.props;
 
 const copy = {
   ne: {
-    h1: 'ग्राहकका फोन AI ले उठाउँछ, नेपालीमा।',
+    h1: 'ग्राहकका फोन नेपालीमा टिप्ने AI एजेन्ट, बनिँदैछ।',
     tryFree: 'निःशुल्क सुरु गर्नुहोस्',
     problemH2: 'दिनभरि उही प्रश्न, उही जवाफ',
     problemQuotes: ['मूल्य कति हो?', 'स्टकमा छ?', 'अफिस कहिले खुल्छ?', 'डेलिभरी हुन्छ?'],
-    setupH2: 'तीन चरणमा तयार',
+    setupH2: 'तीन चरणमा तयार हुने गरी डिजाइन गरिँदैछ',
     steps: [
-      { title: 'व्यवसायबारे सिकाउनुहोस्', body: 'बोलेर, वेबसाइटको लिंक राखेर, फेसबुक पेज जोडेर वा फोटो र भिडियो देखाएर। AirFone ले त्यसैबाट एजेन्टको जानकारी तयार गर्छ।' },
-      { title: 'आफैं फोन गरेर जाँच्नुहोस्', body: 'आफ्नो डेमो नम्बरमा PIN सहित फोन गर्नुहोस् र ग्राहकले झैं प्रश्न सोध्नुहोस्।' },
-      { title: 'ग्राहकका लागि खोल्नुहोस्', body: 'ठीक लागेपछि आफ्नै AirFone नम्बर लिनुहोस् र साँचो कल लिन थाल्नुहोस्।' },
+      { title: 'व्यवसायबारे सिकाउने चरण', body: 'बोलेर, वेबसाइटको लिंक राखेर, फेसबुक पेज जोडेर वा फोटो र भिडियो देखाएर सिकाउन सकिनेछ। AirFone ले त्यसैबाट एजेन्टको जानकारी तयार गर्ने गरी बनिँदैछ।' },
+      { title: 'आफैं फोन गरेर जाँच्ने चरण', body: 'आफ्नो डेमो नम्बरमा PIN सहित फोन गरी ग्राहकले झैं प्रश्न सोध्न सकिनेछ।' },
+      { title: 'ग्राहकका लागि खोल्ने चरण', body: 'ठीक लागेपछि आफ्नै AirFone नम्बर लिई साँचो कल लिन सुरु गर्न सकिनेछ।' },
     ],
     whoH2: 'पसलदेखि विद्यालयसम्म',
     who: [
@@ -37,22 +37,22 @@ const copy = {
     ],
     faqH2: 'प्रायः सोधिने प्रश्न',
     faq: [
-      { q: 'एजेन्टलाई जवाफ थाहा नभए के हुन्छ?', a: 'त्यो जानकारी आफूसँग छैन भन्छ। जवाफ आफैं बनाएर दिँदैन।' },
-      { q: 'सेटअप गर्न प्राविधिक ज्ञान चाहिन्छ?', a: 'चाहिँदैन। व्यवसायबारे बोलेर वा लिंक राखेर सिकाउन सकिन्छ।' },
-      { q: 'मूल्य कति पर्छ?', a: 'मूल्य २८ सेप्टेम्बरमा सुरुवातसँगै सार्वजनिक गर्नेछौं। सूचीमा नाम लेखाउनेलाई पहिले जानकारी दिनेछौं।' },
-      { q: 'WhatsApp मा पनि चल्छ?', a: 'अहिले फोन कलमा चल्छ। WhatsApp छिट्टै थपिँदैछ।' },
+      { q: 'एजेन्टलाई जवाफ थाहा नभए के हुन्छ?', a: 'यो जानकारी नभएको बेला त्यही भन्ने र आफैं जवाफ नबनाउने गरी डिजाइन गरिँदैछ।' },
+      { q: 'सेटअप गर्न प्राविधिक ज्ञान चाहिन्छ?', a: 'चाहिने छैन। व्यवसायबारे बोलेर वा लिंक राखेर सिकाउन सकिनेछ।' },
+      { q: 'मूल्य कति पर्छ?', a: 'मूल्य अझै सार्वजनिक गरिएको छैन। सूचीमा नाम लेखाउनेलाई पहिले जानकारी दिनेछौं।' },
+      { q: 'WhatsApp मा पनि चल्छ?', a: 'फोन कलका लागि डिजाइन गरिँदैछ। WhatsApp पनि निर्माणाधीन छ।' },
     ],
   },
   en: {
-    h1: 'Your customer calls, answered by AI in Nepali.',
+    h1: "An AI agent that will answer your customers' calls in Nepali, is being built.",
     tryFree: 'Try it free',
     problemH2: 'The same questions, all day',
     problemQuotes: ['How much is it?', 'Is it in stock?', 'When is the office open?', 'Do you deliver?'],
-    setupH2: 'Ready in three steps',
+    setupH2: 'Designed to be ready in three steps',
     steps: [
-      { title: 'Teach it your business', body: "Talk to it, paste your website link, connect your Facebook page, or show photos and videos. AirFone builds the agent's knowledge from that." },
-      { title: 'Call it yourself', body: 'Call your demo number with your PIN and ask what your customers ask.' },
-      { title: 'Go live', body: "When you're happy, get your own AirFone number and start taking real calls." },
+      { title: 'Teaching it your business', body: "You'll be able to talk to it, paste your website link, connect your Facebook page, or show photos and videos. AirFone is being designed to build the agent's knowledge from that." },
+      { title: 'Trying it yourself', body: "You'll be able to call your demo number with your PIN and ask what your customers ask." },
+      { title: 'Going live', body: "Once you're happy, you'll be able to get your own AirFone number and start taking real calls." },
     ],
     whoH2: 'From shops to schools',
     who: [
@@ -64,10 +64,10 @@ const copy = {
     ],
     faqH2: 'Common questions',
     faq: [
-      { q: "What if the agent doesn't know an answer?", a: "It says it doesn't have that information. It doesn't make one up." },
-      { q: 'Do I need technical skills?', a: 'No. You teach it by talking or pasting a link.' },
-      { q: 'How much does it cost?', a: "We'll publish pricing at launch on 28 September. People on the waitlist hear first." },
-      { q: 'Does it work on WhatsApp?', a: 'It works on phone calls today. WhatsApp is coming soon.' },
+      { q: "What if the agent doesn't know an answer?", a: "It's being designed to say when it doesn't know something, rather than make an answer up." },
+      { q: 'Do I need technical skills?', a: "It won't need to be. You'll be able to teach it by talking or pasting a link." },
+      { q: 'How much does it cost?', a: "We haven't announced pricing yet. People on the waitlist will hear first." },
+      { q: 'Does it work on WhatsApp?', a: "It's being designed for phone calls. WhatsApp is in development too." },
     ],
   },
 } as const;
