@@ -22,6 +22,7 @@ Light (default):
 | `--ink` | `#16190F` |
 | `--ink-muted` | `#363B2F` |
 | `--line` | `#E1E4D9` |
+| `--line-control` | `#868882` |
 | `--brand` | `#8BC53E` |
 | `--on-brand` | `#0D1502` |
 | `--brand-ink` | `#2F4D07` |
@@ -31,10 +32,16 @@ Light (default):
 | `--night-line` | `#2C3520` |
 | `--night-brand-ink` | `#A6D86A` |
 
+`--line` is for decorative separators only (`.site-footer` / `.bottom`
+hairlines) — 1.4.11 doesn't reach those. `--line-control` is for anything
+that identifies a control boundary (`input`, `select`, `.group`, `.compact
+.more`); it's the one that has to clear 3:1 against both the panel and the
+control fill.
+
 Dark scheme overrides: `--paper #10140B`, `--surface #171D10`, `--ink
-#EEF2E6`, `--ink-muted #CDD4C2`, `--line #2A3220`, `--brand-ink #A6D86A`,
-`--night #0A0D07`. `--brand`, `--on-brand` and all `--night-*` tokens stay
-the same in both schemes.
+#EEF2E6`, `--ink-muted #CDD4C2`, `--line #2A3220`, `--line-control #62764A`,
+`--brand-ink #A6D86A`, `--night #0A0D07`. `--brand`, `--on-brand` and all
+`--night-*` tokens stay the same in both schemes.
 
 Hex literals that live outside `tokens.css` and so are easy to miss when the
 palette is reviewed — all of them are on a public surface:
@@ -74,7 +81,10 @@ because that colour is not a token, and it closed with "all pairs clear the
 4.5:1 minimum with margin" while three real pairs did not. That is the failure
 §7.2 exists to prevent, so the numbers now come from the script or not at all.
 
-The failures this script currently reports are tracked in TEC-42.
+TEC-42 fixed the three failures the script previously reported (teaser focus
+ring, form control boundaries, checkbox checked state). The primary-button
+fill / panel boundary row stays a deliberate `FAIL` — its label text clears
+4.5:1 so 1.4.11 is satisfied through the text, not the fill.
 
 ## Type scale
 
