@@ -16,3 +16,4 @@
 - [Pricing](https://airfone.app/en/pricing/)
 - [Contact](https://airfone.app/en/contact/)
 - [Privacy](https://airfone.app/en/privacy/)
+- [Delete your account](https://airfone.app/en/delete-account/)

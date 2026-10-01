@@ -25,7 +25,10 @@ const here = { locale, href: localePath(locale, path), label: locale === 'ne' ? 
 <footer class="site-footer slim on-night">
   <div class="wrap slim-row">
     <p>{copy.copyright}</p>
-    <a href={localePath(locale, '/privacy/')}>{copy.privacy}</a>
+    <div class="slim-links">
+      <a href={localePath(locale, '/privacy/')}>{copy.privacy}</a>
+      <a href={localePath(locale, '/delete-account/')}>{copy.deleteAccount}</a>
+    </div>
   </div>
 </footer>
 ) : (
@@ -43,6 +46,7 @@ const here = { locale, href: localePath(locale, path), label: locale === 'ne' ? 
             <li><a href={localePath(locale, `${base}/pricing/`)}>{copy.pricing}</a></li>
             <li><a href={APP_URL}>{g.signIn}</a></li>
             <li><a href={localePath(locale, '/privacy/')}>{copy.privacy}</a></li>
+            <li><a href={localePath(locale, '/delete-account/')}>{copy.deleteAccount}</a></li>
           </ul>
         </div>
         <div class="col">
@@ -77,6 +81,10 @@ const here = { locale, href: localePath(locale, path), label: locale === 'ne' ? 
     display: flex;
     justify-content: space-between;
     gap: 16px;
+  }
+  .slim-links {
+    display: flex;
+    gap: 24px;
   }
   .slim-row p,
   .slim-row a {
