@@ -27,6 +27,7 @@ const here = { locale, href: localePath(locale, path), label: locale === 'ne' ? 
     <p>{copy.copyright}</p>
     <div class="slim-links">
       <a href={localePath(locale, '/privacy/')}>{copy.privacy}</a>
+      <a href={localePath(locale, '/terms/')}>{copy.terms}</a>
       <a href={localePath(locale, '/delete-account/')}>{copy.deleteAccount}</a>
     </div>
   </div>
@@ -46,6 +47,7 @@ const here = { locale, href: localePath(locale, path), label: locale === 'ne' ? 
             <li><a href={localePath(locale, `${base}/pricing/`)}>{copy.pricing}</a></li>
             <li><a href={APP_URL}>{g.signIn}</a></li>
             <li><a href={localePath(locale, '/privacy/')}>{copy.privacy}</a></li>
+            <li><a href={localePath(locale, '/terms/')}>{copy.terms}</a></li>
             <li><a href={localePath(locale, '/delete-account/')}>{copy.deleteAccount}</a></li>
           </ul>
         </div>
