@@ -12,7 +12,7 @@ export const t = {
     cta: 'सूचीमा नाम लेखाउनुहोस्',
     ctaLaunched: 'निःशुल्क सुरु गर्नुहोस्',
     menu: 'मेनु',
-    copyright: '© 2026 AirFone',
+    copyright: '© 2026 AirFone, निन्जा इन्फोसिस प्रा. लि., काठमाडौं, नेपाल',
   },
   en: {
     pricing: 'Pricing',
@@ -25,7 +25,7 @@ export const t = {
     cta: 'Join the waitlist',
     ctaLaunched: 'Try it free',
     menu: 'Menu',
-    copyright: '© 2026 AirFone',
+    copyright: '© 2026 AirFone, a product of Ninja Infosys Pvt. Ltd., Kathmandu, Nepal',
   },
 } as const;
 
