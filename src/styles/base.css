@@ -152,7 +152,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 /* Tactile play buttons: grow and show a ring on hover, squash on press,
    send one ripple outward on click (call-player.ts adds .ripple). */
-.tap { position: relative; transition: transform 180ms cubic-bezier(0.2, 0, 0, 1), background-color var(--fast) var(--ease); }
+.tap { position: relative; transition: transform 180ms cubic-bezier(0.2, 0, 0, 1), translate 260ms cubic-bezier(0.2, 0, 0, 1), background-color var(--fast) var(--ease); }
 .tap::before {
   content: ''; position: absolute; inset: -6px; border-radius: inherit;
   border: 2px solid var(--lime); opacity: 0; transform: scale(0.92);
