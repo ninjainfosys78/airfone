@@ -1,13 +1,20 @@
 ---
 import Base from '../layouts/Base.astro';
+import Hero from '../components/home/Hero.astro';
+import ProductIndex from '../components/home/ProductIndex.astro';
+import HowItWorks from '../components/home/HowItWorks.astro';
+import Proof from '../components/home/Proof.astro';
+import Solutions from '../components/home/Solutions.astro';
+import CtaBand from '../components/site/CtaBand.astro';
 ---
 <Base
   description="AirFone answers your business calls in Nepali, day and night, and hands callers to your team when it should. Book a demo or call 970-269-7774."
   path="/"
 >
-  <section class="section">
-    <div class="wrap">
-      <h1 class="display">Every call answered</h1>
-    </div>
-  </section>
+  <Hero />
+  <ProductIndex />
+  <Proof />
+  <HowItWorks />
+  <Solutions />
+  <CtaBand />
 </Base>

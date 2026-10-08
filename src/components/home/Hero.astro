@@ -1,0 +1,35 @@
+---
+import CallOrb from '../orb/CallOrb.astro';
+import CallPlayer from '../player/CallPlayer.astro';
+import { DEMO_NUMBER_DISPLAY, DEMO_NUMBER_TEL } from '../../config/site';
+---
+<section class="hero on-stage">
+  <div class="wrap grid">
+    <div class="copy">
+      <h1 class="display">Every call answered, in Nepali</h1>
+      <div class="actions">
+        <a class="btn btn-lime" href="/demo">Book a demo</a>
+        <a class="btn btn-secondary" href={DEMO_NUMBER_TEL}>Call {DEMO_NUMBER_DISPLAY}</a>
+      </div>
+      <p class="ring muted small">Ring the number and AirFone picks up. Or press play to hear a clinic booking.</p>
+    </div>
+    <div class="stage">
+      <CallOrb for="call-clinic" timing="/audio/clinic.json" size={320} />
+      <div class="player"><CallPlayer clip="clinic" compact /></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero { padding-block: var(--space-9) var(--space-9); overflow: hidden; }
+  .grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: var(--space-8); align-items: center; }
+  .display { color: var(--stage-ink); max-width: 11ch; }
+  .actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-7); }
+  .ring { margin-top: var(--space-5); max-width: 36ch; }
+  .stage { display: grid; justify-items: center; gap: var(--space-5); }
+  .player { width: 100%; max-width: 460px; }
+  @media (max-width: 959px) {
+    .hero { padding-block: var(--space-8); }
+    .grid { grid-template-columns: 1fr; gap: var(--space-7); }
+  }
+</style>
