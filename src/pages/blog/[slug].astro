@@ -43,17 +43,17 @@ const readNext = (next.length ? next : all.filter((p) => p.id !== post.id)).slic
   <article class="post">
     <header class="wrap">
       <a class="back" href="/blog" data-enter><ArrowLeft size={18} stroke-width={2} aria-hidden="true" /> All insights</a>
-      <h1 class="title" data-enter style="--d:1">{d.title}</h1>
-      <p class="meta" data-enter style="--d:2">
+      <h1 class="title" data-enter>{d.title}</h1>
+      <p class="meta" data-enter>
         <time datetime={d.date.toISOString()}>{fmtDate(d.date)}</time>
         {d.updated && <> · Updated <time datetime={d.updated.toISOString()}>{fmtDate(d.updated)}</time></>}
         {d.draft && <span class="draft"> · Draft, not published</span>}
       </p>
     </header>
     <div class="wrap grid">
-      <div class="col prose body" data-enter style="--d:3"><Content /></div>
+      <div class="col prose body" data-enter><Content /></div>
       {readNext.length > 0 && (
-        <nav class="next no-print" aria-labelledby="next-h" data-enter style="--d:4">
+        <nav class="next no-print" aria-labelledby="next-h" data-enter>
           <h2 id="next-h" class="next-h">Read next</h2>
           <ul>
             {readNext.map((p) => (
