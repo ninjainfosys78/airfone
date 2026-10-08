@@ -18,6 +18,10 @@ export interface Product {
   demo: { kind: DemoKind; clip?: string };
   problem: { heading: string; body: string[] };
   gets: string[];
+  /** How it works, in order: what you do and what it does. */
+  how: { h: string; p: string }[];
+  /** Plain facts: label and value. */
+  specs: [string, string][];
   faq: Faq[];
 }
 
@@ -37,6 +41,13 @@ export const products: Product[] = [
         'The call agent picks up every call, answers from your own price lists and notes, and brings a person in when the caller needs one.',
       ],
     },
+    how: [
+      { h: 'Connect your line', p: 'Your existing number through a SIP line, or a new number from us.' },
+      { h: 'Teach it your business', p: 'Upload price lists, documents and notes. It answers only from these.' },
+      { h: 'Set the handover rules', p: 'Choose which calls go straight to a person, such as refunds or complaints.' },
+      { h: 'Read every call', p: 'Each call is recorded and written out, and you can join or take over live.' },
+    ],
+    specs: [['Languages', 'Nepali and English'], ['Calls at once', 'Up to 15'], ['Hours', 'Day and night'], ['Handover', 'To your team mid-call, with a summary'], ['Setup', 'Usually within a day']],
     gets: [
       'Answers up to 15 calls at once on your existing number',
       'Learns from your price lists, documents and notes',
@@ -66,6 +77,13 @@ export const products: Product[] = [
         'The AI phone system answers incoming calls and works through outgoing ones too: it rings, confirms, reschedules and logs the result.',
       ],
     },
+    how: [
+      { h: 'Set up the phone system', p: 'Extensions, menus and queues for your team, on your existing number.' },
+      { h: 'Put the agent on incoming calls', p: 'It answers callers and passes them to the right person.' },
+      { h: 'Upload a call list', p: 'Reminders, confirmations or follow-ups, with the times calls may go out.' },
+      { h: 'See the results', p: 'Each answer is saved against the customer, and missed calls are retried.' },
+    ],
+    specs: [['Direction', 'Incoming and outgoing'], ['Outgoing calls', 'From a list you upload'], ['Retries', 'At the times you set'], ['Handover', 'A person can take over any call'], ['Includes', 'Everything in the Cloud PBX']],
     gets: [
       'Everything in the business phone system',
       'The call agent on every incoming line',
@@ -94,6 +112,13 @@ export const products: Product[] = [
         'AirFone runs your phone system online. Staff answer from the app or a browser, wherever they are, and you change menus and queues yourself.',
       ],
     },
+    how: [
+      { h: 'Move your number', p: 'Your existing line connects through SIP. Callers notice nothing.' },
+      { h: 'Add your team', p: 'Each person gets an extension in the app or a browser.' },
+      { h: 'Build menus and queues', p: 'Set opening hours, call menus and who answers what, yourself.' },
+      { h: 'Review calls', p: 'Every call is recorded with its history on each line.' },
+    ],
+    specs: [['Hardware', 'None needed'], ['Answer from', 'AirFone app, browser or IP desk phone'], ['Your number', 'Kept'], ['Recording', 'Every call'], ['AI agent', 'Can be added to any line']],
     gets: [
       'Extensions for every person and team',
       'Call menus, queues and opening hours',
@@ -122,6 +147,13 @@ export const products: Product[] = [
         'The voice agent sits on your site. Visitors tap and speak, and it answers from your own information, then takes their number if they want to buy.',
       ],
     },
+    how: [
+      { h: 'Add one line of code', p: 'Paste it into your site, or we add it with you.' },
+      { h: 'Give it your information', p: 'Your pages, price lists and notes, the same as the phone agent.' },
+      { h: 'Visitors tap and talk', p: 'It answers out loud and takes a name and number from buyers.' },
+      { h: 'Leads reach your team', p: 'Each one arrives with the full conversation written out.' },
+    ],
+    specs: [['Install', 'One line of code'], ['Languages', 'Nepali and English'], ['Works in', 'Any modern mobile or desktop browser'], ['Knows', 'Only what you give it'], ['Leads', 'Sent to your team with the conversation']],
     gets: [
       'A talk button on any page, added with one line of code',
       'Answers from your own pages, prices and notes',
@@ -149,6 +181,13 @@ export const products: Product[] = [
         'The chatbot answers at once from your own information and, when someone is ready to buy, passes them to your team with the whole conversation.',
       ],
     },
+    how: [
+      { h: 'Add one line of code', p: 'A chat window appears on your pages.' },
+      { h: 'Give it your information', p: 'Your pages, price lists and notes.' },
+      { h: 'It answers at once', p: 'Any hour, from your own information only.' },
+      { h: 'Your team can step in', p: 'Anyone can join a chat, and leads arrive with the full chat.' },
+    ],
+    specs: [['Install', 'One line of code'], ['Hours', 'Any hour'], ['Look', 'Your colours and your name'], ['Knowledge', 'Shared with your phone agent'], ['Handover', 'Your team can join any chat']],
     gets: [
       'A chat window on any page, added with one line of code',
       'Answers from your own pages, prices and notes',
