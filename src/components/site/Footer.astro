@@ -1,6 +1,6 @@
 ---
 import { footerColumns } from '../../data/nav';
-import { COMPANY, CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, ADDRESS, LEGAL_ADDRESS_LINE } from '../../config/site';
+import { COMPANY, CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, OFFICE_LINE, LEGAL_ADDRESS_LINE } from '../../config/site';
 ---
 <footer class="site-footer">
   <div class="wrap">
@@ -10,7 +10,7 @@ import { COMPANY, CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, ADDRE
         <p class="contact">
           <a href={CONTACT_PHONE_TEL}>{CONTACT_PHONE_DISPLAY}</a><br />
           <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a><br />
-          <span class="muted">{ADDRESS.locality}, {ADDRESS.countryName}</span>
+          <span class="muted">{OFFICE_LINE}</span>
         </p>
       </div>
       {footerColumns.map((col) => (

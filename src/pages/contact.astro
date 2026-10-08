@@ -6,7 +6,7 @@ import Mail from '@lucide/astro/icons/mail';
 import AudioLines from '@lucide/astro/icons/audio-lines';
 import MapPin from '@lucide/astro/icons/map-pin';
 import ArrowRight from '@lucide/astro/icons/arrow-right';
-import { ADDRESS, CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, DEMO_NUMBER_DISPLAY, DEMO_NUMBER_TEL } from '../config/site';
+import { OFFICE_LINE, CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, DEMO_NUMBER_DISPLAY, DEMO_NUMBER_TEL } from '../config/site';
 import { breadcrumbJsonLd, localBusinessJsonLd } from '../lib/seo';
 import { Image } from 'astro:assets';
 import team from '../assets/photos/front-desk-busy.png';
@@ -17,7 +17,7 @@ const ways = [
   { icon: AudioLines, label: 'Hear the agent', value: DEMO_NUMBER_DISPLAY, href: DEMO_NUMBER_TEL },
 ];
 ---
-<Base title="Contact" description="Call, email or visit AirFone in Kathmandu. Sales and support on 985-1343348, info@airfone.app, or ring 970-269-7774 to hear the agent." path="/contact" jsonLd={[localBusinessJsonLd(), breadcrumbJsonLd([{ name: 'Contact', path: '/contact' }])]}>
+<Base title="Contact" description="Talk to the AirFone team. Sales and support on 985-1343348, email info@airfone.app, or ring 970-269-7774 to hear the AI call agent answer for yourself." path="/contact" jsonLd={[localBusinessJsonLd(), breadcrumbJsonLd([{ name: 'Contact', path: '/contact' }])]}>
   <section class="top">
     <div class="wrap">
       <h1 data-enter>Talk to the AirFone team</h1>
@@ -46,7 +46,7 @@ const ways = [
         <Image src={team} alt="A receptionist at the AirFone office front desk dialling a desk phone" widths={[400, 800, 1080]} sizes="(max-width: 959px) 100vw, 420px" quality={90} format="webp" class="photo" />
         <figcaption>
           <MapPin size={18} stroke-width={1.75} aria-hidden="true" />
-          <span>{ADDRESS.locality}, {ADDRESS.countryName}</span>
+          <span>{OFFICE_LINE}</span>
         </figcaption>
       </figure>
     </div>

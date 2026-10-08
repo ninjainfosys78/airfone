@@ -1,4 +1,4 @@
-import { ADDRESS, COMPANY, CONTACT_EMAIL, CONTACT_PHONE_JSONLD, LEGAL_ADDRESS, SITE_NAME, SITE_URL } from '../config/site';
+import { COMPANY, CONTACT_EMAIL, CONTACT_PHONE_JSONLD, LEGAL_ADDRESS, SITE_NAME, SITE_URL } from '../config/site';
 
 /** The one URL a page is known by: lowercase, no query, no .html, no trailing slash except root. */
 export function canonicalFor(path: string): string {
@@ -161,7 +161,7 @@ export function localBusinessJsonLd() {
     image: o.logo,
     email: CONTACT_EMAIL,
     telephone: o.contactPoint.telephone,
-    address: { '@type': 'PostalAddress', addressLocality: ADDRESS.locality, addressRegion: ADDRESS.region, addressCountry: ADDRESS.country },
+    address: { '@type': 'PostalAddress', streetAddress: LEGAL_ADDRESS.street, addressLocality: LEGAL_ADDRESS.locality, addressRegion: LEGAL_ADDRESS.region, postalCode: LEGAL_ADDRESS.postal, addressCountry: LEGAL_ADDRESS.country },
     areaServed: { '@type': 'Country', name: 'Nepal' },
     knowsLanguage: ['ne', 'en'],
     parentOrganization: { '@id': ORG_ID },

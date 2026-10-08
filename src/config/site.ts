@@ -25,10 +25,12 @@ export const CONTACT_PHONE_DISPLAY = '985-1343348';
 export const CONTACT_PHONE_TEL = 'tel:+9779851343348';
 export const CONTACT_PHONE_JSONLD = '+977-9851343348';
 
-// Local office (Kathmandu). Name, address and phone must match the Google
-// Business Profile exactly (ledger LO-2). Street address is an owner to-do.
+// AirFone presents as an international product from its US company; the
+// office shown on the site is the registered address.
 export const COMPANY = 'Ninja Infosys LLC';
 // Registered address of the company that runs AirFone.
 export const LEGAL_ADDRESS = { street: '1500 N Grant St, Ste R', locality: 'Denver', region: 'CO', postal: '80203', country: 'US' } as const;
 export const LEGAL_ADDRESS_LINE = `${LEGAL_ADDRESS.street}, ${LEGAL_ADDRESS.locality}, ${LEGAL_ADDRESS.region} ${LEGAL_ADDRESS.postal}, ${LEGAL_ADDRESS.country}`;
-export const ADDRESS = { locality: 'Kathmandu', region: 'Bagmati', country: 'NP', countryName: 'Nepal' } as const;
+export const ADDRESS = { locality: 'Denver', region: 'CO', postal: '80203', country: 'US' } as const;
+/** Short office line for the footer and contact page: "Denver, CO 80203, US". */
+export const OFFICE_LINE = `${ADDRESS.locality}, ${ADDRESS.region} ${ADDRESS.postal}, ${ADDRESS.country}`;
