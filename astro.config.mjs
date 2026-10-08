@@ -7,7 +7,7 @@ import sitemap from '@astrojs/sitemap';
 // scripts/redirects.mjs).
 
 // Pages kept out of the sitemap: they carry noindex.
-const NOINDEX = [/^\/404$/, /^\/pricing$/];
+const NOINDEX = [/^\/404$/, /^\/pricing$/, /^\/orb-pick$/];
 
 export default defineConfig({
   site: 'https://airfone.app',

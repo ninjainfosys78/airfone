@@ -1,0 +1,55 @@
+---
+// THROWAWAY spike page for choosing the orb. Deleted once the owner picks.
+import Base from '../layouts/Base.astro';
+const candidates = [
+  { key: 'shdr-14', name: 'Dither', note: 'Chunky two-tone pixels on a rolling plasma dome.' },
+  { key: 'shdr-21', name: 'Nimbus', note: 'Light diffusing through a cloud. Echoes the cloud in the logo.' },
+  { key: 'shdr-23', name: 'Matrix', note: 'A glyph grid wrapped on the ball.' },
+  { key: 'shdr-29', name: 'LED wall', note: 'Tiles lighting up in flowing blobs.' },
+];
+---
+<Base title="Orb pick" description="Throwaway page for choosing the AirFone call orb from the Orbkit MIT shaders. Not part of the site." path="/orb-pick" noindex>
+  <section class="section on-stage">
+    <div class="wrap">
+      <h1>Pick the orb</h1>
+      <div class="controls" role="group" aria-label="Orb state">
+        <button class="btn btn-secondary" data-state="idle" aria-pressed="true">Idle</button>
+        <button class="btn btn-secondary" data-state="thinking" aria-pressed="false">Thinking</button>
+        <button class="btn btn-secondary" data-state="speaking" aria-pressed="false">Speaking</button>
+      </div>
+      <ul class="grid">
+        {candidates.map((c) => (
+          <li>
+            <airfone-orb class="pick" variant={c.key}></airfone-orb>
+            <h2>{c.name} ({c.key})</h2>
+            <p class="muted">{c.note}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { defineOrb } from '../components/orb/call-orb';
+  import { shdr14Orb } from '../components/orb/variants/shdr-14';
+  import { shdr21Orb } from '../components/orb/variants/shdr-21';
+  import { shdr23Orb } from '../components/orb/variants/shdr-23';
+  import { shdr29Orb } from '../components/orb/variants/shdr-29';
+  defineOrb({ 'shdr-14': shdr14Orb, 'shdr-21': shdr21Orb, 'shdr-23': shdr23Orb, 'shdr-29': shdr29Orb });
+
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-state]');
+  buttons.forEach((b) => b.addEventListener('click', () => {
+    buttons.forEach((o) => o.setAttribute('aria-pressed', String(o === b)));
+    document.querySelectorAll('airfone-orb').forEach((el) => (el as any).engine?.setState(b.dataset.state));
+  }));
+</script>
+
+<style>
+  .controls { display: flex; gap: var(--space-3); margin: var(--space-6) 0 var(--space-7); flex-wrap: wrap; }
+  .controls [aria-pressed='true'] { background: var(--lime); color: var(--on-lime); border-color: var(--lime); }
+  .grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-7) var(--space-6); }
+  .pick { display: block; position: relative; width: 100%; max-width: 280px; aspect-ratio: 1; margin-bottom: var(--space-4); }
+  .pick :global(canvas) { position: absolute; inset: 0; width: 100%; height: 100%; }
+  h2 { font-size: 1.375rem; margin-bottom: var(--space-2); }
+</style>

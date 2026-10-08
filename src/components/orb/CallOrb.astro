@@ -1,0 +1,28 @@
+---
+// The AirFone call orb. Renders a flat still by default; the script upgrades
+// it to the WebGL orb when motion is allowed and WebGL works.
+export interface Props {
+  for?: string;
+  timing?: string;
+  size?: number;
+  variant?: string;
+}
+const { for: audioId, timing, size = 360, variant = 'shdr-14' } = Astro.props;
+---
+<airfone-orb class="orb" variant={variant} for={audioId} timing={timing} style={`--orb-size:${size}px`}>
+  <svg class="orb-still" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+    <circle cx="50" cy="50" r="45" fill="#8BC53E" />
+  </svg>
+</airfone-orb>
+
+<script>
+  import { defineOrb } from './call-orb';
+  import { shdr14Orb } from './variants/shdr-14';
+  defineOrb({ 'shdr-14': shdr14Orb });
+</script>
+
+<style>
+  .orb { position: relative; display: block; width: min(var(--orb-size), 80vw); aspect-ratio: 1; }
+  .orb :global(canvas), .orb-still { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .orb.is-live .orb-still { display: none; }
+</style>

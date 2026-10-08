@@ -35,6 +35,8 @@ the owner chose over the no-glow rule for that element only.
 | `--stage-line` | `#4A6A22` | `#2F4317` | borders on stage |
 | `--error` | `#B3261E` | `#FF8A80` | form errors |
 
+Orb palette (WebGL orb, by state): body `#1B2A0A`, light `#8BC53E` idle, `#C9D6B8` thinking, `#D4ECB1` speaking, `#FFFFFF` and `#4A6A22` for Nimbus. The orb idles slowly while on screen and stops when off screen or the tab is hidden.
+
 Print only: `#FFFFFF` background, `#000000` text.
 Logo files keep their own colours (`#8CC63F` cloud, `#7C7C7C` wordmark).
 Theme colour meta: `#F7F7F8` light, `#0F1115` dark.
