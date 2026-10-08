@@ -38,8 +38,8 @@ const timing = JSON.stringify({ duration: data.duration ?? 0, lines: lines.map((
 <call-player class:list={['player', { compact: p.compact, stage: p.stage, chat: p.chat }]} data-timing={timing}>
   {p.stage && (
     <div class="caption" aria-hidden="true">
-      <p class="c-ne" lang="ne"></p>
-      <p class="c-en"></p>
+      <p class="c-ne" lang="ne">{lines[0]?.ne ?? lines[0]?.text}</p>
+      <p class="c-en">{lines[0]?.ne ? lines[0]?.text : ''}</p>
     </div>
   )}
   {!p.bare && <div class="head">
@@ -130,8 +130,7 @@ const timing = JSON.stringify({ duration: data.duration ?? 0, lines: lines.map((
      captions appear under it only while it speaks; one quiet status line. */
   .stage { background: none; border: 0; padding: 0; color: var(--stage-ink); text-align: center; display: grid; justify-items: center; }
   .stage .play { display: none; }
-  .caption { margin-top: var(--space-3); height: 8.6em; overflow: hidden; max-width: 44ch; display: grid; align-content: start; gap: 2px; opacity: 0; transition: opacity var(--slow) var(--ease); }
-  .is-playing .caption { opacity: 1; }
+  .caption { margin-top: var(--space-3); height: 8.6em; overflow: hidden; max-width: 44ch; display: grid; align-content: start; gap: 2px; }
   .c-ne { font-size: 17px; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .c-en { font-size: 15px; line-height: 1.45; color: var(--stage-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .caption.swap p { animation: cap var(--slow) var(--ease); }
