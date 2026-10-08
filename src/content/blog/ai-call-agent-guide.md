@@ -49,9 +49,3 @@ An agent is not a replacement for your team. Keep a person on calls about money 
 ## Hear one
 
 The fastest way to judge is to listen. The [AI call agent page](/products/ai-call-agent) has a real recorded call from a business in Kathmandu, and you can ring 970-269-7774 to talk to the agent yourself.
-
-## More in this series
-
-- [IP/PBX or a traditional phone line](/blog/ip-pbx-vs-phone-line)
-- [How banks can answer every member call](/blog/banks-answer-every-call)
-- [Adding a voice agent to your website](/blog/website-voice-agent)

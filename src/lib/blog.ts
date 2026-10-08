@@ -21,7 +21,8 @@ export function allTags<T extends PostLike>(posts: T[]): string[] {
 /** Page 1 is /blog; later pages are /blog/page/N. */
 export const pagePath = (n: number) => (n <= 1 ? '/blog' : `/blog/page/${n}`);
 
-export const tagLabel = (tag: string) => tag.replace(/-/g, ' ').replace(/^./, (c) => c.toUpperCase());
+export const tagLabel = (tag: string) =>
+  tag.replace(/-/g, ' ').replace(/^./, (c) => c.toUpperCase()).replace(/\b(ai|pbx|ip|isp|sip)\b/gi, (w) => w.toUpperCase());
 
 /** Posts sharing the most tags with `post`, excluding itself. */
 export function related<T extends PostLike>(posts: T[], post: T, n = 3): T[] {

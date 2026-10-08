@@ -9,7 +9,7 @@ import { products } from '../../data/products';
 import { solutions } from '../../data/solutions';
 
 const font = (w: number) => readFileSync(`node_modules/@fontsource/poppins/files/poppins-latin-${w}-normal.woff`);
-const cloud = `data:image/svg+xml;base64,${readFileSync('public/brand/cloud-outline.svg').toString('base64')}`;
+const cloud = `data:image/svg+xml;base64,${Buffer.from(readFileSync('public/brand/cloud-outline.svg', 'utf8').replace('fill="#000"', 'fill="#8BC53E"')).toString('base64')}`;
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');

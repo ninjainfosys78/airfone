@@ -14,7 +14,7 @@ const list = feature ? rest : items;
 )}
 
 <style>
-  .top-post { padding-bottom: var(--space-8); margin-bottom: var(--space-8); border-bottom: 1px solid var(--line); }
+  .top-post { margin-bottom: var(--space-8); }
   .grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-8) var(--space-6); }
   @media (max-width: 959px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 599px) { .grid { grid-template-columns: 1fr; gap: var(--space-7); } }
