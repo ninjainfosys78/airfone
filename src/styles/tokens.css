@@ -49,18 +49,3 @@
   :root { --gutter: 32px; }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    --canvas: #10140B;
-    --surface: #171D10;
-    --subtle: #1E2615;
-    --line: #2A3220;
-    --ink: #EEF2E6;
-    --ink-muted: #C2CAB5;
-    --link: #A6D86A;
-    --stage: #1B2A0A;
-    --stage-line: #2F4317;
-    --error: #FF8A80;
-    color-scheme: dark;
-  }
-}

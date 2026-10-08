@@ -147,10 +147,6 @@ const plain = [
   .logo { flex: none; display: block; }
   .logo img { width: 128px; height: auto; }
   .logo-dark { display: none; }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) .logo-light { display: none; }
-    :root:not([data-theme='light']) .logo-dark { display: block; }
-  }
 
   .nav-wide { flex: 1; align-self: stretch; }
   .top { display: flex; gap: var(--space-5); list-style: none; margin: 0; padding: 0; height: 100%; align-items: stretch; }

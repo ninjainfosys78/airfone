@@ -40,7 +40,7 @@ Orb palette (WebGL orb, by state): body `#1B2A0A`, light `#8BC53E` idle, `#C9D6B
 
 Print only: `#FFFFFF` background, `#000000` text.
 Logo files keep their own colours (`#8CC63F` cloud, `#7C7C7C` wordmark).
-Theme colour meta: `#FFFFFF` light, `#10140B` dark.
+Theme colour meta: `#FFFFFF`. The site is light only (owner, 2026-10-08): the dark column below is kept for reference but not used.
 
 ### Contrast (computed)
 
