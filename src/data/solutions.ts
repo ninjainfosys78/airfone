@@ -7,7 +7,8 @@ export interface Solution {
   headline: string;
   description: string;
   clip: string;
-  calls: string[];
+  /** What callers ask, and what AirFone does with each. */
+  calls: { q: string; a: string }[];
   does: { h: string; p: string }[];
   products: string[];
   faq: Faq[];
@@ -22,10 +23,10 @@ export const solutions: Solution[] = [
     description: 'AirFone answers bank and cooperative calls in Nepali: deposit rates, branch hours and loan steps, and passes account questions to your staff.',
     clip: 'bank',
     calls: [
-      'What is the fixed deposit rate this month?',
-      'Which branch is open on Saturday?',
-      'What papers do I need for a home loan?',
-      'My card is blocked. Who do I talk to?',
+      { q: 'What is the fixed deposit rate this month?', a: 'Reads it from your current rate sheet' },
+      { q: 'Which branch is open on Saturday?', a: 'Answers from your branch hours' },
+      { q: 'What papers do I need for a home loan?', a: 'Lists the documents from your loan notes' },
+      { q: 'My card is blocked. Who do I talk to?', a: 'Transfers to your staff with a summary' },
     ],
     does: [
       { h: 'Answers rate and product questions', p: 'From the rate sheet and product notes you upload. Change the sheet and the next caller hears the new rate.' },
@@ -47,10 +48,10 @@ export const solutions: Solution[] = [
     description: 'AirFone answers shop and showroom calls in Nepali: price, stock, warranty and opening hours, and holds items for callers by name.',
     clip: 'shop',
     calls: [
-      'Do you have this model in stock?',
-      'What is the price, and is there a warranty?',
-      'Until what time are you open?',
-      'Can you keep one for me?',
+      { q: 'Do you have this model in stock?', a: 'Checks your price list and stock' },
+      { q: 'What is the price, and is there a warranty?', a: 'Quotes the price and warranty you set' },
+      { q: 'Until what time are you open?', a: 'Gives today’s opening hours' },
+      { q: 'Can you keep one for me?', a: 'Takes a name and tells your counter' },
     ],
     does: [
       { h: 'Knows your stock and prices', p: 'Upload your price list or connect your sheet. The agent answers from it on every call.' },
@@ -72,10 +73,10 @@ export const solutions: Solution[] = [
     description: 'AirFone books clinic appointments in Nepali, shares doctor schedules and reminds patients the day before, so your front desk can look after people.',
     clip: 'clinic',
     calls: [
-      'When does the skin doctor sit?',
-      'Can I book for Wednesday morning?',
-      'Are you open on Saturday?',
-      'Can I move my appointment?',
+      { q: 'When does the skin doctor sit?', a: 'Reads the doctor’s schedule' },
+      { q: 'Can I book for Wednesday morning?', a: 'Books the slot and confirms by SMS' },
+      { q: 'Are you open on Saturday?', a: 'Gives your opening hours' },
+      { q: 'Can I move my appointment?', a: 'Moves it and confirms by SMS' },
     ],
     does: [
       { h: 'Shares doctor schedules', p: 'From the schedule you keep in AirFone or a shared sheet, always current.' },
@@ -97,10 +98,10 @@ export const solutions: Solution[] = [
     description: 'AirFone answers internet provider support calls in Nepali, explains known outages, opens tickets and calls customers back when service returns.',
     clip: 'isp',
     calls: [
-      'My internet is down. Is there a problem in my area?',
-      'When will it be fixed?',
-      'Can someone call me back?',
-      'How do I pay my bill?',
+      { q: 'My internet is down. Is there a problem in my area?', a: 'Tells callers about the outage you posted' },
+      { q: 'When will it be fixed?', a: 'Gives the expected fix time' },
+      { q: 'Can someone call me back?', a: 'Opens a ticket for your team' },
+      { q: 'How do I pay my bill?', a: 'Explains your payment options' },
     ],
     does: [
       { h: 'Explains known outages', p: 'Post an outage once in AirFone and every caller from that area hears it, with the expected fix time.' },
