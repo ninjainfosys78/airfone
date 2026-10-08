@@ -7,7 +7,7 @@ export interface Props {
   size?: number;
   variant?: string;
 }
-const { for: audioId, timing, size = 360, variant = 'shdr-14' } = Astro.props;
+const { for: audioId, timing, size = 360, variant = 'shdr-21' } = Astro.props;
 ---
 <airfone-orb class="orb" variant={variant} for={audioId} timing={timing} style={`--orb-size:${size}px`}>
   <svg class="orb-still" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
@@ -17,8 +17,8 @@ const { for: audioId, timing, size = 360, variant = 'shdr-14' } = Astro.props;
 
 <script>
   import { defineOrb } from './call-orb';
-  import { shdr14Orb } from './variants/shdr-14';
-  defineOrb({ 'shdr-14': shdr14Orb });
+  import { shdr21Orb } from './variants/shdr-21';
+  defineOrb({ 'shdr-21': shdr21Orb });
 </script>
 
 <style>

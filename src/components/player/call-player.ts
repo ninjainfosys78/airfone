@@ -37,12 +37,7 @@ class CallPlayer extends HTMLElement {
       this.audio.addEventListener('play', () => el.setAttribute('aria-pressed', 'true'));
       this.audio.addEventListener('pause', () => el.setAttribute('aria-pressed', 'false'));
     });
-    const cc = this.querySelector<HTMLButtonElement>('.cc');
-    cc?.addEventListener('click', () => {
-      const on = cc.getAttribute('aria-pressed') !== 'true';
-      cc.setAttribute('aria-pressed', String(on));
-      this.classList.toggle('no-cc', !on);
-    });
+
     this.audio.addEventListener('play', () => { this.btn.setAttribute('aria-pressed', 'true'); this.classList.add('is-playing'); this.loop(); });
     this.audio.addEventListener('pause', () => { this.btn.setAttribute('aria-pressed', 'false'); cancelAnimationFrame(this.raf); this.draw(); });
     this.audio.addEventListener('ended', () => { this.classList.remove('is-playing'); this.audio.currentTime = 0; this.shown = -1; this.draw(); });

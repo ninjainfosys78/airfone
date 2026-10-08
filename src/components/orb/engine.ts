@@ -81,6 +81,8 @@ export function createOrb(
   canvas: HTMLCanvasElement,
   variant: OrbVariant,
   palette?: Partial<Record<EngineState, Record<string, string>>>,
+  /** Fixed parameter values that win over the variant's presets (framing, light). */
+  tune: Record<string, number> = {},
 ): OrbEngine | null {
   const gl = canvas.getContext('webgl', { alpha: true, antialias: false, premultipliedAlpha: true });
   if (!gl) { console.warn('[airfone-orb] WebGL unavailable, showing the still'); return null; }
@@ -155,7 +157,7 @@ export function createOrb(
 
     const preset = variant.statePresets?.[state];
     for (const p of params) {
-      const target = preset?.[p.def.key] ?? p.def.default;
+      const target = tune[p.def.key] ?? preset?.[p.def.key] ?? p.def.default;
       if (Number.isNaN(p.x)) p.x = target;
       [p.x, p.v] = spring(p.x, p.v, target, dt);
       if (p.def.integrate) { p.clock += dt * speed * p.x; gl.uniform1f(p.loc, p.clock); }

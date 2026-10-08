@@ -11,9 +11,9 @@ export const palettes: Record<string, Palette> = {
     speaking: { ink: '#1B2A0A', paper: '#D4ECB1' },
   },
   'shdr-21': {
-    idle: { light: '#D4ECB1', shadow: '#1B2A0A' },
-    thinking: { light: '#C9D6B8', shadow: '#1B2A0A' },
-    speaking: { light: '#FFFFFF', shadow: '#4A6A22' },
+    idle: { light: '#D4ECB1', shadow: '#4A6A22' },
+    thinking: { light: '#C9D6B8', shadow: '#4A6A22' },
+    speaking: { light: '#FFFFFF', shadow: '#8BC53E' },
   },
   'shdr-23': {
     idle: { glow: '#8BC53E', deep: '#1B2A0A' },
@@ -25,4 +25,10 @@ export const palettes: Record<string, Palette> = {
     thinking: { lit: '#C9D6B8', wall: '#1B2A0A' },
     speaking: { lit: '#D4ECB1', wall: '#1B2A0A' },
   },
+};
+
+// Framing and light per orb: keep the whole cloud inside its square and lift
+// the shadow side so it reads against the dark green stage.
+export const tunes: Record<string, Record<string, number>> = {
+  'shdr-21': { camDist: 5.6, shadowLift: 1.1, ambient: 0.32, edgeSoft: 0.6 },
 };

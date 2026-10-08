@@ -1,6 +1,6 @@
 import { createOrb, type OrbEngine, type OrbVariant } from './engine';
 import { orbState, smooth, type Timing } from './orb-state';
-import { palettes } from './palettes';
+import { palettes, tunes } from './palettes';
 
 /**
  * <airfone-orb variant="shdr-14" for="audio-id" timing="/audio/clinic.json">
@@ -28,7 +28,7 @@ export function defineOrb(variants: Record<string, OrbVariant>) {
       if (!variant) return;
       const canvas = document.createElement('canvas');
       canvas.setAttribute('aria-hidden', 'true');
-      this.engine = createOrb(canvas, variant, palettes[variant.key]);
+      this.engine = createOrb(canvas, variant, palettes[variant.key], tunes[variant.key]);
       if (!this.engine) return;
       this.append(canvas);
       this.classList.add('is-live');

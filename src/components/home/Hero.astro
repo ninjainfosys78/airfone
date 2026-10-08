@@ -11,7 +11,6 @@ import { DEMO_NUMBER_DISPLAY, DEMO_NUMBER_TEL } from '../../config/site';
         <a class="btn btn-lime" href="/demo">Book a demo</a>
         <a class="btn btn-secondary" href={DEMO_NUMBER_TEL}>Call {DEMO_NUMBER_DISPLAY}</a>
       </div>
-      <p class="ring muted small">Ring the number and AirFone picks up. Or press play to hear a clinic booking.</p>
     </div>
     <div class="stage">
       <button type="button" class="orb-btn" data-play-for="call-clinic" aria-pressed="false">
@@ -32,8 +31,7 @@ import { DEMO_NUMBER_DISPLAY, DEMO_NUMBER_TEL } from '../../config/site';
   .grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: var(--space-8); align-items: center; }
   .display { color: var(--stage-ink); max-width: 11ch; }
   .actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-7); }
-  .ring { margin-top: var(--space-5); max-width: 36ch; }
-  .stage { display: grid; justify-items: center; gap: var(--space-4); }
+  .stage { display: grid; justify-items: center; gap: var(--space-5); }
   .orb-btn { position: relative; display: grid; place-items: center; padding: 0; border: 0; background: none; cursor: pointer; border-radius: 50%; }
   .orb-icon {
     position: absolute; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%;
