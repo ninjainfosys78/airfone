@@ -2,21 +2,10 @@
 import CallPlayer from '../player/CallPlayer.astro';
 import { realCall } from '../player/clips';
 import { testimonials } from '../../data/testimonials';
-
-const facts = [
-  { h: 'Speaks Nepali', p: 'Natural Nepali on every call, the way your customers talk.' },
-  { h: '15 calls at once', p: 'No busy tone at the busiest hour.' },
-  { h: 'A person when it counts', p: 'Hands the caller to your team mid-call, with a summary.' },
-];
 ---
 <section class="section" data-reveal>
-  <div class="wrap grid">
-    <div>
-      <h2>A real call, not a script</h2>
-      <ul class="facts">
-        {facts.map((f) => <li><h3>{f.h}</h3><p class="muted">{f.p}</p></li>)}
-      </ul>
-    </div>
+  <div class="wrap narrow">
+    <h2>A real call, not a script</h2>
     <CallPlayer data={realCall} id="call-real" />
   </div>
   {testimonials.length > 0 && (
@@ -32,13 +21,9 @@ const facts = [
 </section>
 
 <style>
-  .grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: var(--space-8); align-items: start; }
-  .facts { list-style: none; margin: var(--space-6) 0 0; padding: 0; display: grid; gap: var(--space-5); }
-  .facts li { padding-bottom: var(--space-5); border-bottom: 1px solid var(--line); }
-  .facts h3 { margin-bottom: var(--space-1); }
+  .narrow { max-width: calc(840px + 2 * var(--gutter)); }
   .quotes { margin-top: var(--space-8); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); }
   figure { margin: 0; }
   blockquote { margin: 0 0 var(--space-3); font-size: 1.25rem; }
   figcaption { color: var(--ink-muted); font-size: 16px; }
-  @media (max-width: 959px) { .grid { grid-template-columns: 1fr; gap: var(--space-7); } }
 </style>

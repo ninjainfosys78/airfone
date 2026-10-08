@@ -3,7 +3,7 @@ title: Adding a voice agent to your website
 description: A voice agent lets website visitors ask their question out loud and get an answer from your own information. What it takes to add one and what to expect.
 date: 2026-10-02
 tags: [website, voice-agent]
-draft: true
+draft: false
 ---
 
 A visitor lands on your site with one question. If they cannot find the answer in a minute, they leave. A voice agent lets them simply ask.

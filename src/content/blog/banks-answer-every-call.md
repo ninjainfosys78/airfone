@@ -3,7 +3,7 @@ title: How banks and cooperatives can answer every member call
 description: Rate questions, branch hours and loan steps fill bank phone lines. How an AI call agent handles them in Nepali and passes account questions to staff.
 date: 2026-10-04
 tags: [banks, ai-call-agent]
-draft: true
+draft: false
 ---
 
 On salary day, the phone lines at most banks and cooperatives are full. Members want to know the deposit rate, which branch is open on Saturday, or what papers a loan needs. Few of these calls need a person.

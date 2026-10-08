@@ -1,11 +1,12 @@
 ---
-import { productLinks, solutionLinks } from '../../data/nav';
+import { products } from '../../data/products';
+import { solutions } from '../../data/solutions';
 
 const path = Astro.url.pathname.replace(/\.html$/, '');
 const current = (href: string) => (path === href || path.startsWith(`${href}/`) ? 'page' : undefined);
 const groups = [
-  { label: 'Products', base: '/products', links: productLinks },
-  { label: 'Solutions', base: '/solutions', links: solutionLinks },
+  { label: 'Products', base: '/products', links: products.map((p) => ({ href: `/products/${p.slug}`, label: p.name, note: p.short })) },
+  { label: 'Solutions', base: '/solutions', links: solutions.map((s) => ({ href: `/solutions/${s.slug}`, label: s.name, note: s.short })) },
 ];
 const plain = [
   { href: '/resellers', label: 'Resellers' },
@@ -27,7 +28,7 @@ const plain = [
             <details class="menu" data-menu>
               <summary aria-current={path.startsWith(g.base) ? 'page' : undefined}>{g.label}</summary>
               <ul class="menu-panel">
-                {g.links.map((l) => <li><a href={l.href} aria-current={current(l.href)}>{l.label}</a></li>)}
+                {g.links.map((l) => <li><a href={l.href} aria-current={current(l.href)}><span class="m-name">{l.label}</span><span class="m-note">{l.note}</span></a></li>)}
               </ul>
             </details>
           </li>
@@ -98,9 +99,9 @@ const plain = [
     min-height: 44px; padding: 0 var(--space-3);
     border-radius: var(--radius-control);
     color: var(--ink); text-decoration: none; font-size: 16px; font-weight: 500;
-    transition: background-color var(--fast) var(--ease);
+    transition: color var(--fast) var(--ease);
   }
-  .nav-link:hover, .menu > summary:hover, .menu[open] > summary { background: var(--subtle); }
+  .nav-link:hover, .menu > summary:hover, .menu[open] > summary { color: var(--link); }
   .menu > summary::after {
     content: ''; width: 7px; height: 7px; margin-top: -3px;
     border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
@@ -111,15 +112,15 @@ const plain = [
 
   .menu { position: relative; }
   .menu-panel {
-    position: absolute; top: calc(100% + 8px); left: 0; min-width: 320px;
-    list-style: none; margin: 0; padding: var(--space-2);
-    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-panel);
+    position: absolute; top: calc(100% + 12px); left: 0; width: 400px;
+    list-style: none; margin: 0; padding: var(--space-3) var(--space-5);
+    background: var(--canvas); border: 1px solid var(--line); border-radius: var(--radius-panel);
   }
-  .menu-panel a {
-    display: block; padding: var(--space-3); border-radius: var(--radius-control);
-    color: var(--ink); text-decoration: none; font-size: 16px;
-  }
-  .menu-panel a:hover { background: var(--subtle); }
+  .menu-panel li + li { border-top: 1px solid var(--line); }
+  .menu-panel a { display: grid; gap: 2px; padding: var(--space-3) 0; color: var(--ink); text-decoration: none; }
+  .m-name { font-size: 16px; font-weight: 600; }
+  .m-note { font-size: 14px; line-height: 1.4; color: var(--ink-muted); }
+  .menu-panel a:hover .m-name, .menu-panel a[aria-current='page'] .m-name { color: var(--link); }
 
   .actions { display: flex; align-items: center; gap: var(--space-3); margin-left: auto; }
   .actions .btn { min-height: 44px; padding: 0 var(--space-4); font-size: 16px; }

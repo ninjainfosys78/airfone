@@ -3,7 +3,7 @@ title: IP/PBX or a traditional phone line for your business
 description: How an online business phone system compares with a traditional line and a PBX box for a growing Nepali business, and when it is worth switching over.
 date: 2026-10-06
 tags: [phone-system, guides]
-draft: true
+draft: false
 ---
 
 Many offices in Kathmandu still have a PBX box in a cupboard, a technician on call, and a phone that rings at one desk. It works until you add a branch, a night shift or a second person who should answer.

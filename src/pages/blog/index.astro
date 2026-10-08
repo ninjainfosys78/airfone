@@ -20,7 +20,7 @@ const tags = allTags(all.map((p) => ({ ...p, data: { ...p.data, draft: false } }
           {tags.map((t) => <a href={`/blog/tag/${t}`}>{tagLabel(t)}</a>)}
         </nav>
       )}
-      {items.length ? <PostList items={items} /> : <p class="muted">The first posts are on their way.</p>}
+      {items.length ? <PostList items={items} feature /> : <p class="muted">The first posts are on their way.</p>}
       <Pager current={1} last={last} />
     </div>
   </section>
@@ -28,7 +28,7 @@ const tags = allTags(all.map((p) => ({ ...p, data: { ...p.data, draft: false } }
 
 <style>
   h1 { margin-bottom: var(--space-6); }
-  .tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-7); }
+  .tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-6); }
   .tags a { display: inline-flex; align-items: center; min-height: 40px; padding: 0 var(--space-4); border: 1px solid var(--line); border-radius: var(--radius-control); color: var(--ink); text-decoration: none; font-size: 16px; }
   .tags a:hover { border-color: var(--ink); }
 </style>

@@ -4,7 +4,7 @@ description: What an AI call agent does on a Nepali business line, what it needs
 date: 2026-10-08
 tags: [ai-call-agent, guides]
 pillar: true
-draft: true
+draft: false
 ---
 
 Most businesses in Nepal still run on the phone. Customers call to ask a price, check stock, book a time or complain. When nobody answers, most of them do not leave a message. They call the next number.
