@@ -1,9 +1,5 @@
 ---
-const steps = [
-  { h: 'Connect your line', p: 'Keep your number and connect it through SIP, or take a new number from us.' },
-  { h: 'Teach it your business', p: 'Add price lists, documents and notes. Change them any time and the agent knows at once.' },
-  { h: 'Watch every call', p: 'Read each call as text, listen back, or join a live call and take over.' },
-];
+const steps = ['Connect your number', 'Add your price list', 'AirFone answers'];
 ---
 <section class="section how" data-reveal>
   <div class="wrap">
@@ -11,9 +7,8 @@ const steps = [
     <ol class="steps">
       {steps.map((s, i) => (
         <li>
-          <span class="n mono">{i + 1}</span>
-          <h3>{s.h}</h3>
-          <p class="muted">{s.p}</p>
+          <span class="n mono" aria-hidden="true">{i + 1}</span>
+          <span class="t">{s}</span>
         </li>
       ))}
     </ol>
@@ -21,9 +16,19 @@ const steps = [
 </section>
 
 <style>
-  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-7); }
-  li { border-top: 1px solid var(--line); padding-top: var(--space-5); }
-  .n { display: block; color: var(--link); font-size: 16px; margin-bottom: var(--space-3); }
-  h3 { margin-bottom: var(--space-3); }
-  @media (max-width: 767px) { .steps { grid-template-columns: 1fr; gap: var(--space-6); } }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); position: relative; }
+  /* One line runs through the three numbers. */
+  .steps::before { content: ''; position: absolute; left: 24px; right: calc((100% - 2 * var(--space-6)) / 3 - 24px); top: 23px; height: 2px; background: var(--line); }
+  li { position: relative; display: grid; gap: var(--space-4); }
+  .n {
+    display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%;
+    background: var(--canvas); border: 2px solid var(--brand); color: var(--link); font-weight: 600; font-size: 17px;
+  }
+  li:last-child .n { background: var(--lime); border-color: var(--lime); color: var(--on-lime); }
+  .t { font-size: clamp(1.25rem, 1rem + 0.9vw, 1.625rem); font-weight: 600; line-height: 1.25; }
+  @media (max-width: 767px) {
+    .steps { grid-template-columns: 1fr; gap: var(--space-5); }
+    .steps::before { left: 23px; right: auto; top: 24px; bottom: 24px; width: 2px; height: auto; }
+    li { grid-template-columns: 48px 1fr; align-items: center; }
+  }
 </style>
