@@ -1,39 +1,96 @@
 ---
 import Base from '../layouts/Base.astro';
-import { ADDRESS, COMPANY, LEGAL_ADDRESS_LINE, CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, DEMO_NUMBER_DISPLAY, DEMO_NUMBER_TEL } from '../config/site';
+import LeadForm from '../components/forms/LeadForm.astro';
+import Phone from '@lucide/astro/icons/phone';
+import Mail from '@lucide/astro/icons/mail';
+import AudioLines from '@lucide/astro/icons/audio-lines';
+import MapPin from '@lucide/astro/icons/map-pin';
+import ArrowRight from '@lucide/astro/icons/arrow-right';
+import { ADDRESS, CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, DEMO_NUMBER_DISPLAY, DEMO_NUMBER_TEL } from '../config/site';
 import { breadcrumbJsonLd, localBusinessJsonLd } from '../lib/seo';
 import { Image } from 'astro:assets';
 import team from '../assets/photos/front-desk-busy.png';
+
+const ways = [
+  { icon: Phone, label: 'Sales and support', value: CONTACT_PHONE_DISPLAY, href: CONTACT_PHONE_TEL },
+  { icon: Mail, label: 'Email', value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
+  { icon: AudioLines, label: 'Hear the agent', value: DEMO_NUMBER_DISPLAY, href: DEMO_NUMBER_TEL },
+];
 ---
 <Base title="Contact" description="Call, email or visit AirFone in Kathmandu. Sales and support on 985-1343348, info@airfone.app, or ring 970-269-7774 to hear the agent." path="/contact" jsonLd={[localBusinessJsonLd(), breadcrumbJsonLd([{ name: 'Contact', path: '/contact' }])]}>
-  <section class="section">
-    <div class="wrap layout">
-    <div>
-      <h1>Contact</h1>
-      <dl class="list">
-        <div><dt>Sales and support</dt><dd><a href={CONTACT_PHONE_TEL}>{CONTACT_PHONE_DISPLAY}</a></dd></div>
-        <div><dt>Email</dt><dd><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></dd></div>
-        <div><dt>Hear the agent</dt><dd><a href={DEMO_NUMBER_TEL}>{DEMO_NUMBER_DISPLAY}</a></dd></div>
-        <div><dt>Office</dt><dd>{ADDRESS.locality}, {ADDRESS.countryName}</dd></div>
-        <div><dt>Company</dt><dd>{COMPANY}<br /><span class="addr">{LEGAL_ADDRESS_LINE}</span></dd></div>
-      </dl>
-      <div class="actions"><a class="btn btn-primary" href="/demo">Book a demo</a><a class="btn btn-secondary" href="/resellers#apply">Become a reseller</a></div>
-    </div>
-      <Image src={team} alt="A receptionist at the AirFone office front desk dialling a desk phone" widths={[400, 800, 1080]} sizes="(max-width: 959px) 100vw, 400px" quality={90} format="webp" class="photo" loading="eager" />
+  <section class="top">
+    <div class="wrap">
+      <h1 data-enter>Talk to the AirFone team</h1>
+      <ul class="ways">
+        {ways.map((w, i) => (
+          <li data-enter style={`--d:${i + 1}`}>
+            <a href={w.href}>
+              <span class="icon" aria-hidden="true"><w.icon size={22} stroke-width={1.75} /></span>
+              <span class="label">{w.label}</span>
+              <span class="value">{w.value}</span>
+              <ArrowRight class="go" size={20} stroke-width={2} aria-hidden="true" />
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
+
+  <section class="section callback" data-reveal>
+    <div class="wrap split">
+      <div class="form-col">
+        <h2>Or we'll call you</h2>
+        <LeadForm kind="demo" submit="Call me back" />
+      </div>
+      <figure class="photo-col">
+        <Image src={team} alt="A receptionist at the AirFone office front desk dialling a desk phone" widths={[400, 800, 1080]} sizes="(max-width: 959px) 100vw, 420px" quality={90} format="webp" class="photo" />
+        <figcaption>
+          <MapPin size={18} stroke-width={1.75} aria-hidden="true" />
+          <span>Our office is in {ADDRESS.locality}, {ADDRESS.countryName}</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
 </Base>
 
 <style>
-  h1 { margin-bottom: var(--space-7); }
-  .layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 360px); gap: var(--space-8); align-items: start; }
-  .photo { width: 100%; height: auto; aspect-ratio: 1080 / 1700; border-radius: var(--radius-panel); }
-  @media (max-width: 959px) { .layout { grid-template-columns: 1fr; } .photo { max-width: 400px; } }
-  .list { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0 var(--space-6); }
-  .list div { padding: var(--space-5) 0; border-top: 1px solid var(--line); }
-  dt { font-size: 16px; color: var(--ink-muted); margin-bottom: var(--space-2); }
-  dd { margin: 0; font-size: 1.25rem; font-weight: 500; }
-  dd a { text-decoration: none; }
-  .addr { font-size: 16px; font-weight: 400; color: var(--ink-muted); }
-  .actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-8); }
+  .top { padding-block: var(--space-9) var(--space-8); }
+  h1 { max-width: 16ch; margin-bottom: var(--space-8); }
+
+  /* Three ways to reach us, each one big tap target. */
+  .ways { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); }
+  .ways a {
+    display: grid; grid-template-columns: auto 1fr auto; grid-template-areas: 'icon label go' 'value value value';
+    align-items: center; gap: var(--space-3) var(--space-3); padding: var(--space-6);
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-panel);
+    color: var(--ink); text-decoration: none;
+    transition: border-color 200ms var(--ease), transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .ways a:hover { border-color: var(--brand); transform: translateY(-3px); }
+  .ways a:active { transform: translateY(0); transition-duration: 90ms; }
+  .ways a:hover .icon { background: var(--brand); color: var(--stage-ink); }
+  .icon { grid-area: icon; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; background: var(--subtle); color: var(--brand); transition: background-color 200ms var(--ease), color 200ms var(--ease); }
+  .label { grid-area: label; font-size: 16px; color: var(--ink-muted); }
+  .value { grid-area: value; margin-top: var(--space-4); font-size: clamp(1.375rem, 1.1rem + 0.8vw, 1.75rem); font-weight: 600; overflow-wrap: anywhere; }
+  .ways :global(.go) { grid-area: go; color: var(--ink-muted); transition: transform var(--fast) var(--ease), color var(--fast) var(--ease); }
+  .ways a:hover :global(.go) { transform: translateX(4px); color: var(--brand); }
+
+  .callback { background: var(--surface); border-top: 1px solid var(--line); }
+  .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: var(--space-9); align-items: start; }
+  .form-col h2 { margin-bottom: var(--space-6); }
+  .form-col { max-width: 560px; }
+  .photo-col { margin: 0; }
+  .photo { display: block; width: 100%; height: auto; aspect-ratio: 1080 / 1700; border-radius: var(--radius-panel); }
+  figcaption { display: flex; align-items: center; gap: var(--space-2); margin-top: var(--space-3); font-size: 16px; color: var(--ink-muted); }
+  figcaption :global(svg) { flex: none; color: var(--brand); }
+
+
+  @media (prefers-reduced-motion: reduce) { .ways a, .ways a:hover { transform: none; } }
+  @media (max-width: 959px) {
+    .ways { grid-template-columns: 1fr; gap: var(--space-3); }
+    .ways a { padding: var(--space-5); }
+    .split { grid-template-columns: 1fr; gap: var(--space-7); }
+    .photo { max-width: 420px; }
+  }
 </style>
