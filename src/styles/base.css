@@ -35,7 +35,7 @@ body {
   body { font-size: 16px; }
 }
 
-h1, h2, h3, h4, .btn, .site-header, .utility, .display {
+h1, h2, h3, h4, .display {
   font-family: var(--font-display);
 }
 
