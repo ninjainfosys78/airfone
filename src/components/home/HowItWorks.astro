@@ -2,9 +2,12 @@
 // Three steps, each with a small picture of the real screen at that step.
 // Built in HTML/CSS (not drawn art) so it stays crisp and on brand.
 ---
-<section class="section how" data-reveal>
+<section class="how">
+  <factory-line class="runway">
+  <div class="frame">
   <div class="wrap">
-    <h2>Live in a day</h2>
+    <h2>From your number to answered calls</h2>
+    <div class="belt" aria-hidden="true"><span class="fill"></span></div>
     <ol class="steps">
       <li>
         <h3><span class="n mono">1</span>Connect your number</h3>
@@ -59,9 +62,68 @@
       </li>
     </ol>
   </div>
+  </div>
+  </factory-line>
 </section>
 
+<script>
+  // Factory line: while the section is pinned, vertical scroll slides the
+  // cards along the belt. Desktop with motion allowed only; otherwise the
+  // plain grid stays.
+  class FactoryLine extends HTMLElement {
+    connectedCallback() {
+      const wide = matchMedia('(min-width: 960px)');
+      const still = matchMedia('(prefers-reduced-motion: reduce)');
+      const track = this.querySelector<HTMLElement>('.steps')!;
+      const fill = this.querySelector<HTMLElement>('.fill')!;
+      const steps = Array.from(track.children) as HTMLElement[];
+      let raf = 0;
+      const update = () => {
+        raf = 0;
+        if (!this.classList.contains('is-live')) return;
+        const r = this.getBoundingClientRect();
+        const run = r.height - innerHeight;
+        const p = Math.min(1, Math.max(0, -r.top / Math.max(1, run)));
+        const wrap = track.parentElement!;
+        const cs = getComputedStyle(wrap);
+        const inner = wrap.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+        const travel = Math.max(0, track.scrollWidth - inner);
+        track.style.transform = `translate3d(${-p * travel}px, 0, 0)`;
+        fill.style.transform = `scaleX(${p})`;
+        const at = Math.min(steps.length - 1, Math.round(p * (steps.length - 1)));
+        steps.forEach((s, i) => s.classList.toggle('is-on', i <= at));
+      };
+      const queue = () => { if (!raf) raf = requestAnimationFrame(update); };
+      const mode = () => {
+        const on = wide.matches && !still.matches;
+        this.classList.toggle('is-live', on);
+        if (!on) { track.style.transform = ''; fill.style.transform = ''; steps.forEach((s) => s.classList.add('is-on')); }
+        queue();
+      };
+      addEventListener('scroll', queue, { passive: true });
+      addEventListener('resize', queue, { passive: true });
+      wide.addEventListener('change', mode);
+      still.addEventListener('change', mode);
+      mode();
+    }
+  }
+  if (!customElements.get('factory-line')) customElements.define('factory-line', FactoryLine);
+</script>
+
 <style>
+  .how { padding-block: var(--space-9); }
+  .runway { display: block; }
+  .belt { display: none; }
+
+  /* Pinned mode */
+  .runway.is-live { height: 230vh; }
+  .runway.is-live .frame { position: sticky; top: 73px; height: calc(100vh - 73px); display: grid; align-content: center; overflow: hidden; }
+  .runway.is-live .belt { display: block; position: relative; height: 2px; margin: var(--space-6) 0 var(--space-7); background: var(--line); }
+  .runway.is-live .fill { position: absolute; inset: 0; background: var(--lime); transform: scaleX(0); transform-origin: left; }
+  .runway.is-live .steps { display: flex; gap: var(--space-8); width: max-content; will-change: transform; }
+  .runway.is-live .steps > li { width: min(520px, 44vw); opacity: 0.45; transition: opacity var(--slow) var(--ease); }
+  .runway.is-live .steps > li.is-on { opacity: 1; }
+
   .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
   .steps > li { display: grid; grid-template-rows: auto 1fr; gap: var(--space-4); }
   h3 { display: flex; align-items: center; gap: var(--space-3); font-size: 1.25rem; }
