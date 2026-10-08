@@ -13,7 +13,7 @@ const last = Math.max(1, Math.ceil(all.length / PAGE_SIZE));
 const tags = allTags(all.map((p) => ({ ...p, data: { ...p.data, draft: false } })));
 ---
 <Base title="Insights" description="Guides for Nepali businesses on answering every call: AI call agents, business phone systems, website voice agents and chatbots." path="/blog" jsonLd={[breadcrumbJsonLd([{ name: 'Insights', path: '/blog' }])]}>
-  <section class="section">
+  <section class="section blog-serif">
     <div class="wrap">
       <h1>Insights</h1>
       <Topics tags={tags} />

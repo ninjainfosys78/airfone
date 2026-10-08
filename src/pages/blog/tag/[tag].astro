@@ -21,7 +21,7 @@ const path = `/blog/tag/${tag}`;
   path={path}
   jsonLd={[breadcrumbJsonLd([{ name: 'Insights', path: '/blog' }, { name: label, path }])]}
 >
-  <section class="section">
+  <section class="section blog-serif">
     <div class="wrap">
       <h1>{label}</h1>
       <Topics tags={tags} current={tag} />

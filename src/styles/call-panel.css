@@ -1,0 +1,47 @@
+/* The call as a panel (product and solution pages): add class="call-panel"
+   around <CallPlayer chat />. Also the masked word rise used by their headlines.
+   :is(.call-panel, #cp) carries id weight so these beat CallPlayer's scoped styles. */
+/* The call as one panel: a player bar (play, name, waveform, time) on top,
+   the conversation below. */
+:is(.call-panel, #cp) call-player.chat {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-areas: 'play meta' 'play wave' 'tx tx';
+  gap: 0 var(--space-4); padding: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-panel); overflow: hidden;
+}
+:is(.call-panel, #cp) .chat .head { display: contents; }
+:is(.call-panel, #cp) .chat .play {
+  grid-area: play; align-self: center; margin: var(--space-5) 0 var(--space-5) var(--space-5);
+  width: 56px; height: 56px; border-radius: 50%; background: var(--ink); color: #fff;
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), background-color 200ms var(--ease);
+}
+:is(.call-panel, #cp) .chat .play { position: relative; }
+/* Until the call is played, a soft ring pulses out from the button to invite a tap. */
+:is(.call-panel, #cp) .chat .play[aria-pressed='false']:not(.played)::after {
+  content: ''; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--lime);
+  animation: invite 1.8s cubic-bezier(0.22, 1, 0.36, 1) infinite; pointer-events: none;
+}
+/* Headline words rise out of a mask; the conversation bubbles follow in turn. */
+@media (prefers-reduced-motion: no-preference) {
+  .rise .w { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+  .rise .w > span { display: inline-block; animation: word-up 900ms cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: calc(var(--i) * 60ms + 80ms); }
+  :is(.call-panel, #cp) .chat .transcript li { animation: bubble-in 600ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+  :is(.call-panel, #cp) .chat .transcript li:nth-child(1) { animation-delay: 450ms; }
+  :is(.call-panel, #cp) .chat .transcript li:nth-child(2) { animation-delay: 600ms; }
+  :is(.call-panel, #cp) .chat .transcript li:nth-child(3) { animation-delay: 750ms; }
+  :is(.call-panel, #cp) .chat .transcript li:nth-child(4) { animation-delay: 900ms; }
+  :is(.call-panel, #cp) .chat .transcript li:nth-child(n+5) { animation-delay: 1050ms; }
+}
+@keyframes word-up { from { transform: translateY(105%); } to { transform: none; } }
+@keyframes bubble-in { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes invite { from { transform: scale(1); opacity: 0.9; } to { transform: scale(1.7); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { :is(.call-panel, #cp) .chat .play::after { animation: none !important; display: none; } }
+:is(.call-panel, #cp) .chat .play:hover { background: var(--brand); transform: scale(1.05); }
+:is(.call-panel, #cp) .chat .play:active { transform: scale(0.95); }
+:is(.call-panel, #cp) .chat .play svg { width: 22px; height: 22px; }
+:is(.call-panel, #cp) .chat .meta { grid-area: meta; display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); padding: var(--space-5) var(--space-5) 0 0; }
+:is(.call-panel, #cp) .chat .label { margin: 0; font-size: 16px; }
+:is(.call-panel, #cp) .chat .time { margin: 0; font-size: 14px; }
+:is(.call-panel, #cp) .chat .slot { grid-area: wave; display: grid; margin: var(--space-2) var(--space-5) var(--space-5) 0; min-height: 32px; }
+:is(.call-panel, #cp) .chat .wave { height: 32px; }
+:is(.call-panel, #cp) .chat audio { display: none; }
+:is(.call-panel, #cp) .chat .transcript { grid-area: tx; margin: 0; padding: 0; border: 0; border-top: 1px solid var(--line); }
+:is(.call-panel, #cp) .chat .transcript ol { height: 380px; border: 0 !important; border-radius: 0 !important; background: var(--canvas); }

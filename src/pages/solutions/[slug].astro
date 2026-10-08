@@ -19,28 +19,24 @@ const used = s.products.map(productBySlug).filter((p) => !!p);
   <section class="top">
     <div class="wrap grid">
       <div>
-        <h1>{s.headline}</h1>
-        <div class="actions">
-          <a class="btn btn-primary" href="/demo">Book a demo</a>
-          <a class="btn btn-secondary" href="/contact">Talk to us</a>
-        </div>
+        <h1 class="rise">{s.headline.split(' ').map((w, i) => (<><span class="w"><span style={`--i:${i}`}>{w}</span></span>{' '}</>))}</h1>
       </div>
-      <CallPlayer clip={s.clip} />
+      <div class="call-panel" data-enter style="--d:1"><CallPlayer clip={s.clip} chat /></div>
     </div>
   </section>
 
   <section class="section" data-reveal>
     <div class="wrap two">
       <h2>The calls you get</h2>
-      <ul class="calls">{s.calls.map((c) => <li>{c}</li>)}</ul>
+      <ul class="calls" data-stagger>{s.calls.map((c, i) => <li style={`--i:${i}`}>{c}</li>)}</ul>
     </div>
   </section>
 
   <section class="section does" data-reveal>
     <div class="wrap">
       <h2>What AirFone does with them</h2>
-      <div class="cols">
-        {s.does.map((d) => <div><h3>{d.h}</h3><p class="muted">{d.p}</p></div>)}
+      <div class="cols" data-stagger>
+        {s.does.map((d, i) => <div style={`--i:${i}`}><h3>{d.h}</h3><p class="muted">{d.p}</p></div>)}
       </div>
     </div>
   </section>
@@ -48,8 +44,8 @@ const used = s.products.map(productBySlug).filter((p) => !!p);
   <section class="section-tight" data-reveal>
     <div class="wrap two">
       <h2>Products to use</h2>
-      <ul class="prods">
-        {used.map((p) => <li><a href={`/products/${p!.slug}`}><span class="pname">{p!.name}</span><span class="arrow" aria-hidden="true"><ArrowRight class="arrow-icon" size={18} stroke-width={2} aria-hidden="true" /></span></a></li>)}
+      <ul class="prods" data-stagger>
+        {used.map((p, i) => <li style={`--i:${i}`}><a href={`/products/${p!.slug}`}><span class="pname">{p!.name}</span><span class="arrow" aria-hidden="true"><ArrowRight class="arrow-icon" size={18} stroke-width={2} aria-hidden="true" /></span></a></li>)}
       </ul>
     </div>
   </section>
@@ -59,13 +55,12 @@ const used = s.products.map(productBySlug).filter((p) => !!p);
 </Base>
 
 <style>
-  .top { padding-block: var(--space-8) var(--space-9); border-bottom: 1px solid var(--line); }
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: start; }
-  h1 { max-width: 13ch; }
-  .actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-7); }
+  .top { padding-block: var(--space-9); border-bottom: 1px solid var(--line); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: center; }
+  h1 { max-width: 14ch; }
   .two { display: grid; grid-template-columns: 1fr 1.4fr; gap: var(--space-8); align-items: start; }
   .calls { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
-  .calls li { padding: var(--space-4) var(--space-5); background: var(--surface); border-radius: var(--radius-panel); font-size: 1.125rem; }
+  .calls li { padding: var(--space-4) var(--space-5); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-panel); font-size: 17px; }
   .does { background: var(--surface); }
   .does h2 { margin-bottom: var(--space-7); }
   .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-7); }

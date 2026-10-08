@@ -3,11 +3,14 @@
 @import '@fontsource/poppins/latin-600.css';
 @import '@fontsource/poppins/devanagari-400.css';
 @import '@fontsource-variable/inter/wght.css';
+@import '@fontsource-variable/source-serif-4/wght.css';
 @import './tokens.css';
+@import './call-panel.css';
 
 /* Arial sized to Poppins' metrics, so text keeps its size and line breaks
    if Poppins arrives late. Stops the header and headings jumping on load. */
 @font-face { font-family: 'Poppins Fallback'; src: local('Arial'), local('Helvetica Neue'), local('Helvetica'); size-adjust: 112.5%; ascent-override: 93%; descent-override: 31%; line-gap-override: 9%; }
+@font-face { font-family: 'Serif Fallback'; src: local('Georgia'); size-adjust: 92%; ascent-override: 98%; descent-override: 31%; line-gap-override: 0%; }
 @font-face { font-family: 'Inter Fallback'; src: local('Arial'), local('Helvetica Neue'), local('Helvetica'); size-adjust: 107%; ascent-override: 90%; descent-override: 22.5%; line-gap-override: 0%; }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -208,3 +211,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
   body { background: #FFFFFF; color: #000000; font-size: 12pt; }
   a { color: inherit; }
 }
+
+/* Blog: headings and post titles in the reading serif. */
+.blog-serif h1, .blog-serif h2, .blog-serif h3 { font-family: 'Source Serif 4 Variable', 'Serif Fallback', Georgia, serif; font-weight: 600; }
