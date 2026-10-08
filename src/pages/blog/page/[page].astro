@@ -16,10 +16,10 @@ export async function getStaticPaths() {
 }
 const { n, last, items } = Astro.props as { n: number; last: number; items: Post[] };
 ---
-<Base title={`Blog, page ${n}`} description={`Older AirFone guides for Nepali businesses on calls, phone systems and website agents. Page ${n} of ${last}.`} path={pagePath(n)}>
+<Base title={`Insights, page ${n}`} description={`Older AirFone guides for Nepali businesses on calls, phone systems and website agents. Page ${n} of ${last}.`} path={pagePath(n)}>
   <section class="section">
     <div class="wrap">
-      <h1>Blog, page {n}</h1>
+      <h1>Insights, page {n}</h1>
       <PostList items={items} />
       <Pager current={n} last={last} />
     </div>

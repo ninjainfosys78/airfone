@@ -1,16 +1,17 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import PostList from '../../../components/blog/PostList.astro';
+import Topics from '../../../components/blog/Topics.astro';
 import { posts, type Post } from '../../../lib/posts';
 import { tagLabel } from '../../../lib/blog';
 import { breadcrumbJsonLd } from '../../../lib/seo';
 
 export async function getStaticPaths() {
   const all = await posts();
-  const tags = [...new Set(all.flatMap((p) => p.data.tags))];
-  return tags.map((tag) => ({ params: { tag }, props: { tag, items: all.filter((p) => p.data.tags.includes(tag)) } }));
+  const tags = [...new Set(all.flatMap((p) => p.data.tags))].sort();
+  return tags.map((tag) => ({ params: { tag }, props: { tag, tags, items: all.filter((p) => p.data.tags.includes(tag)) } }));
 }
-const { tag, items } = Astro.props as { tag: string; items: Post[] };
+const { tag, tags, items } = Astro.props as { tag: string; tags: string[]; items: Post[] };
 const label = tagLabel(tag);
 const path = `/blog/tag/${tag}`;
 ---
@@ -18,11 +19,12 @@ const path = `/blog/tag/${tag}`;
   title={`${label} articles`}
   description={`AirFone articles about ${label.toLowerCase()} for Nepali businesses: practical guides on answering calls, phone systems and website agents.`}
   path={path}
-  jsonLd={[breadcrumbJsonLd([{ name: 'Blog', path: '/blog' }, { name: label, path }])]}
+  jsonLd={[breadcrumbJsonLd([{ name: 'Insights', path: '/blog' }, { name: label, path }])]}
 >
   <section class="section">
     <div class="wrap">
       <h1>{label}</h1>
+      <Topics tags={tags} current={tag} />
       <PostList items={items} />
     </div>
   </section>

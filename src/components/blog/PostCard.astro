@@ -1,0 +1,39 @@
+---
+import { coverFor, fmtDate, readMinutes, type Post } from '../../lib/posts';
+import { tagLabel } from '../../lib/blog';
+export interface Props { post: Post; big?: boolean; level?: 'h2' | 'h3' }
+const { post, big = false, level = 'h2' } = Astro.props;
+const d = post.data;
+const H = level;
+---
+<article class:list={['card', { big }]}>
+  <a class="cover" href={`/blog/${post.id}`} tabindex="-1" aria-hidden="true">
+    <img src={coverFor(post)} alt="" width="1200" height="630" loading={big ? 'eager' : 'lazy'} decoding="async" />
+  </a>
+  <div class="text">
+    <span class="topic">{tagLabel(d.tags[0])}</span>
+    <H class="title"><a href={`/blog/${post.id}`}>{d.title}{d.draft && <span class="draft"> (draft)</span>}</a></H>
+    <span class="meta"><time datetime={d.date.toISOString()}>{fmtDate(d.date)}</time> · {readMinutes(post)} min read</span>
+  </div>
+</article>
+
+<style>
+  .card { position: relative; display: grid; gap: var(--space-4); align-content: start; }
+  .cover { display: block; overflow: hidden; border-radius: var(--radius-panel); background: var(--subtle); aspect-ratio: 1200 / 630; }
+  .cover img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .text { display: grid; gap: var(--space-2); }
+  .topic { font-size: 14px; font-weight: 600; color: var(--link); }
+  .title { font-size: 1.25rem; line-height: 1.3; margin: 0; overflow-wrap: anywhere; }
+  .title a { color: var(--ink); text-decoration: none; transition: color var(--fast) var(--ease); }
+  /* The whole card is one target through the title link. */
+  .title a::after { content: ''; position: absolute; inset: 0; }
+  .card:hover .title a { color: var(--link); }
+  .title a:focus-visible { outline: none; }
+  .card:has(.title a:focus-visible) { outline: 2px solid var(--brand); outline-offset: 6px; border-radius: var(--radius-panel); }
+  .meta { font-size: 14px; color: var(--ink-muted); }
+  .draft { color: var(--error); font-weight: 400; }
+  .big { grid-template-columns: 1.25fr 1fr; gap: var(--space-8); align-items: center; }
+  .big .title { font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem); line-height: 1.15; }
+  .big .text { gap: var(--space-3); }
+  @media (max-width: 859px) { .big { grid-template-columns: 1fr; gap: var(--space-4); } }
+</style>

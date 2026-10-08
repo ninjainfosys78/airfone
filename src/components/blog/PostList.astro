@@ -1,50 +1,21 @@
 ---
-import { fmtDate, type Post } from '../../lib/posts';
-import { tagLabel } from '../../lib/blog';
-export interface Props { items: Post[]; feature?: boolean }
-const { items, feature = false } = Astro.props;
+import PostCard from './PostCard.astro';
+import type { Post } from '../../lib/posts';
+export interface Props { items: Post[]; feature?: boolean; level?: 'h2' | 'h3' }
+const { items, feature = false, level = 'h2' } = Astro.props;
 const [first, ...rest] = items;
 const list = feature ? rest : items;
 ---
-{feature && first && (
-  <a class="feature" href={`/blog/${first.id}`}>
-    <span class="meta muted small"><time datetime={first.data.date.toISOString()}>{fmtDate(first.data.date)}</time> · {first.data.tags.map(tagLabel).join(', ')}</span>
-    <span class="f-title">{first.data.title}{first.data.draft && <span class="draft"> (draft)</span>}</span>
-    <span class="f-desc">{first.data.description}</span>
-    <span class="read">Read the guide <span aria-hidden="true">→</span></span>
-  </a>
-)}
+{feature && first && <div class="top-post"><PostCard post={first} big level={level} /></div>}
 {list.length > 0 && (
-  <ul class="posts">
-    {list.map((p) => (
-      <li>
-        <a href={`/blog/${p.id}`}>
-          <span class="meta muted small"><time datetime={p.data.date.toISOString()}>{fmtDate(p.data.date)}</time> · {p.data.tags.map(tagLabel).join(', ')}</span>
-          <span class="title">{p.data.title}{p.data.draft && <span class="draft"> (draft)</span>}</span>
-          <span class="desc muted">{p.data.description}</span>
-        </a>
-      </li>
-    ))}
+  <ul class="grid">
+    {list.map((p) => <li><PostCard post={p} level={level} /></li>)}
   </ul>
 )}
 
 <style>
-  a { color: var(--ink); text-decoration: none; }
-  .feature {
-    display: grid; gap: var(--space-4); padding: var(--space-7);
-    background: var(--stage); color: var(--stage-ink); border-radius: var(--radius-panel);
-    margin-bottom: var(--space-7);
-  }
-  .feature .meta { color: var(--stage-muted); }
-  .f-title { font-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.5rem); font-weight: 600; line-height: 1.15; max-width: 22ch; overflow-wrap: anywhere; }
-  .f-desc { color: var(--stage-muted); font-size: 1.125rem; max-width: 60ch; }
-  .read { font-weight: 600; color: var(--lime); }
-  .feature:hover .read span { display: inline-block; transform: translateX(4px); transition: transform var(--fast) var(--ease); }
-  .posts { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-7) var(--space-6); }
-  .posts a { display: grid; gap: var(--space-2); padding-top: var(--space-5); border-top: 1px solid var(--line); }
-  .title { font-size: 1.375rem; font-weight: 600; line-height: 1.25; overflow-wrap: anywhere; transition: color var(--fast) var(--ease); }
-  .posts a:hover .title { color: var(--link); }
-  .desc { font-size: 16px; }
-  .draft { color: var(--error); font-weight: 400; }
-  @media (max-width: 767px) { .feature { padding: var(--space-5); } }
+  .top-post { padding-bottom: var(--space-8); margin-bottom: var(--space-8); border-bottom: 1px solid var(--line); }
+  .grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-8) var(--space-6); }
+  @media (max-width: 959px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 599px) { .grid { grid-template-columns: 1fr; gap: var(--space-7); } }
 </style>

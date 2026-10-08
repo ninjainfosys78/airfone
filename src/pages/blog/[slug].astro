@@ -2,7 +2,8 @@
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import CtaBand from '../../components/site/CtaBand.astro';
-import { fmtDate, posts, type Post } from '../../lib/posts';
+import PostList from '../../components/blog/PostList.astro';
+import { coverFor, fmtDate, posts, readMinutes, type Post } from '../../lib/posts';
 import { related, tagLabel } from '../../lib/blog';
 import { articleJsonLd, breadcrumbJsonLd } from '../../lib/seo';
 
@@ -11,12 +12,15 @@ export async function getStaticPaths() {
   return all.map((post) => ({ params: { slug: post.id }, props: { post, all } }));
 }
 const { post, all } = Astro.props as { post: Post; all: Post[] };
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
+const toc = headings.filter((h) => h.depth === 2);
 const d = post.data;
 const path = `/blog/${post.id}`;
-const image = d.image ?? `/og/blog/${post.id}.png`;
+const image = coverFor(post);
 const more = related(all.map((p) => ({ ...p, data: { ...p.data, draft: false } })), { ...post, data: { ...d, draft: false } }) as Post[];
 const pillar = all.find((p) => p.data.pillar && p.id !== post.id && p.data.tags.some((t) => d.tags.includes(t)));
+const next = [...(pillar ? [pillar] : []), ...more.filter((m) => m.id !== pillar?.id)];
+const readNext = (next.length ? next : all.filter((p) => p.id !== post.id)).slice(0, 3);
 ---
 <Base
   title={d.title}
@@ -30,31 +34,47 @@ const pillar = all.find((p) => p.data.pillar && p.id !== post.id && p.data.tags.
   noindex={d.draft}
   jsonLd={[
     articleJsonLd({ slug: post.id, title: d.title, description: d.description, date: d.date, updated: d.updated, image }),
-    breadcrumbJsonLd([{ name: 'Blog', path: '/blog' }, { name: d.title, path }]),
+    breadcrumbJsonLd([{ name: 'Insights', path: '/blog' }, { name: d.title, path }]),
   ]}
 >
-  <article class="section">
-    <div class="wrap">
+  <article class="post">
+    <header class="wrap head">
+      <a class="back" href="/blog"><span aria-hidden="true">←</span> All insights</a>
+      <a class="topic" href={`/blog/tag/${d.tags[0]}`}>{tagLabel(d.tags[0])}</a>
       <h1 class="title">{d.title}</h1>
-      <p class="meta muted small">
+      <p class="meta">
         <time datetime={d.date.toISOString()}>{fmtDate(d.date)}</time>
         {d.updated && <> · Updated <time datetime={d.updated.toISOString()}>{fmtDate(d.updated)}</time></>}
-        {' · '}{d.tags.map((t, i) => <>{i > 0 && ', '}<a href={`/blog/tag/${t}`}>{tagLabel(t)}</a></>)}
+        {' · '}{readMinutes(post)} min read
         {d.draft && <span class="draft"> · Draft, not published</span>}
       </p>
-      <div class="prose body"><Content /></div>
-
-      {(pillar || more.length > 0) && (
-        <aside class="more no-print">
-          <h2 class="h3">Read next</h2>
-          <ul>
-            {pillar && <li><a href={`/blog/${pillar.id}`}>{pillar.data.title}</a></li>}
-            {more.filter((m) => m.id !== pillar?.id).map((m) => <li><a href={`/blog/${m.id}`}>{m.data.title}</a></li>)}
-          </ul>
-        </aside>
-      )}
+    </header>
+    <div class="wrap">
+      <img class="cover" src={image} alt={d.imageAlt ?? ''} width="1200" height="630" decoding="async" fetchpriority="high" />
     </div>
+    <div class="wrap layout">
+      {toc.length > 1 && (
+        <nav class="toc no-print" aria-label="On this page">
+          <h2 class="toc-h">On this page</h2>
+          <ol>{toc.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}</ol>
+        </nav>
+      )}
+      <div class="prose body"><Content /></div>
+    </div>
+    <footer class="wrap foot no-print">
+      <div class="tags">{d.tags.map((t) => <a href={`/blog/tag/${t}`}>{tagLabel(t)}</a>)}</div>
+      <a class="back" href="/blog"><span aria-hidden="true">←</span> Back to all insights</a>
+    </footer>
   </article>
+
+  {readNext.length > 0 && (
+    <section class="section next no-print">
+      <div class="wrap">
+        <h2>Read next</h2>
+        <PostList items={readNext} level="h3" />
+      </div>
+    </section>
+  )}
   <CtaBand />
 </Base>
 
@@ -68,13 +88,53 @@ const pillar = all.find((p) => p.data.pillar && p.id !== post.id && p.data.tags.
   });
 </script>
 
+<script>
+  // Mark the section being read in the contents list.
+  const links = new Map(Array.from(document.querySelectorAll<HTMLAnchorElement>('.toc a')).map((a) => [decodeURIComponent(a.hash.slice(1)), a]));
+  if (links.size) {
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) if (e.isIntersecting) {
+        links.forEach((a) => a.removeAttribute('aria-current'));
+        links.get(e.target.id)?.setAttribute('aria-current', 'true');
+      }
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    links.forEach((_, id) => { const h = document.getElementById(id); if (h) io.observe(h); });
+  }
+</script>
+
 <style>
-  .title { max-width: 22ch; overflow-wrap: anywhere; }
-  .meta { margin: var(--space-4) 0 var(--space-7); }
+  .head { padding-top: var(--space-7); display: grid; justify-items: start; gap: var(--space-4); }
+  .back { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 44px; color: var(--ink-muted); text-decoration: none; font-size: 16px; font-weight: 500; transition: color var(--fast) var(--ease); }
+  .back span { transition: transform var(--fast) var(--ease); }
+  .back:hover { color: var(--ink); }
+  .back:hover span { transform: translateX(-4px); }
+  .topic { font-size: 14px; font-weight: 600; color: var(--link); text-decoration: none; margin-top: var(--space-4); }
+  .title { max-width: 24ch; overflow-wrap: anywhere; margin: 0; }
+  .meta { margin: 0; font-size: 14px; color: var(--ink-muted); }
   .draft { color: var(--error); }
+  .cover { display: block; width: 100%; height: auto; aspect-ratio: 1200 / 630; object-fit: cover; border-radius: var(--radius-panel); margin-block: var(--space-7) var(--space-8); background: var(--subtle); }
+  .layout { display: grid; grid-template-columns: 220px minmax(0, var(--measure)); gap: var(--space-9); justify-content: center; }
+  .layout:not(:has(.toc)) { grid-template-columns: minmax(0, var(--measure)); }
+  .toc { position: sticky; top: 104px; align-self: start; }
+  .toc-h { font-size: 14px; font-weight: 600; margin: 0 0 var(--space-3); }
+  .toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line); }
+  .toc a { display: block; padding: 6px 0 6px var(--space-4); margin-left: -1px; border-left: 2px solid transparent; color: var(--ink-muted); text-decoration: none; font-size: 14px; line-height: 1.4; transition: color var(--fast) var(--ease), border-color var(--fast) var(--ease); }
+  .toc a:hover { color: var(--ink); }
+  .toc a[aria-current] { color: var(--ink); border-left-color: var(--brand); }
   .body { font-size: 1.125rem; }
+  .body :global(h2) { scroll-margin-top: 104px; }
   .body :global(table) { display: block; overflow-x: auto; }
-  .more { max-width: var(--measure); margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--line); }
-  .h3 { font-size: 1.375rem; margin-bottom: var(--space-4); }
-  .more ul { margin: 0; padding-left: 1.25em; display: grid; gap: var(--space-2); }
+  .foot { display: grid; justify-items: start; gap: var(--space-5); max-width: calc(var(--measure) + 220px + var(--space-9) + 2 * var(--gutter)); padding-block: var(--space-7) var(--space-8); }
+  .foot { border-top: 0; }
+  .tags { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .tags a { display: inline-flex; align-items: center; min-height: 36px; padding: 0 var(--space-3); background: var(--subtle); border-radius: var(--radius-control); color: var(--ink); text-decoration: none; font-size: 14px; }
+  .tags a:hover { color: var(--link); }
+  .next { background: var(--surface); border-top: 1px solid var(--line); }
+  .next h2 { margin-bottom: var(--space-7); }
+  @media (max-width: 1023px) {
+    .layout { grid-template-columns: minmax(0, var(--measure)); gap: 0; }
+    .toc { display: none; }
+    .foot { max-width: none; }
+  }
+  @media (max-width: 599px) { .cover { margin-block: var(--space-5) var(--space-6); } }
 </style>

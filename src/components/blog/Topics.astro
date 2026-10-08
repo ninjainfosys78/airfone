@@ -1,0 +1,23 @@
+---
+// Topic bar shared by the blog index and tag pages. The current topic is
+// marked; "All" leads back to the full list.
+import { tagLabel } from '../../lib/blog';
+export interface Props { tags: string[]; current?: string }
+const { tags, current } = Astro.props;
+---
+<nav class="topics" aria-label="Topics">
+  <a href="/blog" aria-current={!current ? 'page' : undefined}>All</a>
+  {tags.map((t) => <a href={`/blog/tag/${t}`} aria-current={current === t ? 'page' : undefined}>{tagLabel(t)}</a>)}
+</nav>
+
+<style>
+  .topics { display: flex; gap: var(--space-5); overflow-x: auto; scrollbar-width: none; border-bottom: 1px solid var(--line); margin-bottom: var(--space-8); }
+  .topics::-webkit-scrollbar { display: none; }
+  .topics a {
+    flex: none; display: inline-flex; align-items: center; min-height: 48px; margin-bottom: -1px;
+    color: var(--ink-muted); text-decoration: none; font-size: 16px; font-weight: 500; white-space: nowrap;
+    border-bottom: 2px solid transparent; transition: color var(--fast) var(--ease), border-color var(--fast) var(--ease);
+  }
+  .topics a:hover { color: var(--ink); }
+  .topics a[aria-current='page'] { color: var(--ink); border-bottom-color: var(--brand); }
+</style>
