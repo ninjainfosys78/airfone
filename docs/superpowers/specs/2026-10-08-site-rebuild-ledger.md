@@ -62,6 +62,7 @@ self-serve sign-up, demo booking, reseller applications. Markdown blog.
 | AU-3 | Every clip has a text transcript on the page | todo | |
 | AU-4 | Audio never autoplays; play/pause works by keyboard | todo | |
 | AU-5 | Clips compressed (Opus/AAC), preload="none" | todo | |
+| AU-6 | ElevenLabs account on a paid plan with a commercial license before any clip goes live (2026-10-08: key works, account is free tier) | owner | |
 
 ## 5. Technical SEO
 
@@ -203,8 +204,84 @@ self-serve sign-up, demo booking, reseller applications. Markdown blog.
 | LN-5 | After launch: indexability, sitemap fetched, forms delivering, mail not in spam | todo | |
 | LN-6 | Quarterly re-run of SEO and blog checks on top pages | todo | |
 
+
+## 15. No AI look (impeccable.style/slop, fetched 2026-10-08)
+
+Every page is scanned against the full catalogue. Absent on every page = done.
+
+| ID | Must not appear | Status | Evidence |
+|---|---|---|---|
+| SLOP-1 | Design system: Font outside DESIGN.md | todo | |
+| SLOP-2 | Design system: Color outside DESIGN.md | todo | |
+| SLOP-3 | Design system: Radius outside DESIGN.md | todo | |
+| SLOP-4 | Design system: Font size outside DESIGN.md | todo | |
+| SLOP-5 | Visual details: Decorative grid-line background | todo | |
+| SLOP-6 | Visual details: Thick border accent on rounded element | todo | |
+| SLOP-7 | Visual details: Glassmorphism, blur or glow as decoration | todo | |
+| SLOP-8 | Visual details: Side-tab accent border (only for real status) | todo | |
+| SLOP-9 | Visual details: Hairline border plus wide shadow | todo | |
+| SLOP-10 | Visual details: Repeating-gradient stripes | todo | |
+| SLOP-11 | Visual details: Extreme border radius on cards | todo | |
+| SLOP-12 | Visual details: Rough SVG illustrations | todo | |
+| SLOP-13 | Typography: Label above a heading | todo | |
+| SLOP-14 | Typography: Tiny interface text | todo | |
+| SLOP-15 | Typography: Flat type hierarchy | todo | |
+| SLOP-16 | Typography: Icon tile stacked above heading | todo | |
+| SLOP-17 | Typography: Italic serif display headline | todo | |
+| SLOP-18 | Typography: Badge above the main headline | todo | |
+| SLOP-19 | Typography: Oversized hero headline | todo | |
+| SLOP-20 | Typography: Crushed letter spacing | todo | |
+| SLOP-21 | Typography: Overused default font (Inter, Geist) | todo | |
+| SLOP-22 | Typography: Single font with no size/weight variation | todo | |
+| SLOP-23 | Typography: All-caps body text | todo | |
+| SLOP-24 | Colour and contrast: Radial-gradient background halo | todo | |
+| SLOP-25 | Colour and contrast: Soft spotlight behind content | todo | |
+| SLOP-26 | Colour and contrast: AI palette (purple gradients, cyan on dark) | todo | |
+| SLOP-27 | Colour and contrast: Dark mode with glowing accents | todo | |
+| SLOP-28 | Colour and contrast: Gradient text | todo | |
+| SLOP-29 | Colour and contrast: Gray text on coloured background | todo | |
+| SLOP-30 | Colour and contrast: Cream/beige palette by reflex | todo | |
+| SLOP-31 | Layout and space: Tiny numbered section labels | todo | |
+| SLOP-32 | Layout and space: Cards flush against scroller edge | todo | |
+| SLOP-33 | Layout and space: Text covered by another element | todo | |
+| SLOP-34 | Layout and space: Unbalanced opening columns | todo | |
+| SLOP-35 | Layout and space: Heading closer to the previous section | todo | |
+| SLOP-36 | Layout and space: Hero metric layout | todo | |
+| SLOP-37 | Layout and space: Identical card grids | todo | |
+| SLOP-38 | Layout and space: Monotonous spacing | todo | |
+| SLOP-39 | Layout and space: Nested cards | todo | |
+| SLOP-40 | Layout and space: Line length over 65 to 75 characters | todo | |
+| SLOP-41 | Layout and space: Content overflowing its container | todo | |
+| SLOP-42 | Layout and space: Clipped menus and popovers | todo | |
+| SLOP-43 | Motion: Pulsing status dot | todo | |
+| SLOP-44 | Motion: Decorative blinking cursor | todo | |
+| SLOP-45 | Motion: Auto-scrolling marquee | todo | |
+| SLOP-46 | Motion: Bounce or elastic easing | todo | |
+| SLOP-47 | Motion: Animation that changes layout | todo | |
+| SLOP-48 | Motion: Images that move on hover | todo | |
+| SLOP-49 | Copy: Same text repeated inside one container | todo | |
+| SLOP-50 | Copy: Em-dash overuse | todo | |
+| SLOP-51 | Copy: Generic marketing claims (world-class, supercharge) | todo | |
+| SLOP-52 | Copy: Forced contrast slogans | todo | |
+| SLOP-53 | Copy: Calling things "theater" | todo | |
+| SLOP-54 | Imagery: Placeholder-style illustrations | todo | |
+| SLOP-55 | Imagery: Jagged image masks | todo | |
+| SLOP-56 | Imagery: Images hidden under overlays | todo | |
+| SLOP-57 | Imagery: Broken or placeholder image | todo | |
+| SLOP-58 | General quality: JavaScript errors on load | todo | |
+| SLOP-59 | General quality: Content stuck waiting to appear | todo | |
+| SLOP-60 | General quality: Cramped padding | todo | |
+| SLOP-61 | General quality: Body text touching the page edge | todo | |
+| SLOP-62 | General quality: Justified text | todo | |
+| SLOP-63 | General quality: Low-contrast text (under AA) | todo | |
+| SLOP-64 | General quality: Skipped heading level | todo | |
+| SLOP-65 | General quality: Tight line height | todo | |
+| SLOP-66 | General quality: Tiny body text | todo | |
+| SLOP-67 | General quality: Wide letter spacing on body text | todo | |
+
 ## Sources
 
+- [impeccable.style AI slop catalogue](https://impeccable.style/slop/)
 - [Website Launch Checklist 2026 (Digital Applied)](https://www.digitalapplied.com/blog/website-launch-checklist-150-items-2026)
 - [Landing Page Checklist: 37 Elements (FastStrat)](https://faststrat.ai/landing-page-checklist-37-elements/)
 - [Landing Page Audit Checklist (Apexure)](https://www.apexure.com/blog/landing-page-audit-checklist)
