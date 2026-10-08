@@ -1,4 +1,5 @@
 ---
+import '@fontsource-variable/inter/wght.css';
 import type { Faq } from '../../data/products';
 export interface Props { items: Faq[]; heading?: string }
 const { items, heading = 'Questions' } = Astro.props;
@@ -18,13 +19,15 @@ const { items, heading = 'Questions' } = Astro.props;
 </section>
 
 <style>
+  .faq details { font-family: 'Inter Variable', system-ui, sans-serif; }
+  .faq summary { font-weight: 600; letter-spacing: 0; }
   .two { display: grid; grid-template-columns: 1fr 1.4fr; gap: var(--space-8); align-items: start; }
   details { border-bottom: 1px solid var(--line); }
   details:first-child { border-top: 1px solid var(--line); }
-  summary { cursor: pointer; padding: var(--space-4) 0; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: var(--space-4); min-height: 44px; }
+  summary { cursor: pointer; padding: var(--space-3) 0; align-items: center; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: var(--space-4); min-height: 44px; }
   summary::-webkit-details-marker { display: none; }
   summary::after { content: '+'; color: var(--link); font-weight: 400; font-size: 1.5rem; line-height: 1; }
   details[open] summary::after { content: '\2212'; }
-  details p { padding-bottom: var(--space-4); }
+  details p { margin: 0; padding: 0 0 var(--space-4); font-size: 15px; line-height: 1.5; max-width: 62ch; }
   @media (max-width: 959px) { .two { grid-template-columns: 1fr; gap: var(--space-6); } }
 </style>

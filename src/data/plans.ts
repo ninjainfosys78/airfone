@@ -1,12 +1,13 @@
 // Plans shown on /pricing. Prices are not public yet: leave `price` unset and
 // the card shows "Priced for your call volume". When prices are set, fill
-// `price` (e.g. "Rs 4,999") and `per` (e.g. "a month"), and drop noindex on
-// the page.
+// `price` and `per` (e.g. "a month").
 export interface Plan {
   id: string;
   name: string;
   /** Who it is for, one line. */
   for: string;
+  /** What you get, in a few words; the card's big line. */
+  pitch: string;
   price?: string;
   per?: string;
   cta: { label: string; href: string };
@@ -20,44 +21,29 @@ export const plans: Plan[] = [
   {
     id: 'phone',
     name: 'Phone system',
-    for: 'For teams that want a modern phone line without the box.',
+    for: 'A business phone line, no hardware.',
+    pitch: 'Your number on every desk and phone',
     cta: { label: 'Get a quote', href: '/demo' },
-    features: [
-      'Keep your existing number',
-      'Extensions for every person and team',
-      'Call menus, queues and opening hours',
-      'Answer from the app or a browser',
-      'Recording and call history',
-    ],
+    features: ['Keep your number', 'Extensions and call menus', 'Every call recorded'],
   },
   {
     id: 'agent',
     name: 'AI call agent',
-    for: 'For businesses that want every call answered, day and night.',
+    for: 'Every call answered, day and night.',
+    pitch: 'Every call answered in Nepali, 24/7',
     cta: { label: 'Book a demo', href: '/demo' },
     builds: 'Phone system',
-    features: [
-      'An agent that answers in Nepali',
-      'Learns from your price lists and notes',
-      'Up to 15 calls at the same time',
-      'Hands callers to your team mid-call',
-      'Every call written out and searchable',
-    ],
+    features: ['Answers in Nepali, 24/7', '15 calls at once', 'Hands over to your team'],
     featured: true,
   },
   {
     id: 'scale',
     name: 'AI phone system',
-    for: 'For banks, hospitals and providers with high volume or many branches.',
+    for: 'For high volume and many branches.',
+    pitch: 'Calls in and out, across branches',
     cta: { label: 'Talk to sales', href: '/contact' },
     builds: 'AI call agent',
-    features: [
-      'Reminder and follow-up calls from a list',
-      'Several branches on one system',
-      'More calls at the same time',
-      'Help connecting your own systems',
-      'A named contact for your account',
-    ],
+    features: ['Outbound reminder calls', 'Multiple branches', 'A named account contact'],
   },
 ];
 

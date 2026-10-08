@@ -11,6 +11,9 @@ importers:
       '@astrojs/rss':
         specifier: ^4
         version: 4.0.19
+      '@fontsource-variable/inter':
+        specifier: 5.2.8
+        version: 5.2.8
       '@fontsource-variable/source-serif-4':
         specifier: 5.2.8
         version: 5.2.8
@@ -409,6 +412,9 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@fontsource-variable/inter@5.2.8':
+    resolution: {integrity: sha512-kOfP2D+ykbcX/P3IFnokOhVRNoTozo5/JxhAIVYLpea/UBmCQ/YWPBfWIDuBImXX/15KH+eKh4xpEUyS2sQQGQ==}
 
   '@fontsource-variable/source-serif-4@5.2.8':
     resolution: {integrity: sha512-qj5xZxbKmucdY2t6Qp2RdFzgQoepl7FLukVOE527o9ueDSQ3M4nwoec5YyTn45iP2y8jCb8H3Se6JnhL7tlltA==}
@@ -2710,6 +2716,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.27.7':
     optional: true
+
+  '@fontsource-variable/inter@5.2.8': {}
 
   '@fontsource-variable/source-serif-4@5.2.8': {}
 
