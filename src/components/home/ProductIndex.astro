@@ -107,7 +107,9 @@ import { products } from '../../data/products';
     transition: color var(--fast) var(--ease);
   }
   [role='tab']:hover { color: var(--ink); }
-  [role='tab'][aria-selected='true'] { color: var(--ink); border-bottom-color: var(--brand); border-bottom-width: 2px; }
+  [role='tab'] { position: relative; }
+  [role='tab'][aria-selected='true'] { color: var(--ink); }
+  [role='tab'][aria-selected='true']::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--brand); }
 
   .panel {
     background: var(--stage); color: var(--stage-ink); border-radius: var(--radius-panel);
@@ -161,6 +163,7 @@ import { products } from '../../data/products';
     .tabs { display: flex; overflow-x: auto; border-top: 0; gap: var(--space-2); scrollbar-width: none; }
     [role='tab'] { flex: none; min-height: 44px; padding: 0 var(--space-4); border: 1px solid var(--line); border-radius: var(--radius-control); font-size: 16px; }
     [role='tab'][aria-selected='true'] { border-color: var(--brand); color: var(--link); }
+    [role='tab'][aria-selected='true']::after { display: none; }
     .panel { padding: var(--space-5); min-height: 0; }
   }
 </style>
