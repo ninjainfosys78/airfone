@@ -38,7 +38,7 @@ const readNext = (next.length ? next : all.filter((p) => p.id !== post.id)).slic
   ]}
 >
   <article class="post">
-    <div class="wrap"><div class="col">
+    <header class="wrap">
       <a class="back" href="/blog"><span aria-hidden="true">←</span> All insights</a>
       <h1 class="title">{d.title}</h1>
       <p class="meta">
@@ -46,20 +46,22 @@ const readNext = (next.length ? next : all.filter((p) => p.id !== post.id)).slic
         {d.updated && <> · Updated <time datetime={d.updated.toISOString()}>{fmtDate(d.updated)}</time></>}
         {d.draft && <span class="draft"> · Draft, not published</span>}
       </p>
-      <div class="prose body"><Content /></div>
-    </div></div>
+    </header>
+    <div class="wrap grid">
+      <div class="col prose body"><Content /></div>
+      {readNext.length > 0 && (
+        <nav class="next no-print" aria-labelledby="next-h">
+          <h2 id="next-h" class="next-h">Read next</h2>
+          <ul>
+            {readNext.map((p) => (
+              <li><a href={`/blog/${p.id}`}><span>{p.data.title}</span><time datetime={p.data.date.toISOString()}>{fmtDate(p.data.date)}</time></a></li>
+            ))}
+          </ul>
+        </nav>
+      )}
+  </div>
   </article>
 
-  {readNext.length > 0 && (
-    <nav class="next wrap no-print" aria-labelledby="next-h"><div class="col">
-      <h2 id="next-h" class="next-h">Read next</h2>
-      <ul>
-        {readNext.map((p) => (
-          <li><a href={`/blog/${p.id}`}><span>{p.data.title}</span><time datetime={p.data.date.toISOString()}>{fmtDate(p.data.date)}</time></a></li>
-        ))}
-      </ul>
-    </div></nav>
-  )}
   <CtaBand />
 </Base>
 
@@ -91,13 +93,18 @@ const readNext = (next.length ? next : all.filter((p) => p.id !== post.id)).slic
   .body :global(h2) { font-size: 1.5rem; line-height: 1.25; margin: var(--space-7) 0 var(--space-3); scroll-margin-top: 104px; }
   .body :global(p), .body :global(ul), .body :global(ol) { margin-bottom: var(--space-4); }
   .body :global(table) { display: block; overflow-x: auto; }
-  .next { padding-bottom: var(--space-9); }
+  /* Desktop: read next sits in the empty right column and stays in view. */
+  .grid { display: grid; grid-template-columns: minmax(0, 700px) minmax(220px, 300px); justify-content: space-between; gap: var(--space-9); }
+  .next { position: sticky; top: 112px; align-self: start; }
+  @media (max-width: 1099px) {
+    .grid { grid-template-columns: minmax(0, 700px); gap: 0; }
+    .next { position: static; margin-top: var(--space-8); }
+  }
   .next-h { font-size: 1.125rem; margin: 0 0 var(--space-3); }
   .next ul { list-style: none; margin: 0; padding: 0; }
-  .next a { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-5); padding: var(--space-4) 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+  .next a { display: flex; flex-direction: column; gap: var(--space-1); padding: var(--space-4) 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
   .next li:last-child a { border-bottom: 1px solid var(--line); }
-  .next span { font-weight: 500; transition: color var(--fast) var(--ease); }
+  .next span { font-weight: 500; line-height: 1.35; transition: color var(--fast) var(--ease); }
   .next a:hover span { color: var(--link); }
   .next time { flex: none; font-size: 14px; color: var(--ink-muted); }
-  @media (max-width: 599px) { .next a { flex-direction: column; gap: var(--space-1); } }
 </style>
