@@ -1,0 +1,31 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PostList from '../../../components/blog/PostList.astro';
+import Pager from '../../../components/blog/Pager.astro';
+import { posts, type Post } from '../../../lib/posts';
+import { PAGE_SIZE, pagePath } from '../../../lib/blog';
+
+export async function getStaticPaths() {
+  const all = await posts();
+  const last = Math.ceil(all.length / PAGE_SIZE);
+  // Page 1 is /blog itself; this route only builds pages 2 and later.
+  return Array.from({ length: Math.max(0, last - 1) }, (_, i) => {
+    const n = i + 2;
+    return { params: { page: String(n) }, props: { n, last, items: all.slice((n - 1) * PAGE_SIZE, n * PAGE_SIZE) } };
+  });
+}
+const { n, last, items } = Astro.props as { n: number; last: number; items: Post[] };
+---
+<Base title={`Blog, page ${n}`} description={`Older AirFone guides for Nepali businesses on calls, phone systems and website agents. Page ${n} of ${last}.`} path={pagePath(n)}>
+  <section class="section">
+    <div class="wrap">
+      <h1>Blog, page {n}</h1>
+      <PostList items={items} />
+      <Pager current={n} last={last} />
+    </div>
+  </section>
+</Base>
+
+<style>
+  h1 { margin-bottom: var(--space-6); }
+</style>

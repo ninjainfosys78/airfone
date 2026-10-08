@@ -1,0 +1,82 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import CtaBand from '../../components/site/CtaBand.astro';
+import { fmtDate, posts, type Post } from '../../lib/posts';
+import { related, tagLabel } from '../../lib/blog';
+import { articleJsonLd, breadcrumbJsonLd } from '../../lib/seo';
+
+export async function getStaticPaths() {
+  const all = await posts();
+  return all.map((post) => ({ params: { slug: post.id }, props: { post, all } }));
+}
+const { post, all } = Astro.props as { post: Post; all: Post[] };
+const { Content } = await render(post);
+const d = post.data;
+const path = `/blog/${post.id}`;
+const image = d.image ?? `/og/blog/${post.id}.png`;
+const more = related(all.map((p) => ({ ...p, data: { ...p.data, draft: false } })), { ...post, data: { ...d, draft: false } }) as Post[];
+const pillar = all.find((p) => p.data.pillar && p.id !== post.id && p.data.tags.some((t) => d.tags.includes(t)));
+---
+<Base
+  title={d.title}
+  description={d.description}
+  path={path}
+  type="article"
+  image={image}
+  imageAlt={d.imageAlt}
+  published={d.date}
+  modified={d.updated ?? d.date}
+  noindex={d.draft}
+  jsonLd={[
+    articleJsonLd({ slug: post.id, title: d.title, description: d.description, date: d.date, updated: d.updated, image }),
+    breadcrumbJsonLd([{ name: 'Blog', path: '/blog' }, { name: d.title, path }]),
+  ]}
+>
+  <article class="section">
+    <div class="wrap">
+      <nav class="crumb small" aria-label="Breadcrumb"><a href="/blog">Blog</a></nav>
+      <h1 class="title">{d.title}</h1>
+      <p class="meta muted small">
+        <time datetime={d.date.toISOString()}>{fmtDate(d.date)}</time>
+        {d.updated && <> · Updated <time datetime={d.updated.toISOString()}>{fmtDate(d.updated)}</time></>}
+        {' · '}{d.tags.map((t, i) => <>{i > 0 && ', '}<a href={`/blog/tag/${t}`}>{tagLabel(t)}</a></>)}
+        {d.draft && <span class="draft"> · Draft, not published</span>}
+      </p>
+      <div class="prose body"><Content /></div>
+
+      {(pillar || more.length > 0) && (
+        <aside class="more no-print">
+          <h2 class="h3">Read next</h2>
+          <ul>
+            {pillar && <li><a href={`/blog/${pillar.id}`}>{pillar.data.title}</a></li>}
+            {more.filter((m) => m.id !== pillar?.id).map((m) => <li><a href={`/blog/${m.id}`}>{m.data.title}</a></li>)}
+          </ul>
+        </aside>
+      )}
+    </div>
+  </article>
+  <CtaBand />
+</Base>
+
+<script>
+  // Wide tables scroll inside their own box instead of the page.
+  document.querySelectorAll('.prose table').forEach((t) => {
+    const box = document.createElement('div');
+    box.className = 'table-scroll';
+    t.replaceWith(box);
+    box.append(t);
+  });
+</script>
+
+<style>
+  .crumb { margin-bottom: var(--space-4); color: var(--ink-muted); }
+  .title { max-width: 22ch; overflow-wrap: anywhere; }
+  .meta { margin: var(--space-4) 0 var(--space-7); }
+  .draft { color: var(--error); }
+  .body { font-size: 1.125rem; }
+  .body :global(table) { display: block; overflow-x: auto; }
+  .more { max-width: var(--measure); margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--line); }
+  .h3 { font-size: 1.375rem; margin-bottom: var(--space-4); }
+  .more ul { margin: 0; padding-left: 1.25em; display: grid; gap: var(--space-2); }
+</style>

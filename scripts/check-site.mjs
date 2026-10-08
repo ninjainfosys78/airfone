@@ -161,8 +161,11 @@ export function audit(dist, { designColours = DESIGN_COLOURS } = {}) {
     // Call transcripts quote callers' own words, including a shop's prices.
     for (const t of body.querySelectorAll('[data-transcript]')) t.remove();
     const ownText = body.text.replace(/\s+/g, ' ');
+    // Legal pages describe the whole service, including app channels.
+    for (const t of body.querySelectorAll('[data-legal]')) t.remove();
+    const marketingText = body.text.replace(/\s+/g, ' ');
     for (const [re, what] of BANNED_COPY) {
-      const hay = what === 'price on the site' ? ownText : text;
+      const hay = what === 'price on the site' ? ownText : what.startsWith('social') ? marketingText : text;
       const m = hay.match(re);
       if (m) add('CV-8', file, `${what}: "…${hay.slice(Math.max(0, m.index - 30), m.index + 30).trim()}…"`);
     }

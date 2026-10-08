@@ -15,7 +15,7 @@ export interface Props {
 const { h1, updated, intro, sections } = Astro.props;
 ---
 <section class="section">
-  <div class="wrap prose legal">
+  <div class="wrap prose legal" data-legal>
     <h1>{h1}</h1>
     <p class="updated muted small">{updated}</p>
     {intro.map((p) => <p set:html={p} />)}

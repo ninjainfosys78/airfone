@@ -1,0 +1,16 @@
+---
+import { pagePath } from '../../lib/blog';
+export interface Props { current: number; last: number }
+const { current, last } = Astro.props;
+---
+{last > 1 && (
+  <nav class="pager" aria-label="Blog pages">
+    {current > 1 ? <a href={pagePath(current - 1)} rel="prev">Newer posts</a> : <span></span>}
+    <span class="muted small">Page {current} of {last}</span>
+    {current < last ? <a href={pagePath(current + 1)} rel="next">Older posts</a> : <span></span>}
+  </nav>
+)}
+
+<style>
+  .pager { display: flex; justify-content: space-between; align-items: center; margin-top: var(--space-6); }
+</style>

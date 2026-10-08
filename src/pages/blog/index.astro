@@ -1,0 +1,34 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostList from '../../components/blog/PostList.astro';
+import Pager from '../../components/blog/Pager.astro';
+import { posts } from '../../lib/posts';
+import { PAGE_SIZE, allTags, tagLabel } from '../../lib/blog';
+import { breadcrumbJsonLd } from '../../lib/seo';
+
+const all = await posts();
+const items = all.slice(0, PAGE_SIZE);
+const last = Math.max(1, Math.ceil(all.length / PAGE_SIZE));
+const tags = allTags(all.map((p) => ({ ...p, data: { ...p.data, draft: false } })));
+---
+<Base title="Blog" description="Guides for Nepali businesses on answering every call: AI call agents, business phone systems, website voice agents and chatbots." path="/blog" jsonLd={[breadcrumbJsonLd([{ name: 'Blog', path: '/blog' }])]}>
+  <section class="section">
+    <div class="wrap">
+      <h1>Blog</h1>
+      {tags.length > 0 && (
+        <nav class="tags" aria-label="Topics">
+          {tags.map((t) => <a href={`/blog/tag/${t}`}>{tagLabel(t)}</a>)}
+        </nav>
+      )}
+      {items.length ? <PostList items={items} /> : <p class="muted">The first posts are on their way.</p>}
+      <Pager current={1} last={last} />
+    </div>
+  </section>
+</Base>
+
+<style>
+  h1 { margin-bottom: var(--space-6); }
+  .tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-7); }
+  .tags a { display: inline-flex; align-items: center; min-height: 40px; padding: 0 var(--space-4); border: 1px solid var(--line); border-radius: var(--radius-control); color: var(--ink); text-decoration: none; font-size: 16px; }
+  .tags a:hover { border-color: var(--ink); }
+</style>
