@@ -1,7 +1,4 @@
 import type { Timing } from '../orb/orb-state';
-import { demoCall } from '../../data/demo-call';
-import { demoWaveform } from '../../data/demo-waveform';
-import { DEMO_AUDIO_URL } from '../../config/site';
 
 export interface ClipData extends Timing {
   id: string;
@@ -18,12 +15,5 @@ export function clip(id: string): ClipData {
   return hit[1];
 }
 
-/** The real recorded Pathibhara call, in the same shape as a generated clip. */
-export const realCall: ClipData & { src: string } = {
-  id: 'pathibhara',
-  label: 'Real call · Pathibhara Solutions',
-  src: DEMO_AUDIO_URL,
-  duration: demoCall.duration,
-  peaks: demoWaveform.peaks,
-  lines: demoCall.lines.map((l) => ({ speaker: l.speaker, ne: l.ne, text: l.en, start: l.start, end: l.end })),
-};
+/** The real recorded Pathibhara call with its silences shortened (scripts/trim-real-call.mjs). */
+export const realCall: ClipData = clip('pathibhara');

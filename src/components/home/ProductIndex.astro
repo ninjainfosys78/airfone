@@ -98,17 +98,17 @@ import { products } from '../../data/products';
 </script>
 
 <style>
-  .explorer { display: grid; grid-template-columns: minmax(260px, 0.8fr) 1.2fr; gap: var(--space-8); align-items: start; }
+  .explorer { display: grid; grid-template-columns: minmax(240px, 0.7fr) 1.3fr; gap: var(--space-8); align-items: start; }
   .tabs { display: grid; border-top: 1px solid var(--line); }
   [role='tab'] {
     display: flex; align-items: center; justify-content: space-between; gap: var(--space-4);
-    min-height: 76px; padding: 0; border: 0; border-bottom: 1px solid var(--line); background: none;
-    font-size: 1.5rem; font-weight: 600; text-align: left; color: var(--ink-muted); cursor: pointer;
+    min-height: 60px; padding: 0; border: 0; border-bottom: 1px solid var(--line); background: none;
+    font-size: 18px; font-weight: 500; text-align: left; color: var(--ink-muted); cursor: pointer;
     transition: color var(--fast) var(--ease);
   }
   [role='tab']:hover { color: var(--ink); }
   [role='tab'] { position: relative; }
-  [role='tab'][aria-selected='true'] { color: var(--ink); }
+  [role='tab'][aria-selected='true'] { color: var(--ink); font-weight: 600; }
   [role='tab'][aria-selected='true']::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--brand); }
 
   .panel {
