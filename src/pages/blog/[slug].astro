@@ -1,5 +1,7 @@
 ---
 import { render } from 'astro:content';
+import '@fontsource-variable/source-serif-4/wght.css';
+import '@fontsource-variable/source-serif-4/wght-italic.css';
 import Base from '../../layouts/Base.astro';
 import CtaBand from '../../components/site/CtaBand.astro';
 import { coverFor, fmtDate, posts, readMinutes, type Post } from '../../lib/posts';
@@ -36,7 +38,7 @@ const readNext = (next.length ? next : all.filter((p) => p.id !== post.id)).slic
   ]}
 >
   <article class="post">
-    <div class="col">
+    <div class="wrap"><div class="col">
       <a class="back" href="/blog"><span aria-hidden="true">←</span> All insights</a>
       <h1 class="title">{d.title}</h1>
       <p class="meta">
@@ -46,18 +48,18 @@ const readNext = (next.length ? next : all.filter((p) => p.id !== post.id)).slic
         {d.draft && <span class="draft"> · Draft, not published</span>}
       </p>
       <div class="prose body"><Content /></div>
-    </div>
+    </div></div>
   </article>
 
   {readNext.length > 0 && (
-    <nav class="next col no-print" aria-labelledby="next-h">
+    <nav class="next wrap no-print" aria-labelledby="next-h"><div class="col">
       <h2 id="next-h" class="next-h">Read next</h2>
       <ul>
         {readNext.map((p) => (
           <li><a href={`/blog/${p.id}`}><span>{p.data.title}</span><time datetime={p.data.date.toISOString()}>{fmtDate(p.data.date)}</time></a></li>
         ))}
       </ul>
-    </nav>
+    </div></nav>
   )}
   <CtaBand />
 </Base>
@@ -74,8 +76,8 @@ const readNext = (next.length ? next : all.filter((p) => p.id !== post.id)).slic
 
 
 <style>
-  /* One centred reading column: back link, title, date, text. Nothing else. */
-  .col { width: min(100% - 2 * var(--gutter), 720px); margin-inline: auto; }
+  /* One reading column on the page's left edge: back link, title, date, text. */
+  .col { max-width: 700px; }
   .post { padding-block: var(--space-7) var(--space-9); }
   .back { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 44px; color: var(--ink-muted); text-decoration: none; font-size: 16px; transition: color var(--fast) var(--ease); }
   .back span { transition: transform var(--fast) var(--ease); }
@@ -84,9 +86,11 @@ const readNext = (next.length ? next : all.filter((p) => p.id !== post.id)).slic
   .title { margin: var(--space-6) 0 var(--space-4); font-size: clamp(2rem, 1.5rem + 2vw, 3rem); line-height: 1.15; overflow-wrap: anywhere; }
   .meta { margin: 0 0 var(--space-8); padding-bottom: var(--space-6); border-bottom: 1px solid var(--line); font-size: 14px; color: var(--ink-muted); }
   .draft { color: var(--error); }
-  .body { max-width: none; font-size: 1.125rem; line-height: 1.7; }
-  .body :global(h2) { font-size: 1.5rem; margin: var(--space-8) 0 var(--space-4); scroll-margin-top: 104px; }
-  .body :global(p), .body :global(ul), .body :global(ol) { margin-bottom: var(--space-5); }
+  .body { max-width: none; font-family: 'Source Serif 4 Variable', Georgia, serif; font-size: 1.1875rem; line-height: 1.55; }
+  .body :global(h2), .body :global(h3) { font-family: inherit; font-weight: 600; }
+  .body :global(li + li) { margin-top: var(--space-1); }
+  .body :global(h2) { font-size: 1.5rem; line-height: 1.25; margin: var(--space-7) 0 var(--space-3); scroll-margin-top: 104px; }
+  .body :global(p), .body :global(ul), .body :global(ol) { margin-bottom: var(--space-4); }
   .body :global(table) { display: block; overflow-x: auto; }
   .next { padding-bottom: var(--space-9); }
   .next-h { font-size: 1.125rem; margin: 0 0 var(--space-3); }
