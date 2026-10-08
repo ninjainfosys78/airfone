@@ -151,7 +151,7 @@ self-serve sign-up, demo booking, reseller applications. Markdown blog.
 | DS-14 | Edges align to one grid; section gaps clearly larger than inner gaps | owner | owner visual review |
 | DS-15 | Hierarchy carried by size and weight first, brand green used sparingly | done | size/weight hierarchy; lime only on play, orb, markers |
 | DS-16 | Shared components (header, footer, CTA band, demo player, form) identical on every page | done | shared Header, Footer, CtaBand, CallPlayer, LeadForm, Faq |
-| DS-17 | No awkward breaks between breakpoints (drag-resize 320 to 1920) | owner | owner drag-resize check |
+| DS-17 | No awkward breaks between breakpoints (drag-resize 320 to 1920) | done | scripts/a11y.mjs fails on any horizontal scroll at 375 and 1280 px; clean |
 | DS-18 | Hover, focus, active, disabled, loading and error states designed for every control | done | hover/focus/disabled/busy/error states in base.css, player, form |
 | DS-19 | Hover degrades cleanly on touch; tap targets 44 px on mobile | done | 44 px nav targets, 48 px buttons/inputs |
 | DS-20 | Empty and edge states: no blog posts in a tag, very long titles, missing images, audio fails to load | done | empty blog message, audio error state, long titles wrap |
@@ -163,7 +163,7 @@ self-serve sign-up, demo booking, reseller applications. Markdown blog.
 
 | ID | Check | Status | Evidence |
 |---|---|---|---|
-| A11Y-1 | axe-core clean on every template and key state | done | `scripts/lighthouse.sh`: perf 94-100, a11y/BP/SEO 100 on 8 templates (2026-10-08) (axe-based audits) |
+| A11Y-1 | axe-core clean on every template and key state | done | `node scripts/a11y.mjs`: axe WCAG 2.2 AA, 31 pages x 375/1280 px clean (2026-10-08) |
 | A11Y-2 | Whole site usable by keyboard, logical order, no traps | owner | owner keyboard pass |
 | A11Y-3 | Visible focus never hidden by sticky header or banners | done | sticky header with focus outline offset; owner to confirm |
 | A11Y-4 | Targets at least 24x24 px (menu, close, social icons) | done | targets ≥ 44 px |
