@@ -17,7 +17,7 @@ export interface Solution {
 export const solutions: Solution[] = [
   {
     slug: 'banks',
-    name: 'Banks and cooperatives',
+    name: 'Banks & Cooperatives',
     short: 'Rates, branches and loan questions answered on the first ring.',
     headline: 'Every member call answered',
     description: 'AirFone answers bank and cooperative calls in Nepali: deposit rates, branch hours and loan steps, and passes account questions to your staff.',
@@ -42,7 +42,7 @@ export const solutions: Solution[] = [
   },
   {
     slug: 'shops',
-    name: 'Shops and showrooms',
+    name: 'Shops & Showrooms',
     short: 'Price, stock and opening hours, every call, every day.',
     headline: 'Never miss a buyer on the phone',
     description: 'AirFone answers shop and showroom calls in Nepali: price, stock, warranty and opening hours, and holds items for callers by name.',
@@ -67,7 +67,7 @@ export const solutions: Solution[] = [
   },
   {
     slug: 'clinics',
-    name: 'Clinics and hospitals',
+    name: 'Clinics & Hospitals',
     short: 'Appointments booked and doctor schedules shared without a queue.',
     headline: 'Patients booked without the wait',
     description: 'AirFone books clinic appointments in Nepali, shares doctor schedules and reminds patients the day before, so your front desk can look after people.',
@@ -92,7 +92,7 @@ export const solutions: Solution[] = [
   },
   {
     slug: 'isps',
-    name: 'Internet providers',
+    name: 'Internet Providers',
     short: 'Outages explained and tickets opened while your team sleeps.',
     headline: 'Outage calls handled in minutes',
     description: 'AirFone answers internet provider support calls in Nepali, explains known outages, opens tickets and calls customers back when service returns.',
