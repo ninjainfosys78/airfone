@@ -76,7 +76,11 @@ import { products } from '../../data/products';
       const panels = Array.from(this.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
       const show = (i: number, focus = false) => {
         tabs.forEach((t, j) => { t.setAttribute('aria-selected', String(i === j)); t.tabIndex = i === j ? 0 : -1; });
-        panels.forEach((p, j) => { p.hidden = i !== j; });
+        panels.forEach((p, j) => {
+          const on = i === j;
+          if (on && p.hidden) { p.classList.remove('enter'); void p.offsetWidth; p.classList.add('enter'); }
+          p.hidden = !on;
+        });
         if (focus) tabs[i].focus();
       };
       this.classList.add('is-live');
@@ -84,7 +88,7 @@ import { products } from '../../data/products';
 
       // Auto-advance every DWELL ms while on screen; pause on hover or focus;
       // stop for good once the visitor picks a product.
-      const DWELL = 5000;
+      const DWELL = 3000;
       let current = 0, timer = 0, visible = false, paused = false, stopped = matchMedia('(prefers-reduced-motion: reduce)').matches;
       const schedule = () => {
         clearTimeout(timer);
@@ -132,7 +136,7 @@ import { products } from '../../data/products';
   [role='tab'][aria-selected='true'] { color: var(--ink); font-weight: 600; }
   [role='tab'][aria-selected='true']::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--brand); transform-origin: left; }
   /* While auto-advancing, the underline fills up as a timer. */
-  .is-auto [role='tab'][aria-selected='true'].tick::after { animation: tick 5000ms linear; }
+  .is-auto [role='tab'][aria-selected='true'].tick::after { animation: tick 3000ms linear; }
   @keyframes tick { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
   .panel {
@@ -181,6 +185,21 @@ import { products } from '../../data/products';
   .bars { display: inline-flex; align-items: center; gap: 2px; height: 14px; }
   .bars i { width: 3px; border-radius: 2px; background: var(--lime); }
   .bars i:nth-child(1) { height: 6px; } .bars i:nth-child(2) { height: 12px; } .bars i:nth-child(3) { height: 9px; } .bars i:nth-child(4) { height: 14px; } .bars i:nth-child(5) { height: 7px; }
+
+  /* Switching products: the panel fades up, then its headline, picture and
+     link arrive in turn, and each row inside the picture pops in after that. */
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @keyframes pop { from { opacity: 0; transform: translateY(6px) scale(0.98); } to { opacity: 1; transform: none; } }
+  .panel.enter { animation: rise 320ms cubic-bezier(0.2, 0, 0, 1) both; }
+  .panel.enter h3 { animation: rise 360ms cubic-bezier(0.2, 0, 0, 1) 40ms both; }
+  .panel.enter .pic { animation: rise 360ms cubic-bezier(0.2, 0, 0, 1) 110ms both; }
+  .panel.enter .more { animation: rise 360ms cubic-bezier(0.2, 0, 0, 1) 200ms both; }
+  .panel.enter :is(.bub, .rows li, .call-top, .site-body > *) { animation: pop 300ms cubic-bezier(0.2, 0, 0, 1) both; }
+  .panel.enter :is(.bub, .rows li, .call-top, .site-body > *):nth-child(1) { animation-delay: 220ms; }
+  .panel.enter :is(.bub, .rows li, .call-top, .site-body > *):nth-child(2) { animation-delay: 320ms; }
+  .panel.enter :is(.bub, .rows li, .call-top, .site-body > *):nth-child(3) { animation-delay: 420ms; }
+  .panel.enter :is(.bub, .rows li, .call-top, .site-body > *):nth-child(4) { animation-delay: 520ms; }
+  @media (prefers-reduced-motion: reduce) { .panel.enter, .panel.enter * { animation: none !important; } }
 
   @media (max-width: 959px) {
     .explorer { grid-template-columns: 1fr; gap: var(--space-5); }
