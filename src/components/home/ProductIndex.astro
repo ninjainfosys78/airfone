@@ -88,7 +88,7 @@ import { products } from '../../data/products';
 
       // Auto-advance every DWELL ms while on screen; pause on hover or focus;
       // stop for good once the visitor picks a product.
-      const DWELL = 3000;
+      const DWELL = 4000;
       let current = 0, timer = 0, visible = false, paused = false, stopped = matchMedia('(prefers-reduced-motion: reduce)').matches;
       const schedule = () => {
         clearTimeout(timer);
@@ -140,7 +140,7 @@ import { products } from '../../data/products';
   [role='tab'][aria-selected='true'] { color: var(--ink); font-weight: 600; }
   [role='tab'][aria-selected='true']::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--brand); transform-origin: left; }
   /* While auto-advancing, the underline fills up as a timer. */
-  .is-auto [role='tab'][aria-selected='true'].tick::after { animation: tick 3000ms linear; }
+  .is-auto [role='tab'][aria-selected='true'].tick::after { animation: tick 4000ms linear; }
   @keyframes tick { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
   .panel {
@@ -152,8 +152,8 @@ import { products } from '../../data/products';
   .explorer.is-live .panels { display: grid; }
   .explorer.is-live .panel { grid-area: 1 / 1; }
   /* Crossfade: the outgoing panel fades out while the new one fades in. */
-  .explorer.is-live .panel { opacity: 1; visibility: visible; transition: opacity 260ms cubic-bezier(0.2, 0, 0, 1), visibility 0s; }
-  .explorer.is-live .panel[hidden] { display: grid; opacity: 0; visibility: hidden; transition: opacity 260ms cubic-bezier(0.2, 0, 0, 1), visibility 0s 260ms; }
+  .explorer.is-live .panel { opacity: 1; visibility: visible; transition: opacity 700ms cubic-bezier(0.2, 0, 0, 1), visibility 0s; }
+  .explorer.is-live .panel[hidden] { display: grid; opacity: 0; visibility: hidden; transition: opacity 700ms cubic-bezier(0.2, 0, 0, 1), visibility 0s 700ms; }
   .explorer:not(.is-live) .panel + .panel { margin-top: var(--space-4); }
   .panel h3 { font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem); line-height: 1.15; max-width: 16ch; }
   .more { justify-self: start; color: var(--lime); font-weight: 600; text-decoration: none; font-size: 17px; }
@@ -196,14 +196,14 @@ import { products } from '../../data/products';
      link arrive in turn, and each row inside the picture pops in after that. */
   @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
   @keyframes pop { from { opacity: 0; transform: translateY(6px) scale(0.98); } to { opacity: 1; transform: none; } }
-  .panel.enter h3 { animation: rise 360ms cubic-bezier(0.2, 0, 0, 1) 40ms both; }
-  .panel.enter .pic { animation: rise 360ms cubic-bezier(0.2, 0, 0, 1) 110ms both; }
-  .panel.enter .more { animation: rise 360ms cubic-bezier(0.2, 0, 0, 1) 200ms both; }
-  .panel.enter :is(.bub, .rows li, .call-top, .site-body > *) { animation: pop 300ms cubic-bezier(0.2, 0, 0, 1) both; }
-  .panel.enter :is(.bub, .rows li, .call-top, .site-body > *):nth-child(1) { animation-delay: 220ms; }
-  .panel.enter :is(.bub, .rows li, .call-top, .site-body > *):nth-child(2) { animation-delay: 320ms; }
-  .panel.enter :is(.bub, .rows li, .call-top, .site-body > *):nth-child(3) { animation-delay: 420ms; }
-  .panel.enter :is(.bub, .rows li, .call-top, .site-body > *):nth-child(4) { animation-delay: 520ms; }
+  .panel.enter h3 { animation: rise 800ms cubic-bezier(0.2, 0, 0, 1) 80ms both; }
+  .panel.enter .pic { animation: rise 800ms cubic-bezier(0.2, 0, 0, 1) 240ms both; }
+  .panel.enter .more { animation: rise 800ms cubic-bezier(0.2, 0, 0, 1) 440ms both; }
+  .panel.enter :is(.bub, .rows li, .call-top, .site-body > *) { animation: pop 700ms cubic-bezier(0.2, 0, 0, 1) both; }
+  .panel.enter :is(.bub, .rows li, .call-top, .site-body > *):nth-child(1) { animation-delay: 420ms; }
+  .panel.enter :is(.bub, .rows li, .call-top, .site-body > *):nth-child(2) { animation-delay: 620ms; }
+  .panel.enter :is(.bub, .rows li, .call-top, .site-body > *):nth-child(3) { animation-delay: 820ms; }
+  .panel.enter :is(.bub, .rows li, .call-top, .site-body > *):nth-child(4) { animation-delay: 1020ms; }
   @media (prefers-reduced-motion: reduce) { .panel.enter, .panel.enter * { animation: none !important; } }
 
   @media (max-width: 959px) {
