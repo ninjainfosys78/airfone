@@ -9,6 +9,8 @@ import Faq from '../../components/site/Faq.astro';
 import { realCall } from '../../components/player/clips';
 import { products, type Product } from '../../data/products';
 import { breadcrumbJsonLd, softwareJsonLd } from '../../lib/seo';
+import { Image } from 'astro:assets';
+import frontDeskPhone from '../../assets/photos/front-desk-phone.png';
 
 export function getStaticPaths() {
   return products.map((p) => ({ params: { slug: p.slug }, props: { p } }));
@@ -43,7 +45,12 @@ const path = `/products/${p.slug}`;
   <section class="section" data-reveal>
     <div class="wrap two">
       <h2>{p.problem.heading}</h2>
-      <div class="body">{p.problem.body.map((t) => <p>{t}</p>)}</div>
+      <div class="body">
+        {p.problem.body.map((t) => <p>{t}</p>)}
+        {p.slug === 'ai-call-agent' && (
+          <Image src={frontDeskPhone} alt="A receptionist answering a call on her mobile while the desk phone waits" widths={[560, 840, 1080]} sizes="(max-width: 959px) 100vw, 640px" quality={90} format="webp" class="photo" />
+        )}
+      </div>
     </div>
   </section>
 
@@ -77,6 +84,7 @@ const path = `/products/${p.slug}`;
   .gap { margin-top: var(--space-4); }
   .two { display: grid; grid-template-columns: 1fr 1.4fr; gap: var(--space-8); align-items: start; }
   .body p { font-size: 1.125rem; }
+  .photo { display: block; width: 100%; height: auto; margin-top: var(--space-6); border-radius: var(--radius-panel); }
   .gets { background: var(--surface); }
   .list { list-style: none; margin: 0; padding: 0; }
   .list li { padding: var(--space-4) 0 var(--space-4) var(--space-6); border-bottom: 1px solid var(--line); position: relative; }
