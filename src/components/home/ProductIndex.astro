@@ -1,38 +1,98 @@
 ---
+// Product explorer: names on the left as tabs, the selected product on the
+// right. Every panel is in the HTML; without JS they simply stack.
 import { products } from '../../data/products';
 ---
-<section class="section" data-reveal>
+<section class="section" id="products" data-reveal>
   <div class="wrap">
     <h2>Products</h2>
-    <ul class="index" id="products">
-      {products.map((p, i) => (
-        <li>
-          <a href={`/products/${p.slug}`}>
-            <span class="n mono">{String(i + 1).padStart(2, '0')}</span>
-            <span class="name">{p.name}</span>
-            <span class="arrow" aria-hidden="true">→</span>
-          </a>
-        </li>
-      ))}
-    </ul>
+    <product-tabs class="explorer">
+      <div class="tabs" role="tablist" aria-label="Products">
+        {products.map((p, i) => (
+          <button type="button" role="tab" id={`tab-${p.slug}`} aria-controls={`panel-${p.slug}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>
+            {p.name}
+          </button>
+        ))}
+      </div>
+      <div class="panels">
+        {products.map((p, i) => (
+          <article class="panel" role="tabpanel" id={`panel-${p.slug}`} aria-labelledby={`tab-${p.slug}`} data-first={i === 0 ? '' : undefined}>
+            <h3>{p.headline}</h3>
+            <ul class="gets">{p.gets.slice(0, 3).map((g) => <li>{g}</li>)}</ul>
+            <div class="actions">
+              <a class="btn btn-primary" href={`/products/${p.slug}`}>See {p.name}</a>
+              <a class="btn btn-secondary" href="/demo">Book a demo</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </product-tabs>
   </div>
 </section>
 
-<style>
-  .index { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
-  a {
-    display: grid; grid-template-columns: 48px 1fr 32px; gap: var(--space-5);
-    align-items: baseline; padding: var(--space-5) 0; border-bottom: 1px solid var(--line);
-    color: var(--ink); text-decoration: none;
+<script>
+  class ProductTabs extends HTMLElement {
+    connectedCallback() {
+      const tabs = Array.from(this.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+      const panels = Array.from(this.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
+      const show = (i: number, focus = false) => {
+        tabs.forEach((t, j) => { t.setAttribute('aria-selected', String(i === j)); t.tabIndex = i === j ? 0 : -1; });
+        panels.forEach((p, j) => { p.hidden = i !== j; });
+        if (focus) tabs[i].focus();
+      };
+      this.classList.add('is-live');
+      show(0);
+      tabs.forEach((t, i) => {
+        t.addEventListener('click', () => show(i));
+        if (matchMedia('(hover: hover)').matches) t.addEventListener('pointerenter', () => show(i));
+        t.addEventListener('keydown', (e) => {
+          const k = e.key;
+          if (k === 'ArrowDown' || k === 'ArrowRight') { e.preventDefault(); show((i + 1) % tabs.length, true); }
+          if (k === 'ArrowUp' || k === 'ArrowLeft') { e.preventDefault(); show((i - 1 + tabs.length) % tabs.length, true); }
+          if (k === 'Home') { e.preventDefault(); show(0, true); }
+          if (k === 'End') { e.preventDefault(); show(tabs.length - 1, true); }
+        });
+      });
+    }
   }
-  a:hover .name { color: var(--link); }
-  a:hover .arrow { transform: translateX(4px); }
-  .n { color: var(--ink-muted); font-size: 16px; }
-  .name { font-size: 1.75rem; font-weight: 600; line-height: 1.25; transition: color var(--fast) var(--ease); }
-  .arrow { color: var(--link); font-size: 1.375rem; transition: transform var(--fast) var(--ease); justify-self: end; }
-  @media (max-width: 767px) {
-    a { grid-template-columns: 1fr 24px; gap: var(--space-2) var(--space-3); }
-    .n { display: none; }
-    .arrow { grid-row: 1; grid-column: 2; }
+  if (!customElements.get('product-tabs')) customElements.define('product-tabs', ProductTabs);
+</script>
+
+<style>
+  .explorer { display: grid; grid-template-columns: minmax(260px, 0.8fr) 1.2fr; gap: var(--space-8); align-items: start; }
+  .tabs { display: grid; border-top: 1px solid var(--line); }
+  [role='tab'] {
+    display: flex; align-items: center; justify-content: space-between; gap: var(--space-4);
+    min-height: 72px; padding: 0; border: 0; border-bottom: 1px solid var(--line); background: none;
+    font-size: 1.5rem; font-weight: 600; text-align: left; color: var(--ink-muted); cursor: pointer;
+    transition: color var(--fast) var(--ease);
+  }
+  [role='tab']::after { content: ''; width: 10px; height: 10px; border-radius: 50%; background: transparent; transition: background-color var(--fast) var(--ease); }
+  [role='tab']:hover { color: var(--ink); }
+  [role='tab'][aria-selected='true'] { color: var(--ink); }
+  [role='tab'][aria-selected='true']::after { background: var(--lime); }
+
+  .panels { position: sticky; top: 96px; }
+  .panel { background: var(--stage); color: var(--stage-ink); border-radius: var(--radius-panel); padding: var(--space-7); min-height: 360px; display: grid; align-content: space-between; gap: var(--space-6); }
+  .panel[hidden] { display: none; }
+  .explorer:not(.is-live) .panel + .panel { margin-top: var(--space-4); }
+  .panel h3 { font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem); line-height: 1.15; max-width: 16ch; }
+  .gets { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
+  .gets li { display: grid; grid-template-columns: 20px 1fr; gap: var(--space-3); color: var(--stage-muted); font-size: 17px; }
+  .gets li::before { content: ''; width: 12px; height: 2px; margin-top: 0.75em; background: var(--lime); }
+  .actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+  .panel .btn-primary { background: var(--lime); color: var(--on-lime); }
+  .panel .btn-primary:hover { background: var(--stage-ink); }
+  .panel .btn-secondary { color: var(--stage-ink); border-color: var(--stage-line); }
+  .panel .btn-secondary:hover { border-color: var(--stage-ink); }
+
+  @media (max-width: 959px) {
+    .explorer { grid-template-columns: 1fr; gap: var(--space-5); }
+    .tabs { display: flex; overflow-x: auto; border-top: 0; gap: var(--space-2); scrollbar-width: none; }
+    [role='tab'] { flex: none; min-height: 44px; padding: 0 var(--space-4); border: 1px solid var(--line); border-radius: var(--radius-control); font-size: 16px; }
+    [role='tab']::after { display: none; }
+    [role='tab'][aria-selected='true'] { border-color: var(--brand); color: var(--link); }
+    .panels { position: static; }
+    .panel { padding: var(--space-5); min-height: 0; }
   }
 </style>
