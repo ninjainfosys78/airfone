@@ -1,0 +1,158 @@
+---
+import { productLinks, solutionLinks } from '../../data/nav';
+
+const path = Astro.url.pathname.replace(/\.html$/, '');
+const current = (href: string) => (path === href || path.startsWith(`${href}/`) ? 'page' : undefined);
+const groups = [
+  { label: 'Products', base: '/products', links: productLinks },
+  { label: 'Solutions', base: '/solutions', links: solutionLinks },
+];
+const plain = [
+  { href: '/resellers', label: 'Resellers' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/pricing', label: 'Pricing' },
+];
+---
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="logo" href="/" aria-label="AirFone home">
+      <img src="/brand/airfone-lockup.svg" alt="AirFone" width="150" height="31" class="logo-light" />
+      <img src="/brand/airfone-lockup-light.svg" alt="" width="150" height="31" class="logo-dark" aria-hidden="true" />
+    </a>
+
+    <nav class="nav-wide" aria-label="Main">
+      <ul>
+        {groups.map((g) => (
+          <li>
+            <details class="menu" data-menu>
+              <summary aria-current={path.startsWith(g.base) ? 'page' : undefined}>{g.label}</summary>
+              <ul class="menu-panel">
+                {g.links.map((l) => <li><a href={l.href} aria-current={current(l.href)}>{l.label}</a></li>)}
+              </ul>
+            </details>
+          </li>
+        ))}
+        {plain.map((l) => <li><a class="nav-link" href={l.href} aria-current={current(l.href)}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <div class="actions">
+      <a class="btn btn-primary" href="/demo">Book a demo</a>
+      <details class="mobile" data-menu>
+        <summary aria-label="Menu"><span class="bars" aria-hidden="true"></span><span class="mobile-label">Menu</span></summary>
+        <nav class="mobile-panel" aria-label="Main">
+          {groups.map((g) => (
+            <div class="mobile-group">
+              <h2 class="mobile-title">{g.label}</h2>
+              <ul>{g.links.map((l) => <li><a href={l.href} aria-current={current(l.href)}>{l.label}</a></li>)}</ul>
+            </div>
+          ))}
+          <ul class="mobile-plain">
+            {plain.map((l) => <li><a href={l.href} aria-current={current(l.href)}>{l.label}</a></li>)}
+            <li><a href="/contact" aria-current={current('/contact')}>Contact</a></li>
+          </ul>
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Close open menus on outside click, Escape, or when another opens.
+  const menus = Array.from(document.querySelectorAll<HTMLDetailsElement>('[data-menu]'));
+  document.addEventListener('click', (e) => {
+    for (const m of menus) if (m.open && !m.contains(e.target as Node)) m.open = false;
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    for (const m of menus) if (m.open) { m.open = false; m.querySelector('summary')?.focus(); }
+  });
+  for (const m of menus) m.addEventListener('toggle', () => {
+    if (m.open) for (const o of menus) if (o !== m) o.open = false;
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--canvas);
+    border-bottom: 1px solid var(--line);
+  }
+  .bar { display: flex; align-items: center; gap: var(--space-6); min-height: 72px; }
+  .logo { display: block; flex: none; }
+  .logo img { width: 132px; height: auto; }
+  .logo-dark { display: none; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .logo-light { display: none; }
+    :root:not([data-theme='light']) .logo-dark { display: block; }
+  }
+
+  .nav-wide { flex: 1; }
+  .nav-wide > ul { display: flex; gap: var(--space-1); list-style: none; margin: 0; padding: 0; align-items: center; }
+  summary { list-style: none; cursor: pointer; }
+  summary::-webkit-details-marker { display: none; }
+  .nav-link, .menu > summary {
+    display: inline-flex; align-items: center; gap: 6px;
+    min-height: 44px; padding: 0 var(--space-3);
+    border-radius: var(--radius-control);
+    color: var(--ink); text-decoration: none; font-size: 16px; font-weight: 500;
+    transition: background-color var(--fast) var(--ease);
+  }
+  .nav-link:hover, .menu > summary:hover, .menu[open] > summary { background: var(--subtle); }
+  .menu > summary::after {
+    content: ''; width: 7px; height: 7px; margin-top: -3px;
+    border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg); transition: transform var(--fast) var(--ease);
+  }
+  .menu[open] > summary::after { transform: translateY(3px) rotate(-135deg); }
+  [aria-current='page'] { color: var(--link); }
+
+  .menu { position: relative; }
+  .menu-panel {
+    position: absolute; top: calc(100% + 8px); left: 0; min-width: 320px;
+    list-style: none; margin: 0; padding: var(--space-2);
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-panel);
+  }
+  .menu-panel a {
+    display: block; padding: var(--space-3); border-radius: var(--radius-control);
+    color: var(--ink); text-decoration: none; font-size: 16px;
+  }
+  .menu-panel a:hover { background: var(--subtle); }
+
+  .actions { display: flex; align-items: center; gap: var(--space-3); margin-left: auto; }
+  .actions .btn { min-height: 44px; padding: 0 var(--space-4); font-size: 16px; }
+
+  .mobile { display: none; }
+  .mobile > summary {
+    display: inline-flex; align-items: center; gap: var(--space-2);
+    min-height: 44px; min-width: 44px; padding: 0 var(--space-3);
+    border: 1px solid var(--line); border-radius: var(--radius-control); font-size: 16px; font-weight: 500;
+  }
+  .bars, .bars::before, .bars::after { display: block; width: 16px; height: 1.5px; background: currentColor; position: relative; }
+  .bars::before, .bars::after { content: ''; position: absolute; left: 0; }
+  .bars::before { top: -5px; }
+  .bars::after { top: 5px; }
+  .mobile-panel {
+    position: fixed; left: 0; right: 0; top: 73px; bottom: 0; overflow-y: auto;
+    background: var(--canvas); padding: var(--space-5) var(--gutter) var(--space-8);
+  }
+  .mobile-group + .mobile-group { margin-top: var(--space-6); }
+  .mobile-title { font-size: 16px; font-weight: 600; color: var(--ink-muted); margin-bottom: var(--space-2); }
+  .mobile-panel ul { list-style: none; margin: 0; padding: 0; }
+  .mobile-panel a {
+    display: flex; align-items: center; min-height: 48px;
+    color: var(--ink); text-decoration: none; font-size: 18px; border-bottom: 1px solid var(--line);
+  }
+  .mobile-plain { margin-top: var(--space-6) !important; }
+
+  @media (max-width: 959px) {
+    .nav-wide { display: none; }
+    .mobile { display: block; }
+  }
+  @media (max-width: 399px) {
+    .actions .btn { padding: 0 var(--space-3); }
+    .mobile-label { display: none; }
+  }
+</style>
