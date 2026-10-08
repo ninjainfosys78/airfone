@@ -15,7 +15,7 @@ class CallPlayer extends HTMLElement {
 
   connectedCallback() {
     this.audio = this.querySelector('audio')!;
-    this.btn = this.querySelector('.play')!;
+    this.btn = this.querySelector('.play') ?? document.createElement('button');
     this.wave = this.querySelector('.wave')!;
     this.items = Array.from(this.querySelectorAll('.transcript li'));
     this.lines = this.items.map((li) => ({

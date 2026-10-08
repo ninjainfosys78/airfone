@@ -13,13 +13,12 @@ import { DEMO_NUMBER_DISPLAY, DEMO_NUMBER_TEL } from '../../config/site';
       </div>
     </div>
     <div class="stage">
-      <button type="button" class="orb-btn" data-play-for="call-clinic" aria-pressed="false">
+      <button type="button" class="orb-btn" data-play-for="call-clinic" aria-pressed="false" aria-label="Play the example clinic call">
         <CallOrb for="call-clinic" timing="/audio/clinic.json" size={340} />
         <span class="orb-icon" aria-hidden="true">
           <svg class="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
           <svg class="i-pause" viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor" /></svg>
         </span>
-        <span class="visually-hidden">Play or pause the example clinic call</span>
       </button>
       <div class="player"><CallPlayer clip="clinic" stage /></div>
     </div>

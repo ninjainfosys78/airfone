@@ -16,6 +16,8 @@ export interface Props {
   stage?: boolean;
   /** The call as a conversation: bubbles that light up as it plays. */
   chat?: boolean;
+  /** No title or controls of its own; something else on the page plays it (data-play-for). */
+  bare?: boolean;
 }
 
 const p = Astro.props;
@@ -40,9 +42,8 @@ const timing = JSON.stringify({ duration: data.duration ?? 0, lines: lines.map((
       <p class="c-en"></p>
     </div>
   )}
-  <div class="head">
-    <button type="button" class="play" aria-pressed="false" aria-controls={id} disabled>
-      <span class="visually-hidden">Play {label}</span>
+  {!p.bare && <div class="head">
+    <button type="button" class="play" aria-pressed="false" aria-controls={id} aria-label={`Play ${label}`} disabled>
       <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
       <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor" /></svg>
     </button>
@@ -51,7 +52,7 @@ const timing = JSON.stringify({ duration: data.duration ?? 0, lines: lines.map((
       <p class="label">{label}</p>
       {data.duration ? <p class="time small"><span class="now">0:00</span> / {fmt(data.duration)}</p> : null}
     </div>
-  </div>
+  </div>}
   <div class="slot">
     <canvas class="wave" aria-hidden="true"></canvas>
     <audio id={id} controls preload="none">

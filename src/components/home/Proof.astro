@@ -10,10 +10,9 @@ const fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).p
     <div class="side on-stage">
       <h2>A real call, not a script</h2>
       <div class="ctrl">
-        <button type="button" class="big" data-play-for="call-real" aria-pressed="false">
+        <button type="button" class="big" data-play-for="call-real" aria-pressed="false" aria-label="Play the real call">
           <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
           <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor" /></svg>
-          <span class="visually-hidden">Play or pause</span>
         </button>
         <div class="who">
           <p class="biz">Pathibhara Solutions</p>
@@ -22,7 +21,7 @@ const fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).p
       </div>
       <div class="bar" aria-hidden="true"><span data-progress-for="call-real"></span></div>
     </div>
-    <div class="convo"><CallPlayer data={realCall} id="call-real" chat /></div>
+    <div class="convo"><CallPlayer data={realCall} id="call-real" chat bare /></div>
   </div>
   {testimonials.length > 0 && (
     <div class="wrap quotes">
@@ -60,7 +59,7 @@ const fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).p
   .bar span { display: block; height: 100%; background: var(--lime); transform: scaleX(0); transform-origin: left; }
 
   /* The player shows only its conversation here; the panel is the control. */
-  .convo :global(.head), .convo :global(.slot) { display: none; }
+  .convo :global(.slot) { display: none; }
   .convo :global(.chat:not(.is-live) .slot) { display: grid; }
   .convo :global(.transcript ol) { height: 100%; min-height: 420px; max-height: 420px; }
 
