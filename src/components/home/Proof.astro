@@ -4,9 +4,9 @@ import { realCall } from '../player/clips';
 import { testimonials } from '../../data/testimonials';
 ---
 <section class="section proof" data-reveal>
-  <div class="wrap narrow">
+  <div class="wrap grid">
     <h2>A real call, not a script</h2>
-    <CallPlayer data={realCall} id="call-real" compact />
+    <CallPlayer data={realCall} id="call-real" chat />
   </div>
   {testimonials.length > 0 && (
     <div class="wrap quotes">
@@ -22,9 +22,17 @@ import { testimonials } from '../../data/testimonials';
 
 <style>
   .proof { background: var(--surface); }
-  .narrow { max-width: calc(840px + 2 * var(--gutter)); }
+  .grid { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); grid-template-rows: auto auto 1fr; gap: var(--space-6) var(--space-8); align-items: start; }
+  .grid :global(call-player) { display: contents; }
+  .grid :global(.head) { grid-column: 1; grid-row: 2; align-self: start; }
+  .grid :global(.transcript) { grid-column: 2; grid-row: 1 / span 3; }
+  .grid h2 { grid-column: 1; grid-row: 1; max-width: 12ch; }
   .quotes { margin-top: var(--space-8); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); }
   figure { margin: 0; }
   blockquote { margin: 0 0 var(--space-3); font-size: 1.25rem; }
   figcaption { color: var(--ink-muted); font-size: 16px; }
+  @media (max-width: 959px) {
+    .grid { grid-template-columns: 1fr; gap: var(--space-5); }
+    .grid :global(.head), .grid :global(.transcript), .grid h2 { grid-column: 1; grid-row: auto; }
+  }
 </style>

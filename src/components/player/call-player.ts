@@ -11,6 +11,7 @@ class CallPlayer extends HTMLElement {
   private raf = 0;
   private lines: { speaker: string; ne?: string; text: string; start: number; end: number }[] = [];
   private shown = -1;
+  private followed: HTMLLIElement | null = null;
 
   connectedCallback() {
     this.audio = this.querySelector('audio')!;
@@ -106,11 +107,22 @@ class CallPlayer extends HTMLElement {
     if (el) el.textContent = `${Math.floor(now / 60)}:${String(Math.floor(now % 60)).padStart(2, '0')}`;
 
     this.caption(now);
+    let current: HTMLLIElement | null = null;
     this.items.forEach((li) => {
       const s = Number(li.dataset.start), e = Number(li.dataset.end);
-      li.classList.toggle('is-now', now >= s && now < e);
+      const isNow = now >= s && now < e;
+      li.classList.toggle('is-now', isNow);
       li.classList.toggle('is-past', now >= e);
+      if (isNow) current = li;
     });
+    // In the conversation view, keep the line being spoken in sight without
+    // moving the page itself.
+    if (current && current !== this.followed && this.classList.contains('chat') && !this.audio.paused) {
+      this.followed = current;
+      const box = (current as HTMLLIElement).parentElement!;
+      const top = (current as HTMLLIElement).offsetTop - box.offsetTop - box.clientHeight / 3;
+      box.scrollTo({ top: Math.max(0, top), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    }
 
     const c = this.wave;
     if (!this.t.peaks.length) return;
