@@ -5,7 +5,7 @@ import { exact, nginxConf } from '../scripts/redirects.mjs';
 
 const map = exact as Map<string, string>;
 const dist = new URL('../dist/', import.meta.url);
-const builds = (p: string) => p === '/' ? existsSync(new URL('index.html', dist)) : existsSync(new URL(`.${p}.html`, dist));
+const builds = (p: string) => p === "/" ? existsSync(new URL("index.html", dist)) : existsSync(new URL(/\.[a-z]+$/.test(p) ? `.${p}` : `.${p}.html`, dist));
 
 describe('redirects', () => {
   it('never chain: no target is itself a source', () => {

@@ -11,4 +11,4 @@ Allow: /
 User-agent: PerplexityBot
 Allow: /
 
-Sitemap: https://airfone.app/sitemap-index.xml
+Sitemap: https://airfone.app/sitemap.xml

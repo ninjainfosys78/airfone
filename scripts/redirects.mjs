@@ -33,6 +33,9 @@ export const exact = (() => {
   both('/waitlist/thanks', '/thanks');
   both('/waitlist', '/demo');
   both('/preview', '/');
+  // Sitemap names the old Astro integration wrote.
+  m.set('/sitemap-index.xml', '/sitemap.xml');
+  m.set('/sitemap-0.xml', '/sitemap.xml');
   for (const p of ['/preview/contact', '/preview/pricing']) both(p, p.replace('/preview', ''));
   // Auth lives in the app.
   for (const a of AUTH) both(`/${a}`, `${APP}/${a}`);
