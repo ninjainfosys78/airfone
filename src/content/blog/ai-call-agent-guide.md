@@ -11,7 +11,7 @@ It's eleven in the morning at a mobile shop on New Road. There are two customers
 
 The person calling only wanted to know if the new model was in stock. They'll try the shop next door. Nobody at the counter will ever know they called.
 
-That's the problem we built AirFone's call agent for. Not the angry customer at the counter, who's getting attention. The one on the phone, who isn't.
+We built AirFone's call agent for that caller.
 
 ## What the caller hears
 
