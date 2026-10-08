@@ -2,6 +2,7 @@
 import { render } from 'astro:content';
 import '@fontsource-variable/source-serif-4/wght.css';
 import '@fontsource-variable/source-serif-4/wght-italic.css';
+import serifUrl from '@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-normal.woff2?url';
 import Base from '../../layouts/Base.astro';
 import CtaBand from '../../components/site/CtaBand.astro';
 import { coverFor, fmtDate, posts, type Post } from '../../lib/posts';
@@ -37,6 +38,7 @@ const readNext = (next.length ? next : all.filter((p) => p.id !== post.id)).slic
     breadcrumbJsonLd([{ name: 'Insights', path: '/blog' }, { name: d.title, path }]),
   ]}
 >
+  <link slot="head" rel="preload" href={serifUrl} as="font" type="font/woff2" crossorigin />
   <article class="post">
     <header class="wrap">
       <a class="back" href="/blog"><span aria-hidden="true">←</span> All insights</a>
@@ -76,6 +78,11 @@ const readNext = (next.length ? next : all.filter((p) => p.id !== post.id)).slic
 </script>
 
 
+<style is:global>
+  /* Georgia sized to Source Serif 4, so text barely moves if the font is late. */
+  @font-face { font-family: 'Serif Fallback'; src: local('Georgia'); size-adjust: 92%; ascent-override: 98%; descent-override: 31%; line-gap-override: 0%; }
+</style>
+
 <style>
   /* One reading column on the page's left edge: back link, title, date, text. */
   .col { max-width: 700px; }
@@ -84,10 +91,10 @@ const readNext = (next.length ? next : all.filter((p) => p.id !== post.id)).slic
   .back span { transition: transform var(--fast) var(--ease); }
   .back:hover { color: var(--ink); }
   .back:hover span { transform: translateX(-4px); }
-  .title { margin: var(--space-6) 0 var(--space-4); width: min(calc(100vw - 2 * var(--gutter)), 1000px); max-width: 28ch; font-family: 'Source Serif 4 Variable', Georgia, serif; font-weight: 600; font-variation-settings: 'opsz' 60; font-size: clamp(2.25rem, 1.6rem + 2.4vw, 3.5rem); line-height: 1.1; overflow-wrap: anywhere; }
-  .meta { margin: 0 0 var(--space-8); padding-bottom: var(--space-6); border-bottom: 1px solid var(--line); font-family: 'Source Serif 4 Variable', Georgia, serif; font-size: 16px; color: var(--ink-muted); }
+  .title { margin: var(--space-6) 0 var(--space-4); width: min(calc(100vw - 2 * var(--gutter)), 1000px); max-width: 28ch; font-family: 'Source Serif 4 Variable', 'Serif Fallback', Georgia, serif; font-weight: 600; font-variation-settings: 'opsz' 60; font-size: clamp(2.25rem, 1.6rem + 2.4vw, 3.5rem); line-height: 1.1; overflow-wrap: anywhere; }
+  .meta { margin: 0 0 var(--space-8); padding-bottom: var(--space-6); border-bottom: 1px solid var(--line); font-family: 'Source Serif 4 Variable', 'Serif Fallback', Georgia, serif; font-size: 16px; color: var(--ink-muted); }
   .draft { color: var(--error); }
-  .body { max-width: none; font-family: 'Source Serif 4 Variable', Georgia, serif; font-size: 1.1875rem; line-height: 1.45; }
+  .body { max-width: none; font-family: 'Source Serif 4 Variable', 'Serif Fallback', Georgia, serif; font-size: 1.1875rem; line-height: 1.45; }
   .body :global(h2), .body :global(h3) { font-family: inherit; font-weight: 600; }
   .body :global(li + li) { margin-top: var(--space-1); }
   .body :global(h2) { font-size: 1.5rem; line-height: 1.25; margin: var(--space-7) 0 var(--space-3); scroll-margin-top: 104px; }
