@@ -1,0 +1,5 @@
+{ "id": "outbound", "label": "Example · Outbound reminder", "lines": [
+  { "speaker": "agent", "voice": "agentF", "text": "Hello, this is a call from Sunrise Clinic for Sita Karki. You have an appointment with Doctor Shrestha tomorrow at ten thirty. Will you be able to come?" },
+  { "speaker": "caller", "voice": "callerJessica", "text": "Actually, can I move it to Friday?" },
+  { "speaker": "agent", "voice": "agentF", "text": "Friday at ten is free. I've moved your appointment to Friday at ten, and you'll get an SMS with the new time." }
+]}

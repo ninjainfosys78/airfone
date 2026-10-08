@@ -1,0 +1,5 @@
+{ "id": "phone-menu", "label": "Example · Phone menu", "lines": [
+  { "speaker": "agent", "voice": "agentM", "text": "Thank you for calling Annapurna Travels. For flight bookings, press one. For tours and trekking, press two. For an existing booking, press three." },
+  { "speaker": "caller", "voice": "callerBill", "text": "Two." },
+  { "speaker": "agent", "voice": "agentM", "text": "Connecting you to our tours team. This call may be recorded to help us serve you better." }
+]}

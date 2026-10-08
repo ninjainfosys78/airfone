@@ -1,8 +1,9 @@
 # AirFone design system
 
 Single source of truth for every value used in `src/`. A value in the code
-that isn't listed here is a bug: fix the code or extend this file. Shared with
-the AirFone app (`airfone/app/lib/core/theme/app_theme.dart`).
+that isn't listed here is a bug: fix the code or extend this file. Brand greens shared
+with the AirFone app (`airfone/app/lib/core/theme/app_theme.dart`). Neutrals are
+white and green-tinted, not gray (owner, 2026-10-08).
 
 ## No AI look
 
@@ -18,12 +19,12 @@ the owner chose over the no-glow rule for that element only.
 
 | Token | Light | Dark | Use |
 |---|---|---|---|
-| `--canvas` | `#F7F7F8` | `#0F1115` | page background |
-| `--surface` | `#FFFFFF` | `#171A20` | panels, player, forms, footer |
-| `--subtle` | `#EFEFF1` | `#1E2229` | quiet fills, hover |
-| `--line` | `#E2E2E6` | `#2A2E36` | 1px borders |
-| `--ink` | `#15181F` | `#EEF0F3` | text |
-| `--ink-muted` | `#4B515C` | `#A9AFB9` | secondary text |
+| `--canvas` | `#FFFFFF` | `#10140B` | page background |
+| `--surface` | `#F4F8EC` | `#171D10` | soft green panels, player, forms, footer |
+| `--subtle` | `#E8F0DA` | `#1E2615` | quiet fills, hover |
+| `--line` | `#DCE5CC` | `#2A3220` | 1px borders |
+| `--ink` | `#16190F` | `#EEF2E6` | text |
+| `--ink-muted` | `#3E4636` | `#C2CAB5` | secondary text |
 | `--brand` | `#2F4F08` | `#2F4F08` | primary buttons |
 | `--on-brand` | `#FFFFFF` | `#FFFFFF` | text on brand |
 | `--link` | `#2F4F08` | `#A6D86A` | links, focus ring, current page |
@@ -39,29 +40,29 @@ Orb palette (WebGL orb, by state): body `#1B2A0A`, light `#8BC53E` idle, `#C9D6B
 
 Print only: `#FFFFFF` background, `#000000` text.
 Logo files keep their own colours (`#8CC63F` cloud, `#7C7C7C` wordmark).
-Theme colour meta: `#F7F7F8` light, `#0F1115` dark.
+Theme colour meta: `#FFFFFF` light, `#10140B` dark.
 
 ### Contrast (computed)
 
 | Pair | Ratio |
 |---|---|
-| ink / canvas | 16.6:1 |
-| ink / surface | 17.8:1 |
-| ink-muted / canvas | 7.5:1 |
-| ink-muted / subtle | 7.0:1 |
-| link / canvas | 8.7:1 |
+| ink / canvas | 17.8:1 |
+| ink / surface | 16.5:1 |
+| ink-muted / canvas | 9.8:1 |
+| ink-muted / subtle | 8.4:1 |
+| link / canvas | 9.4:1 |
 | on-brand / brand | 9.4:1 |
 | on-lime / lime | 9.0:1 |
 | stage-muted / stage | 6.2:1 |
-| dark: ink / canvas | 16.6:1 |
-| dark: ink-muted / surface | 7.9:1 |
-| dark: link / canvas | 11.4:1 |
+| dark: ink / canvas | 16.4:1 |
+| dark: ink-muted / surface | 10.2:1 |
+| dark: link / canvas | 11.2:1 |
 | dark: stage-muted / stage | 10.0:1 |
 | error / surface | 6.5:1 (dark 7.6:1) |
 
 ## Type
 
-- Instrument Sans 400/500/600, self-hosted (latin). JetBrains Mono for numbers
+- Poppins 400/500/600, self-hosted (latin), chosen by the owner 2026-10-08. JetBrains Mono for numbers
   in product screens only.
 - Display (home hero): `clamp(2.25rem, 1.2rem + 4.2vw, 4.5rem)`, 36 to 72px, line height 1.04.
 - h1: `clamp(2.25rem, 1.5rem + 3vw, 3.5rem)`; h2: `clamp(1.75rem, 1.3rem + 1.8vw, 2.5rem)`; h3: 22px.

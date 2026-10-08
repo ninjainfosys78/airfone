@@ -156,10 +156,15 @@ export function audit(dist, { designColours = DESIGN_COLOURS } = {}) {
 
     // Copy checks run on visible text only.
     for (const bad of root.querySelectorAll('script, style, noscript, template')) bad.remove();
-    const text = (root.querySelector('body') ?? root).text.replace(/\s+/g, ' ');
+    const body = root.querySelector('body') ?? root;
+    const text = body.text.replace(/\s+/g, ' ');
+    // Call transcripts quote callers' own words, including a shop's prices.
+    for (const t of body.querySelectorAll('[data-transcript]')) t.remove();
+    const ownText = body.text.replace(/\s+/g, ' ');
     for (const [re, what] of BANNED_COPY) {
-      const m = text.match(re);
-      if (m) add('CV-8', file, `${what}: "…${text.slice(Math.max(0, m.index - 30), m.index + 30).trim()}…"`);
+      const hay = what === 'price on the site' ? ownText : text;
+      const m = hay.match(re);
+      if (m) add('CV-8', file, `${what}: "…${hay.slice(Math.max(0, m.index - 30), m.index + 30).trim()}…"`);
     }
   }
 

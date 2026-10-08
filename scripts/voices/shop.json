@@ -1,0 +1,9 @@
+{ "id": "shop", "label": "Example call · Electronics shop", "lines": [
+  { "speaker": "agent", "voice": "agentF", "text": "Namaste, City Electronics, New Road." },
+  { "speaker": "caller", "voice": "callerChris", "text": "Do you have the fourteen inch ThinkPad in stock?" },
+  { "speaker": "agent", "voice": "agentF", "text": "Yes, we have it in silver and black, with sixteen gigabytes of memory. It comes with a two year warranty." },
+  { "speaker": "caller", "voice": "callerChris", "text": "Great. Until what time are you open today?" },
+  { "speaker": "agent", "voice": "agentF", "text": "We're open until seven this evening. Shall I keep one aside for you under your name?" },
+  { "speaker": "caller", "voice": "callerChris", "text": "Yes please, the black one. Ramesh." },
+  { "speaker": "agent", "voice": "agentF", "text": "Done, Ramesh. The black one is waiting for you at the counter until seven." }
+]}

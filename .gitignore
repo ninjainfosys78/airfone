@@ -13,3 +13,4 @@ bundle/
 key.properties
 google-services.json
 service-account*.json
+.cache/

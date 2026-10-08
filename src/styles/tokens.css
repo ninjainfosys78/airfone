@@ -1,11 +1,11 @@
 /* AirFone tokens. Every value here is listed in DESIGN.md; nothing outside it. */
 :root {
-  --canvas: #F7F7F8;
-  --surface: #FFFFFF;
-  --subtle: #EFEFF1;
-  --line: #E2E2E6;
-  --ink: #15181F;
-  --ink-muted: #4B515C;
+  --canvas: #FFFFFF;
+  --surface: #F4F8EC;
+  --subtle: #E8F0DA;
+  --line: #DCE5CC;
+  --ink: #16190F;
+  --ink-muted: #3E4636;
   --brand: #2F4F08;
   --on-brand: #FFFFFF;
   --link: #2F4F08;
@@ -17,7 +17,7 @@
   --stage-line: #4A6A22;
   --error: #B3261E;
 
-  --font-sans: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-sans: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   --radius-control: 8px;
@@ -51,12 +51,12 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --canvas: #0F1115;
-    --surface: #171A20;
-    --subtle: #1E2229;
-    --line: #2A2E36;
-    --ink: #EEF0F3;
-    --ink-muted: #A9AFB9;
+    --canvas: #10140B;
+    --surface: #171D10;
+    --subtle: #1E2615;
+    --line: #2A3220;
+    --ink: #EEF2E6;
+    --ink-muted: #C2CAB5;
     --link: #A6D86A;
     --stage: #1B2A0A;
     --stage-line: #2F4317;

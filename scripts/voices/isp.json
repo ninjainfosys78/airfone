@@ -1,0 +1,7 @@
+{ "id": "isp", "label": "Example call · Internet provider", "lines": [
+  { "speaker": "agent", "voice": "agentM", "text": "Hello, Valley Net support." },
+  { "speaker": "caller", "voice": "callerAlice", "text": "My internet has been down since this morning. I'm in Baneshwor." },
+  { "speaker": "agent", "voice": "agentM", "text": "I'm sorry about that. There's a fibre cut affecting part of Baneshwor. Our team is on site, and we expect service back by four this afternoon." },
+  { "speaker": "caller", "voice": "callerAlice", "text": "Can someone call me when it's fixed?" },
+  { "speaker": "agent", "voice": "agentM", "text": "Yes. I've opened a ticket on your account and added a callback. You'll get a call and an SMS as soon as your line is back." }
+]}

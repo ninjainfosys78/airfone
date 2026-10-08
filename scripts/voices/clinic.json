@@ -1,0 +1,9 @@
+{ "id": "clinic", "label": "Example call · Clinic", "lines": [
+  { "speaker": "agent", "voice": "agentF", "text": "Hello, Sunrise Clinic. How can I help you today?" },
+  { "speaker": "caller", "voice": "callerJessica", "text": "Hi. I'd like to see a skin doctor this week, if possible." },
+  { "speaker": "agent", "voice": "agentF", "text": "Of course. Doctor Shrestha sees skin patients on Wednesday and Friday mornings. Wednesday at ten thirty is free. Would that work?" },
+  { "speaker": "caller", "voice": "callerJessica", "text": "Wednesday is perfect." },
+  { "speaker": "agent", "voice": "agentF", "text": "Done. Can I have your name, please?" },
+  { "speaker": "caller", "voice": "callerJessica", "text": "Sita Karki." },
+  { "speaker": "agent", "voice": "agentF", "text": "Thank you, Sita. You're booked with Doctor Shrestha on Wednesday at ten thirty. I'll send the details to this number by SMS." }
+]}

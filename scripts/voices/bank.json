@@ -1,0 +1,7 @@
+{ "id": "bank", "label": "Example call · Bank", "lines": [
+  { "speaker": "agent", "voice": "agentM", "text": "Thank you for calling Himal Bank. How can I help?" },
+  { "speaker": "caller", "voice": "callerBill", "text": "What's your fixed deposit rate for one year?" },
+  { "speaker": "agent", "voice": "agentM", "text": "For one year, the rate this month is seven and a half percent, for deposits of ten thousand rupees or more. You can open one in mobile banking or at any branch." },
+  { "speaker": "caller", "voice": "callerBill", "text": "I'd like to talk to someone about a larger amount." },
+  { "speaker": "agent", "voice": "agentM", "text": "Sure. I'm connecting you to our deposits team now. I've passed on that you're asking about a one year deposit, so you won't need to repeat yourself." }
+]}

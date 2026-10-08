@@ -1,0 +1,6 @@
+{ "id": "voice-agent", "label": "Example · Voice agent on a website", "lines": [
+  { "speaker": "caller", "voice": "callerJessica", "text": "Hi. Do you deliver to Pokhara?" },
+  { "speaker": "agent", "voice": "agentF", "text": "Yes, we deliver anywhere in Pokhara within two days. Orders placed before noon go out the same day." },
+  { "speaker": "caller", "voice": "callerJessica", "text": "And can I pay on delivery?" },
+  { "speaker": "agent", "voice": "agentF", "text": "You can. Cash on delivery and digital wallets both work. Would you like me to send the order link to your phone?" }
+]}
