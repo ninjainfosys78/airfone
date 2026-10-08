@@ -8,6 +8,10 @@ export interface Section {
   h: string;
   p?: readonly string[];
   list?: readonly string[];
+  /** Numbered steps instead of bullets. */
+  ordered?: boolean;
+  /** Paragraphs shown after the list. */
+  after?: readonly string[];
 }
 export interface Props {
   h1: string;
@@ -40,7 +44,8 @@ const items = sections.map((s, i) => ({ ...s, n: i + 1, id: slug(s.h) }));
       <section class="part" id={s.id} aria-labelledby={`${s.id}-h`}>
         <h2 id={`${s.id}-h`}><span class="n">{s.n}</span>{s.h}</h2>
         {(s.p ?? []).map((p) => <p set:html={p} />)}
-        {s.list && <ul>{s.list.map((li) => <li set:html={li} />)}</ul>}
+        {s.list && (s.ordered ? <ol>{s.list.map((li) => <li set:html={li} />)}</ol> : <ul>{s.list.map((li) => <li set:html={li} />)}</ul>)}
+        {(s.after ?? []).map((p) => <p set:html={p} />)}
       </section>
     ))}
   </div>
@@ -79,8 +84,8 @@ const items = sections.map((s, i) => ({ ...s, n: i + 1, id: slug(s.h) }));
   .toc a[aria-current] { color: var(--ink); border-left-color: var(--brand); }
 
   .doc { font-family: 'Source Serif 4 Variable', Georgia, serif; font-size: 1.125rem; line-height: 1.5; }
-  .doc p, .doc ul { margin: 0 0 var(--space-3); }
-  .doc ul { padding-left: 1.2em; }
+  .doc p, .doc ul, .doc ol { margin: 0 0 var(--space-3); }
+  .doc ul, .doc ol { padding-left: 1.2em; }
   .doc li + li { margin-top: var(--space-1); }
   .intro { padding-bottom: var(--space-5); margin-bottom: var(--space-2); border-bottom: 1px solid var(--line); font-size: 1.1875rem; }
   .part { padding-top: var(--space-6); scroll-margin-top: 96px; }

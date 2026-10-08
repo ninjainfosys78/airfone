@@ -1,4 +1,5 @@
 ---
+import LegalBody from './LegalBody.astro';
 import { CONTACT_EMAIL } from '../../config/site';
 
 
@@ -67,55 +68,12 @@ const copy = {
   },
 } as const;
 const c = copy.en;
+const mail = `<a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>`;
+const sections = [
+  { h: c.appH, list: c.steps, ordered: true, after: [c.blocked] },
+  { h: c.deletedH, list: c.deleted },
+  { h: c.keptH, list: c.kept },
+  { h: c.emailH, p: [`${c.email} ${mail}`, c.emailSubject] },
+];
 ---
-<section class="section">
-  <div class="wrap prose" data-legal>
-    <h1>{c.h1}</h1>
-    <p>{c.intro}</p>
-
-    <h2>{c.appH}</h2>
-    <ol>
-      {c.steps.map((s) => <li>{s}</li>)}
-    </ol>
-    <p>{c.blocked}</p>
-
-    <h2>{c.deletedH}</h2>
-    <ul>
-      {c.deleted.map((s) => <li>{s}</li>)}
-    </ul>
-
-    <h2>{c.keptH}</h2>
-    <ul>
-      {c.kept.map((s) => <li>{s}</li>)}
-    </ul>
-
-    <h2>{c.emailH}</h2>
-    <p>{c.email} <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
-    <p>{c.emailSubject}</p>
-  </div>
-</section>
-<style>
-  .page-hero {
-    padding: 72px 0 96px;
-  }
-  .prose {
-    max-width: 720px;
-  }
-  .prose p,
-  .prose li {
-    color: var(--ink-muted);
-  }
-  .prose p {
-    margin-top: 16px;
-  }
-  .prose h2 {
-    margin-top: 48px;
-  }
-  .prose ol,
-  .prose ul {
-    margin: 16px 0 0;
-    padding-left: 24px;
-    display: grid;
-    gap: 8px;
-  }
-</style>
+<LegalBody h1={c.h1} updated="Last updated 8 October 2026" intro={[c.intro]} sections={sections} />
