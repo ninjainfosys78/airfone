@@ -3,8 +3,12 @@
 import type { APIContext } from 'astro';
 import { getCollection } from 'astro:content';
 import { readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
 import satori from 'satori';
-import { Resvg } from '@resvg/resvg-js';
+
+// resvg is a native addon. Loading it with require at run time keeps Vite
+// from trying to bundle its .node binary (which fails on Linux builders).
+const { Resvg } = createRequire(import.meta.url)('@resvg/resvg-js') as typeof import('@resvg/resvg-js');
 import { products } from '../../data/products';
 import { solutions } from '../../data/solutions';
 

@@ -21,5 +21,10 @@ export default defineConfig({
   server: { host: '0.0.0.0', port: Number(process.env.ASTRO_DEV_PORT ?? 4321) },
   vite: {
     server: { allowedHosts: true },
+    // resvg is a native module used only at build time for OG images; Vite
+    // must load it from node_modules instead of trying to bundle the .node file.
+    ssr: { external: ['@resvg/resvg-js'] },
+    optimizeDeps: { exclude: ['@resvg/resvg-js'] },
+    build: { rollupOptions: { external: [/\.node$/] } },
   },
 });
