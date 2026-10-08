@@ -1,5 +1,6 @@
 ---
 import '@fontsource-variable/inter/wght.css';
+import Plus from '@lucide/astro/icons/plus';
 import type { Faq } from '../../data/products';
 export interface Props { items: Faq[]; heading?: string }
 const { items, heading = 'Questions' } = Astro.props;
@@ -7,10 +8,10 @@ const { items, heading = 'Questions' } = Astro.props;
 <section class="section faq" data-reveal>
   <div class="wrap two">
     <h2>{heading}</h2>
-    <div>
-      {items.map((f) => (
-        <details>
-          <summary>{f.q}</summary>
+    <div data-stagger>
+      {items.map((f, i) => (
+        <details style={`--i:${i}`}>
+          <summary>{f.q}<Plus class="sign" size={20} stroke-width={2} aria-hidden="true" /></summary>
           <p class="muted">{f.a}</p>
         </details>
       ))}
@@ -26,8 +27,14 @@ const { items, heading = 'Questions' } = Astro.props;
   details:first-child { border-top: 1px solid var(--line); }
   summary { cursor: pointer; padding: var(--space-3) 0; align-items: center; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: var(--space-4); min-height: 44px; }
   summary::-webkit-details-marker { display: none; }
-  summary::after { content: '+'; color: var(--link); font-weight: 400; font-size: 1.5rem; line-height: 1; }
-  details[open] summary::after { content: '\2212'; }
+  summary :global(.sign) { flex: none; color: var(--link); transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1); }
+  details[open] summary :global(.sign) { transform: rotate(45deg); }
+  summary:hover { color: var(--link); }
+  /* Answers slide open and closed where the browser can animate to auto height. */
+  .faq { interpolate-size: allow-keywords; }
+  details::details-content { block-size: 0; overflow: hidden; opacity: 0; transition: block-size 320ms cubic-bezier(0.22, 1, 0.36, 1), opacity 240ms ease, content-visibility 320ms allow-discrete; }
+  details[open]::details-content { block-size: auto; opacity: 1; }
+  @media (prefers-reduced-motion: reduce) { details::details-content { transition: none; } summary :global(.sign) { transition: none; } }
   details p { margin: 0; padding: 0 0 var(--space-4); font-size: 15px; line-height: 1.5; max-width: 62ch; }
   @media (max-width: 959px) { .two { grid-template-columns: 1fr; gap: var(--space-6); } }
 </style>

@@ -31,9 +31,9 @@ import { breadcrumbJsonLd, faqJsonLd } from '../lib/seo';
   <section class="section-tight" data-reveal>
     <div class="wrap two">
       <h2>Add to any plan</h2>
-      <ul class="addons">
-        {addons.map((a) => (
-          <li><a href={a.href}><span class="a-name">{a.name}</span><ArrowRight class="go" size={20} stroke-width={2} aria-hidden="true" /></a></li>
+      <ul class="addons" data-stagger>
+        {addons.map((a, i) => (
+          <li style={`--i:${i}`}><a href={a.href}><span class="a-name">{a.name}</span><ArrowRight class="go" size={20} stroke-width={2} aria-hidden="true" /></a></li>
         ))}
       </ul>
     </div>
