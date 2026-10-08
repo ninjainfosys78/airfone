@@ -33,7 +33,7 @@ class CallPlayer extends HTMLElement {
     this.btn.addEventListener('click', () => (this.audio.paused ? this.play() : this.audio.pause()));
     this.audio.addEventListener('play', () => { this.btn.setAttribute('aria-pressed', 'true'); this.classList.add('is-playing'); this.loop(); });
     this.audio.addEventListener('pause', () => { this.btn.setAttribute('aria-pressed', 'false'); cancelAnimationFrame(this.raf); this.draw(); });
-    this.audio.addEventListener('ended', () => { this.classList.remove('is-playing'); this.audio.currentTime = 0; this.draw(); });
+    this.audio.addEventListener('ended', () => { this.classList.remove('is-playing'); this.audio.currentTime = 0; this.shown = -1; this.draw(); });
     this.audio.addEventListener('error', () => this.fail(), true);
     this.wave.addEventListener('click', (e) => {
       const r = this.wave.getBoundingClientRect();
@@ -66,12 +66,20 @@ class CallPlayer extends HTMLElement {
   private caption(now: number) {
     const box = this.querySelector<HTMLElement>('.caption');
     if (!box || !this.lines.length) return;
+    // One-word status, same rules as the orb.
+    const at = this.lines.findIndex((l) => now >= l.start && now < l.end);
+    const playing = !this.audio.paused;
+    const status = !playing && now === 0 ? 'Ready'
+      : !playing ? 'Paused'
+      : at >= 0 ? (this.lines[at].speaker === 'caller' ? 'Listening' : 'AirFone speaking')
+      : 'Thinking';
+    const st = box.querySelector('.c-status');
+    if (st && st.textContent !== status) st.textContent = status;
     let i = this.lines.findIndex((l) => now >= l.start && now < l.end);
     if (i < 0) i = Math.max(0, this.lines.filter((l) => l.end <= now).length - 1);
     if (i === this.shown) return;
     this.shown = i;
     const l = this.lines[i];
-    box.querySelector('.c-who')!.textContent = l.speaker === 'caller' ? 'Caller' : 'AirFone';
     box.querySelector('.c-ne')!.textContent = l.ne ?? l.text;
     const en = box.querySelector('.c-en');
     if (en) en.textContent = l.ne ? l.text : '';
