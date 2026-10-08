@@ -1,5 +1,6 @@
 ---
 import ArrowRight from '@lucide/astro/icons/arrow-right';
+import ChevronDown from '@lucide/astro/icons/chevron-down';
 // Enterprise-style masthead (IBM / TCS / McKinsey pattern): a thin utility
 // strip, a clean main bar, and full-width mega menus that drop below the
 // whole header with columns and one featured item.
@@ -81,16 +82,22 @@ const plain = [
       <details class="mobile" data-menu>
         <summary aria-label="Menu"><span class="bars" aria-hidden="true"><i></i></span><span class="mobile-label">Menu</span></summary>
         <nav class="mobile-panel" aria-label="Main">
-          {groups.map((g) => (
-            <div class="mobile-group">
-              <h2 class="mobile-title">{g.label}</h2>
-              <ul>{g.links.map((l) => <li><a href={l.href} aria-current={current(l.href)}>{l.label}<ArrowRight class="arrow-icon" size={18} stroke-width={2} aria-hidden="true" /></a></li>)}</ul>
-            </div>
-          ))}
-          <ul class="mobile-plain">
-            {plain.map((l) => <li><a href={l.href} aria-current={current(l.href)}>{l.label}<ArrowRight class="arrow-icon" size={18} stroke-width={2} aria-hidden="true" /></a></li>)}
-            <li><a href="/resellers">Resellers<ArrowRight class="arrow-icon" size={18} stroke-width={2} aria-hidden="true" /></a></li>
-            <li><a href={`${APP_URL}/login`}>Sign in<ArrowRight class="arrow-icon" size={18} stroke-width={2} aria-hidden="true" /></a></li>
+          <ul class="m-list">
+            {groups.map((g) => (
+              <li>
+                <details class="m-acc" open={path.startsWith(g.base) || undefined}>
+                  <summary class="m-row">{g.label}<ChevronDown class="m-chev" size={22} stroke-width={2} aria-hidden="true" /></summary>
+                  <ul class="m-sub">
+                    {g.links.map((l) => <li><a href={l.href} aria-current={current(l.href)}>{l.label}</a></li>)}
+                  </ul>
+                </details>
+              </li>
+            ))}
+            {plain.map((l) => <li><a class="m-row" href={l.href} aria-current={current(l.href)}>{l.label}</a></li>)}
+          </ul>
+          <ul class="m-small">
+            <li><a href="/resellers">Resellers</a></li>
+            <li><a href={`${APP_URL}/login`}>Sign in</a></li>
           </ul>
           <div class="mobile-actions">
             <a class="btn btn-secondary" href={DEMO_NUMBER_TEL}>Call us</a>
@@ -257,19 +264,25 @@ const plain = [
     display: flex; flex-direction: column;
     background: var(--canvas); padding: var(--space-3) var(--gutter) 0;
   }
-  .mobile-group + .mobile-group { margin-top: var(--space-5); }
-  .mobile-title { font-size: 14px; font-weight: 600; color: var(--link); margin-bottom: var(--space-1); }
+  /* Big top-level rows; Products and Solutions open in place as accordions. */
   .mobile-panel ul { list-style: none; margin: 0; padding: 0; }
-  .mobile-panel ul a {
-    display: flex; align-items: center; justify-content: space-between; min-height: 48px;
-    color: var(--ink); text-decoration: none; font-size: 17px; font-weight: 500; border-bottom: 1px solid var(--line);
-    transition: color var(--fast) var(--ease);
+  .m-list > li { border-bottom: 1px solid var(--line); }
+  .m-row {
+    display: flex; align-items: center; justify-content: space-between; min-height: 64px;
+    color: var(--ink); text-decoration: none; font-size: 22px; font-weight: 600; cursor: pointer; list-style: none;
   }
-  .mobile-panel ul a :global(.arrow-icon) { color: var(--ink-muted); transition: transform var(--fast) var(--ease); }
-  .mobile-panel ul a:active { color: var(--link); }
-  .mobile-panel ul a:active :global(.arrow-icon) { transform: translateX(4px); }
-  .mobile-panel ul a[aria-current='page'] { color: var(--link); }
-  .mobile-plain { margin-top: var(--space-5) !important; }
+  .m-row::-webkit-details-marker { display: none; }
+  .m-row[aria-current='page'] { color: var(--link); }
+  .m-row :global(.m-chev) { color: var(--ink-muted); transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .m-acc[open] .m-row :global(.m-chev) { transform: rotate(180deg); color: var(--brand); }
+  .m-acc { interpolate-size: allow-keywords; }
+  .m-acc::details-content { block-size: 0; overflow: hidden; transition: block-size 320ms cubic-bezier(0.22, 1, 0.36, 1), content-visibility 320ms allow-discrete; }
+  .m-acc[open]::details-content { block-size: auto; }
+  .m-sub { padding: 0 0 var(--space-4) !important; }
+  .m-sub a { display: flex; align-items: center; min-height: 44px; color: var(--ink-muted); text-decoration: none; font-size: 17px; font-weight: 500; }
+  .m-sub a:active, .m-sub a[aria-current='page'] { color: var(--link); }
+  .m-small { display: grid; gap: var(--space-1); margin-top: var(--space-5) !important; }
+  .m-small a { display: flex; align-items: center; min-height: 40px; color: var(--ink-muted); text-decoration: none; font-size: 16px; }
   /* Call and demo stay pinned to the bottom of the sheet while it scrolls. */
   .mobile-actions { position: sticky; bottom: 0; margin-top: auto; padding: var(--space-4) 0 calc(var(--space-4) + env(safe-area-inset-bottom)); background: var(--canvas); border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
   .mobile-actions .btn { width: 100%; }
@@ -301,5 +314,5 @@ const plain = [
     .actions .btn { padding: 0 var(--space-3); }
     .mobile-label { display: none; }
   }
-  @media (prefers-reduced-motion: reduce) { .menu .mega, .menu .mega-links li, .menu .mega-feature, .mobile .mobile-panel, .mobile .mobile-panel > * { animation: none !important; } .bars::before, .bars::after, .bars i { transition: none; } .nav-link::before, .menu > summary::before { transition: none; } }
+  @media (prefers-reduced-motion: reduce) { .menu .mega, .menu .mega-links li, .menu .mega-feature, .mobile .mobile-panel, .mobile .mobile-panel > * { animation: none !important; } .bars::before, .bars::after, .bars i, .m-row :global(.m-chev) { transition: none; } .m-acc::details-content { transition: none; } .nav-link::before, .menu > summary::before { transition: none; } }
 </style>

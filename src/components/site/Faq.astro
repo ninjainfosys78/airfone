@@ -1,5 +1,4 @@
 ---
-import '@fontsource-variable/inter/wght.css';
 import Plus from '@lucide/astro/icons/plus';
 import type { Faq } from '../../data/products';
 export interface Props { items: Faq[]; heading?: string }
@@ -20,7 +19,6 @@ const { items, heading = 'Questions' } = Astro.props;
 </section>
 
 <style>
-  .faq details { font-family: 'Inter Variable', system-ui, sans-serif; }
   .faq summary { font-weight: 600; letter-spacing: 0; }
   .two { display: grid; grid-template-columns: 1fr 1.4fr; gap: var(--space-8); align-items: start; }
   details { border-bottom: 1px solid var(--line); }

@@ -2,11 +2,13 @@
 @import '@fontsource/poppins/latin-500.css';
 @import '@fontsource/poppins/latin-600.css';
 @import '@fontsource/poppins/devanagari-400.css';
+@import '@fontsource-variable/inter/wght.css';
 @import './tokens.css';
 
 /* Arial sized to Poppins' metrics, so text keeps its size and line breaks
    if Poppins arrives late. Stops the header and headings jumping on load. */
 @font-face { font-family: 'Poppins Fallback'; src: local('Arial'), local('Helvetica Neue'), local('Helvetica'); size-adjust: 112.5%; ascent-override: 93%; descent-override: 31%; line-gap-override: 9%; }
+@font-face { font-family: 'Inter Fallback'; src: local('Arial'), local('Helvetica Neue'), local('Helvetica'); size-adjust: 107%; ascent-override: 90%; descent-override: 22.5%; line-gap-override: 0%; }
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -31,6 +33,10 @@ body {
 
 @media (max-width: 479px) {
   body { font-size: 16px; }
+}
+
+h1, h2, h3, h4, .btn, .site-header, .utility, .display {
+  font-family: var(--font-display);
 }
 
 h1, h2, h3, h4 {

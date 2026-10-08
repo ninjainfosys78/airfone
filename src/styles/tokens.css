@@ -17,7 +17,9 @@
   --stage-line: #4A6A22;
   --error: #B3261E;
 
-  --font-sans: 'Poppins', 'Poppins Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Inter for reading (body, forms, lists); Poppins for headings, buttons and navigation. */
+  --font-sans: 'Inter Variable', 'Inter Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Poppins', 'Poppins Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   --radius-control: 8px;
