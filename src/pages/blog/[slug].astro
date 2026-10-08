@@ -35,7 +35,7 @@ const readNext = (next.length ? next : all.filter((p) => p.id !== post.id)).slic
   modified={d.updated ?? d.date}
   noindex={d.draft}
   jsonLd={[
-    articleJsonLd({ slug: post.id, title: d.title, description: d.description, date: d.date, updated: d.updated, image }),
+    articleJsonLd({ slug: post.id, title: d.title, description: d.description, date: d.date, updated: d.updated, image, tags: d.tags, words: (post.body ?? '').split(/\s+/).filter(Boolean).length }),
     breadcrumbJsonLd([{ name: 'Insights', path: '/blog' }, { name: d.title, path }]),
   ]}
 >

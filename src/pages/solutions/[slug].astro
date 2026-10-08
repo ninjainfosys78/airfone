@@ -6,7 +6,7 @@ import CtaBand from '../../components/site/CtaBand.astro';
 import Faq from '../../components/site/Faq.astro';
 import { solutions, type Solution } from '../../data/solutions';
 import { productBySlug } from '../../data/products';
-import { breadcrumbJsonLd } from '../../lib/seo';
+import { breadcrumbJsonLd, faqJsonLd, serviceJsonLd } from '../../lib/seo';
 
 export function getStaticPaths() {
   return solutions.map((s) => ({ params: { slug: s.slug }, props: { s } }));
@@ -15,7 +15,7 @@ const { s } = Astro.props as { s: Solution };
 const path = `/solutions/${s.slug}`;
 const used = s.products.map(productBySlug).filter((p) => !!p);
 ---
-<Base title={`AI call answering for ${s.name.toLowerCase()} in Nepal`} description={s.description} path={path} jsonLd={[breadcrumbJsonLd([{ name: s.name, path }])]}>
+<Base title={`AI call answering for ${s.name.toLowerCase()} in Nepal`} description={s.description} path={path} jsonLd={[serviceJsonLd(s), faqJsonLd(s.faq), breadcrumbJsonLd([{ name: s.name, path }])]}>
   <section class="top">
     <div class="wrap grid">
       <div>

@@ -75,7 +75,7 @@ export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
 }
 
 /** No `offers`: the site carries no prices until the owner sends them. */
-export function softwareJsonLd(p: { slug: string; name: string; short: string }) {
+export function softwareJsonLd(p: { slug: string; name: string; short: string; seoTitle?: string; gets?: string[] }) {
   return {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
@@ -86,7 +86,36 @@ export function softwareJsonLd(p: { slug: string; name: string; short: string })
     url: canonicalFor(`/products/${p.slug}`),
     areaServed: { '@type': 'Country', name: 'Nepal' },
     inLanguage: ['ne', 'en'],
+    ...(p.seoTitle ? { alternateName: p.seoTitle } : {}),
+    ...(p.gets?.length ? { featureList: p.gets } : {}),
+    audience: { '@type': 'BusinessAudience', geographicArea: { '@type': 'Country', name: 'Nepal' } },
+    provider: { '@id': ORG_ID },
     publisher: { '@id': ORG_ID },
+  };
+}
+
+/** FAQ markup for questions shown on the page (never for hidden text). */
+export function faqJsonLd(items: { q: string; a: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  };
+}
+
+/** A solution page: the service AirFone provides to one kind of business. */
+export function serviceJsonLd(s: { slug: string; name: string; description: string }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: `AI call answering for ${s.name.toLowerCase()}`,
+    serviceType: 'AI call answering and business phone system',
+    description: s.description,
+    url: canonicalFor(`/solutions/${s.slug}`),
+    areaServed: { '@type': 'Country', name: 'Nepal' },
+    audience: { '@type': 'BusinessAudience', name: s.name },
+    availableLanguage: ['ne', 'en'],
+    provider: { '@id': ORG_ID },
   };
 }
 
@@ -99,6 +128,8 @@ export function articleJsonLd(post: {
   date: Date;
   updated?: Date;
   image: string;
+  tags?: string[];
+  words?: number;
 }) {
   return {
     '@context': 'https://schema.org',
@@ -113,6 +144,9 @@ export function articleJsonLd(post: {
     author: { '@type': 'Organization', '@id': ORG_ID, name: SITE_NAME },
     publisher: { '@id': ORG_ID },
     inLanguage: 'en',
+    ...(post.tags?.length ? { keywords: post.tags.map((t) => t.replace(/-/g, ' ')).join(', '), articleSection: post.tags[0].replace(/-/g, ' ') } : {}),
+    ...(post.words ? { wordCount: post.words } : {}),
+    about: { '@type': 'Thing', name: 'Business phone calls in Nepal' },
   };
 }
 
@@ -128,6 +162,8 @@ export function localBusinessJsonLd() {
     email: CONTACT_EMAIL,
     telephone: o.contactPoint.telephone,
     address: { '@type': 'PostalAddress', addressLocality: ADDRESS.locality, addressRegion: ADDRESS.region, addressCountry: ADDRESS.country },
+    areaServed: { '@type': 'Country', name: 'Nepal' },
+    knowsLanguage: ['ne', 'en'],
     parentOrganization: { '@id': ORG_ID },
   };
 }

@@ -24,6 +24,7 @@ const graph = [orgJsonLd(), websiteJsonLd(), ...jsonLd];
 <title>{fullTitle}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
+{!noindex && <><link rel="alternate" hreflang="en-np" href={canonical} /><link rel="alternate" hreflang="x-default" href={canonical} /></>}
 {noindex && <meta name="robots" content="noindex, follow" />}
 <meta property="og:site_name" content="AirFone" />
 <meta property="og:type" content={type} />
