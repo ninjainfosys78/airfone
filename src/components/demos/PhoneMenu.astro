@@ -1,0 +1,34 @@
+---
+const options = [
+  { key: '1', label: 'Flight bookings', to: 'Ticketing desk, 3 people' },
+  { key: '2', label: 'Tours and trekking', to: 'Tours team, 2 people', active: true },
+  { key: '3', label: 'Existing booking', to: 'AI call agent, then a person' },
+];
+---
+<figure class="menu">
+  <figcaption class="muted small">Example menu · Annapurna Travels</figcaption>
+  <div class="incoming"><span class="mono">+977 98XXXXXXXX</span> calls your number</div>
+  <ol>
+    {options.map((o) => (
+      <li class:list={{ active: o.active }}>
+        <span class="key mono">{o.key}</span>
+        <span class="what">{o.label}</span>
+        <span class="to muted">{o.to}</span>
+      </li>
+    ))}
+  </ol>
+  <p class="note small muted">Every call recorded. Opening hours, queues and menus are changed in the AirFone app.</p>
+</figure>
+
+<style>
+  .menu { margin: 0; background: var(--canvas); border: 1px solid var(--line); border-radius: var(--radius-panel); padding: var(--space-5); }
+  .incoming { margin: var(--space-4) 0; padding: var(--space-3) var(--space-4); background: var(--surface); border-radius: var(--radius-control); font-size: 16px; }
+  ol { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
+  li { display: grid; grid-template-columns: 40px 1fr; gap: 2px var(--space-3); align-items: center; padding: var(--space-3) var(--space-4); border: 1px solid var(--line); border-radius: var(--radius-control); }
+  li.active { border-color: var(--brand); background: var(--surface); }
+  .key { grid-row: span 2; display: grid; place-items: center; width: 40px; height: 40px; border-radius: var(--radius-control); background: var(--subtle); font-weight: 600; }
+  li.active .key { background: var(--lime); color: var(--on-lime); }
+  .what { font-weight: 600; }
+  .to { font-size: 16px; }
+  .note { margin-top: var(--space-4); }
+</style>

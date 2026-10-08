@@ -1,0 +1,49 @@
+---
+// A scripted chat. All messages are in the HTML; chat-demo.ts reveals them
+// one by one when the demo scrolls into view.
+const messages = [
+  { from: 'visitor', text: 'Do you have the 14 inch ThinkPad in stock?' },
+  { from: 'bot', text: 'Yes, in silver and black, with 16 GB of memory and a two year warranty. Our New Road shop is open until 7 pm today.' },
+  { from: 'visitor', text: 'Can I reserve the black one?' },
+  { from: 'bot', text: 'Sure. What name and phone number should I put it under? Someone from the shop will confirm by phone.' },
+  { from: 'visitor', text: 'Ramesh, 98XXXXXXXX' },
+  { from: 'bot', text: 'Thanks, Ramesh. The black ThinkPad is on hold for you, and the shop has your details.' },
+];
+---
+<chat-demo class="chat" data-transcript>
+  <div class="bar"><span class="dot" aria-hidden="true"></span><span>City Electronics</span><span class="label muted">Example chat</span></div>
+  <ol class="log">
+    {messages.map((m) => (
+      <li class={m.from}><span class="visually-hidden">{m.from === 'bot' ? 'AirFone:' : 'Visitor:'}</span>{m.text}</li>
+    ))}
+  </ol>
+</chat-demo>
+
+<script>
+  class ChatDemo extends HTMLElement {
+    connectedCallback() {
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const items = Array.from(this.querySelectorAll('li'));
+      items.forEach((li) => li.classList.add('waiting'));
+      const io = new IntersectionObserver(([e]) => {
+        if (!e.isIntersecting) return;
+        io.disconnect();
+        items.forEach((li, i) => setTimeout(() => li.classList.remove('waiting'), 350 + i * 900));
+      }, { threshold: 0.4 });
+      io.observe(this);
+    }
+  }
+  if (!customElements.get('chat-demo')) customElements.define('chat-demo', ChatDemo);
+</script>
+
+<style>
+  .chat { display: block; background: var(--canvas); border: 1px solid var(--line); border-radius: var(--radius-panel); overflow: hidden; }
+  .bar { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--line); font-weight: 600; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--lime); }
+  .label { margin-left: auto; font-weight: 400; font-size: 16px; }
+  .log { list-style: none; margin: 0; padding: var(--space-5); display: grid; gap: var(--space-3); }
+  li { max-width: 85%; padding: var(--space-3) var(--space-4); border-radius: var(--radius-panel); font-size: 16px; transition: opacity var(--slow) var(--ease), transform var(--slow) var(--ease); }
+  .visitor { justify-self: end; background: var(--brand); color: var(--on-brand); }
+  .bot { justify-self: start; background: var(--surface); border: 1px solid var(--line); }
+  li.waiting { opacity: 0; transform: translateY(6px); }
+</style>

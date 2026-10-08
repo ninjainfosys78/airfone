@@ -4,7 +4,7 @@ import { products } from '../../data/products';
 <section class="section" data-reveal>
   <div class="wrap">
     <h2>Products</h2>
-    <ul class="index">
+    <ul class="index" id="products">
       {products.map((p, i) => (
         <li>
           <a href={`/products/${p.slug}`}>

@@ -1,0 +1,100 @@
+---
+import Base from '../../layouts/Base.astro';
+import CallPlayer from '../../components/player/CallPlayer.astro';
+import ChatDemo from '../../components/demos/ChatDemo.astro';
+import PhoneMenu from '../../components/demos/PhoneMenu.astro';
+import OutboundTimeline from '../../components/demos/OutboundTimeline.astro';
+import CtaBand from '../../components/site/CtaBand.astro';
+import Faq from '../../components/site/Faq.astro';
+import { realCall } from '../../components/player/clips';
+import { products, type Product } from '../../data/products';
+import { breadcrumbJsonLd, softwareJsonLd } from '../../lib/seo';
+
+export function getStaticPaths() {
+  return products.map((p) => ({ params: { slug: p.slug }, props: { p } }));
+}
+const { p } = Astro.props as { p: Product };
+const others = products.filter((o) => o.slug !== p.slug);
+const path = `/products/${p.slug}`;
+---
+<Base
+  title={p.name}
+  description={p.description}
+  path={path}
+  jsonLd={[softwareJsonLd(p), breadcrumbJsonLd([{ name: p.name, path }])]}
+>
+  <section class="top">
+    <div class="wrap grid">
+      <div>
+        <nav class="crumb small" aria-label="Breadcrumb"><a href="/">AirFone</a> / <a href="/#products">Products</a></nav>
+        <h1>{p.headline}</h1>
+        <div class="actions">
+          <a class="btn btn-primary" href="/demo">Book a demo</a>
+          <a class="btn btn-secondary" href="/contact">Talk to us</a>
+        </div>
+      </div>
+      <div class="demo">
+        {p.demo.kind === 'chat' && <ChatDemo />}
+        {p.demo.kind === 'call' && <CallPlayer clip={p.demo.clip} />}
+        {p.demo.kind === 'menu' && <><PhoneMenu /><div class="gap"><CallPlayer clip={p.demo.clip} compact /></div></>}
+        {p.demo.kind === 'outbound' && <><CallPlayer clip={p.demo.clip} /><div class="gap"><OutboundTimeline /></div></>}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="wrap two">
+      <h2>{p.problem.heading}</h2>
+      <div class="body">{p.problem.body.map((t) => <p>{t}</p>)}</div>
+    </div>
+  </section>
+
+  <section class="section gets" data-reveal>
+    <div class="wrap two">
+      <h2>What you get</h2>
+      <ul class="list">{p.gets.map((g) => <li>{g}</li>)}</ul>
+    </div>
+  </section>
+
+  {p.slug === 'ai-call-agent' && (
+    <section class="section" data-reveal>
+      <div class="wrap two">
+        <h2>A real call</h2>
+        <CallPlayer data={realCall} id="call-real" />
+      </div>
+    </section>
+  )}
+
+  <Faq items={p.faq} />
+
+  <section class="section-tight more" data-reveal>
+    <div class="wrap">
+      <h2 class="h3">Other products</h2>
+      <ul>{others.map((o) => <li><a href={`/products/${o.slug}`}>{o.name}</a></li>)}</ul>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .top { padding-block: var(--space-8) var(--space-9); border-bottom: 1px solid var(--line); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: start; }
+  .crumb { color: var(--ink-muted); margin-bottom: var(--space-5); }
+  .crumb a { color: inherit; }
+  h1 { max-width: 14ch; }
+  .actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-7); }
+  .gap { margin-top: var(--space-4); }
+  .two { display: grid; grid-template-columns: 1fr 1.4fr; gap: var(--space-8); align-items: start; }
+  .body p { font-size: 1.125rem; }
+  .gets { background: var(--surface); }
+  .list { list-style: none; margin: 0; padding: 0; }
+  .list li { padding: var(--space-4) 0 var(--space-4) var(--space-6); border-bottom: 1px solid var(--line); position: relative; }
+  .list li::before { content: ''; position: absolute; left: 0; top: 1.4em; width: 12px; height: 2px; background: var(--lime); }
+  .more .h3 { font-size: 1.375rem; margin-bottom: var(--space-4); }
+  .more ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-6); }
+  @media (max-width: 959px) {
+    .grid, .two { grid-template-columns: 1fr; gap: var(--space-6); }
+    .top { padding-block: var(--space-7) var(--space-8); }
+  }
+</style>
