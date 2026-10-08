@@ -36,6 +36,8 @@ const props = Astro.props;
     <link rel="alternate" type="application/rss+xml" title="AirFone blog" href="/rss.xml" />
     <Seo {...props} />
     <slot name="head" />
+    <!-- Without JavaScript the custom players can't run: show native audio controls. -->
+    <noscript><style>call-player .slot { display: grid !important; } call-player audio { visibility: visible !important; } call-player .slot .wave { display: none; }</style></noscript>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>

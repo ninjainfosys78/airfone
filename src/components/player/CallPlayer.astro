@@ -143,7 +143,6 @@ const timing = JSON.stringify({ duration: data.duration ?? 0, lines: lines.map((
   .stage .label, .stage .time { color: var(--stage-muted); font-weight: 400; font-size: 14px; }
   .stage .slot { display: none; }
   .stage audio { color-scheme: dark; }
-  .stage:not(.is-live) .slot { display: grid; width: 100%; max-width: 320px; }
   /* Kept for search engines and screen readers, not shown on the stage. */
   .stage .transcript { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .stage .who { color: var(--stage-muted); }
@@ -157,7 +156,6 @@ const timing = JSON.stringify({ duration: data.duration ?? 0, lines: lines.map((
   .chat .play svg { width: 28px; height: 28px; }
   .chat .label { font-size: 17px; }
   .chat .slot { display: none; }
-  .chat:not(.is-live) .slot { display: grid; }
   .chat .transcript { margin: 0; padding: 0; border: 0; }
   .chat .transcript summary { display: none; }
   .chat .transcript ol {

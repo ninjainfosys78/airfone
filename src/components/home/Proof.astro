@@ -60,7 +60,6 @@ const fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).p
 
   /* The player shows only its conversation here; the panel is the control. */
   .convo :global(.slot) { display: none; }
-  .convo :global(.chat:not(.is-live) .slot) { display: grid; }
   .convo :global(.transcript ol) { height: 100%; min-height: 420px; max-height: 420px; }
 
   .quotes { margin-top: var(--space-8); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); }
