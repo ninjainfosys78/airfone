@@ -6,37 +6,30 @@ tags: [phone-system, guides]
 draft: false
 ---
 
-Many offices in Kathmandu still have a PBX box in a cupboard, a technician on call, and a phone that rings at one desk. It works until you add a branch, a night shift or a second person who should answer.
+Somewhere in a lot of Kathmandu offices there is a cupboard with a small grey box in it. It has a tangle of cables, a blinking light, and a technician's number written on a piece of tape. That box is the phone system, and for years it has done its job.
 
-An IP/PBX moves the phone system online. Here is what changes.
+The trouble starts when the business grows. A second branch opens. Someone starts working from home two days a week. The receptionist goes on leave and nobody else's desk phone can pick up the main line. Each of these needs a visit from the technician, and some of them simply cannot be done.
 
-## The traditional setup
+An online phone system, sometimes called an IP/PBX or cloud PBX, takes the box out of the cupboard and puts it on the internet. The idea sounds technical, but what changes for you is mostly practical.
 
-- A landline or a few mobile numbers
-- A PBX box for extensions, if you have more than a handful of staff
-- Changes to menus or extensions need a visit
-- Calls only reach people at their desks
+## Your number stays, the box goes
 
-## An online phone system
+Your existing number connects to the new system through what is called a SIP line. Callers dial the same number they always have and notice no difference. Behind the scenes, though, the call is no longer tied to a particular desk.
 
-- Your existing number connects through SIP, so callers notice nothing
-- Every person gets an extension in the AirFone app or a browser
-- You change menus, queues and opening hours yourself
-- Calls reach staff wherever they are, and every call is recorded
+Each person on your team gets their own extension, and they can answer it in the AirFone app on their phone or in a browser on their computer. The receptionist can take calls from home. The branch manager in Pokhara has an extension on the same system as head office. When someone is away, their calls can go to a colleague or a queue.
 
-## When switching makes sense
+Call menus, queues and opening hours become settings you change yourself, in a few minutes, rather than a job for a technician. And every call is recorded, which tends to be the thing people did not know they wanted until they had it.
 
-Switch when one of these is true:
+## When it is worth switching
 
-- You have more than one location, or staff who work away from a desk
-- You lose calls at busy times because one line is engaged
-- You need recordings for quality or compliance
-- You want to add an AI agent later without changing anything again
+If you have one office, a few staff who all sit at their desks, and calls are rarely missed, the box in the cupboard may well be fine for now.
 
-## What stays the same
+The case for switching becomes strong when your business stops looking like that. More than one location is the clearest sign. So is having people who work away from a desk, or losing calls at busy times because a single line is engaged. Businesses that need call recordings for quality or compliance usually find the move pays for itself in that alone.
 
-Your number, your callers and the way they reach you. The change is behind the scenes.
+There is one more reason that is easy to miss. Once your calls run through an online system, adding an AI agent later is a setting, not a new project. You can start with extensions and queues today and switch the agent on for after-hours calls whenever you are ready.
 
-## Next step
+## What it feels like for callers
 
-Read about the [business phone system](/products/phone-system), or start from the [AI call agent guide](/blog/ai-call-agent-guide) if you want the agent on the line from day one.
+Nothing changes for the people who call you, and that is the point. Same number, same greeting. They simply get answered more often.
+
+You can read more about the [business phone system](/products/phone-system), or start with the [AI call agent guide](/blog/ai-call-agent-guide) if you would like the agent on the line from the first day.
