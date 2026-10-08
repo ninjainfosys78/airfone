@@ -8,6 +8,9 @@ import MapPin from '@lucide/astro/icons/map-pin';
 import ArrowRight from '@lucide/astro/icons/arrow-right';
 import { OFFICE_LINE, CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, DEMO_NUMBER_DISPLAY, DEMO_NUMBER_TEL } from '../config/site';
 import { breadcrumbJsonLd, localBusinessJsonLd } from '../lib/seo';
+import Related from '../components/site/Related.astro';
+import { products } from '../data/products';
+import { solutions } from '../data/solutions';
 import { Image } from 'astro:assets';
 import team from '../assets/photos/front-desk-busy.png';
 
@@ -52,6 +55,12 @@ const ways = [
     </div>
   </section>
 
+
+  <Related groups={[
+    { h: 'Products', items: products.map((p) => ({ href: `/products/${p.slug}`, label: p.name })) },
+    { h: 'Industries', items: solutions.map((x) => ({ href: `/solutions/${x.slug}`, label: x.name })) },
+    { h: 'Work with us', items: [{ href: '/resellers', label: 'Become a reseller' }, { href: '/pricing', label: 'Pricing' }, { href: '/blog', label: 'Insights' }] },
+  ]} />
 </Base>
 
 <style>

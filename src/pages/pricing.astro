@@ -5,6 +5,9 @@ import CtaBand from '../components/site/CtaBand.astro';
 import ArrowRight from '@lucide/astro/icons/arrow-right';
 import { plans, addons, pricingFaq } from '../data/plans';
 import { breadcrumbJsonLd, faqJsonLd } from '../lib/seo';
+import Related from '../components/site/Related.astro';
+import { products } from '../data/products';
+import { solutions } from '../data/solutions';
 ---
 <Base title="Pricing: AI call agent and cloud phone system plans" description="AirFone pricing for the cloud phone system, the AI call agent that answers in Nepali, and the AI phone system. Priced for your call volume, quoted the same day." path="/pricing" jsonLd={[faqJsonLd(pricingFaq), breadcrumbJsonLd([{ name: 'Pricing', path: '/pricing' }])]}>
   <section class="top">
@@ -40,6 +43,11 @@ import { breadcrumbJsonLd, faqJsonLd } from '../lib/seo';
   </section>
 
   <Faq items={pricingFaq} />
+  <Related groups={[
+    { h: 'Products', items: products.map((p) => ({ href: `/products/${p.slug}`, label: p.name })) },
+    { h: 'Industries', items: solutions.map((x) => ({ href: `/solutions/${x.slug}`, label: x.name })) },
+    { h: 'Next steps', items: [{ href: '/demo', label: 'Book a demo' }, { href: '/resellers', label: 'Become a reseller' }, { href: '/contact', label: 'Contact sales' }] },
+  ]} />
   <CtaBand />
 </Base>
 

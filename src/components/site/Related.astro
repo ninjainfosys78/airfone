@@ -1,0 +1,44 @@
+---
+// "Related" block: a few columns of links to other pages on the same topic.
+// Empty groups are left out; nothing renders when every group is empty.
+import ArrowRight from '@lucide/astro/icons/arrow-right';
+import type { Link } from '../../data/links';
+export interface Props { groups: { h: string; items: Link[] }[] }
+const groups = Astro.props.groups.filter((g) => g.items.length);
+---
+{groups.length > 0 && (
+  <section class="section-tight related" data-reveal aria-label="Related pages">
+    <div class="wrap cols" style={`--n:${groups.length}`}>
+      {groups.map((g) => (
+        <div>
+          <h2 class="h">{g.h}</h2>
+          <ul data-stagger>
+            {g.items.map((l, i) => (
+              <li style={`--i:${i}`}>
+                <a href={l.href}>
+                  <span class="t">{l.label}</span>
+                  {l.meta && <span class="m">{l.meta}</span>}
+                  <ArrowRight class="go" size={16} stroke-width={2} aria-hidden="true" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+)}
+
+<style>
+  .related { border-top: 1px solid var(--line); }
+  .cols { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: var(--space-7); }
+  .h { font-size: 1rem; font-family: var(--font-sans); font-weight: 600; color: var(--ink-muted); margin-bottom: var(--space-3); }
+  ul { list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--line); }
+  a { display: grid; grid-template-columns: 1fr auto; grid-template-areas: 't go' 'm go'; align-items: center; gap: 0 var(--space-3); padding: var(--space-3) 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+  .t { grid-area: t; font-size: 16px; font-weight: 500; line-height: 1.35; transition: color var(--fast) var(--ease); }
+  .m { grid-area: m; font-size: 14px; color: var(--ink-muted); }
+  a :global(.go) { grid-area: go; color: var(--ink-muted); transition: transform var(--fast) var(--ease), color var(--fast) var(--ease); }
+  a:hover .t { color: var(--link); }
+  a:hover :global(.go) { transform: translateX(3px); color: var(--link); }
+  @media (max-width: 767px) { .cols { grid-template-columns: 1fr; gap: var(--space-6); } }
+</style>

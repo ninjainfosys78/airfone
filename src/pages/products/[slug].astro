@@ -4,7 +4,9 @@ import CallPlayer from '../../components/player/CallPlayer.astro';
 import ChatDemo from '../../components/demos/ChatDemo.astro';
 import CtaBand from '../../components/site/CtaBand.astro';
 import Faq from '../../components/site/Faq.astro';
-import { fmtDate, posts } from '../../lib/posts';
+import { posts } from '../../lib/posts';
+import Related from '../../components/site/Related.astro';
+import { productTags, solutionsUsing } from '../../data/links';
 import { products, type Product } from '../../data/products';
 import { faqJsonLd, breadcrumbJsonLd, softwareJsonLd } from '../../lib/seo';
 
@@ -14,11 +16,7 @@ export function getStaticPaths() {
 const { p } = Astro.props as { p: Product };
 const path = `/products/${p.slug}`;
 // Guides on the same topic, so each product page links into the blog.
-const topic: Record<string, string[]> = {
-  'ai-call-agent': ['ai-call-agent'], 'ai-phone-system': ['ai-call-agent', 'phone-system'], 'phone-system': ['phone-system'],
-  'website-voice-agent': ['voice-agent', 'website'], 'website-chatbot': ['website'],
-};
-const guides = (await posts()).filter((x) => !x.data.draft && x.data.tags.some((t) => topic[p.slug]?.includes(t))).slice(0, 3);
+const guides = (await posts()).filter((x) => !x.data.draft && x.data.tags.some((t) => productTags[p.slug]?.includes(t))).slice(0, 4);
 ---
 <Base
   title={p.seoTitle}
@@ -65,27 +63,17 @@ const guides = (await posts()).filter((x) => !x.data.draft && x.data.tags.some((
 
   <Faq items={p.faq} />
 
-  {guides.length > 0 && (
-    <section class="section-tight" data-reveal>
-      <div class="wrap two">
-        <h2>Guides</h2>
-        <ul class="guides">
-          {guides.map((g) => <li><a href={`/blog/${g.id}`}><span>{g.data.title}</span><time datetime={g.data.date.toISOString()}>{fmtDate(g.data.date)}</time></a></li>)}
-        </ul>
-      </div>
-    </section>
-  )}
+  <Related groups={[
+    { h: 'Used by', items: solutionsUsing(p.slug) },
+    { h: 'Guides', items: guides.map((g) => ({ href: `/blog/${g.id}`, label: g.data.title })) },
+    { h: 'Other products', items: products.filter((x) => x.slug !== p.slug).map((x) => ({ href: `/products/${x.slug}`, label: x.name })) },
+  ]} />
 
 
   <CtaBand />
 </Base>
 
 <style>
-  .guides { list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--line); }
-  .guides a { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-5); padding: var(--space-4) 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
-  .guides span { font-size: 1.125rem; font-weight: 500; transition: color var(--fast) var(--ease); }
-  .guides a:hover span { color: var(--link); }
-  .guides time { flex: none; font-size: 14px; color: var(--ink-muted); }
   @media (max-width: 599px) { .guides a { flex-direction: column; gap: var(--space-1); } }
   .top { padding-block: var(--space-9); border-bottom: 1px solid var(--line); }
   .grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: center; }

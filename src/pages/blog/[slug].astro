@@ -6,6 +6,8 @@ import '@fontsource-variable/source-serif-4/wght-italic.css';
 import serifUrl from '@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-normal.woff2?url';
 import Base from '../../layouts/Base.astro';
 import CtaBand from '../../components/site/CtaBand.astro';
+import Related from '../../components/site/Related.astro';
+import { productsForTags, solutionsForTags } from '../../data/links';
 import { coverFor, fmtDate, posts, type Post } from '../../lib/posts';
 import { related } from '../../lib/blog';
 import { articleJsonLd, breadcrumbJsonLd } from '../../lib/seo';
@@ -65,6 +67,11 @@ const readNext = (next.length ? next : all.filter((p) => p.id !== post.id)).slic
   </div>
   </article>
 
+  <Related groups={[
+    { h: 'Products in this article', items: productsForTags(d.tags) },
+    { h: 'Industries', items: solutionsForTags(d.tags) },
+    { h: 'More insights', items: all.filter((x) => x.id !== post.id && !readNext.some((r) => r.id === x.id)).slice(0, 3).map((x) => ({ href: `/blog/${x.id}`, label: x.data.title })) },
+  ]} />
   <CtaBand />
 </Base>
 

@@ -6,6 +6,9 @@ import CtaBand from '../../components/site/CtaBand.astro';
 import Faq from '../../components/site/Faq.astro';
 import { solutions, type Solution } from '../../data/solutions';
 import { productBySlug } from '../../data/products';
+import Related from '../../components/site/Related.astro';
+import { posts } from '../../lib/posts';
+import { solutionTags } from '../../data/links';
 import { breadcrumbJsonLd, faqJsonLd, serviceJsonLd } from '../../lib/seo';
 
 export function getStaticPaths() {
@@ -14,6 +17,7 @@ export function getStaticPaths() {
 const { s } = Astro.props as { s: Solution };
 const path = `/solutions/${s.slug}`;
 const used = s.products.map(productBySlug).filter((p) => !!p);
+const guides = (await posts()).filter((x) => !x.data.draft && x.data.tags.some((t) => solutionTags[s.slug]?.includes(t))).slice(0, 4);
 ---
 <Base title={`AI call answering for ${s.name.toLowerCase()} in Nepal`} description={s.description} path={path} jsonLd={[serviceJsonLd(s), faqJsonLd(s.faq), breadcrumbJsonLd([{ name: s.name, path }])]}>
   <section class="top">
@@ -39,14 +43,11 @@ const used = s.products.map(productBySlug).filter((p) => !!p);
     </div>
   </section>
 
-  <section class="section-tight" data-reveal>
-    <div class="wrap two">
-      <h2>Products to use</h2>
-      <ul class="prods" data-stagger>
-        {used.map((p, i) => <li style={`--i:${i}`}><a href={`/products/${p!.slug}`}><span class="pname">{p!.name}</span><span class="arrow" aria-hidden="true"><ArrowRight class="arrow-icon" size={18} stroke-width={2} aria-hidden="true" /></span></a></li>)}
-      </ul>
-    </div>
-  </section>
+  <Related groups={[
+    { h: 'Products to use', items: used.map((x) => ({ href: `/products/${x!.slug}`, label: x!.name })) },
+    { h: 'Guides', items: guides.map((g) => ({ href: `/blog/${g.id}`, label: g.data.title })) },
+    { h: 'Other industries', items: solutions.filter((x) => x.slug !== s.slug).map((x) => ({ href: `/solutions/${x.slug}`, label: x.name })) },
+  ]} />
 
   <Faq items={s.faq} />
   <CtaBand />
@@ -65,12 +66,6 @@ const used = s.products.map(productBySlug).filter((p) => !!p);
   .a :global(.to) { flex: none; color: var(--link); transform: translateY(3px); }
   @media (max-width: 767px) { .calls li { grid-template-columns: 1fr; gap: 2px; } }
   .h3 { font-size: 1.375rem; }
-  .prods { list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--line); }
-  .prods a { display: flex; justify-content: space-between; align-items: center; min-height: 88px; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
-  .pname { font-size: clamp(1.375rem, 1.1rem + 1vw, 1.75rem); font-weight: 600; transition: color var(--fast) var(--ease); }
-  .arrow { display: inline-flex; color: var(--link); font-size: 1.5rem; transition: transform var(--fast) var(--ease); }
-  .prods a:hover .pname { color: var(--link); }
-  .prods a:hover .arrow { transform: translateX(4px); }
   @media (max-width: 959px) {
     .grid, .two { grid-template-columns: 1fr; gap: var(--space-6); }
   }
