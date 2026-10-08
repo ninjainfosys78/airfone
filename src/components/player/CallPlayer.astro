@@ -12,6 +12,8 @@ export interface Props {
   data?: ClipData & { src?: string };
   id?: string;
   compact?: boolean;
+  /** Sits on the green stage under the orb: no panel, live caption. */
+  stage?: boolean;
 }
 
 const p = Astro.props;
@@ -29,7 +31,7 @@ const sources = remote
 const fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, '0')}`;
 const timing = JSON.stringify({ duration: data.duration ?? 0, lines: lines.map((l) => ({ speaker: l.speaker, start: l.start ?? 0, end: l.end ?? 0 })), peaks: data.peaks ?? [] });
 ---
-<call-player class:list={['player', { compact: p.compact }]} data-timing={timing}>
+<call-player class:list={['player', { compact: p.compact, stage: p.stage }]} data-timing={timing}>
   <div class="head">
     <button type="button" class="play" aria-pressed="false" aria-controls={id} disabled>
       <span class="visually-hidden">Play {label}</span>
@@ -47,9 +49,16 @@ const timing = JSON.stringify({ duration: data.duration ?? 0, lines: lines.map((
       {sources.map((s) => <source src={s.src} type={s.type} />)}
     </audio>
   </div>
+  {p.stage && (
+    <div class="caption" aria-hidden="true">
+      <p class="c-who">{lines[0]?.speaker === 'caller' ? 'Caller' : 'AirFone'}</p>
+      <p class="c-ne" lang="ne">{lines[0]?.ne ?? lines[0]?.text}</p>
+      {lines[0]?.ne && <p class="c-en">{lines[0]?.text}</p>}
+    </div>
+  )}
   <p class="error small" role="status" hidden>Audio couldn't load. The transcript is below.</p>
   {lines.length > 0 && (
-    <details class="transcript" open={!p.compact} data-transcript>
+    <details class="transcript" open={!p.compact && !p.stage} data-transcript>
       <summary>Transcript</summary>
       <ol>
         {lines.map((l) => (
@@ -112,4 +121,25 @@ const timing = JSON.stringify({ duration: data.duration ?? 0, lines: lines.map((
   .is-playing li.is-past { opacity: 0.8; }
   .is-playing li.is-now { opacity: 1; }
   .compact { padding: var(--space-4); }
+
+  /* Stage: part of the orb, not a box. */
+  .stage { background: none; border: 0; padding: 0; color: var(--stage-ink); text-align: center; }
+  .stage .head { justify-content: center; }
+  .stage .meta { text-align: left; }
+  .stage .label { font-size: 16px; }
+  .stage .time { color: var(--stage-muted); }
+  .stage .play:hover { background: var(--stage-ink); color: var(--on-lime); }
+  .stage .slot { max-width: 360px; margin-inline: auto; }
+  .stage audio { color-scheme: dark; }
+  .caption { min-height: 6.5em; margin-top: var(--space-5); display: grid; align-content: start; gap: 4px; }
+  .c-who { font-size: 14px; color: var(--lime); font-weight: 600; }
+  .c-ne { font-size: 20px; line-height: 1.4; font-weight: 500; }
+  .c-en { font-size: 16px; color: var(--stage-muted); }
+  .caption.swap { animation: cap var(--slow) var(--ease); }
+  @keyframes cap { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  .stage .transcript { border-top-color: var(--stage-line); text-align: left; }
+  .stage .transcript summary { color: var(--stage-muted); justify-content: center; }
+  .stage .who { color: var(--stage-muted); }
+  .stage li[data-speaker='agent'] .who { color: var(--lime); }
+  .stage .en.sub { color: var(--stage-muted); }
 </style>

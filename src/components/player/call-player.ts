@@ -9,12 +9,21 @@ class CallPlayer extends HTMLElement {
   private items: HTMLLIElement[] = [];
   private t: T = { duration: 0, lines: [], peaks: [] };
   private raf = 0;
+  private lines: { speaker: string; ne?: string; text: string; start: number; end: number }[] = [];
+  private shown = -1;
 
   connectedCallback() {
     this.audio = this.querySelector('audio')!;
     this.btn = this.querySelector('.play')!;
     this.wave = this.querySelector('.wave')!;
     this.items = Array.from(this.querySelectorAll('.transcript li'));
+    this.lines = this.items.map((li) => ({
+      speaker: li.dataset.speaker ?? 'agent',
+      ne: li.querySelector('.ne')?.textContent ?? undefined,
+      text: li.querySelector('.en')?.textContent ?? li.querySelector('.said')?.textContent ?? '',
+      start: Number(li.dataset.start) || 0,
+      end: Number(li.dataset.end) || 0,
+    }));
     try { this.t = JSON.parse(this.dataset.timing ?? '{}'); } catch { /* keep defaults */ }
 
     this.btn.disabled = false;
@@ -53,12 +62,31 @@ class CallPlayer extends HTMLElement {
     if (!this.audio.paused) this.raf = requestAnimationFrame(this.loop);
   };
 
+  /** Live caption on the stage: the line being spoken, or the last one. */
+  private caption(now: number) {
+    const box = this.querySelector<HTMLElement>('.caption');
+    if (!box || !this.lines.length) return;
+    let i = this.lines.findIndex((l) => now >= l.start && now < l.end);
+    if (i < 0) i = Math.max(0, this.lines.filter((l) => l.end <= now).length - 1);
+    if (i === this.shown) return;
+    this.shown = i;
+    const l = this.lines[i];
+    box.querySelector('.c-who')!.textContent = l.speaker === 'caller' ? 'Caller' : 'AirFone';
+    box.querySelector('.c-ne')!.textContent = l.ne ?? l.text;
+    const en = box.querySelector('.c-en');
+    if (en) en.textContent = l.ne ? l.text : '';
+    box.classList.remove('swap');
+    void box.offsetWidth;
+    box.classList.add('swap');
+  }
+
   private draw() {
     const now = this.audio.currentTime;
     const d = this.audio.duration || this.t.duration || 1;
     const el = this.querySelector('.now');
     if (el) el.textContent = `${Math.floor(now / 60)}:${String(Math.floor(now % 60)).padStart(2, '0')}`;
 
+    this.caption(now);
     this.items.forEach((li) => {
       const s = Number(li.dataset.start), e = Number(li.dataset.end);
       li.classList.toggle('is-now', now >= s && now < e);
@@ -75,7 +103,7 @@ class CallPlayer extends HTMLElement {
     g.scale(dpr, dpr);
     const css = getComputedStyle(this);
     const on = css.getPropertyValue('--lime').trim() || '#8BC53E';
-    const off = css.getPropertyValue('--line').trim() || '#DCE5CC';
+    const off = (this.classList.contains('stage') ? css.getPropertyValue('--stage-line') : css.getPropertyValue('--line')).trim() || '#DCE5CC';
     const n = this.t.peaks.length, gap = 2, bw = Math.max(1, (w - gap * (n - 1)) / n);
     const at = (now / d) * w;
     for (let i = 0; i < n; i++) {
