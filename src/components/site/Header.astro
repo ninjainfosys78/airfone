@@ -78,7 +78,7 @@ const plain = [
     <div class="actions">
       <a class="btn btn-primary" href="/demo">Book a demo</a>
       <details class="mobile" data-menu>
-        <summary aria-label="Menu"><span class="bars" aria-hidden="true"></span><span class="mobile-label">Menu</span></summary>
+        <summary aria-label="Menu"><span class="bars" aria-hidden="true"><i></i></span><span class="mobile-label">Menu</span></summary>
         <nav class="mobile-panel" aria-label="Main">
           {groups.map((g) => (
             <div class="mobile-group">
@@ -91,7 +91,10 @@ const plain = [
             <li><a href="/resellers">Resellers</a></li>
             <li><a href={`${APP_URL}/login`}>Sign in</a></li>
           </ul>
-          <a class="btn btn-primary mobile-cta" href={DEMO_NUMBER_TEL}>Call {DEMO_NUMBER_DISPLAY}</a>
+          <div class="mobile-actions">
+            <a class="btn btn-secondary" href={DEMO_NUMBER_TEL}>Call us</a>
+            <a class="btn btn-primary" href="/demo">Book a demo</a>
+          </div>
         </nav>
       </details>
     </div>
@@ -105,7 +108,7 @@ const plain = [
   // Close a desktop menu by rolling it back up before it disappears.
   const close = (m: HTMLDetailsElement) => {
     if (!m.open || m.classList.contains('closing')) return;
-    if (still.matches || m.classList.contains('mobile')) { m.open = false; return; }
+    if (still.matches) { m.open = false; return; }
     m.classList.add('closing');
     window.setTimeout(() => { if (m.classList.contains('closing')) { m.classList.remove('closing'); m.open = false; } }, 260);
   };
@@ -138,6 +141,15 @@ const plain = [
   // The mobile menu opens right under the bar, wherever the bar is.
   const place = () => header.style.setProperty('--header-h', `${Math.round(header.getBoundingClientRect().bottom)}px`);
   for (const m of menus) m.addEventListener('toggle', place);
+  // While the mobile sheet is open the page behind it stays put.
+  const mobile = menus.find((m) => m.classList.contains('mobile'));
+  mobile?.addEventListener('toggle', () => {
+    document.documentElement.classList.toggle('menu-locked', mobile.open);
+    const lenis = (window as unknown as { lenis?: { stop(): void; start(): void } }).lenis;
+    if (mobile.open) lenis?.stop(); else lenis?.start();
+  });
+  // The summary toggles natively; route its close through the animation.
+  mobile?.querySelector('summary')!.addEventListener('click', (e) => { if (mobile.open) { e.preventDefault(); close(mobile); } });
   addEventListener('resize', place, { passive: true });
   place();
 </script>
@@ -224,24 +236,54 @@ const plain = [
 
   .mobile { display: none; }
   .mobile > summary {
-    display: inline-flex; align-items: center; gap: var(--space-2);
+    display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
     min-height: 44px; min-width: 44px; padding: 0 var(--space-3);
-    border: 1px solid var(--line); border-radius: var(--radius-control); font-size: 16px; font-weight: 500;
+    border-radius: var(--radius-control); font-size: 16px; font-weight: 500;
+    transition: background-color var(--fast) var(--ease);
   }
-  .bars, .bars::before, .bars::after { display: block; width: 16px; height: 1.5px; background: currentColor; position: relative; }
-  .bars::before, .bars::after { content: ''; position: absolute; left: 0; }
-  .bars::before { top: -5px; }
-  .bars::after { top: 5px; }
+  .mobile > summary:active { background: var(--subtle); }
+  /* Three bars that fold into a cross. */
+  .bars { position: relative; width: 20px; height: 14px; }
+  .bars::before, .bars::after, .bars i { content: ''; position: absolute; left: 0; width: 100%; height: 2px; border-radius: 1px; background: currentColor; transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1), opacity 200ms ease; }
+  .bars::before { top: 0; }
+  .bars i { top: 6px; }
+  .bars::after { top: 12px; }
+  .mobile[open]:not(.closing) .bars::before { transform: translateY(6px) rotate(45deg); }
+  .mobile[open]:not(.closing) .bars::after { transform: translateY(-6px) rotate(-45deg); }
+  .mobile[open]:not(.closing) .bars i { opacity: 0; transform: scaleX(0.3); }
+
   .mobile-panel {
-    position: fixed; left: 0; right: 0; top: var(--header-h, 109px); bottom: 0; overflow-y: auto;
-    background: var(--canvas); padding: var(--space-5) var(--gutter) var(--space-8);
+    position: fixed; left: 0; right: 0; top: var(--header-h, 109px); bottom: 0; overflow-y: auto; overscroll-behavior: contain;
+    display: flex; flex-direction: column;
+    background: var(--canvas); padding: var(--space-4) var(--gutter) calc(var(--space-5) + env(safe-area-inset-bottom));
   }
   .mobile-group + .mobile-group { margin-top: var(--space-6); }
-  .mobile-title { font-size: 14px; font-weight: 600; color: var(--ink-muted); margin-bottom: var(--space-2); }
+  .mobile-title { font-size: 14px; font-weight: 600; color: var(--link); margin-bottom: var(--space-1); }
   .mobile-panel ul { list-style: none; margin: 0; padding: 0; }
-  .mobile-panel ul a { display: flex; align-items: center; min-height: 48px; color: var(--ink); text-decoration: none; font-size: 18px; border-bottom: 1px solid var(--line); }
+  .mobile-panel ul a {
+    display: flex; align-items: center; justify-content: space-between; min-height: 52px;
+    color: var(--ink); text-decoration: none; font-size: 18px; font-weight: 500; border-bottom: 1px solid var(--line);
+    transition: color var(--fast) var(--ease);
+  }
+  .mobile-panel ul a::after { content: '→'; color: var(--ink-muted); font-weight: 400; transition: transform var(--fast) var(--ease); }
+  .mobile-panel ul a:active { color: var(--link); }
+  .mobile-panel ul a:active::after { transform: translateX(4px); }
+  .mobile-panel ul a[aria-current='page'] { color: var(--link); }
   .mobile-plain { margin-top: var(--space-6) !important; }
-  .mobile-cta { margin-top: var(--space-6); width: 100%; }
+  .mobile-actions { margin-top: auto; padding-top: var(--space-6); display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+  .mobile-actions .btn { width: 100%; }
+
+  /* Open: the sheet fades down into place and its rows follow in turn.
+     Close: it lifts away quickly. */
+  .mobile[open] .mobile-panel { animation: sheet-in 420ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .mobile[open] .mobile-panel > * { animation: item-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .mobile[open] .mobile-panel > :nth-child(2) { animation-delay: 60ms; }
+  .mobile[open] .mobile-panel > :nth-child(3) { animation-delay: 120ms; }
+  .mobile[open] .mobile-panel > :nth-child(4) { animation-delay: 180ms; }
+  .mobile.closing .mobile-panel { animation: sheet-out 240ms cubic-bezier(0.4, 0, 1, 1) forwards; }
+  @keyframes sheet-in { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: none; } }
+  @keyframes sheet-out { to { opacity: 0; transform: translateY(-8px); } }
+  :global(html.menu-locked), :global(html.menu-locked body) { overflow: hidden; }
 
   @media (max-width: 1023px) {
     .bar { gap: var(--space-4); }
@@ -258,5 +300,5 @@ const plain = [
     .actions .btn { padding: 0 var(--space-3); }
     .mobile-label { display: none; }
   }
-  @media (prefers-reduced-motion: reduce) { .menu .mega, .menu .mega-links li, .menu .mega-feature { animation: none !important; } .nav-link::before, .menu > summary::before { transition: none; } }
+  @media (prefers-reduced-motion: reduce) { .menu .mega, .menu .mega-links li, .menu .mega-feature, .mobile .mobile-panel, .mobile .mobile-panel > * { animation: none !important; } .bars::before, .bars::after, .bars i { transition: none; } .nav-link::before, .menu > summary::before { transition: none; } }
 </style>

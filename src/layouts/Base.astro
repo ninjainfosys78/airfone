@@ -54,6 +54,7 @@ const props = Astro.props;
       // Weighted, eased scrolling on mouse wheels. Touch keeps native scroll.
       if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
         const lenis = new Lenis({ lerp: 0.09, wheelMultiplier: 1, anchors: true });
+        (window as unknown as { lenis: Lenis }).lenis = lenis;
         const raf = (t: number) => { lenis.raf(t); requestAnimationFrame(raf); };
         requestAnimationFrame(raf);
         // Open menus own their scroll.
