@@ -1,35 +1,74 @@
 ---
+// Enterprise-style masthead (IBM / TCS / McKinsey pattern): a thin utility
+// strip, a clean main bar, and full-width mega menus that drop below the
+// whole header with columns and one featured item.
 import { products } from '../../data/products';
 import { solutions } from '../../data/solutions';
+import { APP_URL, DEMO_NUMBER_DISPLAY, DEMO_NUMBER_TEL } from '../../config/site';
 
 const path = Astro.url.pathname.replace(/\.html$/, '');
 const current = (href: string) => (path === href || path.startsWith(`${href}/`) ? 'page' : undefined);
+
 const groups = [
-  { label: 'Products', base: '/products', links: products.map((p) => ({ href: `/products/${p.slug}`, label: p.name, note: p.short })) },
-  { label: 'Solutions', base: '/solutions', links: solutions.map((s) => ({ href: `/solutions/${s.slug}`, label: s.name, note: s.short })) },
+  {
+    id: 'products',
+    label: 'Products',
+    base: '/products',
+    links: products.map((p) => ({ href: `/products/${p.slug}`, label: p.name, note: p.short })),
+    feature: { title: 'Hear the agent on a real call', note: 'Ring it now and ask anything.', href: DEMO_NUMBER_TEL, cta: `Call ${DEMO_NUMBER_DISPLAY}` },
+  },
+  {
+    id: 'solutions',
+    label: 'Solutions',
+    base: '/solutions',
+    links: solutions.map((s) => ({ href: `/solutions/${s.slug}`, label: s.name, note: s.short })),
+    feature: { title: 'Sell AirFone in your city', note: 'Monthly income for every customer you bring.', href: '/resellers', cta: 'Become a reseller' },
+  },
 ];
 const plain = [
-  { href: '/resellers', label: 'Resellers' },
-  { href: '/blog', label: 'Blog' },
+  { href: '/blog', label: 'Insights' },
   { href: '/pricing', label: 'Pricing' },
+  { href: '/contact', label: 'Contact' },
 ];
 ---
 <header class="site-header">
+  <div class="utility">
+    <div class="wrap u-row">
+      <a href={DEMO_NUMBER_TEL} class="u-call">Hear the agent: <span class="mono">{DEMO_NUMBER_DISPLAY}</span></a>
+      <nav aria-label="Utility" class="u-links">
+        <a href="/resellers">Resellers</a>
+        <a href="/contact">Contact</a>
+        <a href={`${APP_URL}/login`}>Sign in</a>
+      </nav>
+    </div>
+  </div>
+
   <div class="wrap bar">
     <a class="logo" href="/" aria-label="AirFone home">
-      <img src="/brand/airfone-lockup.svg" alt="AirFone" width="150" height="31" class="logo-light" />
-      <img src="/brand/airfone-lockup-light.svg" alt="" width="150" height="31" class="logo-dark" aria-hidden="true" />
+      <img src="/brand/airfone-lockup.svg" alt="AirFone" width="140" height="29" class="logo-light" />
+      <img src="/brand/airfone-lockup-light.svg" alt="" width="140" height="29" class="logo-dark" aria-hidden="true" />
     </a>
 
     <nav class="nav-wide" aria-label="Main">
-      <ul>
+      <ul class="top">
         {groups.map((g) => (
           <li>
             <details class="menu" data-menu>
               <summary aria-current={path.startsWith(g.base) ? 'page' : undefined}>{g.label}</summary>
-              <ul class="menu-panel">
-                {g.links.map((l) => <li><a href={l.href} aria-current={current(l.href)}><span class="m-name">{l.label}</span><span class="m-note">{l.note}</span></a></li>)}
-              </ul>
+              <div class="mega">
+                <div class="wrap mega-grid">
+                  <ul class="mega-links">
+                    {g.links.map((l) => (
+                      <li><a href={l.href} aria-current={current(l.href)}><span class="m-name">{l.label}</span><span class="m-note">{l.note}</span></a></li>
+                    ))}
+                  </ul>
+                  <a class="mega-feature" href={g.feature.href}>
+                    <span class="f-title">{g.feature.title}</span>
+                    <span class="f-note">{g.feature.note}</span>
+                    <span class="f-cta">{g.feature.cta} <span aria-hidden="true">→</span></span>
+                  </a>
+                </div>
+              </div>
             </details>
           </li>
         ))}
@@ -50,17 +89,21 @@ const plain = [
           ))}
           <ul class="mobile-plain">
             {plain.map((l) => <li><a href={l.href} aria-current={current(l.href)}>{l.label}</a></li>)}
-            <li><a href="/contact" aria-current={current('/contact')}>Contact</a></li>
+            <li><a href="/resellers">Resellers</a></li>
+            <li><a href={`${APP_URL}/login`}>Sign in</a></li>
           </ul>
+          <a class="btn btn-primary mobile-cta" href={DEMO_NUMBER_TEL}>Call {DEMO_NUMBER_DISPLAY}</a>
         </nav>
       </details>
     </div>
   </div>
+  <div class="scrim" aria-hidden="true"></div>
 </header>
 
 <script>
-  // Close open menus on outside click, Escape, or when another opens.
+  const header = document.querySelector<HTMLElement>('.site-header')!;
   const menus = Array.from(document.querySelectorAll<HTMLDetailsElement>('[data-menu]'));
+  const sync = () => header.classList.toggle('menu-open', menus.some((m) => m.open && !m.classList.contains('mobile')));
   document.addEventListener('click', (e) => {
     for (const m of menus) if (m.open && !m.contains(e.target as Node)) m.open = false;
   });
@@ -70,60 +113,97 @@ const plain = [
   });
   for (const m of menus) m.addEventListener('toggle', () => {
     if (m.open) for (const o of menus) if (o !== m) o.open = false;
+    sync();
   });
+  // Open on hover with a mouse. A short delay keeps menus from flickering as
+  // the pointer crosses the bar; leaving the whole menu closes it.
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    for (const m of menus.filter((x) => !x.classList.contains('mobile'))) {
+      let t = 0;
+      const li = m.closest('li')!;
+      li.addEventListener('pointerenter', () => { clearTimeout(t); t = window.setTimeout(() => { m.open = true; }, 120); });
+      li.addEventListener('pointerleave', () => { clearTimeout(t); t = window.setTimeout(() => { m.open = false; }, 200); });
+      // A click on the label while hover-opened should not close it.
+      m.querySelector('summary')!.addEventListener('click', (e) => { if (m.open) { e.preventDefault(); } });
+    }
+  }
+
+  // Compact bar once the page scrolls.
+  const onScroll = () => {
+    header.classList.toggle('scrolled', scrollY > 24);
+    header.style.setProperty('--header-h', `${header.getBoundingClientRect().bottom}px`);
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 </script>
 
 <style>
-  .site-header {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    background: var(--canvas);
-    border-bottom: 1px solid var(--line);
-  }
-  .bar { display: flex; align-items: center; gap: var(--space-6); min-height: 72px; }
-  .logo { display: block; flex: none; }
-  .logo img { width: 132px; height: auto; }
+  .site-header { position: sticky; top: 0; z-index: 50; background: var(--canvas); border-bottom: 1px solid var(--line); }
+
+  .utility { background: var(--stage); color: var(--stage-ink); font-size: 14px; }
+  .u-row { display: flex; align-items: center; justify-content: space-between; min-height: 36px; gap: var(--space-4); }
+  .utility a { color: var(--stage-ink); text-decoration: none; }
+  .utility a:hover { text-decoration: underline; }
+  .u-links { display: flex; gap: var(--space-5); }
+  .scrolled .utility { display: none; }
+
+  .bar { display: flex; align-items: center; gap: var(--space-7); min-height: 72px; transition: min-height var(--fast) var(--ease); }
+  .scrolled .bar { min-height: 64px; }
+  .logo { flex: none; display: block; }
+  .logo img { width: 128px; height: auto; }
   .logo-dark { display: none; }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme='light']) .logo-light { display: none; }
     :root:not([data-theme='light']) .logo-dark { display: block; }
   }
 
-  .nav-wide { flex: 1; }
-  .nav-wide > ul { display: flex; gap: var(--space-1); list-style: none; margin: 0; padding: 0; align-items: center; }
+  .nav-wide { flex: 1; align-self: stretch; }
+  .top { display: flex; gap: var(--space-5); list-style: none; margin: 0; padding: 0; height: 100%; align-items: stretch; }
+  .top > li { display: flex; }
   summary { list-style: none; cursor: pointer; }
   summary::-webkit-details-marker { display: none; }
   .nav-link, .menu > summary {
-    display: inline-flex; align-items: center; gap: 6px;
-    min-height: 44px; padding: 0 var(--space-3);
-    border-radius: var(--radius-control);
+    display: inline-flex; align-items: center; gap: 8px; height: 100%; min-height: 44px;
     color: var(--ink); text-decoration: none; font-size: 16px; font-weight: 500;
-    transition: color var(--fast) var(--ease);
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+    transition: color var(--fast) var(--ease), border-color var(--fast) var(--ease);
   }
-  .nav-link:hover, .menu > summary:hover, .menu[open] > summary { color: var(--link); }
+  .nav-link:hover, .menu > summary:hover { color: var(--link); }
+  .menu[open] > summary, .nav-link[aria-current='page'], .menu > summary[aria-current='page'] { color: var(--link); border-bottom-color: var(--brand); }
   .menu > summary::after {
-    content: ''; width: 7px; height: 7px; margin-top: -3px;
+    content: ''; width: 6px; height: 6px; margin-top: -3px;
     border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
     transform: rotate(45deg); transition: transform var(--fast) var(--ease);
   }
   .menu[open] > summary::after { transform: translateY(3px) rotate(-135deg); }
-  [aria-current='page'] { color: var(--link); }
 
-  .menu { position: relative; }
-  .menu-panel {
-    position: absolute; top: calc(100% + 12px); left: 0; width: 400px;
-    list-style: none; margin: 0; padding: var(--space-3) var(--space-5);
-    background: var(--canvas); border: 1px solid var(--line); border-radius: var(--radius-panel);
+  /* Full-width mega menu below the whole header. */
+  .mega {
+    position: absolute; left: 0; right: 0; top: 100%;
+    background: var(--canvas); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
   }
-  .menu-panel li + li { border-top: 1px solid var(--line); }
-  .menu-panel a { display: grid; gap: 2px; padding: var(--space-3) 0; color: var(--ink); text-decoration: none; }
-  .m-name { font-size: 16px; font-weight: 600; }
-  .m-note { font-size: 14px; line-height: 1.4; color: var(--ink-muted); }
-  .menu-panel a:hover .m-name, .menu-panel a[aria-current='page'] .m-name { color: var(--link); }
+  .menu[open] .mega { animation: drop var(--slow) var(--ease); }
+  @keyframes drop { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+  .mega-grid { display: grid; grid-template-columns: 1fr 340px; gap: var(--space-8); padding-block: var(--space-7); }
+  .mega-links { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--space-7); }
+  .mega-links a { display: grid; gap: 4px; padding: var(--space-4) 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+  .m-name { font-size: 17px; font-weight: 600; transition: color var(--fast) var(--ease); }
+  .m-note { font-size: 14px; line-height: 1.45; color: var(--ink-muted); }
+  .mega-links a:hover .m-name, .mega-links a[aria-current='page'] .m-name { color: var(--link); }
+  .mega-feature {
+    display: grid; align-content: end; gap: var(--space-2); padding: var(--space-6);
+    background: var(--stage); color: var(--stage-ink); border-radius: var(--radius-panel); text-decoration: none; min-height: 220px;
+  }
+  .f-title { font-size: 1.375rem; font-weight: 600; line-height: 1.25; }
+  .f-note { color: var(--stage-muted); font-size: 16px; }
+  .f-cta { margin-top: var(--space-3); color: var(--lime); font-weight: 600; }
+  .mega-feature:hover .f-cta span { display: inline-block; transform: translateX(4px); transition: transform var(--fast) var(--ease); }
+
+  .scrim { position: absolute; left: 0; right: 0; top: 100%; height: 100vh; background: var(--ink); opacity: 0; pointer-events: none; transition: opacity var(--slow) var(--ease); }
+  .menu-open .scrim { opacity: 0.25; }
 
   .actions { display: flex; align-items: center; gap: var(--space-3); margin-left: auto; }
-  .actions .btn { min-height: 44px; padding: 0 var(--space-4); font-size: 16px; }
+  .actions .btn { min-height: 44px; padding: 0 var(--space-5); font-size: 16px; }
 
   .mobile { display: none; }
   .mobile > summary {
@@ -136,24 +216,31 @@ const plain = [
   .bars::before { top: -5px; }
   .bars::after { top: 5px; }
   .mobile-panel {
-    position: fixed; left: 0; right: 0; top: 73px; bottom: 0; overflow-y: auto;
+    position: fixed; left: 0; right: 0; top: var(--header-h, 109px); bottom: 0; overflow-y: auto;
     background: var(--canvas); padding: var(--space-5) var(--gutter) var(--space-8);
   }
   .mobile-group + .mobile-group { margin-top: var(--space-6); }
-  .mobile-title { font-size: 16px; font-weight: 600; color: var(--ink-muted); margin-bottom: var(--space-2); }
+  .mobile-title { font-size: 14px; font-weight: 600; color: var(--ink-muted); margin-bottom: var(--space-2); }
   .mobile-panel ul { list-style: none; margin: 0; padding: 0; }
-  .mobile-panel a {
-    display: flex; align-items: center; min-height: 48px;
-    color: var(--ink); text-decoration: none; font-size: 18px; border-bottom: 1px solid var(--line);
-  }
+  .mobile-panel ul a { display: flex; align-items: center; min-height: 48px; color: var(--ink); text-decoration: none; font-size: 18px; border-bottom: 1px solid var(--line); }
   .mobile-plain { margin-top: var(--space-6) !important; }
+  .mobile-cta { margin-top: var(--space-6); width: 100%; }
 
-  @media (max-width: 959px) {
+  @media (max-width: 1023px) {
+    .bar { gap: var(--space-4); }
     .nav-wide { display: none; }
     .mobile { display: block; }
+    .scrim { display: none; }
+  }
+  @media (max-width: 599px) {
+    .u-links { display: none; }
+    .u-row { justify-content: center; }
   }
   @media (max-width: 399px) {
+    .logo img { width: 112px; }
+    .actions { gap: var(--space-2); }
     .actions .btn { padding: 0 var(--space-3); }
     .mobile-label { display: none; }
   }
+  @media (prefers-reduced-motion: reduce) { .menu[open] .mega { animation: none; } }
 </style>
