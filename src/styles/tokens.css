@@ -17,7 +17,7 @@
   --stage-line: #4A6A22;
   --error: #B3261E;
 
-  --font-sans: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-sans: 'Poppins', 'Poppins Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   --radius-control: 8px;

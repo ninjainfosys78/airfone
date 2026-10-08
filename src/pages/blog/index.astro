@@ -15,8 +15,8 @@ const tags = allTags(all.map((p) => ({ ...p, data: { ...p.data, draft: false } }
 <Base title="Insights" description="Guides for Nepali businesses on answering every call: AI call agents, business phone systems, website voice agents and chatbots." path="/blog" jsonLd={[breadcrumbJsonLd([{ name: 'Insights', path: '/blog' }])]}>
   <section class="section">
     <div class="wrap">
-      <h1>Insights</h1>
-      <Topics tags={tags} />
+      <h1 data-enter>Insights</h1>
+      <div data-enter style="--d:1"><Topics tags={tags} /></div>
       {items.length ? <PostList items={items} feature /> : <p class="muted">The first posts are on their way.</p>}
       <Pager current={1} last={last} />
     </div>

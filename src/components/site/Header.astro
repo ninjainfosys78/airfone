@@ -145,8 +145,6 @@ const plain = [
   const mobile = menus.find((m) => m.classList.contains('mobile'));
   mobile?.addEventListener('toggle', () => {
     document.documentElement.classList.toggle('menu-locked', mobile.open);
-    const lenis = (window as unknown as { lenis?: { stop(): void; start(): void } }).lenis;
-    if (mobile.open) lenis?.stop(); else lenis?.start();
   });
   // The summary toggles natively; route its close through the animation.
   mobile?.querySelector('summary')!.addEventListener('click', (e) => { if (mobile.open) { e.preventDefault(); close(mobile); } });

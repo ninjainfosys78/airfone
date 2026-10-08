@@ -4,6 +4,10 @@
 @import '@fontsource/poppins/devanagari-400.css';
 @import './tokens.css';
 
+/* Arial sized to Poppins' metrics, so text keeps its size and line breaks
+   if Poppins arrives late. Stops the header and headings jumping on load. */
+@font-face { font-family: 'Poppins Fallback'; src: local('Arial'), local('Helvetica Neue'), local('Helvetica'); size-adjust: 112.5%; ascent-override: 93%; descent-override: 31%; line-gap-override: 9%; }
+
 *, *::before, *::after { box-sizing: border-box; }
 
 html {

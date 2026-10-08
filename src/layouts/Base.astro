@@ -5,6 +5,7 @@ import Seo from '../components/seo/Seo.astro';
 import Header from '../components/site/Header.astro';
 import Footer from '../components/site/Footer.astro';
 import font400 from '@fontsource/poppins/files/poppins-latin-400-normal.woff2?url';
+import font500 from '@fontsource/poppins/files/poppins-latin-500-normal.woff2?url';
 import font600 from '@fontsource/poppins/files/poppins-latin-600-normal.woff2?url';
 
 export interface Props {
@@ -30,6 +31,7 @@ const props = Astro.props;
     <meta name="theme-color" content="#FFFFFF" />
     <meta name="color-scheme" content="light" />
     <link rel="preload" href={font400} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={font500} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={font600} as="font" type="font/woff2" crossorigin />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -49,17 +51,7 @@ const props = Astro.props;
     <Footer />
     <script>
       import { initTaps } from '../scripts/tap';
-      import Lenis from 'lenis';
       initTaps();
-      // Weighted, eased scrolling on mouse wheels. Touch keeps native scroll.
-      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        const lenis = new Lenis({ lerp: 0.09, wheelMultiplier: 1, anchors: true });
-        (window as unknown as { lenis: Lenis }).lenis = lenis;
-        const raf = (t: number) => { lenis.raf(t); requestAnimationFrame(raf); };
-        requestAnimationFrame(raf);
-        // Open menus own their scroll.
-        document.querySelectorAll('.mobile-panel').forEach((el) => el.setAttribute('data-lenis-prevent', ''));
-      }
     </script>
     <script>
       // Fade sections in as they enter the viewport. Content is visible
