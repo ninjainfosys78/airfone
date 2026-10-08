@@ -13,12 +13,11 @@ import { solutions } from '../../data/solutions';
 </section>
 
 <style>
-  .list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--space-7); }
+  .list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; }
   .list { border-bottom: 1px solid var(--line); }
   a { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); min-height: 96px; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
   .name { font-size: clamp(1.375rem, 1.1rem + 1vw, 1.875rem); font-weight: 600; line-height: 1.2; transition: color var(--fast) var(--ease); }
   .arrow { color: var(--link); font-size: 1.5rem; transition: transform var(--fast) var(--ease); }
   a:hover .name { color: var(--link); }
   a:hover .arrow { transform: translateX(4px); }
-  @media (max-width: 767px) { .list { grid-template-columns: 1fr; } }
 </style>
