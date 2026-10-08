@@ -1,4 +1,5 @@
 ---
+import ArrowRight from '@lucide/astro/icons/arrow-right';
 import Base from '../../layouts/Base.astro';
 import CallPlayer from '../../components/player/CallPlayer.astro';
 import CtaBand from '../../components/site/CtaBand.astro';
@@ -48,7 +49,7 @@ const used = s.products.map(productBySlug).filter((p) => !!p);
     <div class="wrap two">
       <h2>Products to use</h2>
       <ul class="prods">
-        {used.map((p) => <li><a href={`/products/${p!.slug}`}><span class="pname">{p!.name}</span><span class="arrow" aria-hidden="true">→</span></a></li>)}
+        {used.map((p) => <li><a href={`/products/${p!.slug}`}><span class="pname">{p!.name}</span><span class="arrow" aria-hidden="true"><ArrowRight class="arrow-icon" size={18} stroke-width={2} aria-hidden="true" /></span></a></li>)}
       </ul>
     </div>
   </section>
@@ -73,7 +74,7 @@ const used = s.products.map(productBySlug).filter((p) => !!p);
   .prods { list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--line); }
   .prods a { display: flex; justify-content: space-between; align-items: center; min-height: 88px; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
   .pname { font-size: clamp(1.375rem, 1.1rem + 1vw, 1.75rem); font-weight: 600; transition: color var(--fast) var(--ease); }
-  .arrow { color: var(--link); font-size: 1.5rem; transition: transform var(--fast) var(--ease); }
+  .arrow { display: inline-flex; color: var(--link); font-size: 1.5rem; transition: transform var(--fast) var(--ease); }
   .prods a:hover .pname { color: var(--link); }
   .prods a:hover .arrow { transform: translateX(4px); }
   @media (max-width: 959px) {

@@ -1,4 +1,5 @@
 ---
+import ArrowRight from '@lucide/astro/icons/arrow-right';
 // Enterprise-style masthead (IBM / TCS / McKinsey pattern): a thin utility
 // strip, a clean main bar, and full-width mega menus that drop below the
 // whole header with columns and one featured item.
@@ -64,7 +65,7 @@ const plain = [
                   </ul>
                   <a class="mega-feature" href={g.feature.href}>
                     <span class="f-title">{g.feature.title}</span>
-                    <span class="f-cta">{g.feature.cta} <span aria-hidden="true">→</span></span>
+                    <span class="f-cta">{g.feature.cta} <span aria-hidden="true"><ArrowRight class="arrow-icon" size={18} stroke-width={2} aria-hidden="true" /></span></span>
                   </a>
                 </div>
               </div>
@@ -83,13 +84,13 @@ const plain = [
           {groups.map((g) => (
             <div class="mobile-group">
               <h2 class="mobile-title">{g.label}</h2>
-              <ul>{g.links.map((l) => <li><a href={l.href} aria-current={current(l.href)}>{l.label}</a></li>)}</ul>
+              <ul>{g.links.map((l) => <li><a href={l.href} aria-current={current(l.href)}>{l.label}<ArrowRight class="arrow-icon" size={18} stroke-width={2} aria-hidden="true" /></a></li>)}</ul>
             </div>
           ))}
           <ul class="mobile-plain">
-            {plain.map((l) => <li><a href={l.href} aria-current={current(l.href)}>{l.label}</a></li>)}
-            <li><a href="/resellers">Resellers</a></li>
-            <li><a href={`${APP_URL}/login`}>Sign in</a></li>
+            {plain.map((l) => <li><a href={l.href} aria-current={current(l.href)}>{l.label}<ArrowRight class="arrow-icon" size={18} stroke-width={2} aria-hidden="true" /></a></li>)}
+            <li><a href="/resellers">Resellers<ArrowRight class="arrow-icon" size={18} stroke-width={2} aria-hidden="true" /></a></li>
+            <li><a href={`${APP_URL}/login`}>Sign in<ArrowRight class="arrow-icon" size={18} stroke-width={2} aria-hidden="true" /></a></li>
           </ul>
           <div class="mobile-actions">
             <a class="btn btn-secondary" href={DEMO_NUMBER_TEL}>Call us</a>
@@ -225,8 +226,9 @@ const plain = [
     background: var(--stage); color: var(--stage-ink); border-radius: var(--radius-panel); text-decoration: none; min-height: 180px;
   }
   .f-title { font-size: 1.375rem; font-weight: 600; line-height: 1.25; }
-  .f-cta { margin-top: var(--space-3); color: var(--lime); font-weight: 600; }
-  .mega-feature:hover .f-cta span { display: inline-block; transform: translateX(4px); transition: transform var(--fast) var(--ease); }
+  .f-cta { display: inline-flex; align-items: center; gap: 6px; margin-top: var(--space-3); color: var(--lime); font-weight: 600; }
+  .f-cta span { display: inline-flex; transition: transform var(--fast) var(--ease); }
+  .mega-feature:hover .f-cta span { display: inline-flex; transform: translateX(4px); transition: transform var(--fast) var(--ease); }
 
 
   .actions { display: flex; align-items: center; gap: var(--space-3); margin-left: auto; }
@@ -263,9 +265,9 @@ const plain = [
     color: var(--ink); text-decoration: none; font-size: 18px; font-weight: 500; border-bottom: 1px solid var(--line);
     transition: color var(--fast) var(--ease);
   }
-  .mobile-panel ul a::after { content: '→'; color: var(--ink-muted); font-weight: 400; transition: transform var(--fast) var(--ease); }
+  .mobile-panel ul a :global(.arrow-icon) { color: var(--ink-muted); transition: transform var(--fast) var(--ease); }
   .mobile-panel ul a:active { color: var(--link); }
-  .mobile-panel ul a:active::after { transform: translateX(4px); }
+  .mobile-panel ul a:active :global(.arrow-icon) { transform: translateX(4px); }
   .mobile-panel ul a[aria-current='page'] { color: var(--link); }
   .mobile-plain { margin-top: var(--space-6) !important; }
   .mobile-actions { margin-top: auto; padding-top: var(--space-6); display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }

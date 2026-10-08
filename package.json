@@ -21,6 +21,7 @@
     "@fontsource-variable/source-serif-4": "5.2.8",
     "@fontsource/jetbrains-mono": "^5.2.0",
     "@fontsource/poppins": "^5",
+    "@lucide/astro": "1.53.0",
     "astro": "^5"
   },
   "devDependencies": {

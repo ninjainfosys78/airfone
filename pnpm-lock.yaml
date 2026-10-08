@@ -20,6 +20,9 @@ importers:
       '@fontsource/poppins':
         specifier: ^5
         version: 5.3.0
+      '@lucide/astro':
+        specifier: ^1.53.0
+        version: 1.53.0(astro@5.18.2(@types/node@24.13.4)(rollup@4.62.4)(typescript@5.9.3))
       astro:
         specifier: ^5
         version: 5.18.2(@types/node@24.13.4)(rollup@4.62.4)(typescript@5.9.3)
@@ -697,6 +700,11 @@ packages:
 
   '@jridgewell/sourcemap-codec@1.5.5':
     resolution: {integrity: sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og==}
+
+  '@lucide/astro@1.53.0':
+    resolution: {integrity: sha512-sOK6+ZBIzlFEhGjifBxDYynGu9WrjdhYiOTMgfwdgEVHMPm7o3/YFnfSnWgiQ8uQsQiIWOM98rjJZJkPlLcb9g==}
+    peerDependencies:
+      astro: ^4 || ^5 || ^6 || ^7
 
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
     resolution: {integrity: sha512-oTXEIha4SsuXdTA4Iyskj0kpdx2yVXdhd75c2v3xGrHFfVMsbhTPZU/nMPL4sWKo4pBHm3aucLaqGlF696dTyQ==}
@@ -2910,6 +2918,10 @@ snapshots:
     optional: true
 
   '@jridgewell/sourcemap-codec@1.5.5': {}
+
+  '@lucide/astro@1.53.0(astro@5.18.2(@types/node@24.13.4)(rollup@4.62.4)(typescript@5.9.3))':
+    dependencies:
+      astro: 5.18.2(@types/node@24.13.4)(rollup@4.62.4)(typescript@5.9.3)
 
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
     optional: true
