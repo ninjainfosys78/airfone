@@ -34,7 +34,18 @@ class CallPlayer extends HTMLElement {
     this.btn.addEventListener('click', () => this.toggle());
     // Anything marked data-play-for="<audio id>" (the orb) plays this call.
     document.querySelectorAll<HTMLElement>(`[data-play-for="${this.audio.id}"]`).forEach((el) => {
-      el.addEventListener('click', () => this.toggle());
+      el.addEventListener('click', () => {
+        this.toggle();
+        // One ripple outward from the tapped control.
+        const t = el.classList.contains('tap') ? el : el.querySelector<HTMLElement>('.tap');
+        if (t && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          t.classList.remove('ripple'); void t.offsetWidth; t.classList.add('ripple');
+          setTimeout(() => t.classList.remove('ripple'), 650);
+        }
+      });
+      // Keyboard presses get the same squash as a mouse press.
+      el.addEventListener('keydown', (e) => { if (e.key === ' ' || e.key === 'Enter') (el.classList.contains('tap') ? el : el.querySelector('.tap'))?.classList.add('pressed'); });
+      el.addEventListener('keyup', () => (el.classList.contains('tap') ? el : el.querySelector('.tap'))?.classList.remove('pressed'));
       this.audio.addEventListener('play', () => el.setAttribute('aria-pressed', 'true'));
       this.audio.addEventListener('pause', () => el.setAttribute('aria-pressed', 'false'));
     });

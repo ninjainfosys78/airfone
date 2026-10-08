@@ -15,7 +15,7 @@ import { DEMO_NUMBER_DISPLAY, DEMO_NUMBER_TEL } from '../../config/site';
     <div class="stage">
       <button type="button" class="orb-btn" data-play-for="call-clinic" aria-pressed="false" aria-label="Play the example clinic call">
         <CallOrb for="call-clinic" timing="/audio/clinic.json" size={340} />
-        <span class="orb-icon" aria-hidden="true">
+        <span class="orb-icon tap" aria-hidden="true">
           <svg class="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
           <svg class="i-pause" viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor" /></svg>
         </span>
@@ -33,10 +33,13 @@ import { DEMO_NUMBER_DISPLAY, DEMO_NUMBER_TEL } from '../../config/site';
   .stage { display: grid; justify-items: center; gap: var(--space-5); }
   .orb-btn { position: relative; display: grid; place-items: center; padding: 0; border: 0; background: none; cursor: pointer; border-radius: 50%; }
   .orb-icon {
-    position: absolute; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%;
+    position: absolute; display: grid; place-items: center; width: 72px; height: 72px; border-radius: 50%;
     background: var(--stage-ink); color: var(--on-lime);
-    transition: opacity var(--slow) var(--ease), transform var(--slow) var(--ease);
+    transition: opacity var(--slow) var(--ease), transform 180ms cubic-bezier(0.2, 0, 0, 1);
   }
+  .orb-btn:hover .orb-icon { transform: scale(1.08); }
+  .orb-btn:hover .orb-icon::before { opacity: 0.6; transform: scale(1); }
+  .orb-btn:active .orb-icon { transform: scale(0.9); transition-duration: 90ms; }
   .orb-icon svg { width: 26px; height: 26px; }
   .orb-icon .i-pause, .orb-btn[aria-pressed='true'] .i-play { display: none; }
   .orb-btn[aria-pressed='true'] .i-pause { display: block; }

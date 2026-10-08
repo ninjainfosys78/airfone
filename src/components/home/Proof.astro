@@ -10,7 +10,7 @@ const fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).p
     <div class="side on-stage">
       <h2>Hear AirFone answer a real customer</h2>
       <div class="ctrl">
-        <button type="button" class="big" data-play-for="call-real" aria-pressed="false" aria-label="Play the real call">
+        <button type="button" class="big tap" data-play-for="call-real" aria-pressed="false" aria-label="Play the real call">
           <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
           <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor" /></svg>
         </button>
@@ -46,9 +46,8 @@ const fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).p
   .ctrl { display: flex; align-items: center; gap: var(--space-4); }
   .big {
     flex: none; display: grid; place-items: center; width: 72px; height: 72px; border: 0; border-radius: 50%;
-    background: var(--lime); color: var(--on-lime); cursor: pointer; transition: background-color var(--fast) var(--ease);
+    background: var(--lime); color: var(--on-lime); cursor: pointer;
   }
-  .big:hover { background: var(--stage-ink); }
   .big:focus-visible { outline: 2px solid var(--stage-ink); outline-offset: 3px; }
   .big svg { width: 28px; height: 28px; }
   .big .i-pause, .big[aria-pressed='true'] .i-play { display: none; }
