@@ -7,44 +7,38 @@ pillar: true
 draft: false
 ---
 
-It is eleven in the morning at a mobile shop in New Road. Two customers are at the counter, one of them arguing about a cracked screen. The phone rings. It rings again. Someone glances at it, decides the counter matters more, and lets it go. On the other end, a person who wanted to know whether you have the new Redmi in stock hangs up and dials the shop next door.
+It's eleven in the morning at a mobile shop on New Road. There are two customers at the counter, and one of them wants a refund for a cracked screen. The phone rings. Somebody looks at it, looks back at the customer, and lets it ring out.
 
-Nobody in the shop will ever know that call happened. That is the quiet problem with a missed call: it leaves no trace. There is no angry review and no complaint, just a sale that went somewhere else.
+The person calling only wanted to know if the new model was in stock. They'll try the shop next door. Nobody at the counter will ever know they called.
 
-An AI call agent is a simple idea aimed at that moment. When the phone rings and nobody can pick up, something still does.
+That's the problem we built AirFone's call agent for. Not the angry customer at the counter, who's getting attention. The one on the phone, who isn't.
 
-## What actually happens on the call
+## What the caller hears
 
-The caller rings your usual number. They are greeted with your business name, in Nepali, by a voice that sounds calm and unhurried. They ask what they wanted to ask: is it in stock, how much is it, are you open on Saturday, can I bring it in for repair today. The agent answers from what you have told it, the same way a well-briefed new employee would.
+They ring your normal number. The agent picks up, says your business name, and asks how it can help, in Nepali. The caller asks whatever they were going to ask: price, stock, whether you're open Saturday, whether they can bring a laptop in for repair this afternoon.
 
-If the caller wants to book a time or hold an item, the agent takes their name and number. If they ask for a person, or the question is one it should not handle, it passes the call to your team. Your staff member picks up with a short note of what the caller already said, so nobody has to start again.
+It answers from what you've told it. If they want to book a time or have something put aside, it takes their name and number. If they ask for a person, or it's a call the agent shouldn't handle, it transfers them to your staff with a short note of what they've said so far. Your staff member doesn't have to start with "how can I help you?"
 
-Afterwards, every call is there to read. You can scroll through a morning's calls the way you would scroll through messages, and see exactly what people asked and what they were told.
+Every call is recorded and written out as text. You can read a morning's calls in a couple of minutes.
 
-## It only knows what you teach it
+## Setting it up
 
-This is the part people expect to be hard, and it usually is not. The agent does not guess. It works from what you give it, and what most businesses need is surprisingly small.
+People expect this part to be a project. It usually takes an afternoon.
 
-Start with your price list, in whatever form it already lives, a spreadsheet or a PDF. Then sit down for twenty minutes and write out the ten questions you hear most often, with the answer you would give. Finally, decide where the agent should stop: refunds, complaints and anything about a customer's own account are good examples of calls that belong to a person.
+The agent only knows what you give it, so start with your price list in whatever form it's in now. A spreadsheet's fine. A PDF's fine. Then write down the questions you get asked most and the answers you'd give. Ten is plenty to start. Last, decide what it shouldn't touch. Most businesses send refunds, complaints and anything about a customer's own account straight to a person.
 
-That is enough to begin. When a price changes, you change it in one place, and the next caller hears the new price. There is no script to rewrite and no one to retrain.
+When a price changes, change it once. The next caller gets the new price.
 
-## Where it earns its keep
+## Where you'll notice it
 
-In the calls we have listened to, the difference shows up in three moments.
+Mostly at the busy hour. Every business has one, and that's when calls go unanswered. The agent can be on fifteen calls at the same time, so nobody hears an engaged tone.
 
-The first is the rush. Most businesses have an hour or two each day when every line is busy. The agent can hold up to fifteen conversations at once, so the caller who would have heard an engaged tone hears an answer instead.
+You'll also notice it after closing. A lot of people only get round to calling in the evening, and right now those calls just ring. And your staff will notice it, because they'll stop answering "where exactly are you?" forty times a day.
 
-The second is the evening. A surprising number of people call after closing, often because that is when they finally have time. Today those calls ring out. With an agent on the line, they get their answer and you get their number.
+## What it shouldn't do
 
-The third is the question you are tired of answering. "What time do you close?" "Where exactly are you?" "Do you deliver to Bhaktapur?" Your team hears these dozens of times a day. Handing them over gives your people back the time for the conversations that need them.
+It isn't a replacement for your team and we don't sell it as one. Money a customer has already paid, complaints, anything medical or legal: those calls should reach a person, and AirFone hands them over mid-call with a summary so the caller doesn't have to repeat themselves.
 
-## Where a person should still answer
+## Try it
 
-An agent is not there to replace your team, and it should not pretend to be one. Calls about money a customer has already paid, complaints, and anything with a medical, legal or safety side to it should go to a person. AirFone passes those calls over in the middle of the conversation, along with a summary, so the caller is never made to explain themselves twice.
-
-The aim is not to answer fewer calls with people. It is to make sure that every call gets answered, and that your people spend their time on the ones that matter most.
-
-## The easiest way to judge
-
-Reading about a phone call only gets you so far. The [AI call agent page](/products/ai-call-agent) has a real recorded call from a business in Kathmandu, and if you ring 970-269-7774 you can talk to the agent yourself. Ask it something awkward. That will tell you more than this article can.
+The [AI call agent page](/products/ai-call-agent) has a real recorded call from a business in Kathmandu. Or ring 970-269-7774 and talk to it yourself. Ask it something difficult.

@@ -6,30 +6,30 @@ tags: [phone-system, guides]
 draft: false
 ---
 
-Somewhere in a lot of Kathmandu offices there is a cupboard with a small grey box in it. It has a tangle of cables, a blinking light, and a technician's number written on a piece of tape. That box is the phone system, and for years it has done its job.
+A lot of offices in Kathmandu have a PBX box in a cupboard somewhere. Grey, a few cables, a light that blinks, and a technician's number on a strip of tape. It's been doing the job for years.
 
-The trouble starts when the business grows. A second branch opens. Someone starts working from home two days a week. The receptionist goes on leave and nobody else's desk phone can pick up the main line. Each of these needs a visit from the technician, and some of them simply cannot be done.
+It starts to struggle when the business grows. You open a second branch. Someone works from home on Fridays. The receptionist is on leave and the main line only rings at her desk. Each change means calling the technician, and some of them he can't do at all.
 
-An online phone system, sometimes called an IP/PBX or cloud PBX, takes the box out of the cupboard and puts it on the internet. The idea sounds technical, but what changes for you is mostly practical.
+An online phone system (you'll also see it called an IP/PBX or cloud PBX) does the same job without the box.
 
-## Your number stays, the box goes
+## What changes
 
-Your existing number connects to the new system through what is called a SIP line. Callers dial the same number they always have and notice no difference. Behind the scenes, though, the call is no longer tied to a particular desk.
+Your existing number connects to it over a SIP line. Callers dial the same number as before and don't notice anything.
 
-Each person on your team gets their own extension, and they can answer it in the AirFone app on their phone or in a browser on their computer. The receptionist can take calls from home. The branch manager in Pokhara has an extension on the same system as head office. When someone is away, their calls can go to a colleague or a queue.
+What's different is that calls aren't tied to a desk any more. Everyone gets an extension they can answer in the AirFone app on their phone or in a browser. The receptionist can take calls from home. A branch in Pokhara can sit on the same system as head office. If someone's away, their calls go to a colleague or a queue.
 
-Call menus, queues and opening hours become settings you change yourself, in a few minutes, rather than a job for a technician. And every call is recorded, which tends to be the thing people did not know they wanted until they had it.
+You set up call menus, queues and opening hours yourself, which takes minutes. And every call is recorded, which most people don't think they need until the first time they do.
 
-## When it is worth switching
+## Should you switch?
 
-If you have one office, a few staff who all sit at their desks, and calls are rarely missed, the box in the cupboard may well be fine for now.
+If you have one office, everyone works at a desk and you rarely miss calls, the box is probably fine for now.
 
-The case for switching becomes strong when your business stops looking like that. More than one location is the clearest sign. So is having people who work away from a desk, or losing calls at busy times because a single line is engaged. Businesses that need call recordings for quality or compliance usually find the move pays for itself in that alone.
+It's worth switching when that stops being true: a second location, staff who aren't at a desk, or calls lost at busy times because one line is engaged. If you need recordings for quality or compliance, that alone usually justifies it.
 
-There is one more reason that is easy to miss. Once your calls run through an online system, adding an AI agent later is a setting, not a new project. You can start with extensions and queues today and switch the agent on for after-hours calls whenever you are ready.
+It also makes adding an AI agent later easy. Once your calls run through AirFone, turning the agent on for after-hours calls is a setting, not another installation.
 
-## What it feels like for callers
+## For your callers
 
-Nothing changes for the people who call you, and that is the point. Same number, same greeting. They simply get answered more often.
+Nothing changes. Same number, same greeting. They just get answered more often.
 
-You can read more about the [business phone system](/products/phone-system), or start with the [AI call agent guide](/blog/ai-call-agent-guide) if you would like the agent on the line from the first day.
+More on the [business phone system](/products/phone-system), or read the [AI call agent guide](/blog/ai-call-agent-guide) if you want the agent from day one.

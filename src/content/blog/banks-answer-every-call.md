@@ -6,28 +6,26 @@ tags: [banks, ai-call-agent]
 draft: false
 ---
 
-Ask anyone who has worked the phones at a cooperative what salary day sounds like, and they will describe the same thing: every line lit up from ten in the morning, and almost every caller asking one of four or five questions.
+Salary day at a cooperative sounds the same everywhere. From about ten o'clock every line is busy, and most callers want one of four things: this month's fixed deposit rate, whether a branch is open on Saturday, what papers a loan needs, or help with a mobile banking PIN.
 
-What is the fixed deposit rate this month? Is the Baneshwor branch open on Saturday? What papers do I need for a home loan? Why is my mobile banking asking for a new PIN?
+None of that is hard to answer. It's on the rate sheet by the counter and the notice on your website. There just aren't enough people to read it out to everyone at once.
 
-None of these are hard questions. The answers already exist, in the rate sheet pinned by the counter and the notice on the website. The difficulty is only that there are hundreds of people asking them at the same time, and a handful of staff to answer.
+## Answering from what you already publish
 
-## Reading out what you already publish
+You give the call agent the documents you already have: the rate sheet, branch hours, the loan checklist, your mobile banking steps. It answers members from those, in Nepali, on as many calls as come in.
 
-An AI call agent is well suited to exactly this kind of call. You give it the documents you already have, the current rates, branch hours, the loan checklist, the steps for mobile banking, and it answers members from them, in Nepali, on as many calls at once as you need.
+Rates change, usually monthly. When they do, you upload the new sheet and the next caller hears the new rate. Nothing gets re-recorded. For a bank that matters, because reading out last month's rate is worse than not answering.
 
-When the rates change at the start of the month, you upload the new sheet. The next member who calls hears the new rate. There is nothing to re-record and no script to rewrite, which matters in a business where a wrong number read out over the phone is a real problem.
+## Accounts stay with your staff
 
-## The line it does not cross
+This is always the first question, and it should be.
 
-The question every bank asks first is the right one: what about accounts?
+The agent can't see balances or transactions. It isn't connected to your core banking system and doesn't need to be. If a member asks about their own account, it tells them a staff member will help and transfers the call, with a note of what they asked.
 
-The agent does not see balances, transactions or anything else about a member's own money. It is not connected to your core banking system and does not need to be. When a caller asks about their account, it says so plainly and passes the call to your staff, with a short note of what the member asked. Your team picks up already knowing why they are calling.
+In practice that split works well. The rate and branch questions, which are most of the volume, get answered straight away. The account questions reach someone who isn't already on hold with three rate enquiries.
 
-That division turns out to work well in practice. The general questions, which make up most of the volume, are handled at once. The personal ones, which need a person and often some care, reach a person who is not already buried under rate enquiries.
+## Every call on record
 
-## A record of every call
+Calls are recorded and transcribed, and you can search the transcripts by topic. If a member says later they were told something different, you can find the call and listen to it. Compliance teams tend to care about this more than anything else here.
 
-Every call is recorded and written out as text, and the transcripts can be searched by topic. If a member later says they were told something different, you can find the call and listen. For compliance teams, that is often the feature that matters most.
-
-You can hear an example of a member call on the [banks and cooperatives page](/solutions/banks). If you are new to the idea, the [AI call agent guide](/blog/ai-call-agent-guide) explains how it works for any business.
+There's an example member call on the [banks and cooperatives page](/solutions/banks). If you're new to call agents generally, start with the [AI call agent guide](/blog/ai-call-agent-guide).

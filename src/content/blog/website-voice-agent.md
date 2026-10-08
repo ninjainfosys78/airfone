@@ -6,26 +6,26 @@ tags: [website, voice-agent]
 draft: false
 ---
 
-Picture someone looking at your website on their phone at nine in the evening. They are fairly sure they want to buy, but they have one question first. Do you deliver to Chitwan? They scroll, check the menu, open the FAQ, and do not find it. They could send a message and wait until tomorrow. Most will close the tab instead.
+Someone's on your website at nine at night, on their phone. They want to buy, but first they need to know if you deliver to Chitwan. They check the menu, then the FAQ, and can't find it. They could send a message and wait for a reply tomorrow. Most people won't. They'll close the tab.
 
-A voice agent gives that visitor another option. They tap a button, ask their question out loud, and hear an answer straight away.
+A voice agent lets them just ask.
 
-## How it fits on your site
+## Adding it
 
-Adding it takes one line of code, the same kind of snippet you would paste in for analytics. A small talk button appears on your pages. When a visitor taps it, their browser asks for permission to use the microphone, and then they simply speak, in Nepali or English.
+It's one line of code, like the snippet you'd paste in for analytics. A small talk button appears on your pages. A visitor taps it, their browser asks for the microphone, and they speak, in Nepali or English.
 
-The agent answers from the same information as your phone agent: your web pages, your price lists, and the notes you have written about common questions. If you already use AirFone on your phone line, there is nothing new to teach it.
+It answers from the same information as your phone agent: your pages, price lists and the notes you've written. If you already use AirFone on your phone line, there's nothing new to set up.
 
-## What people actually ask
+## What people ask
 
-The questions are rarely complicated. On shop and service websites they are mostly practical: whether you deliver to a particular city, whether cash on delivery is possible, whether something is in stock, and when you are open. These are the small doubts that stand between a visitor and a purchase, and they are exactly the ones a website struggles to answer in the moment.
+Mostly practical things. Do you deliver to my city? Can I pay cash on delivery? Is this in stock? When are you open? Small questions, but they're often the last thing between a visitor and an order, and a website is bad at answering them in the moment.
 
-## From a question to a customer
+## Getting the lead
 
-When a visitor sounds ready to buy, the agent offers to take their name and number. Your team receives them along with the whole conversation, so the follow-up call starts with "I hear you wanted delivery to Chitwan" rather than "How can I help you?"
+When someone sounds ready to buy, the agent asks for their name and number and sends them to your team with the conversation attached. So your follow-up call can start with "you wanted delivery to Chitwan" instead of "how can I help?"
 
-## Voice, chat, or both
+## Talking or typing
 
-Not everyone wants to talk to a website, especially in an office or on a bus. The [website chatbot](/products/website-chatbot) uses the same knowledge, so you can offer typing and talking side by side and let visitors choose.
+Plenty of people won't talk to a website in an office or on a bus. The [website chatbot](/products/website-chatbot) uses the same knowledge, so you can offer both.
 
-You can hear an example on the [voice agent page](/products/website-voice-agent). For the phone side of the same idea, read the [AI call agent guide](/blog/ai-call-agent-guide).
+There's an example on the [voice agent page](/products/website-voice-agent). For phone calls, see the [AI call agent guide](/blog/ai-call-agent-guide).
