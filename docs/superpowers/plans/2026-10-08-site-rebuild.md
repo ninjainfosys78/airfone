@@ -1,11 +1,11 @@
 # airfone.app Rebuild Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: superpowers:executing-plans (native) task by task. Steps use `- [ ]`.
-> On approval this file is copied to `airfone-landing-site/docs/superpowers/plans/2026-10-08-site-rebuild.md` and committed.
+> Copy in repo: `airfone-landing-site/docs/superpowers/plans/2026-10-08-site-rebuild.md` (first version committed 06bc178). On approval this revision replaces it.
 
 **Goal:** Replace airfone.app with a premium, English-only, AirFone-branded marketing site for five products, with ElevenLabs demo calls, a Markdown blog and complete technical SEO, passing every row of the launch ledger.
 
-**Architecture:** Same repo (`~/Development/code/airfone-landing-site`), same Astro static build and eShasan route-bundle deploy (`scripts/make-bundle.mjs`). Astro 4 → 5 for the content layer. Zero JS by default; three small islands (call player, chat demo, forms) written as plain TS custom elements, not React. All page metadata flows through one `Seo.astro`; all copy and product facts live in typed data files so pages stay thin.
+**Architecture:** Same repo (`~/Development/code/airfone-landing-site`), same Astro static build and eShasan route-bundle deploy (`scripts/make-bundle.mjs`). Astro 4 → 5 for the content layer. Zero JS by default; four small islands (call orb, call player, chat demo, forms) written as plain TS custom elements, not React. All page metadata flows through one `Seo.astro`; all copy and product facts live in typed data files so pages stay thin.
 
 **Tech stack:** Astro 5, `@astrojs/sitemap`, `@astrojs/rss`, Zod (via `astro:content`), Vitest (unit), a Node `scripts/check-site.mjs` that audits `dist/`, `@axe-core/cli` + Lighthouse CI for a11y and speed, ElevenLabs TTS API + `ffmpeg` for audio.
 
@@ -14,6 +14,8 @@
 ## Context
 
 The owner wants airfone.app redesigned completely: premium, modern, AirFone's own brand (app colours, cloud mark), no AI look (impeccable.style catalogue), English only, five products (no social chat), no prices yet, honest proof (labelled example calls voiced with ElevenLabs, the real Pathibhara call), a .md blog, and SEO done to every edge case. The spec and the 192-row ledger were approved in conversation on 2026-10-08.
+
+**Revision 2 (2026-10-08):** the owner asked for a proper voice orb. Research picked Orbkit (zzzzshawn/orbkit, gallery orbkit.zzzzshawn.cloud) for the look and the orb-voice-visualizer approach (one fragment shader, no Three.js) for the engine. New Task 3 builds it; tasks renumbered 1 to 12.
 
 ## Global constraints (verbatim from spec)
 
@@ -30,15 +32,16 @@ The owner wants airfone.app redesigned completely: premium, modern, AirFone's ow
 - Canonical host `https://airfone.app`, no trailing slash except `/`.
 - ElevenLabs key only in git-ignored `.env`; never in `src/`, `public/` or the bundle. Free-tier clips are drafts (AU-6).
 - Demo number 970-269-7774. Contact phone and email from `src/config/site.ts`.
+- Orb: only Orbkit's MIT orbs (shdr-11, 12, 13, 14, 16, 17, 21, 23, 24, 27, 29, 30, 32, 33). Never the 19 XorDev ports (non-commercial). Keep the MIT notice in the ported file. Raw WebGL, no React, no Three.js, ≤ 8 KB gzipped. Recoloured to `--lime`/`--brand`; glow kept minimal (owner accepted the orb over the no-glow rule for this one element only).
 - Owner rules: no local screenshot/preview tests (owner reviews UI live); commit and show each finished piece; never rebuild just to show a UI change (dev server hot-reloads).
 
 ## Review focus (failure modes no happy-path test covers)
 
-1. **JS disabled or the player island fails** → transcript and a native `<audio controls>` still work. Test: Task 3 renders the player with no script and asserts `<audio controls>` + full transcript in HTML.
-2. **Form submitted twice / backend down / rate limited (`{"status":"rate_limited"}`)** → one request in flight, a clear retry message, input kept. Test: Task 7 unit tests `submitLead` against mocked 429/500/network error.
-3. **Blog post with a missing field, a draft, or a tag with one post** → build fails on missing field; draft absent from pages, sitemap, RSS; tag page still renders with correct canonical. Test: Task 8 fixtures.
-4. **Old URLs and slash variants** (`/features`, `/ne/pricing`, `/blog/x/`) → single 301 to the right page, never a chain or 200 duplicate. Test: Task 9 `check-site` redirect map assertions + nginx conf lint.
-5. **Very long content** (long post title, long product name at 320px, transcript with a 200-char line) → wraps, no horizontal scroll. Test: Task 10 `check-site` flags any element wider than viewport via axe + a 320px Lighthouse run; plus long-title fixture in Task 8.
+1. **JS disabled or the player island fails** → transcript and a native `<audio controls>` still work. Test: Task 4 renders the player with no script and asserts `<audio controls>` + full transcript in HTML.
+2. **Form submitted twice / backend down / rate limited (`{"status":"rate_limited"}`)** → one request in flight, a clear retry message, input kept. Test: Task 8 unit tests `submitLead` against mocked 429/500/network error.
+3. **Blog post with a missing field, a draft, or a tag with one post** → build fails on missing field; draft absent from pages, sitemap, RSS; tag page still renders with correct canonical. Test: Task 9 fixtures.
+4. **Old URLs and slash variants** (`/features`, `/ne/pricing`, `/blog/x/`) → single 301 to the right page, never a chain or 200 duplicate. Test: Task 10 `check-site` redirect map assertions + nginx conf lint.
+5. **Very long content** (long post title, long product name at 320px, transcript with a 200-char line) → wraps, no horizontal scroll. Test: Task 11 `check-site` flags any element wider than viewport via axe + a 320px Lighthouse run; plus long-title fixture in Task 9.
 
 ---
 
@@ -56,6 +59,7 @@ src/
   data/solutions.ts            # banks, shops, clinics, isps
   data/nav.ts                  # header + footer links
   components/site/Header.astro, Footer.astro, CtaBand.astro
+  components/orb/CallOrb.astro + call-orb.ts + shader.ts  # island (Orbkit MIT shader)
   components/player/CallPlayer.astro + call-player.ts   # island
   components/demos/ChatDemo.astro + chat-demo.ts         # island
   components/demos/PhoneMenu.astro, OutboundTimeline.astro (static)
@@ -107,7 +111,18 @@ Each task ends with: `pnpm test` green, `pnpm build` green, `node scripts/check-
 - [ ] Run → FAIL. Implement with `node-html-parser` (dev dep). Run → PASS.
 - [ ] Commit `feat: check-site auditor for ledger rows`. Ledger: evidence column for rows it covers now reads `pnpm check`.
 
-### Task 3: Call player + audio pipeline (draft clips)
+### Task 3: AirFone call orb (Orbkit MIT shader, raw WebGL)
+**Files:** create `src/components/orb/CallOrb.astro`, `src/components/orb/call-orb.ts`, `src/components/orb/shader.ts` (ported GLSL + MIT notice), `src/components/orb/orb-state.ts`, `src/assets/orb-still.png` (fallback frame), `tests/orb-state.test.ts`; throwaway `src/pages/_orb-pick.astro` (deleted at the end of this task).
+**Produces:** `<CallOrb audio={HTMLAudioElement id} timing={clipTimingUrl} size? />`; `orbState(t: number, timing): 'idle'|'listening'|'thinking'|'speaking'`; `smooth(prev: number, next: number, k=0.15): number`; custom element `airfone-orb` with `.setLevel(0..1)` and `.setState(s)`.
+- [ ] Spike (throwaway, labelled): fetch 4 MIT candidates from the Orbkit registry (`shdr-14` Dither, `shdr-21` Nimbus, `shdr-11` Hydrogen, `shdr-13` Ion), extract each fragment shader, render all four on `/_orb-pick` in AirFone colours driven by a sample clip. Owner picks one (and may name another MIT number from the gallery). Record the choice in the spec §4.
+- [ ] `tests/orb-state.test.ts`: `orbState` returns `speaking` inside an agent line, `listening` inside a caller line, `thinking` in a gap ≥ 300 ms, `idle` before start and after end; `smooth` converges and never overshoots 1. Run → FAIL.
+- [ ] Implement `orb-state.ts` → PASS.
+- [ ] Port the chosen shader into `shader.ts`: uniforms `uTime`, `uLevel`, `uState` (0 idle, 1 listening, 2 thinking, 3 speaking), `uColorA` = lime, `uColorB` = brand; strip any glow pass beyond the orb edge; keep the original MIT header.
+- [ ] `call-orb.ts`: one canvas, WebGL1 context, DPR capped at 2; level from an `AnalyserNode` on the linked `<audio>` (RMS over 300–3400 Hz bins, smoothed); state from `orbState(currentTime, timing)`; `IntersectionObserver` pauses rendering offscreen; `visibilitychange` pauses; no WebGL or `prefers-reduced-motion` → shows `orb-still.png` and does nothing else; `aria-hidden="true"` (the transcript carries the meaning).
+- [ ] `CallOrb.astro` renders the still image by default (content visible without JS), the element upgrades it. Size budget check: `gzip -c dist/_astro/call-orb*.js | wc -c` ≤ 8192.
+- [ ] Delete `_orb-pick.astro`. Commit `feat: AirFone call orb`. Ledger: add rows ORB-1 (MIT orb only, notice kept), ORB-2 (≤ 8 KB), ORB-3 (still frame without WebGL / reduced motion), ORB-4 (pauses offscreen), all with evidence.
+
+### Task 4: Call player + audio pipeline (draft clips)
 **Files:** create `scripts/voices/{clinic,bank,shop,isp,voice-agent,phone-menu,outbound}.json`, `scripts/make-voices.mjs`, `src/components/player/CallPlayer.astro`, `src/components/player/call-player.ts`, `tests/call-player.test.ts`, `tests/make-voices.test.ts`; output `public/audio/*`.
 **Interfaces:** clip script `{ id, label: "Example call · Clinic", lines: [{ speaker: "agent"|"caller", voice: string, text: string }] }`; timing file `{ id, label, duration, lines: [{ speaker, text, start, end }] }`; `<CallPlayer clip="clinic" />` and `<CallPlayer src={DEMO_AUDIO_URL} transcript={...} label="Real call · Pathibhara" />`.
 - [ ] Ask the owner to pick voices: list library voices with the key (`GET /v2/voices?category=premade&page_size=100`), shortlist 2 agent + 3 caller voices, generate one 10-second sample each (~1,000 chars total), owner chooses. Record IDs in `scripts/voices/voices.json`.
@@ -118,33 +133,33 @@ Each task ends with: `pnpm test` green, `pnpm build` green, `node scripts/check-
 - [ ] Implement `CallPlayer.astro` (static markup: label, native audio, transcript `<ol>`) and `call-player.ts` custom element that, when JS runs, swaps native controls for a play/pause `<button aria-pressed>`, a slim waveform (`<canvas>` drawn from a precomputed peaks array in the timing JSON, lime while playing, `--line` otherwise), and highlights/fades in the current line by `timeupdate`. Space/Enter toggle; respects reduced motion; on `error` restores native controls and shows "Audio couldn't load. The transcript is below."
 - [ ] Commit (audio files included) `feat: call player and ElevenLabs demo clips (drafts)`. Ledger: AU-2..5, DS-18/20.
 
-### Task 4: Home
+### Task 5: Home
 **Files:** create `src/pages/index.astro`, `src/components/home/*.astro` (Hero, ProductIndex, HowItWorks, Proof, Closing), `src/components/site/CtaBand.astro`; modify `src/data/products.ts` (create).
 **Produces:** `products: Product[]` with `{ slug, name, short, promise, demo: {kind: 'call'|'chat'|'menu'|'outbound', clip?}, sections, faq }`.
-- [ ] Hero: one ≤ 8-word headline about answering every call, no subtitle, "Book a demo" + "Call 970-269-7774" (`tel:`), CallPlayer (clinic) on the `--brand` stage with the cloud outline behind it. No badge, no eyebrow, no stats.
+- [ ] Hero: one ≤ 8-word headline about answering every call, no subtitle, "Book a demo" + "Call 970-269-7774" (`tel:`), CallOrb above a compact CallPlayer (clinic) on the `--brand` stage; the orb follows the call (speaking, listening, thinking). Product pages keep the plain waveform player so the orb stays special. No badge, no eyebrow, no stats.
 - [ ] ProductIndex: five products as a typographic index (name, one line, arrow link), not cards. HowItWorks: three steps as a numbered list only because it is a real sequence. Proof: Real call · Pathibhara player + facts true of the product ("Speaks Nepali on calls", "Answers 15 calls at once", "Hands over to a person mid-call"); hidden `<Testimonials>` slot rendering nothing when `data/testimonials.ts` is empty. Closing CTA band.
 - [ ] `pnpm build && pnpm check` → green. Owner reviews live. Commit `feat: home page`. Ledger: PG-1, CV-1..4, CV-6, SLOP rows for this page.
 
-### Task 5: Product pages
+### Task 6: Product pages
 **Files:** create `src/pages/products/[slug].astro`, `src/components/demos/{ChatDemo.astro,chat-demo.ts,PhoneMenu.astro,OutboundTimeline.astro}`, `tests/products.test.ts`.
 - [ ] `tests/products.test.ts`: exactly 5 products, exact spec names, unique slugs (`website-voice-agent`, `website-chatbot`, `ai-call-agent`, `phone-system`, `ai-phone-system`), each has a demo and ≥ 3 FAQ, none mentions price or social channels. FAIL → fill `products.ts` → PASS.
 - [ ] Page template: problem → product's own demo → what you get (prose + short list, not a card grid) → FAQ (`<details>`) → CTA. Demo by kind: voice agent and AI call agent use CallPlayer (AI call agent also shows the Pathibhara call); chatbot uses ChatDemo (scripted messages revealed on view, full transcript in HTML without JS); phone system uses PhoneMenu (static diagram of a menu routing a call, real HTML not an image) + clip; AI phone system uses OutboundTimeline (reminder call, answer, handover) + clip.
 - [ ] JSON-LD `softwareJsonLd` + breadcrumbs. Build + check green; owner reviews. Commit `feat: five product pages`. Ledger: PG-2, SD-2/4, CV-9 (list of marketed features vs built, appended to spec §9 for the owner).
 
-### Task 6: Solutions, resellers, contact, pricing placeholder
+### Task 7: Solutions, resellers, contact, pricing placeholder
 **Files:** create `src/data/solutions.ts`, `src/pages/solutions/[slug].astro`, `src/pages/resellers.astro`, `src/pages/contact.astro`, `src/pages/pricing.astro`.
 - [ ] Four solutions, each with its own example call (bank, shop, clinic, isp clips) and copy specific to that business (what calls they get, what AirFone does with them). Test in `tests/solutions.test.ts`: no two solutions share more than 30% of their body sentences.
 - [ ] Resellers: why, how it works, LeadForm (`source=reseller`, fields agreed with owner, default name/phone/business/city). Contact: address, phone, email, map link, `localBusinessJsonLd()`. Pricing: "Pricing is set for your call volume", demo CTA, no numbers, `noindex` until prices exist.
 - [ ] Build + check; owner reviews. Commit. Ledger: PG-3..6, SD-5.
 
-### Task 7: Lead forms
+### Task 8: Lead forms
 **Files:** create `src/lib/lead.ts`, `src/components/forms/{LeadForm.astro,lead-form.ts}`, `src/pages/demo.astro`, `tests/lead.test.ts`.
 **Produces:** `validateLead(f: {name, phone, business}): Record<string,string>` (field → message); `submitLead(url, body, fetchImpl): Promise<{ok:true}|{ok:false, kind:'rate_limited'|'server'|'network', retryAfter?}>`.
 - [ ] `tests/lead.test.ts`: Nepali mobile `98XXXXXXXX`/`+97798…` valid, 7 digits invalid, empty name invalid; `submitLead` maps 200 → ok, `{"status":"rate_limited","retry_after":60}` → rate_limited 60, 500 → server, thrown fetch → network (Review focus 2). FAIL → implement → PASS.
 - [ ] LeadForm: real `<form method="post" action={WAITLIST_API_URL}>` works without JS; island adds inline validation, disables submit while in flight, keeps input on error, shows "We'll call you within one working day" on success, honeypot `website`, `consent` checkbox with privacy link, UTM passthrough.
 - [ ] `/demo` page (3 fields). End-to-end once against production endpoint with `source=demo-test` and phone `9800000000`, then ask the owner before deleting that row via `/api/admin/waitlist/:phone`. Commit. Ledger: FM-1..8.
 
-### Task 8: Blog
+### Task 9: Blog
 **Files:** create `src/content.config.ts`, `src/content/blog/*.md` (4 drafts), `src/pages/blog/[...page].astro`, `src/pages/blog/[slug].astro`, `src/pages/blog/tag/[tag].astro`, `src/pages/rss.xml.ts`, `src/lib/blog.ts`, `tests/blog.test.ts`, `tests/fixtures/blog/*`.
 **Produces:** `publishedPosts(): Promise<Post[]>` (drafts out, newest first), `postsByTag(tag)`, `pagePath(n)` (`/blog`, `/blog/page/2`).
 - [ ] Schema: `title`, `description` (min 120, max 160, meta only, never printed under the title), `date`, `updated?`, `tags` (≥1), `draft` (default false), `image`, `imageAlt`.
@@ -152,27 +167,27 @@ Each task ends with: `pnpm test` green, `pnpm build` green, `node scripts/check-
 - [ ] Post layout: 680px measure, no byline, published/updated dates, prose styles, tables scroll in their own region, print CSS, related posts by tag, pillar ↔ post links. Paginated pages titled "Blog, page N" with self canonical. RSS excludes drafts.
 - [ ] Write the 4 starter posts as `draft: true`; owner reviews and flips them. Commit. Ledger: PG-7, PG-8 n/a and BL-4 n/a (owner: no bylines; BlogPosting author = Organization AirFone), BL-1..3, BL-5..10, SEO-9/11, SD-3.
 
-### Task 9: Redirects, 404, sitemap, robots, llms.txt, OG images
+### Task 10: Redirects, 404, sitemap, robots, llms.txt, OG images
 **Files:** modify `docs/nginx-redirects.conf`, `astro.config.mjs` (sitemap filter), `public/robots.txt`, `public/llms.txt`; create `src/pages/404.astro`, `src/pages/og/[...slug].png.ts` (satori + `@resvg/resvg-js`, brand colours, cloud mark, page title); delete `src/pages/ne/**`, auth/teaser pages.
 - [ ] Redirect map in `scripts/redirects.mjs` (single source): `/features`,`/platform`,`/services`→`/products/ai-call-agent` etc., `/about`→`/`, `/upcoming`,`/waitlist/thanks`→`/demo`, `/ne`→`/`, `/ne/(.*)`→`/$1` mapped, auth pages→`APP_URL` equivalents, any `/(.+)/$`→`/$1`. Generates the nginx conf. `tests/redirects.test.ts`: no target is itself a source (no chains), every target exists in `dist/` or is `APP_URL` (Review focus 4).
 - [ ] 404 page (styled, links to home, products, blog); confirm nginx `error_page 404 /404.html` returns status 404. Sitemap excludes `noindex` routes and drafts. robots.txt allows all incl. GPTBot/ClaudeBot/PerplexityBot, points at sitemap. llms.txt lists products, solutions and posts.
 - [ ] Commit. Ledger: PG-10/11, SEO-1/3/7/8/12/14, LN-2.
 
-### Task 10: Quality gates
+### Task 11: Quality gates
 **Files:** create `.lighthouserc.json`, `scripts/a11y.sh`; modify `package.json` (`"qa": "pnpm build && pnpm check && pnpm a11y && pnpm lhci"`).
 - [ ] `@axe-core/cli` over every built page served by `astro preview` → 0 violations. Keyboard pass by owner (A11Y-2/3).
 - [ ] Lighthouse CI mobile on one page per template: performance ≥ 95, accessibility 100, SEO 100, best practices 100; budgets: JS ≤ 30 KB, CSS ≤ 40 KB, fonts ≤ 2 files preloaded.
 - [ ] Rich Results Test and validator.schema.org on one URL per template after deploy (manual, record URLs in ledger).
 - [ ] Walk SLOP-1..67 per page; mark each with evidence. Commit. Ledger: CWV-*, A11Y-*, SD-7/8, SLOP-*.
 
-### Task 11: Launch
+### Task 12: Launch
 - [ ] Owner tasks surfaced in one list: paid ElevenLabs plan then `node scripts/make-voices.mjs --final` (AU-6), proof/testimonials, official address, analytics tool, Search Console/Bing, Google Business Profile, directory listings, reseller form fields, blog sign-off.
 - [ ] `PUBLIC_SITE_MODE` removed; `pnpm bundle` and deploy through the existing route-bundle pipeline only after the owner says go. Keep previous bundle for rollback (LN-4).
 - [ ] After deploy: `curl -I` headers (SEC-1/2), crawl for 404s and chains (LN-1), redirects, sitemap fetch, one real demo submission, phone logged-out pass (LN-3/5). Ledger final pass: every row `done`, `n/a` with reason, or `owner`.
 
 ## Verification (end to end)
 
-1. `pnpm test` — all Vitest suites green (seo, check-site, make-voices, call-player, products, solutions, lead, blog, redirects).
+1. `pnpm test` — all Vitest suites green (seo, check-site, orb-state, make-voices, call-player, products, solutions, lead, blog, redirects).
 2. `pnpm qa` — build, `check-site` (0 findings), axe (0 violations), Lighthouse budgets met.
 3. `grep -rE 'sk_|ELEVENLABS' dist/` → nothing.
 4. Owner reviews each task on the dev server (hot reload, no rebuilds just to show UI).
@@ -180,4 +195,4 @@ Each task ends with: `pnpm test` green, `pnpm build` green, `node scripts/check-
 
 ## Execution
 
-Recommended: **Native** (I build every task in this session, one fresh reviewer at the end). The tasks share a small set of interfaces (`seo.ts`, `products.ts`, `CallPlayer`, `LeadForm`) and build on each other in order, and the owner reviews each piece live anyway, so per-task subagent reviews would add cost without catching much more.
+Recommended: **Native** (I build every task in this session, one fresh reviewer at the end). The tasks share a small set of interfaces (`seo.ts`, `products.ts`, `CallOrb`, `CallPlayer`, `LeadForm`) and build on each other in order, and the owner reviews each piece live anyway, so per-task subagent reviews would add cost without catching much more.
