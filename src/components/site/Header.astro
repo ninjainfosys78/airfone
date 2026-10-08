@@ -31,8 +31,7 @@ const plain = [
   { href: '/contact', label: 'Contact' },
 ];
 ---
-<header class="site-header">
-  <div class="utility">
+<div class="utility">
     <div class="wrap u-row">
       <a href={DEMO_NUMBER_TEL} class="u-call">Hear the agent: <span class="mono">{DEMO_NUMBER_DISPLAY}</span></a>
       <nav aria-label="Utility" class="u-links">
@@ -43,6 +42,7 @@ const plain = [
     </div>
   </div>
 
+<header class="site-header">
   <div class="wrap bar">
     <a class="logo" href="/" aria-label="AirFone home">
       <img src="/brand/airfone-lockup.svg" alt="AirFone" width="140" height="29" class="logo-light" />
@@ -126,27 +126,24 @@ const plain = [
     }
   }
 
-  // Compact bar once the page scrolls.
-  const onScroll = () => {
-    header.classList.toggle('scrolled', scrollY > 24);
-    header.style.setProperty('--header-h', `${header.getBoundingClientRect().bottom}px`);
-  };
-  addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  // The mobile menu opens right under the bar, wherever the bar is.
+  const place = () => header.style.setProperty('--header-h', `${Math.round(header.getBoundingClientRect().bottom)}px`);
+  for (const m of menus) m.addEventListener('toggle', place);
+  addEventListener('resize', place, { passive: true });
+  place();
 </script>
 
 <style>
   .site-header { position: sticky; top: 0; z-index: 50; background: var(--canvas); border-bottom: 1px solid var(--line); }
+  .utility { position: relative; z-index: 51; }
 
   .utility { background: var(--stage); color: var(--stage-ink); font-size: 14px; }
   .u-row { display: flex; align-items: center; justify-content: space-between; min-height: 36px; gap: var(--space-4); }
   .utility a { color: var(--stage-ink); text-decoration: none; }
   .utility a:hover { text-decoration: underline; }
   .u-links { display: flex; gap: var(--space-5); }
-  .scrolled .utility { display: none; }
 
-  .bar { display: flex; align-items: center; gap: var(--space-7); min-height: 72px; transition: min-height var(--fast) var(--ease); }
-  .scrolled .bar { min-height: 64px; }
+  .bar { display: flex; align-items: center; gap: var(--space-7); height: 72px; }
   .logo { flex: none; display: block; }
   .logo img { width: 128px; height: auto; }
   .logo-dark { display: none; }
@@ -180,8 +177,8 @@ const plain = [
     position: absolute; left: 0; right: 0; top: 100%;
     background: var(--canvas); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
   }
-  .menu[open] .mega { animation: drop var(--slow) var(--ease); }
-  @keyframes drop { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+  .menu[open] .mega { animation: drop 180ms cubic-bezier(0.2, 0, 0, 1); }
+  @keyframes drop { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
   .mega-grid { display: grid; grid-template-columns: 1fr 340px; gap: var(--space-8); padding-block: var(--space-7); }
   .mega-links { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--space-7); }
   .mega-links a { display: block; padding: var(--space-4) 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
