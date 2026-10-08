@@ -23,8 +23,8 @@ const path = `/blog/tag/${tag}`;
 >
   <section class="section">
     <div class="wrap">
-      <h1 data-enter>{label}</h1>
-      <div data-enter style="--d:1"><Topics tags={tags} current={tag} /></div>
+      <h1>{label}</h1>
+      <Topics tags={tags} current={tag} />
       <PostList items={items} />
     </div>
   </section>

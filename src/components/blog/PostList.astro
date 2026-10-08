@@ -6,10 +6,10 @@ const { items, feature = false, level = 'h2' } = Astro.props;
 const [first, ...rest] = items;
 const list = feature ? rest : items;
 ---
-{feature && first && <div class="top-post" data-enter style="--d:2"><PostCard post={first} big level={level} /></div>}
+{feature && first && <div class="top-post" data-enter><PostCard post={first} big level={level} /></div>}
 {list.length > 0 && (
   <ul class="grid">
-    {list.map((p, i) => <li data-enter style={`--d:${i + 3}`}><PostCard post={p} level={level} /></li>)}
+    {list.map((p, i) => <li data-enter style={`--d:${i + 1}`}><PostCard post={p} level={level} /></li>)}
   </ul>
 )}
 
