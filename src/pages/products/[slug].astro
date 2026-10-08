@@ -32,10 +32,6 @@ const guides = (await posts()).filter((x) => !x.data.draft && x.data.tags.some((
     <div class="wrap grid">
       <div data-enter>
         <h1>{p.headline}</h1>
-        <div class="actions">
-          <a class="btn btn-primary" href="/demo">Book a demo</a>
-          <a class="btn btn-secondary" href="/pricing">Pricing</a>
-        </div>
       </div>
       <div class="demo" data-enter style="--d:1">
         {p.demo.kind === 'chat' && <ChatDemo />}
@@ -97,7 +93,6 @@ const guides = (await posts()).filter((x) => !x.data.draft && x.data.tags.some((
   .top { padding-block: var(--space-9); border-bottom: 1px solid var(--line); }
   .grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: center; }
   h1 { max-width: 14ch; }
-  .actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-7); }
   .gap { margin-top: var(--space-4); }
 
   .section h2, .specs-wrap h2 { margin-bottom: var(--space-7); }
