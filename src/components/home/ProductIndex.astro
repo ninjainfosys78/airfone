@@ -144,7 +144,7 @@ import { products } from '../../data/products';
   @keyframes tick { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
   .panel {
-    background: var(--stage); color: var(--stage-ink); border-radius: var(--radius-panel);
+    background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: var(--radius-panel);
     padding: var(--space-7); min-height: 440px; display: grid; grid-template-rows: auto 1fr auto; gap: var(--space-6);
   }
   /* All panels share one grid cell, so the box is always as tall as the
@@ -156,7 +156,7 @@ import { products } from '../../data/products';
   .explorer.is-live .panel[hidden] { display: grid; opacity: 0; visibility: hidden; transition: opacity 700ms cubic-bezier(0.2, 0, 0, 1), visibility 0s 700ms; }
   .explorer:not(.is-live) .panel + .panel { margin-top: var(--space-4); }
   .panel h3 { font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem); line-height: 1.15; max-width: 16ch; }
-  .more { justify-self: start; color: var(--lime); font-weight: 600; text-decoration: none; font-size: 17px; }
+  .more { justify-self: start; color: var(--link); font-weight: 600; text-decoration: none; font-size: 17px; }
   .more:hover { text-decoration: underline; }
 
   /* The small pictures: white surfaces on the green, like real product UI. */
