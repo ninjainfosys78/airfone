@@ -10,6 +10,8 @@ export interface Product {
   name: string;
   /** One line, used in lists and meta. */
   short: string;
+  /** Search title: what people type, e.g. "AI call agent in Nepal". */
+  seoTitle: string;
   /** The page's h1. */
   headline: string;
   description: string;
@@ -24,8 +26,9 @@ export const products: Product[] = [
     slug: 'ai-call-agent',
     name: 'AI Call Agent',
     short: 'Answers your phone line in Nepali, day and night, and hands over to your team when it should.',
+    seoTitle: 'AI Call Agent in Nepal that answers in Nepali',
     headline: 'Your phone, answered on the first ring',
-    description: 'AirFone AI call agent answers your business line in Nepali, any hour, from what you teach it, and passes callers to your team mid-call.',
+    description: 'AirFone is an AI call agent for businesses in Nepal. It answers your phone in Nepali, day and night, and hands callers to your team mid-call.',
     demo: { kind: 'call', clip: 'shop' },
     problem: {
       heading: 'Missed calls are missed customers',
@@ -52,8 +55,9 @@ export const products: Product[] = [
     slug: 'ai-phone-system',
     name: 'AI Phone System',
     short: 'A full business phone system with an agent that answers and calls out for you.',
+    seoTitle: 'AI Phone System in Nepal for inbound and outbound calls',
     headline: 'One phone system that answers and calls back',
-    description: 'AirFone AI phone system gives you extensions, queues and recording plus an agent that answers callers and makes reminder and follow-up calls.',
+    description: 'AirFone AI phone system for Nepal: extensions, queues and recording, plus an AI agent that answers callers and makes reminder and follow-up calls.',
     demo: { kind: 'outbound', clip: 'outbound' },
     problem: {
       heading: 'Calls go both ways',
@@ -79,8 +83,9 @@ export const products: Product[] = [
     slug: 'phone-system',
     name: 'Cloud PBX',
     short: 'Extensions, menus, recording and queues on your existing number, with no hardware.',
+    seoTitle: 'Cloud PBX in Nepal: business phone system, no hardware',
     headline: 'A business phone system without the box',
-    description: 'AirFone business phone system gives your team extensions, call menus, queues and recording on your existing number, from a browser or phone.',
+    description: 'AirFone cloud PBX for businesses in Nepal: extensions, call menus, queues and recording on your existing number, from a browser or the app.',
     demo: { kind: 'menu', clip: 'phone-menu' },
     problem: {
       heading: 'The old PBX holds you back',
@@ -106,8 +111,9 @@ export const products: Product[] = [
     slug: 'website-voice-agent',
     name: 'Website Voice Agent',
     short: 'Visitors tap once and talk to an agent that knows your business.',
+    seoTitle: 'AI Voice Agent for websites in Nepal',
     headline: 'Let website visitors simply ask',
-    description: 'AirFone voice agent lets visitors talk to your website. It answers from your own information and passes serious buyers to your team.',
+    description: 'AirFone voice agent lets visitors to your website in Nepal talk to it in Nepali or English. It answers from your information and passes buyers on.',
     demo: { kind: 'call', clip: 'voice-agent' },
     problem: {
       heading: 'Visitors leave with their question',
@@ -132,8 +138,9 @@ export const products: Product[] = [
     slug: 'website-chatbot',
     name: 'Website Chatbot',
     short: 'Answers questions from your own knowledge and passes real leads to your team.',
+    seoTitle: 'AI Chatbot for websites in Nepal',
     headline: 'Answers on your website, any hour',
-    description: 'AirFone chatbot answers website visitors from your own knowledge, any hour, and hands real leads to your team with the conversation attached.',
+    description: 'AirFone AI chatbot answers website visitors in Nepal from your own knowledge, any hour, and hands real leads to your team with the chat attached.',
     demo: { kind: 'chat' },
     problem: {
       heading: 'Contact forms are slow',

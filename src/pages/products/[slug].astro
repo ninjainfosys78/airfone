@@ -19,7 +19,7 @@ const { p } = Astro.props as { p: Product };
 const path = `/products/${p.slug}`;
 ---
 <Base
-  title={p.name}
+  title={p.seoTitle}
   description={p.description}
   path={path}
   jsonLd={[softwareJsonLd(p), breadcrumbJsonLd([{ name: p.name, path }])]}

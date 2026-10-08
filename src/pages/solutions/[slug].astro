@@ -14,7 +14,7 @@ const { s } = Astro.props as { s: Solution };
 const path = `/solutions/${s.slug}`;
 const used = s.products.map(productBySlug).filter((p) => !!p);
 ---
-<Base title={s.name} description={s.description} path={path} jsonLd={[breadcrumbJsonLd([{ name: s.name, path }])]}>
+<Base title={`AI call answering for ${s.name.toLowerCase()} in Nepal`} description={s.description} path={path} jsonLd={[breadcrumbJsonLd([{ name: s.name, path }])]}>
   <section class="top">
     <div class="wrap grid">
       <div>

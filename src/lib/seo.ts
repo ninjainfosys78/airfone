@@ -84,6 +84,8 @@ export function softwareJsonLd(p: { slug: string; name: string; short: string })
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web, Android',
     url: canonicalFor(`/products/${p.slug}`),
+    areaServed: { '@type': 'Country', name: 'Nepal' },
+    inLanguage: ['ne', 'en'],
     publisher: { '@id': ORG_ID },
   };
 }
