@@ -4,7 +4,7 @@ import '@fontsource-variable/source-serif-4/wght.css';
 import '@fontsource-variable/source-serif-4/wght-italic.css';
 import Base from '../../layouts/Base.astro';
 import CtaBand from '../../components/site/CtaBand.astro';
-import { coverFor, fmtDate, posts, readMinutes, type Post } from '../../lib/posts';
+import { coverFor, fmtDate, posts, type Post } from '../../lib/posts';
 import { related } from '../../lib/blog';
 import { articleJsonLd, breadcrumbJsonLd } from '../../lib/seo';
 
@@ -44,7 +44,6 @@ const readNext = (next.length ? next : all.filter((p) => p.id !== post.id)).slic
       <p class="meta">
         <time datetime={d.date.toISOString()}>{fmtDate(d.date)}</time>
         {d.updated && <> · Updated <time datetime={d.updated.toISOString()}>{fmtDate(d.updated)}</time></>}
-        {' · '}{readMinutes(post)} min read
         {d.draft && <span class="draft"> · Draft, not published</span>}
       </p>
       <div class="prose body"><Content /></div>
