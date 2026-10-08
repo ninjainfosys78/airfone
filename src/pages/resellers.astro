@@ -5,14 +5,14 @@ import Faq from '../components/site/Faq.astro';
 import { breadcrumbJsonLd } from '../lib/seo';
 
 const why = [
-  { h: 'A product your customers ask for', p: 'Every business loses calls. AirFone fixes that on their existing number, in Nepali.' },
-  { h: 'Monthly income that grows', p: 'You earn on every month each customer stays, and your share rises as you add customers.' },
-  { h: 'We do the heavy lifting', p: 'Training, demo numbers, sales material and second-line support come from us.' },
+  { h: 'A product every business needs' },
+  { h: 'Monthly income for every customer' },
+  { h: 'Training, demo numbers and support from us' },
 ];
 const steps = [
-  { h: 'Apply', p: 'Fill in the form. We call within one working day.' },
-  { h: 'Get trained', p: 'One session on the products, the demo and setup.' },
-  { h: 'Sell and set up', p: 'Use your own demo number with prospects, then set customers up from your partner portal.' },
+  { h: 'Apply, and we call within one working day' },
+  { h: 'One training session on the products and setup' },
+  { h: 'Sell with your own demo number' },
 ];
 const faq = [
   { q: 'Who can become a reseller?', a: 'IT shops, telecom and internet companies, consultants and agencies who already serve businesses in Nepal.' },
@@ -20,27 +20,28 @@ const faq = [
   { q: 'How do I get paid?', a: 'Every month, for every active customer. We share the full terms and your price list after the first call.' },
 ];
 ---
-<Base title="Resellers" description="Sell AirFone to businesses in your area. Monthly income per customer, training, demo numbers and support from the AirFone team." path="/resellers" jsonLd={[breadcrumbJsonLd([{ name: 'Resellers', path: '/resellers' }])]}>
-  <section class="top">
-    <div class="wrap">
-      <h1>Sell AirFone in your city</h1>
-      <div class="cols">
-        {why.map((w) => <div><h2 class="h3">{w.h}</h2><p class="muted">{w.p}</p></div>)}
+<Base title="Become an AirFone reseller: AI call agent partner program" description="Sell AirFone to businesses in your area. Monthly income per customer, training, demo numbers and support from the AirFone team." path="/resellers" jsonLd={[breadcrumbJsonLd([{ name: 'Resellers', path: '/resellers' }])]}>
+  <section class="page">
+    <div class="wrap grid">
+      <div>
+        <h1 class="rise">{'Sell AirFone in your city'.split(' ').map((w, i) => (<><span class="w"><span style={`--i:${i}`}>{w}</span></span>{' '}</>))}</h1>
+
+        <ul class="why">
+          {why.map((w, i) => <li data-enter style={`--d:${i + 1}`}>{w.h}</li>)}
+        </ul>
+
+        <h2 class="sub" data-enter style="--d:4">How it works</h2>
+        <ol class="steps">
+          {steps.map((st, i) => (
+            <li data-enter style={`--d:${i + 5}`}><span class="n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span><span>{st.h}</span></li>
+          ))}
+        </ol>
       </div>
-    </div>
-  </section>
 
-  <section class="section" data-reveal>
-    <div class="wrap two">
-      <h2>How it works</h2>
-      <ol class="steps">{steps.map((s, i) => <li><span class="n mono">{i + 1}</span><div><h3>{s.h}</h3><p class="muted">{s.p}</p></div></li>)}</ol>
-    </div>
-  </section>
-
-  <section class="section apply" id="apply" data-reveal>
-    <div class="wrap two">
-      <h2>Apply</h2>
-      <LeadForm kind="reseller" submit="Send application" withType={false} withCity />
+      <div class="panel" id="apply" data-enter style="--d:2">
+        <h2 class="panel-h">Apply</h2>
+        <LeadForm kind="reseller" submit="Send application" withType={false} withCity />
+      </div>
     </div>
   </section>
 
@@ -48,15 +49,25 @@ const faq = [
 </Base>
 
 <style>
-  .top { padding-block: var(--space-8) var(--space-9); border-bottom: 1px solid var(--line); }
-  h1 { max-width: 14ch; margin-bottom: var(--space-8); }
-  .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-7); }
-  .h3 { font-size: 1.375rem; margin-bottom: var(--space-3); }
-  .two { display: grid; grid-template-columns: 1fr 1.4fr; gap: var(--space-8); align-items: start; }
-  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-5); }
-  .steps li { display: grid; grid-template-columns: 40px 1fr; gap: var(--space-4); padding-bottom: var(--space-5); border-bottom: 1px solid var(--line); }
-  .n { display: grid; place-items: center; width: 40px; height: 40px; border-radius: var(--radius-control); background: var(--lime); color: var(--on-lime); font-weight: 600; }
-  .steps h3 { margin-bottom: var(--space-1); }
-  .apply { background: var(--surface); }
-  @media (max-width: 959px) { .cols, .two { grid-template-columns: 1fr; gap: var(--space-6); } }
+  .page { padding-block: var(--space-9) var(--space-10); }
+  .grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 520px); gap: var(--space-9); align-items: start; }
+  h1 { max-width: 12ch; margin-bottom: var(--space-7); }
+
+  /* Why sell it: three short lines. */
+  .why { list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--line); max-width: 520px; }
+  .why li { padding: var(--space-4) 0; border-top: 1px solid var(--line); font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; line-height: 1.3; }
+
+  .sub { margin: var(--space-8) 0 var(--space-3); font-size: 1rem; color: var(--ink-muted); font-family: var(--font-sans); font-weight: 600; }
+  .steps { list-style: none; margin: 0; padding: 0; max-width: 520px; border-bottom: 1px solid var(--line); }
+  .steps li { display: grid; grid-template-columns: 40px 1fr; gap: var(--space-3); padding: var(--space-3) 0; border-top: 1px solid var(--line); font-size: 17px; }
+  .n { font-family: var(--font-display); font-weight: 600; color: var(--link); font-variant-numeric: tabular-nums; }
+
+  .panel { position: sticky; top: 104px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-panel); padding: var(--space-7); scroll-margin-top: 104px; }
+  .panel-h { font-size: 1.375rem; margin-bottom: var(--space-5); }
+
+  @media (max-width: 959px) {
+    .page { padding-block: var(--space-8); }
+    .grid { grid-template-columns: 1fr; gap: var(--space-7); }
+    .panel { position: static; padding: var(--space-5); }
+  }
 </style>
