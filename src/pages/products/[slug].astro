@@ -26,7 +26,6 @@ const path = `/products/${p.slug}`;
   <section class="top">
     <div class="wrap grid">
       <div>
-        <nav class="crumb small" aria-label="Breadcrumb"><a href="/">AirFone</a> / <a href="/#products">Products</a></nav>
         <h1>{p.headline}</h1>
         <div class="actions">
           <a class="btn btn-primary" href="/demo">Book a demo</a>
@@ -80,8 +79,6 @@ const path = `/products/${p.slug}`;
 <style>
   .top { padding-block: var(--space-8) var(--space-9); border-bottom: 1px solid var(--line); }
   .grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: start; }
-  .crumb { color: var(--ink-muted); margin-bottom: var(--space-5); }
-  .crumb a { color: inherit; }
   h1 { max-width: 14ch; }
   .actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-7); }
   .gap { margin-top: var(--space-4); }

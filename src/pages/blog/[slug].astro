@@ -35,7 +35,6 @@ const pillar = all.find((p) => p.data.pillar && p.id !== post.id && p.data.tags.
 >
   <article class="section">
     <div class="wrap">
-      <nav class="crumb small" aria-label="Breadcrumb"><a href="/blog">Blog</a></nav>
       <h1 class="title">{d.title}</h1>
       <p class="meta muted small">
         <time datetime={d.date.toISOString()}>{fmtDate(d.date)}</time>
@@ -70,7 +69,6 @@ const pillar = all.find((p) => p.data.pillar && p.id !== post.id && p.data.tags.
 </script>
 
 <style>
-  .crumb { margin-bottom: var(--space-4); color: var(--ink-muted); }
   .title { max-width: 22ch; overflow-wrap: anywhere; }
   .meta { margin: var(--space-4) 0 var(--space-7); }
   .draft { color: var(--error); }
