@@ -21,3 +21,17 @@ describe('blog helpers', () => {
   it('labels tags in sentence case', () => expect(tagLabel('call-centres')).toBe('Call centres'));
   it('related posts share tags and exclude itself', () => expect(related(posts, posts[0]).map((p) => p.id)).toEqual(['b', 'd']));
 });
+
+import { postSchema } from '../src/lib/blog-schema';
+
+describe('post schema', () => {
+  const ok = { title: 'A useful title here', description: 'x'.repeat(130), date: '2026-10-01', tags: ['guides'] };
+  it('accepts a complete post and defaults draft to false', () => expect(postSchema.parse(ok).draft).toBe(false));
+  it.each(['title', 'description', 'date', 'tags'])('rejects a post without %s', (k) => {
+    const bad: Record<string, unknown> = { ...ok };
+    delete bad[k];
+    expect(postSchema.safeParse(bad).success).toBe(false);
+  });
+  it('rejects a short description', () => expect(postSchema.safeParse({ ...ok, description: 'too short' }).success).toBe(false));
+  it('rejects tags with spaces or capitals', () => expect(postSchema.safeParse({ ...ok, tags: ['Call Centres'] }).success).toBe(false));
+});
