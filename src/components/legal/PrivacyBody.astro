@@ -1,0 +1,222 @@
+---
+import LegalBody from './LegalBody.astro';
+import { CONTACT_EMAIL } from '../../config/site';
+
+const mail = `<a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>`;
+const del = '/delete-account';
+
+const copy = {
+  en: {
+    h1: 'Privacy policy',
+    updated: 'Last updated 4 October 2026',
+    intro: [
+      'AirFone is a product of Ninja Infosys Pvt. Ltd., Kathmandu, Nepal. It answers phone calls and WhatsApp messages for businesses with an AI assistant, connects callers to the right person, and gives the business its calls, messages and recordings in one app. This policy explains what we collect when you use the AirFone app or website, why, who we share it with, how long we keep it, and what you can do about it.',
+      `Questions about this policy: ${mail}.`,
+    ],
+    sections: [
+      {
+        h: 'What we collect',
+        list: [
+          '<strong>Your account:</strong> your name, email address, password (stored only as a secure hash), and your Google account ID if you sign in with Google. A phone number, if you add one.',
+          '<strong>Your business:</strong> its name and type, the people in it and their roles, and what you teach the assistant: opening hours, prices, services, documents, photos and website pages you add.',
+          '<strong>Calls and messages:</strong> the phone numbers of callers and of the people you call, when calls happen and how long they last, what the assistant said and did, voicemails, chat messages, and, where the business has turned recording on, call recordings and their transcripts and summaries.',
+          '<strong>Your devices:</strong> push notification tokens, the app version and device type, and network addresses we use to keep accounts secure.',
+          '<strong>Payments:</strong> your wallet balance and transactions. Card and wallet details are entered with the payment provider, not stored by us.',
+          '<strong>The waitlist:</strong> before launch, the mobile number, optional email, business type, page and language you gave us when joining.',
+        ],
+      },
+      {
+        h: 'How we use it',
+        list: [
+          'To answer, route, record and transcribe calls as your business has set up, and to show you what happened.',
+          'To run your account: signing in, sending verification and password-reset codes, and notifications.',
+          'To bill for calls, numbers and AI use, and to keep payment records.',
+          'To keep the service secure, stop abuse and fix problems.',
+          'To reply when you contact us.',
+        ],
+        p: ['We do not sell personal information and we do not use it for advertising.'],
+      },
+      {
+        h: 'How the AI assistant handles calls',
+        p: [
+          'When the assistant answers a call, the caller’s voice is turned into text, the text and the business’s own knowledge are sent to an AI model to write the reply, and the reply is turned back into speech. This happens while the call is live. We send these providers only what is needed to answer that call.',
+          'The assistant can make mistakes. Businesses should check what it knows and what it tells callers.',
+        ],
+      },
+      {
+        h: 'WhatsApp messages',
+        p: [
+          'A business can connect its WhatsApp Business number to AirFone. When a customer messages that number, we receive the message through Meta\'s WhatsApp Business Platform (the WhatsApp Cloud API) and process it on the business\'s behalf.',
+        ],
+        list: [
+          '<strong>What we receive:</strong> the customer\'s WhatsApp phone number and profile name, the messages, photos, voice notes, documents and reactions they send, and delivery and read receipts for messages the business sends.',
+          '<strong>How we use it:</strong> to show the conversation to the business in AirFone so its team can read and reply, and, if the business turns it on, to let the AI assistant answer the customer from what the business has taught it. The assistant can be switched off for a number or for one conversation.',
+          '<strong>Who it goes to:</strong> messages are sent and received through Meta (WhatsApp). Text the assistant answers is sent to the AI model provider listed below, only to write that reply. We do not use WhatsApp data for advertising and do not sell it.',
+          '<strong>How long we keep it:</strong> for as long as the business keeps the conversation or its AirFone account. A business can delete a contact and their conversation in the app; a customer can ask the business, or us at ${mail}, to delete their messages.',
+        ],
+      },
+      {
+        h: 'Who we share it with',
+        p: ['We use these providers to run AirFone. They process information for us, under their own terms and security practices:'],
+        list: [
+          'Cloudflare: storage of recordings, files and backups, and network protection.',
+          'Meta: the WhatsApp Business Platform, to send and receive WhatsApp messages for businesses that connect a number.',
+          'Google: the Gemini AI models, Google sign-in and Firebase push notifications.',
+          'OpenRouter: access to AI models.',
+          'Deepgram: speech to text.',
+          'Rumik and Inworld: text to speech.',
+          'Stripe, Khalti, eSewa, Fonepay and ConnectIPS: payments.',
+          'Phone carriers, such as Nepal Telecom: connecting calls to and from phone numbers.',
+        ],
+      },
+      {
+        h: 'Callers to a business',
+        p: [
+          'If you call a business that uses AirFone, that business decides how your call is handled and is responsible for its records of it. AirFone handles the call on the business’s behalf. To ask about your call, contact the business; we will help them respond.',
+        ],
+      },
+      {
+        h: 'Where it is stored',
+        p: ['Information is stored on our servers and with the providers above, some of which are outside Nepal.'],
+      },
+      {
+        h: 'How long we keep it',
+        list: [
+          'Call recordings: 30 days by default. A business can change this within the limit its plan allows.',
+          'Your account and your business’s information: until you delete them.',
+          'Payment, wallet and invoice records: 7 years, for accounting and tax.',
+          'Backups: overwritten within 30 days.',
+          'Waitlist entries: until launch, or until you ask us to remove you.',
+        ],
+      },
+      {
+        h: 'Your choices',
+        list: [
+          `Delete your account in the app, or follow <a href="${del}">these steps</a>.`,
+          `Ask for a copy of your information, or to correct it, by writing to ${mail}.`,
+          'Turn call recording on or off, and set how long recordings are kept, in the app.',
+        ],
+      },
+      {
+        h: 'Security',
+        p: ['Information is encrypted in transit, passwords are stored only as hashes, and access to production systems is limited to the people who run them. No system is perfectly secure; tell us at once if you think your account has been misused.'],
+      },
+      {
+        h: 'Children',
+        p: ['AirFone is for businesses and is not meant for anyone under 16.'],
+      },
+      {
+        h: 'Changes',
+        p: ['If we change this policy we will update the date above, and tell account owners in the app or by email before a significant change takes effect.'],
+      },
+    ],
+  },
+  ne: {
+    h1: 'गोपनीयता नीति',
+    updated: 'अन्तिम पटक अद्यावधिक: ४ अक्टोबर २०२६',
+    intro: [
+      'AirFone, निन्जा इन्फोसिस प्रा. लि., काठमाडौं, नेपालको उत्पादन हो। यसले व्यवसायका फोन कल र WhatsApp सन्देशहरू AI सहायकमार्फत सम्हाल्छ, कल गर्नेलाई सही व्यक्तिसम्म जोड्छ, र व्यवसायलाई आफ्ना कल, सन्देश र रेकर्डिङ एउटै एपमा दिन्छ। तपाईंले AirFone एप वा वेबसाइट प्रयोग गर्दा हामी के सङ्कलन गर्छौं, किन, कोसँग बाँड्छौं, कति समय राख्छौं र तपाईं के गर्न सक्नुहुन्छ भन्ने यो नीतिले बताउँछ।',
+      `यो नीतिबारे प्रश्न: ${mail}।`,
+    ],
+    sections: [
+      {
+        h: 'हामी के सङ्कलन गर्छौं',
+        list: [
+          '<strong>तपाईंको खाता:</strong> नाम, इमेल ठेगाना, पासवर्ड (सुरक्षित ह्यासको रूपमा मात्र), र Google बाट साइन इन गर्नुभएमा Google खाताको ID। फोन नम्बर थप्नुभएमा त्यो पनि।',
+          '<strong>तपाईंको व्यवसाय:</strong> नाम र प्रकार, त्यसमा भएका व्यक्ति र तिनका भूमिका, र तपाईंले सहायकलाई सिकाउनुभएका कुरा: खुल्ने समय, मूल्य, सेवा, कागजात, फोटो र वेबसाइटका पृष्ठ।',
+          '<strong>कल र सन्देश:</strong> कल गर्ने र तपाईंले कल गर्नुभएका व्यक्तिका फोन नम्बर, कल कहिले र कति समय भयो, सहायकले के भन्यो र के गर्‍यो, भ्वाइसमेल, च्याट सन्देश, र व्यवसायले रेकर्डिङ खोलेको भए कल रेकर्डिङ, त्यसको लिखित रूप र सारांश।',
+          '<strong>तपाईंका उपकरण:</strong> पुस सूचनाका टोकन, एपको संस्करण र उपकरणको प्रकार, र खाता सुरक्षित राख्न प्रयोग हुने नेटवर्क ठेगाना।',
+          '<strong>भुक्तानी:</strong> वालेटको ब्यालेन्स र कारोबार। कार्ड र वालेटका विवरण भुक्तानी प्रदायकमै भरिन्छन्, हामी राख्दैनौं।',
+          '<strong>प्रतीक्षा सूची:</strong> सुरु हुनुअघि सूचीमा नाम लेखाउँदा दिनुभएको मोबाइल नम्बर, वैकल्पिक इमेल, व्यवसायको प्रकार, पृष्ठ र भाषा।',
+        ],
+      },
+      {
+        h: 'हामी यसलाई कसरी प्रयोग गर्छौं',
+        list: [
+          'व्यवसायले मिलाएअनुसार कल उठाउन, जोड्न, रेकर्ड गर्न र लेख्न, र के भयो भनेर देखाउन।',
+          'खाता चलाउन: साइन इन, प्रमाणीकरण र पासवर्ड परिवर्तनका कोड पठाउन, र सूचना दिन।',
+          'कल, नम्बर र AI प्रयोगको शुल्क लिन, र भुक्तानीका अभिलेख राख्न।',
+          'सेवा सुरक्षित राख्न, दुरुपयोग रोक्न र समस्या समाधान गर्न।',
+          'तपाईंले सम्पर्क गर्दा जवाफ दिन।',
+        ],
+        p: ['हामी व्यक्तिगत जानकारी बेच्दैनौं र विज्ञापनका लागि प्रयोग गर्दैनौं।'],
+      },
+      {
+        h: 'AI सहायकले कल कसरी सम्हाल्छ',
+        p: [
+          'सहायकले कल उठाउँदा कल गर्नेको आवाजलाई पाठमा बदलिन्छ, त्यो पाठ र व्यवसायको आफ्नै जानकारी जवाफ लेख्न AI मोडेलमा पठाइन्छ, र जवाफलाई फेरि आवाजमा बदलिन्छ। यो कल चलिरहेकै बेला हुन्छ। हामी यी प्रदायकलाई त्यो कलको जवाफ दिन चाहिने कुरा मात्र पठाउँछौं।',
+          'सहायकले गल्ती गर्न सक्छ। व्यवसायले सहायकलाई के थाहा छ र उसले कल गर्नेलाई के भन्छ भनेर जाँच्नुपर्छ।',
+        ],
+      },
+      {
+        h: 'WhatsApp सन्देश',
+        p: [
+          'व्यवसायले आफ्नो WhatsApp Business नम्बर AirFone मा जोड्न सक्छ। ग्राहकले त्यो नम्बरमा सन्देश पठाउँदा हामी Meta को WhatsApp Business Platform (WhatsApp Cloud API) मार्फत त्यो सन्देश पाउँछौं र व्यवसायको तर्फबाट प्रशोधन गर्छौं।',
+        ],
+        list: [
+          '<strong>हामी के पाउँछौं:</strong> ग्राहकको WhatsApp फोन नम्बर र प्रोफाइल नाम, उनले पठाएका सन्देश, फोटो, भ्वाइस नोट, कागजात र प्रतिक्रिया, र व्यवसायले पठाएका सन्देश पुगे वा पढिए भन्ने जानकारी।',
+          '<strong>कसरी प्रयोग गर्छौं:</strong> व्यवसायको टोलीले पढ्न र जवाफ दिन सकोस् भनेर कुराकानी AirFone मा देखाउन, र व्यवसायले खोलेको भए AI सहायकले व्यवसायले सिकाएका कुराबाट ग्राहकलाई जवाफ दिन। सहायक नम्बरका लागि वा एउटा कुराकानीका लागि बन्द गर्न सकिन्छ।',
+          '<strong>कोसम्म पुग्छ:</strong> सन्देश Meta (WhatsApp) मार्फत पठाइन्छ र पाइन्छ। सहायकले जवाफ दिने पाठ जवाफ लेख्नका लागि मात्र तल उल्लेखित AI मोडेल प्रदायकमा पठाइन्छ। WhatsApp को जानकारी विज्ञापनमा प्रयोग गर्दैनौं र बेच्दैनौं।',
+          '<strong>कति समय राखिन्छ:</strong> व्यवसायले कुराकानी वा AirFone खाता राखेसम्म। व्यवसायले एपमै सम्पर्क र कुराकानी मेटाउन सक्छ; ग्राहकले आफ्ना सन्देश मेटाउन व्यवसायलाई वा हामीलाई ${mail} मा भन्न सक्नुहुन्छ।',
+        ],
+      },
+      {
+        h: 'हामी कोसँग बाँड्छौं',
+        p: ['AirFone चलाउन हामी यी प्रदायक प्रयोग गर्छौं। उनीहरू आफ्नै सर्त र सुरक्षा अभ्यासअनुसार हाम्रो तर्फबाट जानकारी प्रशोधन गर्छन्:'],
+        list: [
+          'Cloudflare: रेकर्डिङ, फाइल र ब्याकअप राख्न, र नेटवर्क सुरक्षा।',
+          'Meta: नम्बर जोडेका व्यवसायका लागि WhatsApp सन्देश पठाउन र पाउन WhatsApp Business Platform।',
+          'Google: Gemini AI मोडेल, Google साइन इन र Firebase पुस सूचना।',
+          'OpenRouter: AI मोडेलसम्म पहुँच।',
+          'Deepgram: आवाजबाट पाठ।',
+          'Rumik र Inworld: पाठबाट आवाज।',
+          'Stripe, Khalti, eSewa, Fonepay र ConnectIPS: भुक्तानी।',
+          'नेपाल टेलिकमजस्ता फोन कम्पनी: फोन नम्बरमा कल जोड्न।',
+        ],
+      },
+      {
+        h: 'व्यवसायमा कल गर्नेहरू',
+        p: [
+          'AirFone प्रयोग गर्ने व्यवसायमा कल गर्नुभयो भने तपाईंको कल कसरी सम्हालिन्छ भन्ने त्यो व्यवसायले तय गर्छ र त्यसको अभिलेखको जिम्मेवारी पनि उसैको हुन्छ। AirFone ले व्यवसायको तर्फबाट कल सम्हाल्छ। आफ्नो कलबारे सोध्न व्यवसायलाई सम्पर्क गर्नुहोस्; जवाफ दिन हामी उनीहरूलाई सघाउँछौं।',
+        ],
+      },
+      {
+        h: 'कहाँ राखिन्छ',
+        p: ['जानकारी हाम्रा सर्भर र माथिका प्रदायकमा राखिन्छ। तीमध्ये केही नेपाल बाहिर छन्।'],
+      },
+      {
+        h: 'कति समय राखिन्छ',
+        list: [
+          'कल रेकर्डिङ: पूर्वनिर्धारित रूपमा ३० दिन। व्यवसायले आफ्नो योजनाले दिएको सीमाभित्र यो बदल्न सक्छ।',
+          'तपाईंको खाता र व्यवसायको जानकारी: तपाईंले मेटाउँदासम्म।',
+          'भुक्तानी, वालेट र बिलका अभिलेख: लेखा र करका लागि ७ वर्ष।',
+          'ब्याकअप: ३० दिनभित्र मेटिन्छ।',
+          'प्रतीक्षा सूची: सुरु नहुँदासम्म, वा तपाईंले हटाउन भन्दासम्म।',
+        ],
+      },
+      {
+        h: 'तपाईंका विकल्प',
+        list: [
+          `एपबाटै खाता मेटाउनुहोस्, वा <a href="${del}">यी चरण</a> पालना गर्नुहोस्।`,
+          `आफ्नो जानकारीको प्रति वा सुधार चाहिएमा ${mail} मा लेख्नुहोस्।`,
+          'कल रेकर्डिङ खोल्ने वा बन्द गर्ने, र रेकर्डिङ कति समय राख्ने भन्ने एपमै मिलाउनुहोस्।',
+        ],
+      },
+      {
+        h: 'सुरक्षा',
+        p: ['जानकारी पठाउँदा इन्क्रिप्ट गरिन्छ, पासवर्ड ह्यासको रूपमा मात्र राखिन्छ, र उत्पादन प्रणालीमा पहुँच चलाउने व्यक्तिमा मात्र सीमित छ। कुनै पनि प्रणाली पूर्ण सुरक्षित हुँदैन; खाताको दुरुपयोग भएको लागेमा हामीलाई तुरुन्त भन्नुहोस्।'],
+      },
+      {
+        h: 'बालबालिका',
+        p: ['AirFone व्यवसायका लागि हो र १६ वर्षमुनिकाका लागि होइन।'],
+      },
+      {
+        h: 'परिवर्तन',
+        p: ['यो नीति बदलेमा माथिको मिति अद्यावधिक गर्छौं, र ठूलो परिवर्तन लागू हुनुअघि खाताधनीलाई एप वा इमेलमार्फत जानकारी दिन्छौं।'],
+      },
+    ],
+  },
+} as const;
+const c = copy.en;
+---
+<LegalBody h1={c.h1} updated={c.updated} intro={c.intro} sections={c.sections} />

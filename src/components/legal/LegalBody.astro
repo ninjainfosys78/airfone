@@ -1,0 +1,36 @@
+---
+// Shared layout for the legal pages: heading, last-changed date,
+// introduction, then numbered sections of paragraphs and lists.
+export interface Section {
+  h: string;
+  p?: readonly string[];
+  list?: readonly string[];
+}
+export interface Props {
+  h1: string;
+  updated: string;
+  intro: readonly string[];
+  sections: readonly Section[];
+}
+const { h1, updated, intro, sections } = Astro.props;
+---
+<section class="section">
+  <div class="wrap prose legal">
+    <h1>{h1}</h1>
+    <p class="updated muted small">{updated}</p>
+    {intro.map((p) => <p set:html={p} />)}
+    {sections.map((s, i) => (
+      <>
+        <h2>{i + 1}. {s.h}</h2>
+        {(s.p ?? []).map((p) => <p set:html={p} />)}
+        {s.list && <ul>{s.list.map((li) => <li set:html={li} />)}</ul>}
+      </>
+    ))}
+  </div>
+</section>
+
+<style>
+  .legal h1 { margin-bottom: var(--space-3); }
+  .legal .updated { margin-bottom: var(--space-6); }
+  .legal ul { padding-left: 1.25em; }
+</style>

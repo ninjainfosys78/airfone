@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import { products } from '../data/products';
+---
+<Base title="Page not found" description="This page does not exist on airfone.app. Try the home page, the products or the blog, or call us on 985-1343348." path="/404" noindex>
+  <section class="section">
+    <div class="wrap">
+      <h1>We could not find that page</h1>
+      <ul class="links">
+        <li><a href="/">Home</a></li>
+        {products.map((p) => <li><a href={`/products/${p.slug}`}>{p.name}</a></li>)}
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  h1 { margin-bottom: var(--space-6); max-width: 16ch; }
+  .links { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); font-size: 1.125rem; }
+</style>
