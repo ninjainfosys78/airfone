@@ -112,8 +112,10 @@
 
 <style>
   /* Conveyor: two copies of the steps move left forever; hover pauses it. */
-  .how h2 { margin-bottom: var(--space-7); }
+  .how h2 { margin-bottom: var(--space-6); }
+  /* Desktop: the belt bleeds to both screen edges. Smaller screens: inside the margins. */
   .belt { overflow: hidden; padding-block: var(--space-2); }
+  @media (max-width: 1023px) { .belt { margin-inline: var(--gutter); } }
   .conveyor { display: flex; width: max-content; gap: var(--space-6); animation: belt 36s linear infinite; }
   .belt:hover .conveyor, .belt:focus-within .conveyor { animation-play-state: paused; }
   @keyframes belt { from { transform: translateX(0); } to { transform: translateX(calc(-50% - var(--space-6) / 2)); } }
