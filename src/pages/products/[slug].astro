@@ -2,7 +2,6 @@
 import Base from '../../layouts/Base.astro';
 import CallPlayer from '../../components/player/CallPlayer.astro';
 import ChatDemo from '../../components/demos/ChatDemo.astro';
-import PhoneMenu from '../../components/demos/PhoneMenu.astro';
 import CtaBand from '../../components/site/CtaBand.astro';
 import Faq from '../../components/site/Faq.astro';
 import { fmtDate, posts } from '../../lib/posts';
@@ -35,7 +34,7 @@ const guides = (await posts()).filter((x) => !x.data.draft && x.data.tags.some((
       <div class="demo" data-enter style="--d:1">
         {p.demo.kind === 'chat' && <ChatDemo />}
         {p.demo.kind === 'call' && <CallPlayer clip={p.demo.clip} chat />}
-        {p.demo.kind === 'menu' && <><PhoneMenu /><div class="gap"><CallPlayer clip={p.demo.clip} compact /></div></>}
+        {p.demo.kind === 'menu' && <CallPlayer clip={p.demo.clip} chat />}
         {p.demo.kind === 'outbound' && <CallPlayer clip={p.demo.clip} chat />}
       </div>
     </div>

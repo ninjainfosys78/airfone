@@ -1,4 +1,4 @@
-{ "id": "bank", "label": "Bank", "lines": [
+{ "id": "bank", "label":"Himal Bank", "lines": [
   { "speaker": "agent", "voice": "agent", "ne": "हिमाल बैंकमा फोन गर्नुभएकोमा धन्यवाद। के सहयोग गरूँ?", "text": "Thank you for calling Himal Bank. How can I help?" },
   { "speaker": "caller", "voice": "callerBill", "ne": "एक वर्षको मुद्दती निक्षेपको ब्याजदर कति छ?", "text": "What is the interest rate on a one year fixed deposit?" },
   { "speaker": "agent", "voice": "agent", "ne": "यो महिना एक वर्षको लागि साढे सात प्रतिशत छ, दस हजार वा सोभन्दा बढीको निक्षेपमा। मोबाइल बैंकिङ वा जुनसुकै शाखाबाट खोल्न सक्नुहुन्छ।", "text": "This month it's seven and a half percent for one year, on deposits of ten thousand or more. You can open one in mobile banking or at any branch." },

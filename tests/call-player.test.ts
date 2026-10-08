@@ -15,7 +15,7 @@ describe('CallPlayer without JavaScript', async () => {
     expect(html).toContain('/audio/clinic.m4a');
   });
 
-  it('labels the call by business, without "Example"', () => { expect(html).toContain('>Clinic<'); expect(html).not.toContain('Example'); });
+  it('labels the call by business, without "Example"', () => { expect(html).toContain('>Sunrise Clinic<'); expect(html).not.toContain('Example'); });
 
   it('prints every transcript line as text', () => {
     for (const l of clinic.lines) expect(html).toContain(l.text.replace(/'/g, '&#39;'));

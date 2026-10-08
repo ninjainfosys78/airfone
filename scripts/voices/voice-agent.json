@@ -1,4 +1,4 @@
-{ "id": "voice-agent", "label": "Voice agent on a website", "lines": [
+{ "id": "voice-agent", "label":"Website visitor", "lines": [
   { "speaker": "caller", "voice": "callerJessica", "ne": "पोखरासम्म डेलिभरी हुन्छ?", "text": "Do you deliver to Pokhara?" },
   { "speaker": "agent", "voice": "agent", "ne": "हुन्छ, पोखराभित्र दुई दिनमा पुग्छ। दिउँसो बाह्र बजेअघिको अर्डर सोही दिन पठाइन्छ।", "text": "Yes, anywhere in Pokhara within two days. Orders before noon go out the same day." },
   { "speaker": "caller", "voice": "callerJessica", "ne": "सामान आएपछि पैसा तिर्न मिल्छ?", "text": "Can I pay on delivery?" },
