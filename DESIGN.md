@@ -62,7 +62,7 @@ Theme colour meta: `#FFFFFF` light, `#10140B` dark.
 
 ## Type
 
-- Poppins 400/500/600, self-hosted (latin), chosen by the owner 2026-10-08. JetBrains Mono for numbers
+- Poppins 400/500/600, self-hosted (latin), plus Poppins Devanagari 400 for the Nepali in call transcripts. Chosen by the owner 2026-10-08. JetBrains Mono for numbers
   in product screens only.
 - Display (home hero): `clamp(2.25rem, 1.2rem + 4.2vw, 4.5rem)`, 36 to 72px, line height 1.04.
 - h1: `clamp(2.25rem, 1.5rem + 3vw, 3.5rem)`; h2: `clamp(1.75rem, 1.3rem + 1.8vw, 2.5rem)`; h3: 22px.

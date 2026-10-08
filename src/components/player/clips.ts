@@ -7,7 +7,7 @@ export interface ClipData extends Timing {
   id: string;
   label: string;
   peaks: number[];
-  lines: { speaker: 'agent' | 'caller'; text: string; start: number; end: number }[];
+  lines: { speaker: 'agent' | 'caller'; text: string; ne?: string; start: number; end: number }[];
 }
 
 const files = import.meta.glob<ClipData>('../../../public/audio/*.json', { eager: true, import: 'default' });
@@ -25,5 +25,5 @@ export const realCall: ClipData & { src: string } = {
   src: DEMO_AUDIO_URL,
   duration: demoCall.duration,
   peaks: demoWaveform.peaks,
-  lines: demoCall.lines.map((l) => ({ speaker: l.speaker, text: l.en, start: l.start, end: l.end })),
+  lines: demoCall.lines.map((l) => ({ speaker: l.speaker, ne: l.ne, text: l.en, start: l.start, end: l.end })),
 };

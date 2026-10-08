@@ -46,3 +46,11 @@ describe('make-voices', () => {
     expect(peaksFrom(samples, 4)).toEqual([0.5, 1, 0, 0.1]);
   });
 });
+
+describe('Nepali lines', () => {
+  const ne = { id: 'n', label: 'L', lines: [{ speaker: 'agent', voice: 'a', ne: 'नमस्ते', text: 'Hello' }] };
+  it('speaks the Nepali text and bills its length', () => {
+    expect(planClip(ne, voices)[0].text).toBe('नमस्ते');
+    expect(charCount([ne])).toBe('नमस्ते'.length);
+  });
+});

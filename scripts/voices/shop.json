@@ -1,9 +1,9 @@
 { "id": "shop", "label": "Example call · Electronics shop", "lines": [
-  { "speaker": "agent", "voice": "agentF", "text": "Namaste, City Electronics, New Road." },
-  { "speaker": "caller", "voice": "callerChris", "text": "Do you have the fourteen inch ThinkPad in stock?" },
-  { "speaker": "agent", "voice": "agentF", "text": "Yes, we have it in silver and black, with sixteen gigabytes of memory. It comes with a two year warranty." },
-  { "speaker": "caller", "voice": "callerChris", "text": "Great. Until what time are you open today?" },
-  { "speaker": "agent", "voice": "agentF", "text": "We're open until seven this evening. Shall I keep one aside for you under your name?" },
-  { "speaker": "caller", "voice": "callerChris", "text": "Yes please, the black one. Ramesh." },
-  { "speaker": "agent", "voice": "agentF", "text": "Done, Ramesh. The black one is waiting for you at the counter until seven." }
+  { "speaker": "agent", "voice": "agent", "ne": "नमस्ते, सिटी इलेक्ट्रोनिक्स, न्युरोड।", "text": "Hello, City Electronics, New Road." },
+  { "speaker": "caller", "voice": "callerChris", "ne": "चौध इन्चको थिंकप्याड स्टकमा छ?", "text": "Do you have the fourteen inch ThinkPad in stock?" },
+  { "speaker": "agent", "voice": "agent", "ne": "छ। सिल्भर र कालो दुवै रङमा, सोह्र जीबी र्‍याम, दुई वर्षको वारेन्टीसहित।", "text": "Yes, in silver and black, sixteen gigabytes of memory, with a two year warranty." },
+  { "speaker": "caller", "voice": "callerChris", "ne": "आज कति बजेसम्म खुला हुन्छ?", "text": "Until what time are you open today?" },
+  { "speaker": "agent", "voice": "agent", "ne": "बेलुका सात बजेसम्म। तपाईंको नाममा एउटा छुट्याएर राखूँ?", "text": "Until seven this evening. Shall I keep one aside in your name?" },
+  { "speaker": "caller", "voice": "callerChris", "ne": "हुन्छ, कालो रङको। रमेश।", "text": "Yes please, the black one. Ramesh." },
+  { "speaker": "agent", "voice": "agent", "ne": "भयो रमेशजी। कालो थिंकप्याड सात बजेसम्म काउन्टरमा तपाईंको लागि राखिन्छ।", "text": "Done, Ramesh. The black ThinkPad will be kept for you at the counter until seven." }
 ]}

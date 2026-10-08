@@ -1,6 +1,6 @@
 { "id": "voice-agent", "label": "Example · Voice agent on a website", "lines": [
-  { "speaker": "caller", "voice": "callerJessica", "text": "Hi. Do you deliver to Pokhara?" },
-  { "speaker": "agent", "voice": "agentF", "text": "Yes, we deliver anywhere in Pokhara within two days. Orders placed before noon go out the same day." },
-  { "speaker": "caller", "voice": "callerJessica", "text": "And can I pay on delivery?" },
-  { "speaker": "agent", "voice": "agentF", "text": "You can. Cash on delivery and digital wallets both work. Would you like me to send the order link to your phone?" }
+  { "speaker": "caller", "voice": "callerJessica", "ne": "पोखरासम्म डेलिभरी हुन्छ?", "text": "Do you deliver to Pokhara?" },
+  { "speaker": "agent", "voice": "agent", "ne": "हुन्छ, पोखराभित्र दुई दिनमा पुग्छ। दिउँसो बाह्र बजेअघिको अर्डर सोही दिन पठाइन्छ।", "text": "Yes, anywhere in Pokhara within two days. Orders before noon go out the same day." },
+  { "speaker": "caller", "voice": "callerJessica", "ne": "सामान आएपछि पैसा तिर्न मिल्छ?", "text": "Can I pay on delivery?" },
+  { "speaker": "agent", "voice": "agent", "ne": "मिल्छ। नगद र डिजिटल वालेट दुवै चल्छ। अर्डरको लिंक तपाईंको फोनमा पठाइदिऊँ?", "text": "Yes. Cash and digital wallets both work. Shall I send the order link to your phone?" }
 ]}

@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-// Builds the demo calls from scripts/voices/*.json with ElevenLabs.
+// Builds the demo calls from scripts/voices/*.json with ElevenLabs. Lines
+// are spoken in Nepali (`ne`); `text` is the English shown under each line.
 // Each line is spoken separately (cached by voice + text, so reruns are
 // free), joined with short gaps, loudness-matched, and written to
 // public/audio/<id>.opus and .m4a with <id>.json timings and waveform peaks.
@@ -20,13 +21,13 @@ const SCRIPTS = join(ROOT, 'scripts/voices');
 const CACHE = join(ROOT, '.cache/voices');
 const OUT = join(ROOT, 'public/audio');
 const GAP = 0.35;
-const MODEL = 'eleven_multilingual_v2';
+const MODEL = 'eleven_v4'; // speaks Nepali; multilingual_v2 does not
 
 export function planClip(script, voices) {
   return script.lines.map((l, i) => {
     const voiceId = voices[l.voice];
     if (!voiceId) throw new Error(`${script.id} line ${i + 1}: unknown voice "${l.voice}"`);
-    return { speaker: l.speaker, voiceId, text: l.text };
+    return { speaker: l.speaker, voiceId, text: l.ne ?? l.text };
   });
 }
 
@@ -42,7 +43,7 @@ export function stitch(durations, gap = GAP) {
   return out;
 }
 
-export const charCount = (scripts) => scripts.reduce((n, s) => n + s.lines.reduce((m, l) => m + l.text.length, 0), 0);
+export const charCount = (scripts) => scripts.reduce((n, s) => n + s.lines.reduce((m, l) => m + (l.ne ?? l.text).length, 0), 0);
 
 export const cacheKey = (voiceId, text) => createHash('sha256').update(`${MODEL}\n${voiceId}\n${text}`).digest('hex').slice(0, 20);
 
@@ -116,7 +117,7 @@ async function build(script, voices, key) {
     id: script.id,
     label: script.label,
     duration: Math.round(total * 1000) / 1000,
-    lines: script.lines.map((l, i) => ({ speaker: l.speaker, text: l.text, ...times[i] })),
+    lines: script.lines.map((l, i) => ({ speaker: l.speaker, ne: l.ne, text: l.text, ...times[i] })),
     peaks: peaksFrom(decodeMono(wav), 120),
   };
   writeFileSync(join(OUT, `${script.id}.json`), JSON.stringify(timing));

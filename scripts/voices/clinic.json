@@ -1,9 +1,9 @@
 { "id": "clinic", "label": "Example call · Clinic", "lines": [
-  { "speaker": "agent", "voice": "agentF", "text": "Hello, Sunrise Clinic. How can I help you today?" },
-  { "speaker": "caller", "voice": "callerJessica", "text": "Hi. I'd like to see a skin doctor this week, if possible." },
-  { "speaker": "agent", "voice": "agentF", "text": "Of course. Doctor Shrestha sees skin patients on Wednesday and Friday mornings. Wednesday at ten thirty is free. Would that work?" },
-  { "speaker": "caller", "voice": "callerJessica", "text": "Wednesday is perfect." },
-  { "speaker": "agent", "voice": "agentF", "text": "Done. Can I have your name, please?" },
-  { "speaker": "caller", "voice": "callerJessica", "text": "Sita Karki." },
-  { "speaker": "agent", "voice": "agentF", "text": "Thank you, Sita. You're booked with Doctor Shrestha on Wednesday at ten thirty. I'll send the details to this number by SMS." }
+  { "speaker": "agent", "voice": "agent", "ne": "नमस्ते, सनराइज क्लिनिक। म तपाईंलाई कसरी सहयोग गर्न सक्छु?", "text": "Hello, Sunrise Clinic. How can I help you?" },
+  { "speaker": "caller", "voice": "callerJessica", "ne": "यो हप्ता छालाको डाक्टरलाई देखाउन मिल्छ?", "text": "Can I see a skin doctor this week?" },
+  { "speaker": "agent", "voice": "agent", "ne": "मिल्छ। डाक्टर श्रेष्ठ बुधबार र शुक्रबार बिहान बस्नुहुन्छ। बुधबार साढे दस बजे खाली छ। हुन्छ?", "text": "Yes. Doctor Shrestha sees patients on Wednesday and Friday mornings. Wednesday at ten thirty is free. Does that work?" },
+  { "speaker": "caller", "voice": "callerJessica", "ne": "हुन्छ, बुधबार ठिक छ।", "text": "Yes, Wednesday is fine." },
+  { "speaker": "agent", "voice": "agent", "ne": "तपाईंको नाम भन्नुहोस् न।", "text": "May I have your name?" },
+  { "speaker": "caller", "voice": "callerJessica", "ne": "सीता कार्की।", "text": "Sita Karki." },
+  { "speaker": "agent", "voice": "agent", "ne": "धन्यवाद सीताजी। बुधबार साढे दस बजे डाक्टर श्रेष्ठसँग तपाईंको समय मिलाइयो। विवरण यही नम्बरमा एसएमएसबाट पठाउँछु।", "text": "Thank you, Sita. You're booked with Doctor Shrestha on Wednesday at ten thirty. I'll send the details to this number by SMS." }
 ]}
