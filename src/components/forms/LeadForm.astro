@@ -2,6 +2,7 @@
 // Lead form for demos and resellers. Works as a plain form post without
 // JavaScript (the endpoint redirects to /thanks); lead-form.ts adds inline
 // validation and submits with fetch.
+import ChevronDown from '@lucide/astro/icons/chevron-down';
 import { WAITLIST_API_URL } from '../../config/site';
 
 export interface Props {
@@ -45,10 +46,13 @@ const types = [
     {withType && (
       <div class="field">
         <label for={`${id}-type`}>Type of business</label>
-        <select id={`${id}-type`} name="business_type">
-          <option value="">Choose one</option>
-          {types.map((t) => <option value={t.v}>{t.l}</option>)}
-        </select>
+        <span class="select">
+          <select id={`${id}-type`} name="business_type">
+            <option value="">Choose one</option>
+            {types.map((t) => <option value={t.v}>{t.l}</option>)}
+          </select>
+          <ChevronDown class="chev" size={20} stroke-width={2} aria-hidden="true" />
+        </span>
       </div>
     )}
     {withCity && (
@@ -83,6 +87,10 @@ const types = [
     background: var(--canvas); border: 1px solid var(--line); border-radius: var(--radius-control);
     font-size: 17px; transition: border-color var(--fast) var(--ease);
   }
+  /* Our own chevron, with the same inset as the text on the left. */
+  .select { position: relative; display: block; }
+  select { appearance: none; -webkit-appearance: none; padding-right: calc(var(--space-4) * 2 + 20px); cursor: pointer; }
+  .select :global(.chev) { position: absolute; right: var(--space-4); top: 50%; translate: 0 -50%; color: var(--ink-muted); pointer-events: none; }
   input:hover, select:hover { border-color: var(--ink-muted); }
   input:focus-visible, select:focus-visible { outline: 2px solid var(--link); outline-offset: 0; border-color: var(--link); }
   input[aria-invalid='true'] { border-color: var(--error); }
