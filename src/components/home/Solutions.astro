@@ -6,17 +6,19 @@ import { solutions } from '../../data/solutions';
     <h2>Who it's for</h2>
     <ul class="list">
       {solutions.map((s) => (
-        <li><a href={`/solutions/${s.slug}`}><span class="name">{s.name}</span></a></li>
+        <li><a href={`/solutions/${s.slug}`}><span class="name">{s.name}</span><span class="arrow" aria-hidden="true">→</span></a></li>
       ))}
     </ul>
   </div>
 </section>
 
 <style>
-  .who { background: var(--surface); }
   .list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--space-7); }
-  a { display: grid; gap: var(--space-1); padding: var(--space-5) 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
-  a:hover .name { color: var(--link); text-decoration: underline; }
-  .name { font-size: 1.25rem; font-weight: 600; }
+  .list { border-bottom: 1px solid var(--line); }
+  a { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); min-height: 96px; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+  .name { font-size: clamp(1.375rem, 1.1rem + 1vw, 1.875rem); font-weight: 600; line-height: 1.2; transition: color var(--fast) var(--ease); }
+  .arrow { color: var(--link); font-size: 1.5rem; transition: transform var(--fast) var(--ease); }
+  a:hover .name { color: var(--link); }
+  a:hover .arrow { transform: translateX(4px); }
   @media (max-width: 767px) { .list { grid-template-columns: 1fr; } }
 </style>

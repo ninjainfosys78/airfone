@@ -3,10 +3,10 @@ import CallPlayer from '../player/CallPlayer.astro';
 import { realCall } from '../player/clips';
 import { testimonials } from '../../data/testimonials';
 ---
-<section class="section" data-reveal>
+<section class="section proof" data-reveal>
   <div class="wrap narrow">
     <h2>A real call, not a script</h2>
-    <CallPlayer data={realCall} id="call-real" />
+    <CallPlayer data={realCall} id="call-real" compact />
   </div>
   {testimonials.length > 0 && (
     <div class="wrap quotes">
@@ -21,6 +21,7 @@ import { testimonials } from '../../data/testimonials';
 </section>
 
 <style>
+  .proof { background: var(--surface); }
   .narrow { max-width: calc(840px + 2 * var(--gutter)); }
   .quotes { margin-top: var(--space-8); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); }
   figure { margin: 0; }
