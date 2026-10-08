@@ -63,7 +63,7 @@ const timing = JSON.stringify({ duration: data.duration ?? 0, lines: lines.map((
   {lines.length > 0 && (
     <details class="transcript" data-transcript open={p.chat}>
       <summary>Transcript</summary>
-      <ol>
+      <ol tabindex={p.chat ? 0 : undefined} aria-label={p.chat ? `Transcript of ${label}` : undefined}>
         {lines.map((l) => (
           <li data-speaker={l.speaker} data-start={l.start} data-end={l.end}>
             <span class="who">{l.speaker === 'agent' ? 'AirFone' : 'Caller'}</span>
