@@ -33,11 +33,9 @@ const used = s.products.map(productBySlug).filter((p) => !!p);
   </section>
 
   <section class="section does" data-reveal>
-    <div class="wrap">
-      <h2>What AirFone does with them</h2>
-      <div class="cols" data-stagger>
-        {s.does.map((d, i) => <div style={`--i:${i}`}><h3>{d.h}</h3><p class="muted">{d.p}</p></div>)}
-      </div>
+    <div class="wrap two">
+      <h2>What AirFone does</h2>
+      <ul class="does-list" data-stagger>{s.does.map((d, i) => <li style={`--i:${i}`}>{d.h}</li>)}</ul>
     </div>
   </section>
 
@@ -62,9 +60,8 @@ const used = s.products.map(productBySlug).filter((p) => !!p);
   .calls { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
   .calls li { padding: var(--space-4) var(--space-5); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-panel); font-size: 17px; }
   .does { background: var(--surface); }
-  .does h2 { margin-bottom: var(--space-7); }
-  .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-7); }
-  .cols h3 { margin-bottom: var(--space-3); }
+  .does-list { list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--line); }
+  .does-list li { padding: var(--space-4) 0; border-top: 1px solid var(--line); font-size: 1.25rem; font-weight: 600; font-family: var(--font-display); }
   .h3 { font-size: 1.375rem; }
   .prods { list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--line); }
   .prods a { display: flex; justify-content: space-between; align-items: center; min-height: 88px; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
@@ -74,6 +71,5 @@ const used = s.products.map(productBySlug).filter((p) => !!p);
   .prods a:hover .arrow { transform: translateX(4px); }
   @media (max-width: 959px) {
     .grid, .two { grid-template-columns: 1fr; gap: var(--space-6); }
-    .cols { grid-template-columns: 1fr; gap: var(--space-6); }
   }
 </style>
