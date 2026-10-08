@@ -1,6 +1,9 @@
 ---
-// Shared layout for the legal pages: heading, last-changed date,
-// introduction, then numbered sections of paragraphs and lists.
+// Shared layout for the legal pages: title and date, a contents list that
+// stays in view on desktop, then numbered sections of paragraphs and lists.
+import '@fontsource-variable/source-serif-4/wght.css';
+import serifUrl from '@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-normal.woff2?url';
+
 export interface Section {
   h: string;
   p?: readonly string[];
@@ -13,24 +16,79 @@ export interface Props {
   sections: readonly Section[];
 }
 const { h1, updated, intro, sections } = Astro.props;
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const items = sections.map((s, i) => ({ ...s, n: i + 1, id: slug(s.h) }));
 ---
-<section class="section">
-  <div class="wrap prose legal" data-legal>
+<link rel="preload" href={serifUrl} as="font" type="font/woff2" crossorigin />
+<header class="head">
+  <div class="wrap" data-enter>
     <h1>{h1}</h1>
-    <p class="updated muted small">{updated}</p>
-    {intro.map((p) => <p set:html={p} />)}
-    {sections.map((s, i) => (
-      <>
-        <h2>{i + 1}. {s.h}</h2>
+    <p class="updated">{updated}</p>
+  </div>
+</header>
+
+<div class="wrap layout" data-legal data-enter>
+  <nav class="toc" aria-label="Sections">
+    <ol>
+      {items.map((s) => <li><a href={`#${s.id}`}><span class="n">{s.n}</span>{s.h}</a></li>)}
+    </ol>
+  </nav>
+
+  <div class="doc">
+    <div class="intro">{intro.map((p) => <p set:html={p} />)}</div>
+    {items.map((s) => (
+      <section class="part" id={s.id} aria-labelledby={`${s.id}-h`}>
+        <h2 id={`${s.id}-h`}><span class="n">{s.n}</span>{s.h}</h2>
         {(s.p ?? []).map((p) => <p set:html={p} />)}
         {s.list && <ul>{s.list.map((li) => <li set:html={li} />)}</ul>}
-      </>
+      </section>
     ))}
   </div>
-</section>
+</div>
+
+<script>
+  // Mark the section being read in the contents list.
+  const links = new Map(Array.from(document.querySelectorAll<HTMLAnchorElement>('.toc a')).map((a) => [a.hash.slice(1), a]));
+  if (links.size && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) if (e.isIntersecting) {
+        links.forEach((a) => a.removeAttribute('aria-current'));
+        links.get(e.target.id)?.setAttribute('aria-current', 'true');
+      }
+    }, { rootMargin: '-15% 0px -75% 0px' });
+    links.forEach((_, id) => { const el = document.getElementById(id); if (el) io.observe(el); });
+  }
+</script>
 
 <style>
-  .legal h1 { margin-bottom: var(--space-3); }
-  .legal .updated { margin-bottom: var(--space-6); }
-  .legal ul { padding-left: 1.25em; }
+  .head { padding-block: var(--space-9) var(--space-7); border-bottom: 1px solid var(--line); }
+  h1 { margin: 0; }
+  .updated { margin: var(--space-3) 0 0; font-size: 16px; color: var(--ink-muted); }
+
+  .layout { display: grid; grid-template-columns: 260px minmax(0, 700px); gap: var(--space-9); padding-block: var(--space-8) var(--space-10); }
+
+  .toc { position: sticky; top: 104px; align-self: start; max-height: calc(100vh - 128px); overflow-y: auto; }
+  .toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line); }
+  .toc a {
+    display: flex; gap: var(--space-3); padding: 7px 0 7px var(--space-4); margin-left: -1px;
+    border-left: 2px solid transparent; color: var(--ink-muted); text-decoration: none; font-size: 15px; line-height: 1.35;
+    transition: color var(--fast) var(--ease), border-color var(--fast) var(--ease);
+  }
+  .toc .n { flex: none; min-width: 1.4em; font-variant-numeric: tabular-nums; }
+  .toc a:hover { color: var(--ink); }
+  .toc a[aria-current] { color: var(--ink); border-left-color: var(--brand); }
+
+  .doc { font-family: 'Source Serif 4 Variable', Georgia, serif; font-size: 1.125rem; line-height: 1.5; }
+  .doc p, .doc ul { margin: 0 0 var(--space-4); }
+  .doc ul { padding-left: 1.2em; }
+  .doc li + li { margin-top: var(--space-2); }
+  .intro { padding-bottom: var(--space-6); margin-bottom: var(--space-2); border-bottom: 1px solid var(--line); font-size: 1.1875rem; }
+  .part { padding-top: var(--space-7); scroll-margin-top: 96px; }
+  .part h2 { display: flex; align-items: baseline; gap: var(--space-3); margin: 0 0 var(--space-4); font-size: 1.375rem; line-height: 1.3; }
+  .part h2 .n { flex: none; color: var(--link); font-variant-numeric: tabular-nums; }
+
+  @media (max-width: 1023px) {
+    .layout { grid-template-columns: minmax(0, 700px); gap: 0; padding-top: var(--space-6); }
+    .toc { position: static; max-height: none; margin-bottom: var(--space-6); padding-bottom: var(--space-5); border-bottom: 1px solid var(--line); }
+  }
 </style>
