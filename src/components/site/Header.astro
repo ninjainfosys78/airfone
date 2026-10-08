@@ -179,12 +179,19 @@ const plain = [
     position: absolute; left: 0; right: 0; top: 100%;
     background: var(--canvas); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
   }
-  /* Opening from closed: a short fade. Moving between menus: no animation,
-     the panel content just swaps under a steady panel. */
-  .site-header:not(.switching) .menu[open] .mega { animation: drop 160ms ease-out; }
-  .menu[open] .mega-grid { animation: fade 200ms ease-out; }
-  @keyframes drop { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  /* Opening from closed: the panel unrolls downward from the bar, then its
+     links rise in one after another. Moving between menus keeps the panel
+     still and only replays the links. */
+  .site-header:not(.switching) .menu[open] .mega { animation: unroll 320ms cubic-bezier(0.2, 0, 0, 1); }
+  .menu[open] .mega-links li, .menu[open] .mega-feature { animation: item-in 360ms cubic-bezier(0.2, 0, 0, 1) both; }
+  .menu[open] .mega-links li:nth-child(1) { animation-delay: 60ms; }
+  .menu[open] .mega-links li:nth-child(2) { animation-delay: 90ms; }
+  .menu[open] .mega-links li:nth-child(3) { animation-delay: 120ms; }
+  .menu[open] .mega-links li:nth-child(4) { animation-delay: 150ms; }
+  .menu[open] .mega-links li:nth-child(5) { animation-delay: 180ms; }
+  .menu[open] .mega-feature { animation-delay: 140ms; }
+  @keyframes unroll { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+  @keyframes item-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
   .mega-grid { display: grid; grid-template-columns: 1fr 340px; gap: var(--space-8); padding-block: var(--space-7); }
   .mega-links { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--space-7); }
   .mega-links a { display: block; padding: var(--space-4) 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
@@ -238,5 +245,5 @@ const plain = [
     .actions .btn { padding: 0 var(--space-3); }
     .mobile-label { display: none; }
   }
-  @media (prefers-reduced-motion: reduce) { .menu[open] .mega, .menu[open] .mega-grid { animation: none !important; } .nav-link::before, .menu > summary::before { transition: none; } }
+  @media (prefers-reduced-motion: reduce) { .menu[open] .mega, .menu[open] .mega-links li, .menu[open] .mega-feature { animation: none !important; } .nav-link::before, .menu > summary::before { transition: none; } }
 </style>
