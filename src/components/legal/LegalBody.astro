@@ -79,12 +79,12 @@ const items = sections.map((s, i) => ({ ...s, n: i + 1, id: slug(s.h) }));
   .toc a[aria-current] { color: var(--ink); border-left-color: var(--brand); }
 
   .doc { font-family: 'Source Serif 4 Variable', Georgia, serif; font-size: 1.125rem; line-height: 1.5; }
-  .doc p, .doc ul { margin: 0 0 var(--space-4); }
+  .doc p, .doc ul { margin: 0 0 var(--space-3); }
   .doc ul { padding-left: 1.2em; }
-  .doc li + li { margin-top: var(--space-2); }
-  .intro { padding-bottom: var(--space-6); margin-bottom: var(--space-2); border-bottom: 1px solid var(--line); font-size: 1.1875rem; }
-  .part { padding-top: var(--space-7); scroll-margin-top: 96px; }
-  .part h2 { display: flex; align-items: baseline; gap: var(--space-3); margin: 0 0 var(--space-4); font-size: 1.375rem; line-height: 1.3; }
+  .doc li + li { margin-top: var(--space-1); }
+  .intro { padding-bottom: var(--space-5); margin-bottom: var(--space-2); border-bottom: 1px solid var(--line); font-size: 1.1875rem; }
+  .part { padding-top: var(--space-6); scroll-margin-top: 96px; }
+  .part h2 { display: flex; align-items: baseline; gap: var(--space-3); margin: 0 0 var(--space-3); font-size: 1.375rem; line-height: 1.3; }
   .part h2 .n { flex: none; color: var(--link); font-variant-numeric: tabular-nums; }
 
   @media (max-width: 1023px) {
