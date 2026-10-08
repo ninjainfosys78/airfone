@@ -110,6 +110,7 @@ const plain = [
     for (const m of menus) if (m.open) { m.open = false; m.querySelector('summary')?.focus(); }
   });
   for (const m of menus) m.addEventListener('toggle', () => {
+    if (m.open) header.classList.toggle('switching', menus.some((o) => o !== m && o.open && !o.classList.contains('mobile')));
     if (m.open) for (const o of menus) if (o !== m) o.open = false;
     sync();
   });
@@ -119,8 +120,8 @@ const plain = [
     for (const m of menus.filter((x) => !x.classList.contains('mobile'))) {
       let t = 0;
       const li = m.closest('li')!;
-      li.addEventListener('pointerenter', () => { clearTimeout(t); t = window.setTimeout(() => { m.open = true; }, 120); });
-      li.addEventListener('pointerleave', () => { clearTimeout(t); t = window.setTimeout(() => { m.open = false; }, 200); });
+      li.addEventListener('pointerenter', () => { clearTimeout(t); t = window.setTimeout(() => { m.open = true; }, 150); });
+      li.addEventListener('pointerleave', () => { clearTimeout(t); t = window.setTimeout(() => { m.open = false; }, 260); });
       // A click on the label while hover-opened should not close it.
       m.querySelector('summary')!.addEventListener('click', (e) => { if (m.open) { e.preventDefault(); } });
     }
@@ -156,11 +157,17 @@ const plain = [
   .nav-link, .menu > summary {
     display: inline-flex; align-items: center; gap: 8px; height: 100%; min-height: 44px;
     color: var(--ink); text-decoration: none; font-size: 16px; font-weight: 500;
-    border-bottom: 2px solid transparent; margin-bottom: -1px;
-    transition: color var(--fast) var(--ease), border-color var(--fast) var(--ease);
+    position: relative;
+    transition: color var(--fast) var(--ease);
   }
+  .top > li { position: relative; }
+  .top > li::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--brand);
+    transform: scaleX(0); transition: transform 220ms var(--ease); pointer-events: none;
+  }
+  .top > li:has(.menu[open])::after, .top > li:has([aria-current='page'])::after { transform: scaleX(1); }
   .nav-link:hover, .menu > summary:hover { color: var(--link); }
-  .menu[open] > summary, .nav-link[aria-current='page'], .menu > summary[aria-current='page'] { color: var(--link); border-bottom-color: var(--brand); }
+  .menu[open] > summary, .nav-link[aria-current='page'], .menu > summary[aria-current='page'] { color: var(--link); }
   .menu > summary::after {
     content: ''; width: 6px; height: 6px; margin-top: -3px;
     border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
@@ -173,8 +180,12 @@ const plain = [
     position: absolute; left: 0; right: 0; top: 100%;
     background: var(--canvas); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
   }
-  .menu[open] .mega { animation: drop 180ms cubic-bezier(0.2, 0, 0, 1); }
-  @keyframes drop { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+  /* Opening from closed: a short fade. Moving between menus: no animation,
+     the panel content just swaps under a steady panel. */
+  .site-header:not(.switching) .menu[open] .mega { animation: drop 160ms ease-out; }
+  .menu[open] .mega-grid { animation: fade 200ms ease-out; }
+  @keyframes drop { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
   .mega-grid { display: grid; grid-template-columns: 1fr 340px; gap: var(--space-8); padding-block: var(--space-7); }
   .mega-links { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--space-7); }
   .mega-links a { display: block; padding: var(--space-4) 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
@@ -228,5 +239,5 @@ const plain = [
     .actions .btn { padding: 0 var(--space-3); }
     .mobile-label { display: none; }
   }
-  @media (prefers-reduced-motion: reduce) { .menu[open] .mega { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .menu[open] .mega, .menu[open] .mega-grid { animation: none !important; } .top > li::after { transition: none; } }
 </style>
