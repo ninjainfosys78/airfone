@@ -171,9 +171,11 @@ button, input, select, textarea { font: inherit; color: inherit; }
 /* Invite a first tap: a faint ring every few seconds until anything plays. */
 .tap.invite::after {
   content: ''; position: absolute; inset: 0; border-radius: inherit; border: 2px solid var(--lime);
-  animation: invite 3.2s cubic-bezier(0.2, 0, 0, 1) infinite; pointer-events: none;
+  animation: invite 1.8s cubic-bezier(0.2, 0, 0, 1) infinite; pointer-events: none;
 }
-@keyframes invite { 0% { opacity: 0.7; transform: scale(1); } 45%, 100% { opacity: 0; transform: scale(1.9); } }
+.tap.invite:not(:hover) { animation: breathe 1.8s ease-in-out infinite; }
+@keyframes invite { 0% { opacity: 0.9; transform: scale(1); } 70%, 100% { opacity: 0; transform: scale(2.3); } }
+@keyframes breathe { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.07); } 35% { transform: scale(1); } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
