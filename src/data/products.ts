@@ -22,7 +22,7 @@ export interface Product {
 export const products: Product[] = [
   {
     slug: 'ai-call-agent',
-    name: 'AI call agent (inbound)',
+    name: 'AI Call Agent',
     short: 'Answers your phone line in Nepali, day and night, and hands over to your team when it should.',
     headline: 'Your phone, answered on the first ring',
     description: 'AirFone AI call agent answers your business line in Nepali, any hour, from what you teach it, and passes callers to your team mid-call.',
@@ -50,7 +50,7 @@ export const products: Product[] = [
   },
   {
     slug: 'ai-phone-system',
-    name: 'AI phone system (inbound and outbound)',
+    name: 'AI Phone System',
     short: 'A full business phone system with an agent that answers and calls out for you.',
     headline: 'One phone system that answers and calls back',
     description: 'AirFone AI phone system gives you extensions, queues and recording plus an agent that answers callers and makes reminder and follow-up calls.',
@@ -77,7 +77,7 @@ export const products: Product[] = [
   },
   {
     slug: 'phone-system',
-    name: 'Business phone system (IP/PBX)',
+    name: 'Cloud PBX',
     short: 'Extensions, menus, recording and queues on your existing number, with no hardware.',
     headline: 'A business phone system without the box',
     description: 'AirFone business phone system gives your team extensions, call menus, queues and recording on your existing number, from a browser or phone.',
@@ -104,7 +104,7 @@ export const products: Product[] = [
   },
   {
     slug: 'website-voice-agent',
-    name: 'Voice agent for your website',
+    name: 'Website Voice Agent',
     short: 'Visitors tap once and talk to an agent that knows your business.',
     headline: 'Let website visitors simply ask',
     description: 'AirFone voice agent lets visitors talk to your website. It answers from your own information and passes serious buyers to your team.',
@@ -130,7 +130,7 @@ export const products: Product[] = [
   },
   {
     slug: 'website-chatbot',
-    name: 'Chatbot for your website',
+    name: 'Website Chatbot',
     short: 'Answers questions from your own knowledge and passes real leads to your team.',
     headline: 'Answers on your website, any hour',
     description: 'AirFone chatbot answers website visitors from your own knowledge, any hour, and hands real leads to your team with the conversation attached.',

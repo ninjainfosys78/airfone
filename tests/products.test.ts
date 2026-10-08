@@ -1,13 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { products } from '../src/data/products';
 
-const NAMES = [
-  'AI call agent (inbound)',
-  'AI phone system (inbound and outbound)',
-  'Business phone system (IP/PBX)',
-  'Voice agent for your website',
-  'Chatbot for your website',
-];
+const NAMES = ['AI Call Agent', 'AI Phone System', 'Cloud PBX', 'Website Voice Agent', 'Website Chatbot'];
 
 describe('products', () => {
   it('are exactly the five agreed products', () => {

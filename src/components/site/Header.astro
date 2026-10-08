@@ -14,15 +14,15 @@ const groups = [
     id: 'products',
     label: 'Products',
     base: '/products',
-    links: products.map((p) => ({ href: `/products/${p.slug}`, label: p.name, note: p.short })),
-    feature: { title: 'Hear the agent on a real call', note: 'Ring it now and ask anything.', href: DEMO_NUMBER_TEL, cta: `Call ${DEMO_NUMBER_DISPLAY}` },
+    links: products.map((p) => ({ href: `/products/${p.slug}`, label: p.name })),
+    feature: { title: 'Hear the agent on a real call', href: DEMO_NUMBER_TEL, cta: `Call ${DEMO_NUMBER_DISPLAY}` },
   },
   {
     id: 'solutions',
     label: 'Solutions',
     base: '/solutions',
-    links: solutions.map((s) => ({ href: `/solutions/${s.slug}`, label: s.name, note: s.short })),
-    feature: { title: 'Sell AirFone in your city', note: 'Monthly income for every customer you bring.', href: '/resellers', cta: 'Become a reseller' },
+    links: solutions.map((s) => ({ href: `/solutions/${s.slug}`, label: s.name })),
+    feature: { title: 'Sell AirFone in your city', href: '/resellers', cta: 'Become a reseller' },
   },
 ];
 const plain = [
@@ -59,12 +59,11 @@ const plain = [
                 <div class="wrap mega-grid">
                   <ul class="mega-links">
                     {g.links.map((l) => (
-                      <li><a href={l.href} aria-current={current(l.href)}><span class="m-name">{l.label}</span><span class="m-note">{l.note}</span></a></li>
+                      <li><a href={l.href} aria-current={current(l.href)}><span class="m-name">{l.label}</span></a></li>
                     ))}
                   </ul>
                   <a class="mega-feature" href={g.feature.href}>
                     <span class="f-title">{g.feature.title}</span>
-                    <span class="f-note">{g.feature.note}</span>
                     <span class="f-cta">{g.feature.cta} <span aria-hidden="true">→</span></span>
                   </a>
                 </div>
@@ -185,16 +184,14 @@ const plain = [
   @keyframes drop { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
   .mega-grid { display: grid; grid-template-columns: 1fr 340px; gap: var(--space-8); padding-block: var(--space-7); }
   .mega-links { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--space-7); }
-  .mega-links a { display: grid; gap: 4px; padding: var(--space-4) 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+  .mega-links a { display: block; padding: var(--space-4) 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
   .m-name { font-size: 17px; font-weight: 600; transition: color var(--fast) var(--ease); }
-  .m-note { font-size: 14px; line-height: 1.45; color: var(--ink-muted); }
   .mega-links a:hover .m-name, .mega-links a[aria-current='page'] .m-name { color: var(--link); }
   .mega-feature {
     display: grid; align-content: end; gap: var(--space-2); padding: var(--space-6);
-    background: var(--stage); color: var(--stage-ink); border-radius: var(--radius-panel); text-decoration: none; min-height: 220px;
+    background: var(--stage); color: var(--stage-ink); border-radius: var(--radius-panel); text-decoration: none; min-height: 180px;
   }
   .f-title { font-size: 1.375rem; font-weight: 600; line-height: 1.25; }
-  .f-note { color: var(--stage-muted); font-size: 16px; }
   .f-cta { margin-top: var(--space-3); color: var(--lime); font-weight: 600; }
   .mega-feature:hover .f-cta span { display: inline-block; transform: translateX(4px); transition: transform var(--fast) var(--ease); }
 

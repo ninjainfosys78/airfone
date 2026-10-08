@@ -48,7 +48,7 @@ const used = s.products.map(productBySlug).filter((p) => !!p);
     <div class="wrap two">
       <h2 class="h3">Products for {s.name.toLowerCase()}</h2>
       <ul class="prods">
-        {used.map((p) => <li><a href={`/products/${p!.slug}`}>{p!.name}</a><span class="muted">{p!.short}</span></li>)}
+        {used.map((p) => <li><a href={`/products/${p!.slug}`}>{p!.name}</a></li>)}
       </ul>
     </div>
   </section>

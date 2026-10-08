@@ -9,7 +9,7 @@ be `done` or `n/a` with a reason before launch.
 - A complete redesign of airfone.app: premium, modern, in AirFone's own branding.
 - For everyone: small businesses sign up themselves, larger buyers book a demo, resellers apply.
 - English only.
-- Five products: website voice agent, website chatbot, AI call agent (inbound), business phone
+- Five products (menu names since 2026-10-08: AI Call Agent, AI Phone System, Cloud PBX, Website Voice Agent, Website Chatbot): website voice agent, website chatbot, AI call agent (inbound), business phone
   system (IP/PBX), AI phone system (inbound and outbound). No social media chat anywhere.
 - No prices for now. The owner will send them later.
 - A Markdown blog and strong SEO.
