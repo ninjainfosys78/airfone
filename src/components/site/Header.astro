@@ -207,6 +207,7 @@ const plain = [
   .mega-grid { display: grid; grid-template-columns: 1fr 340px; gap: var(--space-8); padding-block: var(--space-7); }
   .mega-links { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--space-7); }
   .mega-links a { display: block; padding: var(--space-4) 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+  .mega-links li:nth-child(-n+2) a { border-top: 0; }
   .m-name { font-size: 17px; font-weight: 600; transition: color var(--fast) var(--ease); }
   .mega-links a:hover .m-name, .mega-links a[aria-current='page'] .m-name { color: var(--link); }
   .mega-feature {
