@@ -170,10 +170,13 @@ const timing = JSON.stringify({ duration: data.duration ?? 0, lines: lines.map((
     background: var(--surface); border: 1px solid var(--line); cursor: pointer;
   }
   .chat .transcript li[data-speaker='caller'] { justify-self: end; background: var(--canvas); }
-  .chat .who { display: block; font-size: 13px; margin-bottom: 2px; }
+  /* Who is talking shows by side and colour, not a repeated label. */
+  .chat .who { display: none; }
+  .chat .transcript li[data-speaker='agent'] { background: var(--stage); border-color: var(--stage); color: var(--stage-ink); }
+  .chat .transcript li[data-speaker='agent'] .en.sub { color: var(--stage-muted); }
   .chat .ne { font-size: 16px; }
   .chat .en.sub { font-size: 14px; }
-  .chat.is-playing li { opacity: 0.5; }
-  .chat.is-playing li.is-past { opacity: 0.75; }
-  .chat.is-playing li.is-now { opacity: 1; border-color: var(--brand); }
+  .chat.is-playing li, .chat.is-playing li.is-past { opacity: 1; }
+  .chat .transcript li { border-width: 2px; }
+  .chat.is-playing li.is-now { border-color: var(--lime); }
 </style>
