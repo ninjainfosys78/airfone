@@ -46,7 +46,7 @@ const ways = [
         <Image src={team} alt="A receptionist at the AirFone office front desk dialling a desk phone" widths={[400, 800, 1080]} sizes="(max-width: 959px) 100vw, 420px" quality={90} format="webp" class="photo" />
         <figcaption>
           <MapPin size={18} stroke-width={1.75} aria-hidden="true" />
-          <span>Our office is in {ADDRESS.locality}, {ADDRESS.countryName}</span>
+          <span>{ADDRESS.locality}, {ADDRESS.countryName}</span>
         </figcaption>
       </figure>
     </div>
@@ -80,9 +80,14 @@ const ways = [
   .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: var(--space-9); align-items: start; }
   .form-col h2 { margin-bottom: var(--space-6); }
   .form-col { max-width: 560px; }
-  .photo-col { margin: 0; }
+  .photo-col { position: relative; margin: 0; }
   .photo { display: block; width: 100%; height: auto; aspect-ratio: 1080 / 1700; border-radius: var(--radius-panel); }
-  figcaption { display: flex; align-items: center; gap: var(--space-2); margin-top: var(--space-3); font-size: 16px; color: var(--ink-muted); }
+  /* Where the office is, set on the photo itself. */
+  figcaption {
+    position: absolute; left: var(--space-4); bottom: var(--space-4);
+    display: inline-flex; align-items: center; gap: var(--space-2); padding: 8px 14px 8px 12px;
+    background: var(--surface); border-radius: 999px; font-size: 15px; font-weight: 500; color: var(--ink);
+  }
   figcaption :global(svg) { flex: none; color: var(--brand); }
 
 

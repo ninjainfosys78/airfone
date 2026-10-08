@@ -88,6 +88,7 @@ const types = [
     font-size: 17px; transition: border-color var(--fast) var(--ease);
   }
   /* Our own chevron, with the same inset as the text on the left. */
+  .check input, .check label { cursor: pointer; }
   .select { position: relative; display: block; }
   select { appearance: none; -webkit-appearance: none; padding-right: calc(var(--space-4) * 2 + 20px); cursor: pointer; }
   .select :global(.chev) { position: absolute; right: var(--space-4); top: 50%; translate: 0 -50%; color: var(--ink-muted); pointer-events: none; }
