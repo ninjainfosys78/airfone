@@ -6,7 +6,7 @@
   "description": "airfone.app marketing site (Astro static).",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/sitemap.mjs dist",
+    "build": "node scripts/redirects.mjs && astro build && node scripts/sitemap.mjs dist",
     "preview": "astro preview",
     "test": "vitest run",
     "check": "node scripts/check-site.mjs dist",

@@ -25,6 +25,15 @@ describe('redirects', () => {
   it.runIf(existsSync(new URL('index.html', dist)))('every internal target is a built page', () => {
     for (const [, to] of map) if (to.startsWith('/')) expect(builds(to), `${to} not built`).toBe(true);
   });
+  it('sends /en and /ne (and everything under them) home for Cloudflare', async () => {
+    const { cloudflareRedirects } = await import('../scripts/redirects.mjs');
+    const out = cloudflareRedirects();
+    expect(out).toContain('/en / 301');
+    expect(out).toContain('/en/* /:splat 301');
+    expect(out).toContain('/ne/* /:splat 301');
+    // Exact rules come before the catch-alls.
+    expect(out.indexOf('/en / 301')).toBeLessThan(out.indexOf('/en/* /:splat 301'));
+  });
   it('writes a trailing-slash rule and a real 404', () => {
     const conf = nginxConf();
     expect(conf).toContain('location ~ ^(/.+)/$');
