@@ -83,13 +83,15 @@ export function createOrb(
   palette?: Partial<Record<EngineState, Record<string, string>>>,
 ): OrbEngine | null {
   const gl = canvas.getContext('webgl', { alpha: true, antialias: false, premultipliedAlpha: true });
-  if (!gl) return null;
+  if (!gl) { console.warn('[airfone-orb] WebGL unavailable, showing the still'); return null; }
 
   const compile = (type: number, src: string) => {
     const s = gl.createShader(type)!;
     gl.shaderSource(s, src);
     gl.compileShader(s);
-    return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null;
+    if (gl.getShaderParameter(s, gl.COMPILE_STATUS)) return s;
+    console.warn(`[airfone-orb] ${variant.key} shader failed:`, gl.getShaderInfoLog(s));
+    return null;
   };
   const decls = [
     ...variant.params.map((p) => `uniform float uP_${p.key};`),

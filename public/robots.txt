@@ -1,7 +1,14 @@
 User-agent: *
 Allow: /
+Disallow: /orb-pick
 
-Disallow: /waitlist/
-Disallow: /en/waitlist/
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
 
 Sitemap: https://airfone.app/sitemap-index.xml

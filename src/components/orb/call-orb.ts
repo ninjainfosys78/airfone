@@ -23,7 +23,7 @@ export function defineOrb(variants: Record<string, OrbVariant>) {
     private tick = 0;
 
     connectedCallback() {
-      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) { console.info('[airfone-orb] reduced motion is on, showing the still'); return; }
       const variant = variants[this.getAttribute('variant') ?? ''];
       if (!variant) return;
       const canvas = document.createElement('canvas');

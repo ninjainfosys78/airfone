@@ -120,7 +120,9 @@ export function audit(dist, { designColours = DESIGN_COLOURS } = {}) {
 
     const canonical = root.querySelector('link[rel="canonical"]')?.getAttribute('href');
     if (route !== '/404' && canonical !== canonicalFor(route)) add('SEO-2', file, `canonical ${canonical} should be ${canonicalFor(route)}`);
-    if (!root.querySelector('meta[property="og:image"]')) add('SEO-5', file, 'no og:image');
+    const og = root.querySelector('meta[property="og:image"]')?.getAttribute('content');
+    if (!og) add('SEO-5', file, 'no og:image');
+    else if (og.startsWith(SITE) && !existsSync(join(dist, og.slice(SITE.length)))) add('SEO-5', file, `og:image ${og} is not in the build`);
 
     for (const s of root.querySelectorAll('script[type="application/ld+json"]')) {
       try {
