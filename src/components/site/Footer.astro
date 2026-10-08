@@ -1,6 +1,6 @@
 ---
 import { footerColumns } from '../../data/nav';
-import { COMPANY, CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, ADDRESS } from '../../config/site';
+import { COMPANY, CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, ADDRESS, LEGAL_ADDRESS_LINE } from '../../config/site';
 ---
 <footer class="site-footer">
   <div class="wrap">
@@ -20,7 +20,7 @@ import { COMPANY, CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, ADDRE
         </nav>
       ))}
     </div>
-    <p class="legal muted">© {new Date().getFullYear()} {COMPANY}</p>
+    <p class="legal muted">© {new Date().getFullYear()} {COMPANY}, {LEGAL_ADDRESS_LINE}</p>
   </div>
 </footer>
 

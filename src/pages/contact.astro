@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { ADDRESS, COMPANY, CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, DEMO_NUMBER_DISPLAY, DEMO_NUMBER_TEL } from '../config/site';
+import { ADDRESS, COMPANY, LEGAL_ADDRESS_LINE, CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, DEMO_NUMBER_DISPLAY, DEMO_NUMBER_TEL } from '../config/site';
 import { breadcrumbJsonLd, localBusinessJsonLd } from '../lib/seo';
 ---
 <Base title="Contact" description="Call, email or visit AirFone in Kathmandu. Sales and support on 985-1343348, info@airfone.app, or ring 970-269-7774 to hear the agent." path="/contact" jsonLd={[localBusinessJsonLd(), breadcrumbJsonLd([{ name: 'Contact', path: '/contact' }])]}>
@@ -11,7 +11,8 @@ import { breadcrumbJsonLd, localBusinessJsonLd } from '../lib/seo';
         <div><dt>Sales and support</dt><dd><a href={CONTACT_PHONE_TEL}>{CONTACT_PHONE_DISPLAY}</a></dd></div>
         <div><dt>Email</dt><dd><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></dd></div>
         <div><dt>Hear the agent</dt><dd><a href={DEMO_NUMBER_TEL}>{DEMO_NUMBER_DISPLAY}</a></dd></div>
-        <div><dt>Office</dt><dd>{COMPANY}<br />{ADDRESS.locality}, {ADDRESS.countryName}</dd></div>
+        <div><dt>Office</dt><dd>{ADDRESS.locality}, {ADDRESS.countryName}</dd></div>
+        <div><dt>Company</dt><dd>{COMPANY}<br /><span class="addr">{LEGAL_ADDRESS_LINE}</span></dd></div>
       </dl>
       <div class="actions"><a class="btn btn-primary" href="/demo">Book a demo</a><a class="btn btn-secondary" href="/resellers#apply">Become a reseller</a></div>
     </div>
@@ -25,5 +26,6 @@ import { breadcrumbJsonLd, localBusinessJsonLd } from '../lib/seo';
   dt { font-size: 16px; color: var(--ink-muted); margin-bottom: var(--space-2); }
   dd { margin: 0; font-size: 1.25rem; font-weight: 500; }
   dd a { text-decoration: none; }
+  .addr { font-size: 16px; font-weight: 400; color: var(--ink-muted); }
   .actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-8); }
 </style>
