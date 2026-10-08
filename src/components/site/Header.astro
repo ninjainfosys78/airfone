@@ -160,12 +160,11 @@ const plain = [
     position: relative;
     transition: color var(--fast) var(--ease);
   }
-  .top > li { position: relative; }
-  .top > li::after {
+  .nav-link::before, .menu > summary::before {
     content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--brand);
     transform: scaleX(0); transition: transform 220ms var(--ease); pointer-events: none;
   }
-  .top > li:has(.menu[open])::after, .top > li:has([aria-current='page'])::after { transform: scaleX(1); }
+  .menu[open] > summary::before, .nav-link[aria-current='page']::before, .menu > summary[aria-current='page']::before { transform: scaleX(1); }
   .nav-link:hover, .menu > summary:hover { color: var(--link); }
   .menu[open] > summary, .nav-link[aria-current='page'], .menu > summary[aria-current='page'] { color: var(--link); }
   .menu > summary::after {
@@ -239,5 +238,5 @@ const plain = [
     .actions .btn { padding: 0 var(--space-3); }
     .mobile-label { display: none; }
   }
-  @media (prefers-reduced-motion: reduce) { .menu[open] .mega, .menu[open] .mega-grid { animation: none !important; } .top > li::after { transition: none; } }
+  @media (prefers-reduced-motion: reduce) { .menu[open] .mega, .menu[open] .mega-grid { animation: none !important; } .nav-link::before, .menu > summary::before { transition: none; } }
 </style>
