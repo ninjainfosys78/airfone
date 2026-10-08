@@ -152,30 +152,38 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 /* Tactile play buttons: grow and show a ring on hover, squash on press,
    send one ripple outward on click (call-player.ts adds .ripple). */
-.tap { position: relative; transition: transform 180ms cubic-bezier(0.2, 0, 0, 1), translate 260ms cubic-bezier(0.2, 0, 0, 1), background-color var(--fast) var(--ease); }
+.tap { position: relative; transition: transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1), translate 260ms cubic-bezier(0.2, 0, 0, 1), background-color var(--fast) var(--ease); }
 .tap::before {
   content: ''; position: absolute; inset: -6px; border-radius: inherit;
-  border: 2px solid var(--lime); opacity: 0; transform: scale(0.92);
+  border: 2px solid var(--stage-ink); opacity: 0; transform: scale(0.92);
   transition: opacity 180ms var(--ease), transform 180ms cubic-bezier(0.2, 0, 0, 1);
   pointer-events: none;
 }
 .tap:hover { transform: scale(1.06); }
-.tap:hover::before { opacity: 0.6; transform: scale(1); }
+.tap:hover::before { opacity: 0.9; transform: scale(1); }
 .tap:active, .tap.pressed { transform: scale(0.92); transition-duration: 90ms; }
 .tap.ripple::after {
-  content: ''; position: absolute; inset: 0; border-radius: inherit; background: var(--lime);
+  content: ''; position: absolute; inset: 0; border-radius: inherit; background: var(--stage-ink);
   animation: ripple 600ms cubic-bezier(0.2, 0, 0, 1) forwards; pointer-events: none;
 }
 @keyframes ripple { from { opacity: 0.45; transform: scale(1); } to { opacity: 0; transform: scale(2.2); } }
 
 /* Invite a first tap: a faint ring every few seconds until anything plays. */
 .tap.invite::after {
-  content: ''; position: absolute; inset: 0; border-radius: inherit; border: 2px solid var(--lime);
+  content: ''; position: absolute; inset: 0; border-radius: inherit; border: 2px solid var(--stage-ink);
   animation: invite 1.8s cubic-bezier(0.2, 0, 0, 1) infinite; pointer-events: none;
 }
-.tap.invite:not(:hover) { animation: breathe 1.8s ease-in-out infinite; }
+.tap.invite:not(:hover) { animation: taptap 1.8s linear infinite; }
 @keyframes invite { 0% { opacity: 0.9; transform: scale(1); } 70%, 100% { opacity: 0; transform: scale(2.3); } }
-@keyframes breathe { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.07); } 35% { transform: scale(1); } }
+/* Tap-tap: two quick springy bumps, then a rest. */
+@keyframes taptap {
+  0% { transform: scale(1); }
+  7% { transform: scale(1.14); }
+  13% { transform: scale(0.95); }
+  20% { transform: scale(1.1); }
+  27% { transform: scale(0.98); }
+  33%, 100% { transform: scale(1); }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }

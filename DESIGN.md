@@ -88,4 +88,5 @@ Radius 8px (controls), 12px (panels). Inline code 4px. Borders 1px. No
 - Section entrance: opacity plus 8px translate, 250ms, only for content below
   the first screen, never hides content without JS.
 - The orb and waveform move only while audio plays.
+- Play buttons (owner, 2026-10-08): a tap-tap double bounce and a white ring every 1.8s until the first play, springy press (cubic-bezier(0.34, 1.56, 0.64, 1)), one ripple on click. The only place bounce is used.
 - `prefers-reduced-motion: reduce` turns all of it off.
