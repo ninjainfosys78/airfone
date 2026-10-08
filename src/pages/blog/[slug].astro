@@ -83,7 +83,7 @@ const readNext = (next.length ? next : all.filter((p) => p.id !== post.id)).slic
   .back span { transition: transform var(--fast) var(--ease); }
   .back:hover { color: var(--ink); }
   .back:hover span { transform: translateX(-4px); }
-  .title { margin: var(--space-6) 0 var(--space-4); font-size: clamp(2rem, 1.5rem + 2vw, 3rem); line-height: 1.15; overflow-wrap: anywhere; }
+  .title { margin: var(--space-6) 0 var(--space-4); max-width: 20ch; font-family: 'Source Serif 4 Variable', Georgia, serif; font-weight: 600; font-variation-settings: 'opsz' 60; font-size: clamp(2.25rem, 1.6rem + 2.4vw, 3.5rem); line-height: 1.1; overflow-wrap: anywhere; }
   .meta { margin: 0 0 var(--space-8); padding-bottom: var(--space-6); border-bottom: 1px solid var(--line); font-size: 14px; color: var(--ink-muted); }
   .draft { color: var(--error); }
   .body { max-width: none; font-family: 'Source Serif 4 Variable', Georgia, serif; font-size: 1.1875rem; line-height: 1.55; }
