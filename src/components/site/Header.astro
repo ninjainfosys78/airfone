@@ -253,24 +253,25 @@ const plain = [
   .mobile[open]:not(.closing) .bars i { opacity: 0; transform: scaleX(0.3); }
 
   .mobile-panel {
-    position: fixed; left: 0; right: 0; top: var(--header-h, 109px); bottom: 0; overflow-y: auto; overscroll-behavior: contain;
+    position: fixed; left: 0; right: 0; top: var(--header-h, 109px); height: calc(100dvh - var(--header-h, 109px)); overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
     display: flex; flex-direction: column;
-    background: var(--canvas); padding: var(--space-4) var(--gutter) calc(var(--space-5) + env(safe-area-inset-bottom));
+    background: var(--canvas); padding: var(--space-3) var(--gutter) 0;
   }
-  .mobile-group + .mobile-group { margin-top: var(--space-6); }
+  .mobile-group + .mobile-group { margin-top: var(--space-5); }
   .mobile-title { font-size: 14px; font-weight: 600; color: var(--link); margin-bottom: var(--space-1); }
   .mobile-panel ul { list-style: none; margin: 0; padding: 0; }
   .mobile-panel ul a {
-    display: flex; align-items: center; justify-content: space-between; min-height: 52px;
-    color: var(--ink); text-decoration: none; font-size: 18px; font-weight: 500; border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: space-between; min-height: 48px;
+    color: var(--ink); text-decoration: none; font-size: 17px; font-weight: 500; border-bottom: 1px solid var(--line);
     transition: color var(--fast) var(--ease);
   }
   .mobile-panel ul a :global(.arrow-icon) { color: var(--ink-muted); transition: transform var(--fast) var(--ease); }
   .mobile-panel ul a:active { color: var(--link); }
   .mobile-panel ul a:active :global(.arrow-icon) { transform: translateX(4px); }
   .mobile-panel ul a[aria-current='page'] { color: var(--link); }
-  .mobile-plain { margin-top: var(--space-6) !important; }
-  .mobile-actions { margin-top: auto; padding-top: var(--space-6); display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+  .mobile-plain { margin-top: var(--space-5) !important; }
+  /* Call and demo stay pinned to the bottom of the sheet while it scrolls. */
+  .mobile-actions { position: sticky; bottom: 0; margin-top: auto; padding: var(--space-4) 0 calc(var(--space-4) + env(safe-area-inset-bottom)); background: var(--canvas); border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
   .mobile-actions .btn { width: 100%; }
 
   /* Open: the sheet fades down into place and its rows follow in turn.
