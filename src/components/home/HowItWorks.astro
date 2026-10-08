@@ -2,7 +2,7 @@
 // Three steps in plain words. Big numbers carry the section; nothing technical.
 const steps = ['Give us your phone number', 'Tell us about your business', 'AirFone answers every call'];
 ---
-<section class="section how" data-reveal>
+<section class="how on-stage" data-reveal>
   <div class="wrap">
     <h2>Three steps, one day</h2>
     <ol class="steps">
@@ -17,9 +17,11 @@ const steps = ['Give us your phone number', 'Tell us about your business', 'AirF
 </section>
 
 <style>
-  .how h2 { margin-bottom: var(--space-8); }
+  .how { padding-block: var(--space-10); }
+  .how h2 { margin-bottom: var(--space-8); color: var(--stage-ink); }
+  @media (max-width: 767px) { .how { padding-block: var(--space-9); } }
   .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-7); }
-  li { display: grid; align-content: start; gap: var(--space-5); padding-top: var(--space-5); border-top: 2px solid var(--line); }
+  li { display: grid; align-content: start; gap: var(--space-5); padding-top: var(--space-5); border-top: 2px solid var(--stage-line); }
   li:last-child { border-top-color: var(--lime); }
   .n {
     font-size: clamp(4.5rem, 3rem + 6vw, 8.5rem); font-weight: 600; line-height: 0.9;
