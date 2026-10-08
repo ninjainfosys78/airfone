@@ -30,7 +30,19 @@ class CallPlayer extends HTMLElement {
     if (!this.t.peaks.length) this.wave.style.display = 'none';
     this.classList.add('is-live');
 
-    this.btn.addEventListener('click', () => (this.audio.paused ? this.play() : this.audio.pause()));
+    this.btn.addEventListener('click', () => this.toggle());
+    // Anything marked data-play-for="<audio id>" (the orb) plays this call.
+    document.querySelectorAll<HTMLElement>(`[data-play-for="${this.audio.id}"]`).forEach((el) => {
+      el.addEventListener('click', () => this.toggle());
+      this.audio.addEventListener('play', () => el.setAttribute('aria-pressed', 'true'));
+      this.audio.addEventListener('pause', () => el.setAttribute('aria-pressed', 'false'));
+    });
+    const cc = this.querySelector<HTMLButtonElement>('.cc');
+    cc?.addEventListener('click', () => {
+      const on = cc.getAttribute('aria-pressed') !== 'true';
+      cc.setAttribute('aria-pressed', String(on));
+      this.classList.toggle('no-cc', !on);
+    });
     this.audio.addEventListener('play', () => { this.btn.setAttribute('aria-pressed', 'true'); this.classList.add('is-playing'); this.loop(); });
     this.audio.addEventListener('pause', () => { this.btn.setAttribute('aria-pressed', 'false'); cancelAnimationFrame(this.raf); this.draw(); });
     this.audio.addEventListener('ended', () => { this.classList.remove('is-playing'); this.audio.currentTime = 0; this.shown = -1; this.draw(); });
@@ -45,6 +57,10 @@ class CallPlayer extends HTMLElement {
 
     // One call at a time on the page.
     document.addEventListener('play', (e) => { if (e.target !== this.audio && !this.audio.paused) this.audio.pause(); }, true);
+  }
+
+  private toggle() {
+    if (this.audio.paused) this.play(); else this.audio.pause();
   }
 
   private play() {
@@ -69,11 +85,11 @@ class CallPlayer extends HTMLElement {
     // One-word status, same rules as the orb.
     const at = this.lines.findIndex((l) => now >= l.start && now < l.end);
     const playing = !this.audio.paused;
-    const status = !playing && now === 0 ? 'Ready'
+    const status = !playing && now === 0 ? 'Tap the orb to listen'
       : !playing ? 'Paused'
-      : at >= 0 ? (this.lines[at].speaker === 'caller' ? 'Listening' : 'AirFone speaking')
+      : at >= 0 ? (this.lines[at].speaker === 'caller' ? 'Listening' : 'Speaking')
       : 'Thinking';
-    const st = box.querySelector('.c-status');
+    const st = this.querySelector('.c-status');
     if (st && st.textContent !== status) st.textContent = status;
     let i = this.lines.findIndex((l) => now >= l.start && now < l.end);
     if (i < 0) i = Math.max(0, this.lines.filter((l) => l.end <= now).length - 1);

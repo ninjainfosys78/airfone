@@ -14,7 +14,14 @@ import { DEMO_NUMBER_DISPLAY, DEMO_NUMBER_TEL } from '../../config/site';
       <p class="ring muted small">Ring the number and AirFone picks up. Or press play to hear a clinic booking.</p>
     </div>
     <div class="stage">
-      <CallOrb for="call-clinic" timing="/audio/clinic.json" size={320} />
+      <button type="button" class="orb-btn" data-play-for="call-clinic" aria-pressed="false">
+        <CallOrb for="call-clinic" timing="/audio/clinic.json" size={340} />
+        <span class="orb-icon" aria-hidden="true">
+          <svg class="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
+          <svg class="i-pause" viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor" /></svg>
+        </span>
+        <span class="visually-hidden">Play or pause the example clinic call</span>
+      </button>
       <div class="player"><CallPlayer clip="clinic" stage /></div>
     </div>
   </div>
@@ -26,7 +33,19 @@ import { DEMO_NUMBER_DISPLAY, DEMO_NUMBER_TEL } from '../../config/site';
   .display { color: var(--stage-ink); max-width: 11ch; }
   .actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-7); }
   .ring { margin-top: var(--space-5); max-width: 36ch; }
-  .stage { display: grid; justify-items: center; gap: var(--space-5); }
+  .stage { display: grid; justify-items: center; gap: var(--space-4); }
+  .orb-btn { position: relative; display: grid; place-items: center; padding: 0; border: 0; background: none; cursor: pointer; border-radius: 50%; }
+  .orb-icon {
+    position: absolute; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%;
+    background: var(--stage-ink); color: var(--on-lime);
+    transition: opacity var(--slow) var(--ease), transform var(--slow) var(--ease);
+  }
+  .orb-icon svg { width: 26px; height: 26px; }
+  .orb-icon .i-pause, .orb-btn[aria-pressed='true'] .i-play { display: none; }
+  .orb-btn[aria-pressed='true'] .i-pause { display: block; }
+  .orb-btn[aria-pressed='true'] .orb-icon { opacity: 0; transform: scale(0.9); }
+  .orb-btn[aria-pressed='true']:hover .orb-icon, .orb-btn[aria-pressed='true']:focus-visible .orb-icon { opacity: 1; transform: none; }
+  .orb-btn:focus-visible { outline: 2px solid var(--lime); outline-offset: 6px; }
   .player { width: 100%; max-width: 440px; }
   @media (max-width: 959px) {
     .hero { padding-block: var(--space-8); }

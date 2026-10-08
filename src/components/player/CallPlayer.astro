@@ -34,9 +34,8 @@ const timing = JSON.stringify({ duration: data.duration ?? 0, lines: lines.map((
 <call-player class:list={['player', { compact: p.compact, stage: p.stage }]} data-timing={timing}>
   {p.stage && (
     <div class="caption" aria-hidden="true">
-      <p class="c-status">Ready</p>
-      <p class="c-ne" lang="ne">{lines[0]?.ne ?? lines[0]?.text}</p>
-      {lines[0]?.ne && <p class="c-en">{lines[0]?.text}</p>}
+      <p class="c-ne" lang="ne"></p>
+      <p class="c-en"></p>
     </div>
   )}
   <div class="head">
@@ -44,12 +43,13 @@ const timing = JSON.stringify({ duration: data.duration ?? 0, lines: lines.map((
       <span class="visually-hidden">Play {label}</span>
       <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
       <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor" /></svg>
-      {p.stage && <span class="b-label" aria-hidden="true"><span class="b-play">Play the {label.split('· ')[1]?.toLowerCase() ?? 'example'} call</span><span class="b-pause">Pause</span></span>}
     </button>
     <div class="meta">
+      {p.stage && <p class="c-status" aria-live="polite">Tap the orb to listen</p>}
       <p class="label">{label}</p>
       {data.duration ? <p class="time small"><span class="now">0:00</span> / {fmt(data.duration)}</p> : null}
     </div>
+    {p.stage && <button type="button" class="cc" aria-pressed="true">CC<span class="visually-hidden"> captions</span></button>}
   </div>
   <div class="slot">
     <canvas class="wave" aria-hidden="true"></canvas>
@@ -124,26 +124,27 @@ const timing = JSON.stringify({ duration: data.duration ?? 0, lines: lines.map((
   .is-playing li.is-now { opacity: 1; }
   .compact { padding: var(--space-4); }
 
-  /* Stage: part of the orb, not a box. Orb, status, caption, one control. */
+  /* Stage: Siri / ChatGPT voice pattern. The orb is the control; small
+     captions appear under it only while it speaks; one quiet status line. */
   .stage { background: none; border: 0; padding: 0; color: var(--stage-ink); text-align: center; display: grid; justify-items: center; }
-  .caption { min-height: 7.5em; display: grid; align-content: start; gap: 6px; max-width: 30ch; }
-  .c-status { font-size: 14px; font-weight: 600; color: var(--lime); }
-  .c-ne { font-size: 20px; line-height: 1.45; font-weight: 500; }
-  .c-en { font-size: 16px; color: var(--stage-muted); }
-  .caption.swap .c-ne, .caption.swap .c-en { animation: cap var(--slow) var(--ease); }
-  @keyframes cap { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-  .stage .head { margin-top: var(--space-5); flex-direction: column; gap: var(--space-3); }
-  .stage .play { width: auto; height: 52px; padding: 0 var(--space-5) 0 var(--space-4); gap: var(--space-2); display: inline-flex; align-items: center; font-weight: 600; font-size: 16px; }
-  .stage .play:hover { background: var(--stage-ink); color: var(--on-lime); }
-  .b-pause, .play[aria-pressed='true'] .b-play { display: none; }
-  .play[aria-pressed='true'] .b-pause { display: inline; }
-  .stage .meta { text-align: center; }
-  .stage .label { display: none; }
-  .stage .time { color: var(--stage-muted); font-size: 14px; }
-  .stage .slot { width: 100%; max-width: 320px; min-height: 40px; margin-top: var(--space-3); }
-  .stage .wave { height: 32px; }
+  .stage .play { display: none; }
+  .caption { min-height: 4.6em; max-width: 34ch; display: grid; align-content: start; gap: 2px; opacity: 0; transition: opacity var(--slow) var(--ease); }
+  .is-playing .caption { opacity: 1; }
+  .no-cc .caption { visibility: hidden; }
+  .c-ne { font-size: 17px; line-height: 1.5; }
+  .c-en { font-size: 15px; line-height: 1.45; color: var(--stage-muted); }
+  .caption.swap p { animation: cap var(--slow) var(--ease); }
+  @keyframes cap { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+  .stage .head { margin-top: var(--space-3); gap: var(--space-4); align-items: center; }
+  .stage .meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 var(--space-3); font-size: 14px; }
+  .c-status { color: var(--lime); font-weight: 600; font-size: 14px; }
+  .stage .label, .stage .time { color: var(--stage-muted); font-size: 14px; font-weight: 400; }
+  .cc { min-height: 32px; min-width: 44px; padding: 0 var(--space-2); border: 1px solid var(--stage-line); border-radius: 6px; background: none; color: var(--stage-muted); font-size: 13px; font-weight: 600; cursor: pointer; }
+  .cc[aria-pressed='true'] { color: var(--stage-ink); border-color: var(--stage-muted); }
+  .stage .slot { display: none; }
   .stage audio { color-scheme: dark; }
-  .stage .transcript { width: 100%; border-top-color: var(--stage-line); text-align: left; margin-top: var(--space-5); }
+  .stage:not(.is-live) .slot { display: grid; width: 100%; max-width: 320px; }
+  .stage .transcript { width: 100%; border-top-color: var(--stage-line); text-align: left; margin-top: var(--space-4); }
   .stage .transcript summary { color: var(--stage-muted); justify-content: center; }
   .stage .who { color: var(--stage-muted); }
   .stage li[data-speaker='agent'] .who { color: var(--lime); }
