@@ -131,7 +131,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 .on-stage { background: var(--stage); color: var(--stage-ink); }
 .on-stage .muted { color: var(--stage-muted); }
-.on-stage a { color: var(--stage-ink); }
+.on-stage a:not(.btn) { color: var(--stage-ink); }
 
 /* Long-form text */
 .prose { max-width: var(--measure); }

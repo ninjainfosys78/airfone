@@ -17,8 +17,8 @@ class CallPlayer extends HTMLElement {
     this.items = Array.from(this.querySelectorAll('.transcript li'));
     try { this.t = JSON.parse(this.dataset.timing ?? '{}'); } catch { /* keep defaults */ }
 
-    this.btn.hidden = false;
-    if (this.t.peaks.length) this.wave.hidden = false;
+    this.btn.disabled = false;
+    if (!this.t.peaks.length) this.wave.style.display = 'none';
     this.classList.add('is-live');
 
     this.btn.addEventListener('click', () => (this.audio.paused ? this.play() : this.audio.pause()));
@@ -44,8 +44,7 @@ class CallPlayer extends HTMLElement {
 
   private fail() {
     this.classList.remove('is-live', 'is-playing');
-    this.btn.hidden = true;
-    this.wave.hidden = true;
+    this.btn.disabled = true;
     (this.querySelector('.error') as HTMLElement).hidden = false;
   }
 
@@ -67,7 +66,7 @@ class CallPlayer extends HTMLElement {
     });
 
     const c = this.wave;
-    if (c.hidden || !this.t.peaks.length) return;
+    if (!this.t.peaks.length) return;
     const dpr = Math.min(devicePixelRatio || 1, 2);
     const w = c.clientWidth, h = c.clientHeight;
     if (!w) return;

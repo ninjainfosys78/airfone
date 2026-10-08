@@ -31,7 +31,7 @@ const timing = JSON.stringify({ duration: data.duration ?? 0, lines: lines.map((
 ---
 <call-player class:list={['player', { compact: p.compact }]} data-timing={timing}>
   <div class="head">
-    <button type="button" class="play" aria-pressed="false" aria-controls={id} hidden>
+    <button type="button" class="play" aria-pressed="false" aria-controls={id} disabled>
       <span class="visually-hidden">Play {label}</span>
       <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
       <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor" /></svg>
@@ -41,10 +41,12 @@ const timing = JSON.stringify({ duration: data.duration ?? 0, lines: lines.map((
       {data.duration ? <p class="time small"><span class="now">0:00</span> / {fmt(data.duration)}</p> : null}
     </div>
   </div>
-  <canvas class="wave" aria-hidden="true" hidden></canvas>
-  <audio id={id} controls preload="none">
-    {sources.map((s) => <source src={s.src} type={s.type} />)}
-  </audio>
+  <div class="slot">
+    <canvas class="wave" aria-hidden="true"></canvas>
+    <audio id={id} controls preload="none">
+      {sources.map((s) => <source src={s.src} type={s.type} />)}
+    </audio>
+  </div>
   <p class="error small" role="status" hidden>Audio couldn't load. The transcript is below.</p>
   {lines.length > 0 && (
     <details class="transcript" open={!p.compact} data-transcript>
@@ -88,9 +90,14 @@ const timing = JSON.stringify({ duration: data.duration ?? 0, lines: lines.map((
   .play[aria-pressed='true'] .i-pause { display: block; }
   .label { font-weight: 600; }
   .time { color: var(--ink-muted); font-variant-numeric: tabular-nums; }
-  .wave { width: 100%; height: 48px; margin-top: var(--space-4); cursor: pointer; }
-  audio { width: 100%; margin-top: var(--space-4); }
-  .is-live audio { display: none; }
+  /* Waveform and native audio share one slot so upgrading never shifts layout. */
+  .slot { display: grid; margin-top: var(--space-4); min-height: 54px; align-items: center; }
+  .slot > * { grid-area: 1 / 1; }
+  .wave { width: 100%; height: 48px; cursor: pointer; visibility: hidden; }
+  audio { width: 100%; }
+  .is-live .wave { visibility: visible; }
+  .is-live audio { visibility: hidden; pointer-events: none; }
+  .play:disabled { opacity: 0.35; cursor: default; }
   .error { color: var(--error); margin-top: var(--space-3); }
   .transcript { margin-top: var(--space-4); border-top: 1px solid var(--line); padding-top: var(--space-3); }
   .transcript summary { cursor: pointer; font-size: 16px; font-weight: 500; color: var(--ink-muted); min-height: 32px; display: flex; align-items: center; }

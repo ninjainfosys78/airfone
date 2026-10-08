@@ -12,7 +12,9 @@
     "check": "node scripts/check-site.mjs dist",
     "voices": "node scripts/make-voices.mjs",
     "bundle": "pnpm run build && node scripts/make-bundle.mjs",
-    "verify": "node scripts/make-bundle.mjs --verify-only"
+    "verify": "node scripts/make-bundle.mjs --verify-only",
+    "lighthouse": "scripts/lighthouse.sh",
+    "qa": "pnpm test && pnpm build && pnpm check"
   },
   "dependencies": {
     "@astrojs/rss": "^4",
