@@ -6,7 +6,7 @@ import { DEMO_NUMBER_DISPLAY, DEMO_NUMBER_TEL } from '../../config/site';
 <section class="hero on-stage">
   <div class="wrap grid">
     <div class="copy">
-      <h1 class="display">Every call answered, in Nepali</h1>
+      <h1 class="display">{'Every call answered, in Nepali'.split(' ').map((w, i) => (<><span class="w"><span style={`--i:${i}`}>{w}</span></span>{' '}</>))}</h1>
       <div class="actions">
         <a class="btn btn-lime" href="/demo">Book a demo</a>
         <a class="btn btn-secondary" href={DEMO_NUMBER_TEL}>Call {DEMO_NUMBER_DISPLAY}</a>

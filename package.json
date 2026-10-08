@@ -21,7 +21,8 @@
     "@astrojs/sitemap": "^3",
     "@fontsource/jetbrains-mono": "^5.2.0",
     "@fontsource/poppins": "^5",
-    "astro": "^5"
+    "astro": "^5",
+    "lenis": "1.3.11"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2",

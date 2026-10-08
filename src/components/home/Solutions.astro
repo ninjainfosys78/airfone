@@ -5,7 +5,7 @@ import frontDesk from '../../assets/photos/team-front-desk.png';
 ---
 <section class="section who" data-reveal>
   <div class="wrap grid">
-    <Image src={frontDesk} alt="An AirFone team member at the office front desk in Kathmandu" widths={[440, 880, 1080]} sizes="(max-width: 959px) 100vw, 380px" quality={90} format="webp" class="photo" />
+    <div class="photo-frame"><Image src={frontDesk} alt="An AirFone team member at the office front desk in Kathmandu" widths={[440, 880, 1080]} sizes="(max-width: 959px) 100vw, 380px" quality={90} format="webp" class="photo" /></div>
     <div>
     <h2>Who it's for</h2>
     <ul class="list">
@@ -19,9 +19,10 @@ import frontDesk from '../../assets/photos/team-front-desk.png';
 
 <style>
   .grid { display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: var(--space-8); align-items: center; }
-  .photo { width: 100%; height: auto; aspect-ratio: 1080 / 1700; border-radius: var(--radius-panel); }
+  .photo-frame { overflow: hidden; border-radius: var(--radius-panel); aspect-ratio: 1080 / 1700; }
+  .photo { display: block; width: 100%; height: 100%; object-fit: cover; }
   .grid h2 { margin-bottom: var(--space-6); }
-  @media (max-width: 959px) { .grid { grid-template-columns: 1fr; } .photo { max-width: 400px; } }
+  @media (max-width: 959px) { .grid { grid-template-columns: 1fr; } .photo-frame { max-width: 400px; } }
   .list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; }
   .list { border-bottom: 1px solid var(--line); }
   a { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); min-height: 64px; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
