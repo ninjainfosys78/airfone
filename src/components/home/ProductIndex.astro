@@ -61,7 +61,7 @@ import { products } from '../../data/products';
               )}
             </figure>
 
-            <a class="more" href={`/products/${p.slug}`}>See {p.name} <span aria-hidden="true">→</span></a>
+            <a class="more" href={`/products/${p.slug}`}>See {p.name}</a>
           </article>
         ))}
       </div>
@@ -106,9 +106,8 @@ import { products } from '../../data/products';
     font-size: 1.5rem; font-weight: 600; text-align: left; color: var(--ink-muted); cursor: pointer;
     transition: color var(--fast) var(--ease);
   }
-  [role='tab']::after { content: '→'; color: var(--link); opacity: 0; transform: translateX(-6px); transition: opacity var(--fast) var(--ease), transform var(--fast) var(--ease); }
-  [role='tab']:hover, [role='tab'][aria-selected='true'] { color: var(--ink); }
-  [role='tab'][aria-selected='true']::after { opacity: 1; transform: none; }
+  [role='tab']:hover { color: var(--ink); }
+  [role='tab'][aria-selected='true'] { color: var(--ink); border-bottom-color: var(--brand); border-bottom-width: 2px; }
 
   .panel {
     background: var(--stage); color: var(--stage-ink); border-radius: var(--radius-panel);
@@ -122,9 +121,7 @@ import { products } from '../../data/products';
   .explorer:not(.is-live) .panel + .panel { margin-top: var(--space-4); }
   .panel h3 { font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem); line-height: 1.15; max-width: 16ch; }
   .more { justify-self: start; color: var(--lime); font-weight: 600; text-decoration: none; font-size: 17px; }
-  .more span { display: inline-block; transition: transform var(--fast) var(--ease); }
   .more:hover { text-decoration: underline; }
-  .more:hover span { transform: translateX(4px); }
 
   /* The small pictures: white surfaces on the green, like real product UI. */
   .pic { margin: 0; align-self: center; }
@@ -163,7 +160,6 @@ import { products } from '../../data/products';
     .explorer { grid-template-columns: 1fr; gap: var(--space-5); }
     .tabs { display: flex; overflow-x: auto; border-top: 0; gap: var(--space-2); scrollbar-width: none; }
     [role='tab'] { flex: none; min-height: 44px; padding: 0 var(--space-4); border: 1px solid var(--line); border-radius: var(--radius-control); font-size: 16px; }
-    [role='tab']::after { display: none; }
     [role='tab'][aria-selected='true'] { border-color: var(--brand); color: var(--link); }
     .panel { padding: var(--space-5); min-height: 0; }
   }
