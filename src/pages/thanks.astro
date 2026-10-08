@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import { DEMO_NUMBER_DISPLAY, DEMO_NUMBER_TEL } from '../config/site';
+---
+<Base title="Thanks" description="Thanks for getting in touch with AirFone. We will call you within one working day to set up your demo or partnership." path="/thanks" noindex>
+  <section class="section">
+    <div class="wrap prose">
+      <h1>Thanks, we have your details</h1>
+      <p>We will call you within one working day. Meanwhile, ring <a href={DEMO_NUMBER_TEL}>{DEMO_NUMBER_DISPLAY}</a> to hear AirFone answer.</p>
+      <p><a href="/">Back to the home page</a></p>
+    </div>
+  </section>
+</Base>

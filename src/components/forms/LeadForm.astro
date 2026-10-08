@@ -1,0 +1,101 @@
+---
+// Lead form for demos and resellers. Works as a plain form post without
+// JavaScript (the endpoint redirects to /thanks); lead-form.ts adds inline
+// validation and submits with fetch.
+import { WAITLIST_API_URL } from '../../config/site';
+
+export interface Props {
+  kind: 'demo' | 'reseller';
+  submit?: string;
+  withType?: boolean;
+  withCity?: boolean;
+}
+const { kind, submit = 'Book a demo', withType = true, withCity = false } = Astro.props;
+const id = `lead-${kind}`;
+const types = [
+  { v: 'shop', l: 'Shop or showroom' },
+  { v: 'online_store', l: 'Online store' },
+  { v: 'clinic', l: 'Clinic or hospital' },
+  { v: 'bank', l: 'Bank or cooperative' },
+  { v: 'isp', l: 'Internet provider' },
+  { v: 'school', l: 'School or college' },
+  { v: 'restaurant', l: 'Restaurant or hotel' },
+  { v: 'other', l: 'Something else' },
+];
+---
+<lead-form>
+  <form id={id} class="form" method="post" action={WAITLIST_API_URL} data-kind={kind} novalidate>
+    <input type="hidden" name="locale" value="en" />
+    <input type="hidden" name="source" value={kind} />
+    <div class="field">
+      <label for={`${id}-name`}>Your name</label>
+      <input id={`${id}-name`} name="name" autocomplete="name" required maxlength="80" />
+      <p class="err" id={`${id}-name-err`} hidden></p>
+    </div>
+    <div class="field">
+      <label for={`${id}-phone`}>Phone</label>
+      <input id={`${id}-phone`} name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="98XXXXXXXX" />
+      <p class="err" id={`${id}-phone-err`} hidden></p>
+    </div>
+    <div class="field">
+      <label for={`${id}-business`}>Business name</label>
+      <input id={`${id}-business`} name="business_name" autocomplete="organization" maxlength="120" />
+      <p class="err" id={`${id}-business-err`} hidden></p>
+    </div>
+    {withType && (
+      <div class="field">
+        <label for={`${id}-type`}>Type of business</label>
+        <select id={`${id}-type`} name="business_type">
+          <option value="">Choose one</option>
+          {types.map((t) => <option value={t.v}>{t.l}</option>)}
+        </select>
+      </div>
+    )}
+    {withCity && (
+      <div class="field">
+        <label for={`${id}-city`}>City</label>
+        <input id={`${id}-city`} name="city" autocomplete="address-level2" maxlength="60" />
+      </div>
+    )}
+    <div class="hp" aria-hidden="true">
+      <label for={`${id}-website`}>Leave this empty</label>
+      <input id={`${id}-website`} name="website" tabindex="-1" autocomplete="off" />
+    </div>
+    <div class="field check">
+      <input id={`${id}-consent`} name="consent" type="checkbox" value="on" required />
+      <label for={`${id}-consent`}>AirFone may call me about this. See the <a href="/privacy">privacy policy</a>.</label>
+      <p class="err" id={`${id}-consent-err`} hidden></p>
+    </div>
+    <button class="btn btn-primary submit" type="submit">{submit}</button>
+    <p class="status" role="status" aria-live="polite"></p>
+    <p class="next small muted">We call you back within one working day.</p>
+  </form>
+</lead-form>
+
+<script src="./lead-form.ts"></script>
+
+<style>
+  .form { display: grid; gap: var(--space-4); max-width: 520px; }
+  .field { display: grid; gap: var(--space-2); }
+  label { font-size: 16px; font-weight: 500; }
+  input:not([type='checkbox']), select {
+    min-height: 48px; padding: 0 var(--space-4); width: 100%;
+    background: var(--canvas); border: 1px solid var(--line); border-radius: var(--radius-control);
+    font-size: 17px; transition: border-color var(--fast) var(--ease);
+  }
+  input:hover, select:hover { border-color: var(--ink-muted); }
+  input:focus-visible, select:focus-visible { outline: 2px solid var(--link); outline-offset: 0; border-color: var(--link); }
+  input[aria-invalid='true'] { border-color: var(--error); }
+  .check { grid-template-columns: 24px 1fr; align-items: start; column-gap: var(--space-3); }
+  .check input { width: 22px; height: 22px; margin: 2px 0 0; accent-color: var(--brand); }
+  .check label { font-weight: 400; }
+  .check .err { grid-column: 2; }
+  .err { color: var(--error); font-size: 16px; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .submit { justify-self: start; margin-top: var(--space-2); }
+  .submit[aria-busy='true'] { opacity: 0.7; cursor: progress; }
+  .status:empty { display: none; }
+  .status { font-weight: 500; }
+  .status.ok { color: var(--link); }
+  .status.bad { color: var(--error); }
+</style>

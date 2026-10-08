@@ -1,0 +1,83 @@
+---
+import Base from '../../layouts/Base.astro';
+import CallPlayer from '../../components/player/CallPlayer.astro';
+import CtaBand from '../../components/site/CtaBand.astro';
+import Faq from '../../components/site/Faq.astro';
+import { solutions, type Solution } from '../../data/solutions';
+import { productBySlug } from '../../data/products';
+import { breadcrumbJsonLd } from '../../lib/seo';
+
+export function getStaticPaths() {
+  return solutions.map((s) => ({ params: { slug: s.slug }, props: { s } }));
+}
+const { s } = Astro.props as { s: Solution };
+const path = `/solutions/${s.slug}`;
+const used = s.products.map(productBySlug).filter((p) => !!p);
+---
+<Base title={s.name} description={s.description} path={path} jsonLd={[breadcrumbJsonLd([{ name: s.name, path }])]}>
+  <section class="top">
+    <div class="wrap grid">
+      <div>
+        <nav class="crumb small" aria-label="Breadcrumb"><a href="/">AirFone</a> / {s.name}</nav>
+        <h1>{s.headline}</h1>
+        <div class="actions">
+          <a class="btn btn-primary" href="/demo">Book a demo</a>
+          <a class="btn btn-secondary" href="/contact">Talk to us</a>
+        </div>
+      </div>
+      <CallPlayer clip={s.clip} />
+    </div>
+  </section>
+
+  <section class="section" data-reveal>
+    <div class="wrap two">
+      <h2>The calls you get</h2>
+      <ul class="calls">{s.calls.map((c) => <li>{c}</li>)}</ul>
+    </div>
+  </section>
+
+  <section class="section does" data-reveal>
+    <div class="wrap">
+      <h2>What AirFone does with them</h2>
+      <div class="cols">
+        {s.does.map((d) => <div><h3>{d.h}</h3><p class="muted">{d.p}</p></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight" data-reveal>
+    <div class="wrap two">
+      <h2 class="h3">Products for {s.name.toLowerCase()}</h2>
+      <ul class="prods">
+        {used.map((p) => <li><a href={`/products/${p!.slug}`}>{p!.name}</a><span class="muted">{p!.short}</span></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <Faq items={s.faq} />
+  <CtaBand />
+</Base>
+
+<style>
+  .top { padding-block: var(--space-8) var(--space-9); border-bottom: 1px solid var(--line); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: start; }
+  .crumb { color: var(--ink-muted); margin-bottom: var(--space-5); }
+  .crumb a { color: inherit; }
+  h1 { max-width: 13ch; }
+  .actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-7); }
+  .two { display: grid; grid-template-columns: 1fr 1.4fr; gap: var(--space-8); align-items: start; }
+  .calls { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
+  .calls li { padding: var(--space-4) var(--space-5); background: var(--surface); border-radius: var(--radius-panel); font-size: 1.125rem; }
+  .does { background: var(--surface); }
+  .does h2 { margin-bottom: var(--space-7); }
+  .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-7); }
+  .cols h3 { margin-bottom: var(--space-3); }
+  .h3 { font-size: 1.375rem; }
+  .prods { list-style: none; margin: 0; padding: 0; }
+  .prods li { display: grid; gap: var(--space-1); padding: var(--space-4) 0; border-bottom: 1px solid var(--line); }
+  .prods a { font-weight: 600; }
+  @media (max-width: 959px) {
+    .grid, .two { grid-template-columns: 1fr; gap: var(--space-6); }
+    .cols { grid-template-columns: 1fr; gap: var(--space-6); }
+  }
+</style>

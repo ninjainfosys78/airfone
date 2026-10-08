@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import LeadForm from '../components/forms/LeadForm.astro';
+import CallPlayer from '../components/player/CallPlayer.astro';
+import { DEMO_NUMBER_DISPLAY, DEMO_NUMBER_TEL } from '../config/site';
+import { breadcrumbJsonLd } from '../lib/seo';
+---
+<Base title="Book a demo" description="Book a short AirFone demo. We set it up on a test number with your own prices, so you hear it answer calls for your business." path="/demo" jsonLd={[breadcrumbJsonLd([{ name: 'Book a demo', path: '/demo' }])]}>
+  <section class="section">
+    <div class="wrap grid">
+      <div>
+        <h1>Book a demo</h1>
+        <ol class="steps">
+          <li>Leave your number. We call within one working day.</li>
+          <li>Send us a price list or a few common questions.</li>
+          <li>Hear AirFone answer calls for your business on a test number.</li>
+        </ol>
+        <div class="or">
+          <h2 class="h3">Or ring it now</h2>
+          <p><a class="num" href={DEMO_NUMBER_TEL}>{DEMO_NUMBER_DISPLAY}</a></p>
+        </div>
+        <div class="sample"><CallPlayer clip="clinic" compact id="call-demo-clinic" /></div>
+      </div>
+      <div class="panel"><LeadForm kind="demo" /></div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: start; }
+  .steps { margin: var(--space-6) 0 0; padding-left: 1.25em; display: grid; gap: var(--space-3); font-size: 1.125rem; }
+  .or { margin-top: var(--space-7); }
+  .h3 { font-size: 1.375rem; margin-bottom: var(--space-2); }
+  .num { font-size: 2rem; font-weight: 600; text-decoration: none; color: var(--link); }
+  .sample { margin-top: var(--space-6); }
+  .panel { background: var(--surface); border-radius: var(--radius-panel); padding: var(--space-6); }
+  @media (max-width: 959px) { .grid { grid-template-columns: 1fr; } }
+</style>
