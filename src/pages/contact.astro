@@ -7,11 +7,9 @@ import team from '../assets/photos/team-front-desk.png';
 ---
 <Base title="Contact" description="Call, email or visit AirFone in Kathmandu. Sales and support on 985-1343348, info@airfone.app, or ring 970-269-7774 to hear the agent." path="/contact" jsonLd={[localBusinessJsonLd(), breadcrumbJsonLd([{ name: 'Contact', path: '/contact' }])]}>
   <section class="section">
-    <div class="wrap top">
+    <div class="wrap layout">
+    <div>
       <h1>Contact</h1>
-      <Image src={team} alt="An AirFone team member at the office front desk in Kathmandu" widths={[400, 800, 1080]} sizes="(max-width: 767px) 100vw, 400px" quality={90} format="webp" class="photo" loading="eager" />
-    </div>
-    <div class="wrap">
       <dl class="list">
         <div><dt>Sales and support</dt><dd><a href={CONTACT_PHONE_TEL}>{CONTACT_PHONE_DISPLAY}</a></dd></div>
         <div><dt>Email</dt><dd><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></dd></div>
@@ -21,14 +19,17 @@ import team from '../assets/photos/team-front-desk.png';
       </dl>
       <div class="actions"><a class="btn btn-primary" href="/demo">Book a demo</a><a class="btn btn-secondary" href="/resellers#apply">Become a reseller</a></div>
     </div>
+      <Image src={team} alt="An AirFone team member at the office front desk in Kathmandu" widths={[400, 800, 1080]} sizes="(max-width: 959px) 100vw, 400px" quality={90} format="webp" class="photo" loading="eager" />
+    </div>
   </section>
 </Base>
 
 <style>
-  .top { display: grid; grid-template-columns: 1fr minmax(0, 400px); gap: var(--space-7); align-items: end; margin-bottom: var(--space-7); }
-  .photo { width: 100%; height: auto; border-radius: var(--radius-panel); }
-  @media (max-width: 767px) { .top { grid-template-columns: 1fr; } }
-  .list { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0 var(--space-7); }
+  h1 { margin-bottom: var(--space-7); }
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 360px); gap: var(--space-8); align-items: start; }
+  .photo { width: 100%; height: auto; aspect-ratio: 9 / 16; border-radius: var(--radius-panel); }
+  @media (max-width: 959px) { .layout { grid-template-columns: 1fr; } .photo { max-width: 400px; } }
+  .list { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0 var(--space-6); }
   .list div { padding: var(--space-5) 0; border-top: 1px solid var(--line); }
   dt { font-size: 16px; color: var(--ink-muted); margin-bottom: var(--space-2); }
   dd { margin: 0; font-size: 1.25rem; font-weight: 500; }

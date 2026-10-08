@@ -1,9 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
 import LeadForm from '../components/forms/LeadForm.astro';
-import CallPlayer from '../components/player/CallPlayer.astro';
 import { DEMO_NUMBER_DISPLAY, DEMO_NUMBER_TEL } from '../config/site';
 import { breadcrumbJsonLd } from '../lib/seo';
+import { Image } from 'astro:assets';
+import team from '../assets/photos/team-front-desk.png';
 ---
 <Base title="Book a demo" description="Book a short AirFone demo. We set it up on a test number with your own prices, so you hear it answer calls for your business." path="/demo" jsonLd={[breadcrumbJsonLd([{ name: 'Book a demo', path: '/demo' }])]}>
   <section class="section">
@@ -19,7 +20,7 @@ import { breadcrumbJsonLd } from '../lib/seo';
           <h2 class="h3">Or ring it now</h2>
           <p><a class="num" href={DEMO_NUMBER_TEL}>{DEMO_NUMBER_DISPLAY}</a></p>
         </div>
-        <div class="sample"><CallPlayer clip="clinic" compact id="call-demo-clinic" /></div>
+        <Image src={team} alt="An AirFone team member at the office front desk in Kathmandu" widths={[360, 720, 1080]} sizes="(max-width: 959px) 100vw, 360px" quality={90} format="webp" class="photo" />
       </div>
       <div class="panel"><LeadForm kind="demo" /></div>
     </div>
@@ -32,7 +33,7 @@ import { breadcrumbJsonLd } from '../lib/seo';
   .or { margin-top: var(--space-7); }
   .h3 { font-size: 1.375rem; margin-bottom: var(--space-2); }
   .num { font-size: 2rem; font-weight: 600; text-decoration: none; color: var(--link); }
-  .sample { margin-top: var(--space-6); }
+  .photo { display: block; margin-top: var(--space-7); width: 100%; max-width: 360px; height: auto; aspect-ratio: 9 / 16; border-radius: var(--radius-panel); }
   .panel { background: var(--surface); border-radius: var(--radius-panel); padding: var(--space-6); }
   @media (max-width: 959px) { .grid { grid-template-columns: 1fr; } }
 </style>
