@@ -107,7 +107,11 @@ import { products } from '../../data/products';
 
       tabs.forEach((t, i) => {
         t.addEventListener('click', () => pick(i));
-        if (matchMedia('(hover: hover)').matches) t.addEventListener('pointerenter', () => { current = i; show(i); });
+        if (matchMedia('(hover: hover)').matches) {
+          let hover = 0;
+          t.addEventListener('pointerenter', () => { hover = window.setTimeout(() => { if (current !== i) { current = i; show(i); } }, 90); });
+          t.addEventListener('pointerleave', () => clearTimeout(hover));
+        }
         t.addEventListener('keydown', (e) => {
           const k = e.key;
           const go = (n: number) => { e.preventDefault(); stopped = true; current = n; show(n, true); schedule(); };
@@ -147,7 +151,9 @@ import { products } from '../../data/products';
      tallest panel and switching never moves the page. */
   .explorer.is-live .panels { display: grid; }
   .explorer.is-live .panel { grid-area: 1 / 1; }
-  .explorer.is-live .panel[hidden] { display: grid; visibility: hidden; }
+  /* Crossfade: the outgoing panel fades out while the new one fades in. */
+  .explorer.is-live .panel { opacity: 1; visibility: visible; transition: opacity 260ms cubic-bezier(0.2, 0, 0, 1), visibility 0s; }
+  .explorer.is-live .panel[hidden] { display: grid; opacity: 0; visibility: hidden; transition: opacity 260ms cubic-bezier(0.2, 0, 0, 1), visibility 0s 260ms; }
   .explorer:not(.is-live) .panel + .panel { margin-top: var(--space-4); }
   .panel h3 { font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem); line-height: 1.15; max-width: 16ch; }
   .more { justify-self: start; color: var(--lime); font-weight: 600; text-decoration: none; font-size: 17px; }
@@ -190,7 +196,6 @@ import { products } from '../../data/products';
      link arrive in turn, and each row inside the picture pops in after that. */
   @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
   @keyframes pop { from { opacity: 0; transform: translateY(6px) scale(0.98); } to { opacity: 1; transform: none; } }
-  .panel.enter { animation: rise 320ms cubic-bezier(0.2, 0, 0, 1) both; }
   .panel.enter h3 { animation: rise 360ms cubic-bezier(0.2, 0, 0, 1) 40ms both; }
   .panel.enter .pic { animation: rise 360ms cubic-bezier(0.2, 0, 0, 1) 110ms both; }
   .panel.enter .more { animation: rise 360ms cubic-bezier(0.2, 0, 0, 1) 200ms both; }
