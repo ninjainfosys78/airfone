@@ -103,8 +103,13 @@ class CallPlayer extends HTMLElement {
   private draw() {
     const now = this.audio.currentTime;
     const d = this.audio.duration || this.t.duration || 1;
+    const stamp = `${Math.floor(now / 60)}:${String(Math.floor(now % 60)).padStart(2, '0')}`;
     const el = this.querySelector('.now');
-    if (el) el.textContent = `${Math.floor(now / 60)}:${String(Math.floor(now % 60)).padStart(2, '0')}`;
+    if (el) el.textContent = stamp;
+    // Controls that live outside the player (data-time-for / data-progress-for).
+    const id = this.audio.id;
+    document.querySelectorAll<HTMLElement>(`[data-time-for="${id}"]`).forEach((t) => { t.textContent = stamp; });
+    document.querySelectorAll<HTMLElement>(`[data-progress-for="${id}"]`).forEach((b) => { b.style.transform = `scaleX(${Math.min(1, now / d)})`; });
 
     this.caption(now);
     let current: HTMLLIElement | null = null;
