@@ -101,17 +101,25 @@ const plain = [
 <script>
   const header = document.querySelector<HTMLElement>('.site-header')!;
   const menus = Array.from(document.querySelectorAll<HTMLDetailsElement>('[data-menu]'));
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+  // Close a desktop menu by rolling it back up before it disappears.
+  const close = (m: HTMLDetailsElement) => {
+    if (!m.open || m.classList.contains('closing')) return;
+    if (still.matches || m.classList.contains('mobile')) { m.open = false; return; }
+    m.classList.add('closing');
+    window.setTimeout(() => { if (m.classList.contains('closing')) { m.classList.remove('closing'); m.open = false; } }, 260);
+  };
   const sync = () => header.classList.toggle('menu-open', menus.some((m) => m.open && !m.classList.contains('mobile')));
   document.addEventListener('click', (e) => {
-    for (const m of menus) if (m.open && !m.contains(e.target as Node)) m.open = false;
+    for (const m of menus) if (m.open && !m.contains(e.target as Node)) close(m);
   });
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
-    for (const m of menus) if (m.open) { m.open = false; m.querySelector('summary')?.focus(); }
+    for (const m of menus) if (m.open) { close(m); m.querySelector('summary')?.focus(); }
   });
   for (const m of menus) m.addEventListener('toggle', () => {
     if (m.open) header.classList.toggle('switching', menus.some((o) => o !== m && o.open && !o.classList.contains('mobile')));
-    if (m.open) for (const o of menus) if (o !== m) o.open = false;
+    if (m.open) for (const o of menus) if (o !== m) { o.classList.remove('closing'); o.open = false; }
     sync();
   });
   // Open on hover with a mouse. A short delay keeps menus from flickering as
@@ -120,8 +128,8 @@ const plain = [
     for (const m of menus.filter((x) => !x.classList.contains('mobile'))) {
       let t = 0;
       const li = m.closest('li')!;
-      li.addEventListener('pointerenter', () => { clearTimeout(t); t = window.setTimeout(() => { m.open = true; }, 150); });
-      li.addEventListener('pointerleave', () => { clearTimeout(t); t = window.setTimeout(() => { m.open = false; }, 260); });
+      li.addEventListener('pointerenter', () => { clearTimeout(t); if (m.classList.contains('closing')) { m.classList.remove('closing'); return; } t = window.setTimeout(() => { m.open = true; }, 150); });
+      li.addEventListener('pointerleave', () => { clearTimeout(t); t = window.setTimeout(() => close(m), 220); });
       // A click on the label while hover-opened should not close it.
       m.querySelector('summary')!.addEventListener('click', (e) => { if (m.open) { e.preventDefault(); } });
     }
@@ -162,17 +170,17 @@ const plain = [
   }
   .nav-link::before, .menu > summary::before {
     content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--brand);
-    transform: scaleX(0); transition: transform 220ms var(--ease); pointer-events: none;
+    transform: scaleX(0); transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1); pointer-events: none;
   }
-  .menu[open] > summary::before, .nav-link[aria-current='page']::before, .menu > summary[aria-current='page']::before { transform: scaleX(1); }
+  .menu[open]:not(.closing) > summary::before, .nav-link[aria-current='page']::before, .menu > summary[aria-current='page']::before { transform: scaleX(1); }
   .nav-link:hover, .menu > summary:hover { color: var(--link); }
   .menu[open] > summary, .nav-link[aria-current='page'], .menu > summary[aria-current='page'] { color: var(--link); }
   .menu > summary::after {
     content: ''; width: 6px; height: 6px; margin-top: -3px;
     border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
-    transform: rotate(45deg); transition: transform var(--fast) var(--ease);
+    transform: rotate(45deg); transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .menu[open] > summary::after { transform: translateY(3px) rotate(-135deg); }
+  .menu[open]:not(.closing) > summary::after { transform: translateY(3px) rotate(-135deg); }
 
   /* Full-width mega menu below the whole header. */
   .mega {
@@ -182,16 +190,20 @@ const plain = [
   /* Opening from closed: the panel unrolls downward from the bar, then its
      links rise in one after another. Moving between menus keeps the panel
      still and only replays the links. */
-  .site-header:not(.switching) .menu[open] .mega { animation: unroll 320ms cubic-bezier(0.2, 0, 0, 1); }
-  .menu[open] .mega-links li, .menu[open] .mega-feature { animation: item-in 360ms cubic-bezier(0.2, 0, 0, 1) both; }
-  .menu[open] .mega-links li:nth-child(1) { animation-delay: 60ms; }
-  .menu[open] .mega-links li:nth-child(2) { animation-delay: 90ms; }
-  .menu[open] .mega-links li:nth-child(3) { animation-delay: 120ms; }
-  .menu[open] .mega-links li:nth-child(4) { animation-delay: 150ms; }
-  .menu[open] .mega-links li:nth-child(5) { animation-delay: 180ms; }
-  .menu[open] .mega-feature { animation-delay: 140ms; }
-  @keyframes unroll { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
-  @keyframes item-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .site-header:not(.switching) .menu[open] .mega { animation: unroll 460ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .menu.closing .mega { animation: rollup 260ms cubic-bezier(0.4, 0, 1, 1) forwards !important; }
+  .menu.closing .mega-links li, .menu.closing .mega-feature { animation: item-out 180ms ease-in forwards !important; }
+  .menu[open] .mega-links li, .menu[open] .mega-feature { animation: item-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .menu[open] .mega-links li:nth-child(1) { animation-delay: 80ms; }
+  .menu[open] .mega-links li:nth-child(2) { animation-delay: 130ms; }
+  .menu[open] .mega-links li:nth-child(3) { animation-delay: 180ms; }
+  .menu[open] .mega-links li:nth-child(4) { animation-delay: 230ms; }
+  .menu[open] .mega-links li:nth-child(5) { animation-delay: 280ms; }
+  .menu[open] .mega-feature { animation-delay: 200ms; }
+  @keyframes unroll { from { clip-path: inset(0 0 100% 0); opacity: 0.6; } to { clip-path: inset(0 0 0 0); opacity: 1; } }
+  @keyframes rollup { from { clip-path: inset(0 0 0 0); opacity: 1; } to { clip-path: inset(0 0 100% 0); opacity: 0.4; } }
+  @keyframes item-out { to { opacity: 0; transform: translateY(-4px); } }
+  @keyframes item-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
   .mega-grid { display: grid; grid-template-columns: 1fr 340px; gap: var(--space-8); padding-block: var(--space-7); }
   .mega-links { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--space-7); }
   .mega-links a { display: block; padding: var(--space-4) 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
@@ -245,5 +257,5 @@ const plain = [
     .actions .btn { padding: 0 var(--space-3); }
     .mobile-label { display: none; }
   }
-  @media (prefers-reduced-motion: reduce) { .menu[open] .mega, .menu[open] .mega-links li, .menu[open] .mega-feature { animation: none !important; } .nav-link::before, .menu > summary::before { transition: none; } }
+  @media (prefers-reduced-motion: reduce) { .menu .mega, .menu .mega-links li, .menu .mega-feature { animation: none !important; } .nav-link::before, .menu > summary::before { transition: none; } }
 </style>
