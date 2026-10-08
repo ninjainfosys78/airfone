@@ -1,4 +1,4 @@
-{ "id": "phone-menu", "label": "Example · Phone menu", "lines": [
+{ "id": "phone-menu", "label": "Phone menu", "lines": [
   { "speaker": "agent", "voice": "agent", "ne": "अन्नपूर्ण ट्राभल्समा फोन गर्नुभएकोमा धन्यवाद। हवाई टिकटको लागि एक थिच्नुहोस्। टुर र ट्रेकिङको लागि दुई। बुक भइसकेको यात्राको लागि तीन।", "text": "Thank you for calling Annapurna Travels. For flights, press one. For tours and trekking, two. For an existing booking, three." },
   { "speaker": "caller", "voice": "callerBill", "ne": "दुई।", "text": "Two." },
   { "speaker": "agent", "voice": "agent", "ne": "टुर टोलीसँग जोडिदिँदै छु। राम्रो सेवाका लागि यो कल रेकर्ड हुन सक्छ।", "text": "Connecting you to the tours team. This call may be recorded to help us serve you better." }

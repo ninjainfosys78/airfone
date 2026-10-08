@@ -11,7 +11,7 @@ const messages = [
 ];
 ---
 <chat-demo class="chat" data-transcript>
-  <div class="bar"><span class="dot" aria-hidden="true"></span><span>City Electronics</span><span class="label muted">Example chat</span></div>
+  <div class="bar"><span class="dot" aria-hidden="true"></span><span>City Electronics</span></div>
   <ol class="log">
     {messages.map((m) => (
       <li class={m.from}><span class="visually-hidden">{m.from === 'bot' ? 'AirFone:' : 'Visitor:'}</span>{m.text}</li>

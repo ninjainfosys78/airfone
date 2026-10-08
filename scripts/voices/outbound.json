@@ -1,4 +1,4 @@
-{ "id": "outbound", "label": "Example · Outbound reminder", "lines": [
+{ "id": "outbound", "label": "Outbound reminder", "lines": [
   { "speaker": "agent", "voice": "agent", "ne": "नमस्ते, सनराइज क्लिनिकबाट सीता कार्कीलाई फोन गरेको। भोलि साढे दस बजे डाक्टर श्रेष्ठसँग तपाईंको समय छ। आउन मिल्छ?", "text": "Hello, this is Sunrise Clinic calling for Sita Karki. You have an appointment with Doctor Shrestha tomorrow at ten thirty. Can you come?" },
   { "speaker": "caller", "voice": "callerJessica", "ne": "शुक्रबार सार्न मिल्छ?", "text": "Can I move it to Friday?" },
   { "speaker": "agent", "voice": "agent", "ne": "शुक्रबार दस बजे खाली छ। तपाईंको समय शुक्रबार दस बजे सारेँ, नयाँ समय एसएमएसमा आउँछ।", "text": "Friday at ten is free. I've moved you to Friday at ten, and the new time will come by SMS." }

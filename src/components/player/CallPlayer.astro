@@ -22,7 +22,8 @@ export interface Props {
 
 const p = Astro.props;
 const data: Partial<ClipData> & { src?: string } = p.data ?? (p.clip ? loadClip(p.clip) : {});
-const label = p.label ?? data.label ?? 'Example call';
+// Labels name the business only ("Electronics shop"), never "Example call".
+const label = (p.label ?? data.label ?? 'Call').replace(/^Example call · /, '');
 const lines = p.transcript ?? data.lines ?? [];
 const id = p.id ?? `call-${p.clip ?? data.id ?? 'remote'}`;
 const remote = p.src ?? data.src;

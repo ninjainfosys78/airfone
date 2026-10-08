@@ -31,7 +31,7 @@ export const products: Product[] = [
     name: 'AI Call Agent',
     short: 'Answers your phone line in Nepali, day and night, and hands over to your team when it should.',
     seoTitle: 'AI Call Agent in Nepal that answers in Nepali',
-    headline: 'Your phone, answered on the first ring',
+    headline: 'AI agent that answers your business line in Nepali',
     description: 'AirFone is an AI call agent for businesses in Nepal. It answers your phone in Nepali, day and night, and hands callers to your team mid-call.',
     demo: { kind: 'call', clip: 'shop' },
     problem: {
@@ -67,7 +67,7 @@ export const products: Product[] = [
     name: 'AI Phone System',
     short: 'A full business phone system with an agent that answers and calls out for you.',
     seoTitle: 'AI Phone System in Nepal for inbound and outbound calls',
-    headline: 'One phone system that answers and calls back',
+    headline: 'A phone system that answers calls and makes them',
     description: 'AirFone AI phone system for Nepal: extensions, queues and recording, plus an AI agent that answers callers and makes reminder and follow-up calls.',
     demo: { kind: 'outbound', clip: 'outbound' },
     problem: {
@@ -102,7 +102,7 @@ export const products: Product[] = [
     name: 'Cloud PBX',
     short: 'Extensions, menus, recording and queues on your existing number, with no hardware.',
     seoTitle: 'Cloud PBX in Nepal: business phone system, no hardware',
-    headline: 'A business phone system without the box',
+    headline: 'Your business phone system, online',
     description: 'AirFone cloud PBX for businesses in Nepal: extensions, call menus, queues and recording on your existing number, from a browser or the app.',
     demo: { kind: 'menu', clip: 'phone-menu' },
     problem: {
@@ -137,7 +137,7 @@ export const products: Product[] = [
     name: 'Website Voice Agent',
     short: 'Visitors tap once and talk to an agent that knows your business.',
     seoTitle: 'AI Voice Agent for websites in Nepal',
-    headline: 'Let website visitors simply ask',
+    headline: 'A voice agent for your website',
     description: 'AirFone voice agent lets visitors to your website in Nepal talk to it in Nepali or English. It answers from your information and passes buyers on.',
     demo: { kind: 'call', clip: 'voice-agent' },
     problem: {
@@ -171,7 +171,7 @@ export const products: Product[] = [
     name: 'Website Chatbot',
     short: 'Answers questions from your own knowledge and passes real leads to your team.',
     seoTitle: 'AI Chatbot for websites in Nepal',
-    headline: 'Answers on your website, any hour',
+    headline: 'A chatbot that answers from your own information',
     description: 'AirFone AI chatbot answers website visitors in Nepal from your own knowledge, any hour, and hands real leads to your team with the chat attached.',
     demo: { kind: 'chat' },
     problem: {

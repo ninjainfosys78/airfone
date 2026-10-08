@@ -1,4 +1,4 @@
-{ "id": "shop", "label": "Example call · Electronics shop", "lines": [
+{ "id": "shop", "label": "Electronics shop", "lines": [
   { "speaker": "agent", "voice": "agent", "ne": "नमस्ते, सिटी इलेक्ट्रोनिक्स, न्युरोड।", "text": "Hello, City Electronics, New Road." },
   { "speaker": "caller", "voice": "callerChris", "ne": "चौध इन्चको थिंकप्याड स्टकमा छ?", "text": "Do you have the fourteen inch ThinkPad in stock?" },
   { "speaker": "agent", "voice": "agent", "ne": "छ। सिल्भर र कालो दुवै रङमा, सोह्र जीबी र्‍याम, दुई वर्षको वारेन्टीसहित।", "text": "Yes, in silver and black, sixteen gigabytes of memory, with a two year warranty." },

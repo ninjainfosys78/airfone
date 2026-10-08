@@ -1,4 +1,4 @@
-{ "id": "isp", "label": "Example call · Internet provider", "lines": [
+{ "id": "isp", "label": "Internet provider", "lines": [
   { "speaker": "agent", "voice": "agent", "ne": "नमस्ते, भ्याली नेट सपोर्ट।", "text": "Hello, Valley Net support." },
   { "speaker": "caller", "voice": "callerAlice", "ne": "बिहानदेखि इन्टरनेट छैन। म बानेश्वरमा छु।", "text": "My internet has been down since this morning. I'm in Baneshwor." },
   { "speaker": "agent", "voice": "agent", "ne": "माफ गर्नुहोला। बानेश्वरको केही भागमा फाइबर काटिएको छ। हाम्रो टोली त्यहीँ छ, अपराह्न चार बजेसम्म सेवा फर्किन्छ।", "text": "Sorry about that. A fibre cut is affecting part of Baneshwor. Our team is on site, and service should be back by four this afternoon." },
