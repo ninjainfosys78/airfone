@@ -1,6 +1,7 @@
 ---
-// Product explorer: names on the left as tabs, the selected product on the
-// right. Every panel is in the HTML; without JS they simply stack.
+// Product explorer: names on the left as tabs; on the right the selected
+// product's headline, a small picture of it working, and one link.
+// Every panel is in the HTML; without JS they simply stack.
 import { products } from '../../data/products';
 ---
 <section class="section" id="products" data-reveal>
@@ -15,14 +16,52 @@ import { products } from '../../data/products';
         ))}
       </div>
       <div class="panels">
-        {products.map((p, i) => (
-          <article class="panel" role="tabpanel" id={`panel-${p.slug}`} aria-labelledby={`tab-${p.slug}`} data-first={i === 0 ? '' : undefined}>
+        {products.map((p) => (
+          <article class="panel" role="tabpanel" id={`panel-${p.slug}`} aria-labelledby={`tab-${p.slug}`}>
             <h3>{p.headline}</h3>
-            <ul class="gets">{p.gets.slice(0, 3).map((g) => <li>{g}</li>)}</ul>
-            <div class="actions">
-              <a class="btn btn-primary" href={`/products/${p.slug}`}>See {p.name}</a>
-              <a class="btn btn-secondary" href="/demo">Book a demo</a>
-            </div>
+
+            <figure class="pic" aria-hidden="true">
+              {p.slug === 'ai-call-agent' && (
+                <div class="call">
+                  <div class="call-top"><span class="dot"></span><span>Incoming call</span><span class="mono num">+977 98XXXXXXXX</span></div>
+                  <p class="bub agent" lang="ne">नमस्ते, सिटी इलेक्ट्रोनिक्स। के सहयोग गरूँ?</p>
+                  <p class="bub caller" lang="ne">थिंकप्याड स्टकमा छ?</p>
+                  <p class="bub agent" lang="ne">छ, सिल्भर र कालो दुवै रङमा।</p>
+                </div>
+              )}
+              {p.slug === 'ai-phone-system' && (
+                <ul class="rows">
+                  <li><span>Sita Karki</span><span class="tag ok">Confirmed</span></li>
+                  <li><span>Ram Thapa</span><span class="tag">Moved to Friday</span></li>
+                  <li><span>Hari Basnet</span><span class="tag live"><span class="dot"></span>Calling</span></li>
+                  <li><span>Gita Rai</span><span class="tag ok">Confirmed</span></li>
+                </ul>
+              )}
+              {p.slug === 'phone-system' && (
+                <ul class="rows keys">
+                  <li><span class="key mono">1</span><span>Flight bookings</span><span class="muted-s">3 people</span></li>
+                  <li class="on"><span class="key mono">2</span><span>Tours and trekking</span><span class="muted-s">Ringing</span></li>
+                  <li><span class="key mono">3</span><span>Existing booking</span><span class="muted-s">AI agent</span></li>
+                </ul>
+              )}
+              {p.slug === 'website-voice-agent' && (
+                <div class="site">
+                  <div class="site-bar"><span></span><span></span><span></span></div>
+                  <div class="site-body">
+                    <span class="ln w1"></span><span class="ln w2"></span><span class="ln w3"></span>
+                    <span class="talk"><span class="bars"><i></i><i></i><i></i><i></i><i></i></span>Talk to us</span>
+                  </div>
+                </div>
+              )}
+              {p.slug === 'website-chatbot' && (
+                <div class="call">
+                  <p class="bub caller">Do you deliver to Pokhara?</p>
+                  <p class="bub agent">Yes, within two days. Orders before noon go out the same day.</p>
+                </div>
+              )}
+            </figure>
+
+            <a class="more" href={`/products/${p.slug}`}>See {p.name} <span aria-hidden="true">→</span></a>
           </article>
         ))}
       </div>
@@ -63,28 +102,62 @@ import { products } from '../../data/products';
   .tabs { display: grid; border-top: 1px solid var(--line); }
   [role='tab'] {
     display: flex; align-items: center; justify-content: space-between; gap: var(--space-4);
-    min-height: 72px; padding: 0; border: 0; border-bottom: 1px solid var(--line); background: none;
+    min-height: 76px; padding: 0; border: 0; border-bottom: 1px solid var(--line); background: none;
     font-size: 1.5rem; font-weight: 600; text-align: left; color: var(--ink-muted); cursor: pointer;
     transition: color var(--fast) var(--ease);
   }
-  [role='tab']::after { content: ''; width: 10px; height: 10px; border-radius: 50%; background: transparent; transition: background-color var(--fast) var(--ease); }
-  [role='tab']:hover { color: var(--ink); }
-  [role='tab'][aria-selected='true'] { color: var(--ink); }
-  [role='tab'][aria-selected='true']::after { background: var(--lime); }
+  [role='tab']::after { content: '→'; color: var(--link); opacity: 0; transform: translateX(-6px); transition: opacity var(--fast) var(--ease), transform var(--fast) var(--ease); }
+  [role='tab']:hover, [role='tab'][aria-selected='true'] { color: var(--ink); }
+  [role='tab'][aria-selected='true']::after { opacity: 1; transform: none; }
 
-  .panels { position: sticky; top: 96px; }
-  .panel { background: var(--stage); color: var(--stage-ink); border-radius: var(--radius-panel); padding: var(--space-7); min-height: 360px; display: grid; align-content: space-between; gap: var(--space-6); }
-  .panel[hidden] { display: none; }
+  .panel {
+    background: var(--stage); color: var(--stage-ink); border-radius: var(--radius-panel);
+    padding: var(--space-7); min-height: 440px; display: grid; grid-template-rows: auto 1fr auto; gap: var(--space-6);
+  }
+  /* All panels share one grid cell, so the box is always as tall as the
+     tallest panel and switching never moves the page. */
+  .explorer.is-live .panels { display: grid; }
+  .explorer.is-live .panel { grid-area: 1 / 1; }
+  .explorer.is-live .panel[hidden] { display: grid; visibility: hidden; }
   .explorer:not(.is-live) .panel + .panel { margin-top: var(--space-4); }
   .panel h3 { font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem); line-height: 1.15; max-width: 16ch; }
-  .gets { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
-  .gets li { display: grid; grid-template-columns: 20px 1fr; gap: var(--space-3); color: var(--stage-muted); font-size: 17px; }
-  .gets li::before { content: ''; width: 12px; height: 2px; margin-top: 0.75em; background: var(--lime); }
-  .actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
-  .panel .btn-primary { background: var(--lime); color: var(--on-lime); }
-  .panel .btn-primary:hover { background: var(--stage-ink); }
-  .panel .btn-secondary { color: var(--stage-ink); border-color: var(--stage-line); }
-  .panel .btn-secondary:hover { border-color: var(--stage-ink); }
+  .more { justify-self: start; color: var(--lime); font-weight: 600; text-decoration: none; font-size: 17px; }
+  .more span { display: inline-block; transition: transform var(--fast) var(--ease); }
+  .more:hover { text-decoration: underline; }
+  .more:hover span { transform: translateX(4px); }
+
+  /* The small pictures: white surfaces on the green, like real product UI. */
+  .pic { margin: 0; align-self: center; }
+  .call, .rows, .site { background: var(--canvas); color: var(--ink); border-radius: var(--radius-panel); padding: var(--space-5); }
+  .call { display: grid; gap: var(--space-2); }
+  .call-top { display: flex; align-items: center; gap: var(--space-2); font-size: 14px; font-weight: 600; margin-bottom: var(--space-2); }
+  .num { margin-left: auto; font-weight: 400; color: var(--ink-muted); font-size: 13px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); flex: none; }
+  .bub { margin: 0; padding: var(--space-2) var(--space-3); border-radius: var(--radius-panel); font-size: 15px; line-height: 1.45; max-width: 85%; }
+  .bub.agent { justify-self: start; background: var(--surface); border: 1px solid var(--line); }
+  .bub.caller { justify-self: end; background: var(--brand); color: var(--on-brand); }
+  .rows { list-style: none; margin: 0; display: grid; }
+  .rows li { display: flex; align-items: center; gap: var(--space-3); justify-content: space-between; padding: var(--space-3) 0; font-size: 15px; }
+  .rows li + li { border-top: 1px solid var(--line); }
+  .tag { display: inline-flex; align-items: center; gap: 6px; padding: 2px var(--space-2); border-radius: 6px; font-size: 13px; background: var(--subtle); color: var(--ink-muted); }
+  .tag.ok { color: var(--link); font-weight: 600; }
+  .tag.live { color: var(--ink); font-weight: 600; }
+  .keys li { justify-content: flex-start; }
+  .keys li > span:nth-child(2) { flex: 1; }
+  .key { display: grid; place-items: center; width: 32px; height: 32px; border-radius: var(--radius-control); background: var(--subtle); font-weight: 600; }
+  .keys li.on .key { background: var(--lime); color: var(--on-lime); }
+  .keys li.on { font-weight: 600; }
+  .muted-s { color: var(--ink-muted); font-size: 13px; }
+  .site { padding: 0; overflow: hidden; }
+  .site-bar { display: flex; gap: 6px; padding: var(--space-3); border-bottom: 1px solid var(--line); }
+  .site-bar span { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+  .site-body { position: relative; display: grid; gap: var(--space-2); padding: var(--space-5) var(--space-5) var(--space-8); }
+  .ln { height: 10px; border-radius: 4px; background: var(--subtle); }
+  .w1 { width: 70%; } .w2 { width: 90%; } .w3 { width: 55%; }
+  .talk { position: absolute; right: var(--space-4); bottom: var(--space-4); display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-4); border-radius: var(--radius-control); background: var(--brand); color: var(--on-brand); font-size: 14px; font-weight: 600; }
+  .bars { display: inline-flex; align-items: center; gap: 2px; height: 14px; }
+  .bars i { width: 3px; border-radius: 2px; background: var(--lime); }
+  .bars i:nth-child(1) { height: 6px; } .bars i:nth-child(2) { height: 12px; } .bars i:nth-child(3) { height: 9px; } .bars i:nth-child(4) { height: 14px; } .bars i:nth-child(5) { height: 7px; }
 
   @media (max-width: 959px) {
     .explorer { grid-template-columns: 1fr; gap: var(--space-5); }
@@ -92,7 +165,6 @@ import { products } from '../../data/products';
     [role='tab'] { flex: none; min-height: 44px; padding: 0 var(--space-4); border: 1px solid var(--line); border-radius: var(--radius-control); font-size: 16px; }
     [role='tab']::after { display: none; }
     [role='tab'][aria-selected='true'] { border-color: var(--brand); color: var(--link); }
-    .panels { position: static; }
     .panel { padding: var(--space-5); min-height: 0; }
   }
 </style>

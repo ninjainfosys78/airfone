@@ -59,7 +59,7 @@ const timing = JSON.stringify({ duration: data.duration ?? 0, lines: lines.map((
 
   <p class="error small" role="status" hidden>Audio couldn't load. The transcript is below.</p>
   {lines.length > 0 && (
-    <details class="transcript" open={!p.compact && !p.stage} data-transcript>
+    <details class="transcript" data-transcript>
       <summary>Transcript</summary>
       <ol>
         {lines.map((l) => (
@@ -127,10 +127,10 @@ const timing = JSON.stringify({ duration: data.duration ?? 0, lines: lines.map((
      captions appear under it only while it speaks; one quiet status line. */
   .stage { background: none; border: 0; padding: 0; color: var(--stage-ink); text-align: center; display: grid; justify-items: center; }
   .stage .play { display: none; }
-  .caption { margin-top: var(--space-3); min-height: 4.4em; max-width: 44ch; display: grid; align-content: start; gap: 2px; opacity: 0; transition: opacity var(--slow) var(--ease); }
+  .caption { margin-top: var(--space-3); height: 8.6em; overflow: hidden; max-width: 44ch; display: grid; align-content: start; gap: 2px; opacity: 0; transition: opacity var(--slow) var(--ease); }
   .is-playing .caption { opacity: 1; }
-  .c-ne { font-size: 17px; line-height: 1.5; }
-  .c-en { font-size: 15px; line-height: 1.45; color: var(--stage-muted); }
+  .c-ne { font-size: 17px; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .c-en { font-size: 15px; line-height: 1.45; color: var(--stage-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .caption.swap p { animation: cap var(--slow) var(--ease); }
   @keyframes cap { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
   .stage .head { order: -1; margin: 0; justify-content: center; }
