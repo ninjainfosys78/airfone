@@ -81,15 +81,36 @@ import { products } from '../../data/products';
       };
       this.classList.add('is-live');
       show(0);
+
+      // Auto-advance every DWELL ms while on screen; pause on hover or focus;
+      // stop for good once the visitor picks a product.
+      const DWELL = 5000;
+      let current = 0, timer = 0, visible = false, paused = false, stopped = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const schedule = () => {
+        clearTimeout(timer);
+        this.classList.toggle('is-auto', !stopped && visible && !paused);
+        if (stopped || !visible || paused) return;
+        // Restart the fill animation on the selected tab.
+        tabs[current].classList.remove('tick'); void tabs[current].offsetWidth; tabs[current].classList.add('tick');
+        timer = window.setTimeout(() => { current = (current + 1) % tabs.length; show(current); schedule(); }, DWELL);
+      };
+      const pick = (i: number) => { stopped = true; current = i; show(i); schedule(); };
+      new IntersectionObserver(([e]) => { visible = e.isIntersecting; schedule(); }, { threshold: 0.4 }).observe(this);
+      this.addEventListener('pointerenter', () => { paused = true; schedule(); });
+      this.addEventListener('pointerleave', () => { paused = false; schedule(); });
+      this.addEventListener('focusin', () => { paused = true; schedule(); });
+      this.addEventListener('focusout', () => { paused = false; schedule(); });
+
       tabs.forEach((t, i) => {
-        t.addEventListener('click', () => show(i));
-        if (matchMedia('(hover: hover)').matches) t.addEventListener('pointerenter', () => show(i));
+        t.addEventListener('click', () => pick(i));
+        if (matchMedia('(hover: hover)').matches) t.addEventListener('pointerenter', () => { current = i; show(i); });
         t.addEventListener('keydown', (e) => {
           const k = e.key;
-          if (k === 'ArrowDown' || k === 'ArrowRight') { e.preventDefault(); show((i + 1) % tabs.length, true); }
-          if (k === 'ArrowUp' || k === 'ArrowLeft') { e.preventDefault(); show((i - 1 + tabs.length) % tabs.length, true); }
-          if (k === 'Home') { e.preventDefault(); show(0, true); }
-          if (k === 'End') { e.preventDefault(); show(tabs.length - 1, true); }
+          const go = (n: number) => { e.preventDefault(); stopped = true; current = n; show(n, true); schedule(); };
+          if (k === 'ArrowDown' || k === 'ArrowRight') go((i + 1) % tabs.length);
+          if (k === 'ArrowUp' || k === 'ArrowLeft') go((i - 1 + tabs.length) % tabs.length);
+          if (k === 'Home') go(0);
+          if (k === 'End') go(tabs.length - 1);
         });
       });
     }
@@ -109,7 +130,10 @@ import { products } from '../../data/products';
   [role='tab']:hover { color: var(--ink); }
   [role='tab'] { position: relative; }
   [role='tab'][aria-selected='true'] { color: var(--ink); font-weight: 600; }
-  [role='tab'][aria-selected='true']::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--brand); }
+  [role='tab'][aria-selected='true']::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--brand); transform-origin: left; }
+  /* While auto-advancing, the underline fills up as a timer. */
+  .is-auto [role='tab'][aria-selected='true'].tick::after { animation: tick 5000ms linear; }
+  @keyframes tick { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
   .panel {
     background: var(--stage); color: var(--stage-ink); border-radius: var(--radius-panel);
