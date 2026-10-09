@@ -33,6 +33,7 @@
     "puppeteer-core": "^24",
     "satori": "^0.18",
     "sharp": "^0.35.4",
+    "simple-icons": "16.34.0",
     "typescript": "^5.4.0",
     "vitest": "^3"
   },

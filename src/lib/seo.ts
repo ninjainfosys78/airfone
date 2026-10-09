@@ -168,3 +168,28 @@ export function localBusinessJsonLd() {
     parentOrganization: { '@id': ORG_ID },
   };
 }
+
+/** The glossary as a set of defined terms. */
+export function definedTermSetJsonLd(terms: { slug: string; term: string; short: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'DefinedTermSet',
+    '@id': `${SITE_URL}/glossary#set`,
+    name: 'AirFone glossary of telecom and voice AI terms',
+    url: canonicalFor('/glossary'),
+    hasDefinedTerm: terms.map((t) => ({ '@type': 'DefinedTerm', name: t.term, description: t.short, url: canonicalFor(`/glossary/${t.slug}`) })),
+  };
+}
+
+/** One glossary term. */
+export function definedTermJsonLd(t: { slug: string; term: string; full?: string; short: string }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'DefinedTerm',
+    name: t.term,
+    ...(t.full ? { alternateName: t.full } : {}),
+    description: t.short,
+    url: canonicalFor(`/glossary/${t.slug}`),
+    inDefinedTermSet: `${SITE_URL}/glossary#set`,
+  };
+}

@@ -12,6 +12,7 @@ export const footerColumns = [
     links: [
       { href: '/resellers', label: 'Resellers' },
       { href: '/blog', label: 'Insights' },
+      { href: '/glossary', label: 'Glossary' },
       { href: '/pricing', label: 'Pricing' },
       { href: '/contact', label: 'Contact' },
       { href: '/demo', label: 'Book a demo' },

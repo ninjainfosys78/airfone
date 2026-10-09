@@ -1,0 +1,77 @@
+---
+import Base from '../../layouts/Base.astro';
+import Related from '../../components/site/Related.astro';
+import CtaBand from '../../components/site/CtaBand.astro';
+import ArrowLeft from '@lucide/astro/icons/arrow-left';
+import { glossary, termBySlug, type Term } from '../../data/glossary';
+import { productLink } from '../../data/links';
+import { posts } from '../../lib/posts';
+import { productTags } from '../../data/links';
+import { breadcrumbJsonLd, definedTermJsonLd, faqJsonLd } from '../../lib/seo';
+
+export function getStaticPaths() {
+  return glossary.map((t) => ({ params: { slug: t.slug }, props: { t } }));
+}
+const { t } = Astro.props as { t: Term };
+const path = `/glossary/${t.slug}`;
+const heading = t.full ? `What is ${t.term} (${t.full})?` : `What is ${/^[A-Z]{2,}/.test(t.term) ? t.term : `a ${t.term.toLowerCase()}`}?`;
+const related = t.related.map(termBySlug).filter((x): x is Term => !!x);
+const product = t.product ? productLink(t.product) : null;
+const guides = t.product
+  ? (await posts()).filter((x) => !x.data.draft && x.data.tags.some((g) => productTags[t.product!]?.includes(g))).slice(0, 3)
+  : [];
+---
+<Base
+  title={`${t.term}${t.full ? ` (${t.full})` : ''}: meaning and how it works`}
+  description={t.short.length <= 160 ? t.short : `${t.short.slice(0, 157).replace(/\s+\S*$/, '')}…`}
+  path={path}
+  jsonLd={[
+    definedTermJsonLd(t),
+    faqJsonLd([{ q: heading, a: t.short }]),
+    breadcrumbJsonLd([{ name: 'Glossary', path: '/glossary' }, { name: t.term, path }]),
+  ]}
+>
+  <article class="term">
+    <div class="wrap">
+      <div class="col">
+        <a class="back" href="/glossary" data-enter><ArrowLeft size={18} stroke-width={2} aria-hidden="true" /> Glossary</a>
+        <h1 data-enter>{heading}</h1>
+        <p class="def" data-enter><dfn>{t.term}</dfn>{t.short.slice(t.term.length)}</p>
+        <div class="prose body" data-enter>
+          {t.body.map((p) => <p>{p}</p>)}
+        </div>
+        {related.length > 0 && (
+          <nav class="see" aria-label="Related terms" data-enter>
+            <span class="see-h">Related terms</span>
+            <ul>{related.map((r) => <li><a href={`/glossary/${r.slug}`}>{r.term}</a></li>)}</ul>
+          </nav>
+        )}
+      </div>
+    </div>
+  </article>
+
+  <Related groups={[
+    { h: 'Where this matters', items: product ? [product] : [] },
+    { h: 'Guides', items: guides.map((g) => ({ href: `/blog/${g.id}`, label: g.data.title })) },
+    { h: 'More terms', items: glossary.filter((x) => x.slug !== t.slug && !t.related.includes(x.slug)).slice(0, 4).map((x) => ({ href: `/glossary/${x.slug}`, label: x.term })) },
+  ]} />
+  <CtaBand />
+</Base>
+
+<style>
+  .term { padding-block: var(--space-8) var(--space-9); }
+  .col { max-width: 720px; }
+  .back { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 44px; color: var(--ink-muted); text-decoration: none; font-size: 16px; }
+  .back:hover { color: var(--ink); }
+  h1 { margin: var(--space-5) 0 var(--space-5); font-family: 'Source Serif 4 Variable', 'Serif Fallback', Georgia, serif; font-weight: 600; font-size: clamp(2rem, 1.5rem + 2vw, 3rem); line-height: 1.12; }
+  /* The quotable one-line answer, set apart from the explanation. */
+  .def { margin: 0 0 var(--space-6); padding: var(--space-5) var(--space-6); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-panel); font-size: 1.1875rem; line-height: 1.5; }
+  dfn { font-style: normal; font-weight: 600; }
+  .body { max-width: none; font-family: 'Source Serif 4 Variable', 'Serif Fallback', Georgia, serif; font-size: 1.125rem; line-height: 1.5; }
+  .body p { margin: 0 0 var(--space-4); }
+  .see { margin-top: var(--space-6); display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+  .see-h { font-size: 15px; font-weight: 600; color: var(--ink-muted); }
+  .see ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .see a { display: inline-flex; align-items: center; min-height: 36px; padding: 0 var(--space-4); border: 1px solid var(--line); border-radius: var(--radius-control); color: var(--ink); text-decoration: none; font-size: 15px; transition: border-color var(--fast) var(--ease), color var(--fast) var(--ease); }
+  .see a:hover { border-color: var(--brand); color: var(--link); }
+</style>

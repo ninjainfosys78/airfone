@@ -1,0 +1,50 @@
+---
+import Base from '../../layouts/Base.astro';
+import ArrowRight from '@lucide/astro/icons/arrow-right';
+import { glossary } from '../../data/glossary';
+import { breadcrumbJsonLd, definedTermSetJsonLd } from '../../lib/seo';
+
+const terms = [...glossary].sort((a, b) => a.term.localeCompare(b.term));
+---
+<Base
+  title="Glossary: SIP, PBX, IVR, VoIP and AI call agent terms explained"
+  description="Plain definitions of the telecom and voice AI terms businesses meet when choosing a phone system: SIP, SIP trunk, PBX, IVR, DID, codec, RTP and VoIP."
+  path="/glossary"
+  jsonLd={[definedTermSetJsonLd(terms), breadcrumbJsonLd([{ name: 'Glossary', path: '/glossary' }])]}
+>
+  <section class="section blog-serif">
+    <div class="wrap">
+      <h1 data-enter>Glossary</h1>
+      <ul class="terms">
+        {terms.map((t, i) => (
+          <li data-enter style={`--d:${Math.min(i + 1, 8)}`}>
+            <a href={`/glossary/${t.slug}`}>
+              <span class="name">{t.term}{t.full && <span class="full"> · {t.full}</span>}</span>
+              <span class="short">{t.short}</span>
+              <ArrowRight class="go" size={18} stroke-width={2} aria-hidden="true" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  h1 { margin-bottom: var(--space-7); }
+  .terms { list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--line); }
+  .terms a {
+    display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr) auto; gap: var(--space-6); align-items: baseline;
+    padding: var(--space-5) 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none;
+  }
+  .name { font-family: 'Source Serif 4 Variable', 'Serif Fallback', Georgia, serif; font-size: 1.375rem; font-weight: 600; transition: color var(--fast) var(--ease); }
+  .full { display: block; font-family: var(--font-sans); font-size: 14px; font-weight: 400; color: var(--ink-muted); margin-top: 2px; }
+  .short { font-size: 16px; line-height: 1.5; color: var(--ink-muted); }
+  .terms :global(.go) { color: var(--ink-muted); transition: transform var(--fast) var(--ease), color var(--fast) var(--ease); }
+  .terms a:hover .name { color: var(--link); }
+  .terms a:hover :global(.go) { transform: translateX(4px); color: var(--link); }
+  @media (max-width: 767px) {
+    .terms a { grid-template-columns: 1fr auto; gap: var(--space-2) var(--space-4); }
+    .short { grid-column: 1 / -1; grid-row: 2; }
+  }
+</style>

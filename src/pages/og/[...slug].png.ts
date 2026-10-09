@@ -11,6 +11,7 @@ import satori from 'satori';
 const { Resvg } = createRequire(import.meta.url)('@resvg/resvg-js') as typeof import('@resvg/resvg-js');
 import { products } from '../../data/products';
 import { solutions } from '../../data/solutions';
+import { glossary } from '../../data/glossary';
 
 const font = (w: number) => readFileSync(`node_modules/@fontsource/poppins/files/poppins-latin-${w}-normal.woff`);
 const cloud = `data:image/svg+xml;base64,${Buffer.from(readFileSync('public/brand/cloud-outline.svg', 'utf8').replace('fill="#000"', 'fill="#8BC53E"')).toString('base64')}`;
@@ -32,6 +33,8 @@ export async function getStaticPaths() {
     { slug: 'orb-pick', title: 'Orb pick' },
     ...products.map((p) => ({ slug: `products/${p.slug}`, title: p.headline })),
     ...solutions.map((s) => ({ slug: `solutions/${s.slug}`, title: s.headline })),
+    { slug: 'glossary', title: 'Telecom and voice AI glossary' },
+    ...glossary.map((t) => ({ slug: `glossary/${t.slug}`, title: t.full ? `${t.term}: ${t.full}` : t.term })),
     ...posts.map((p) => ({ slug: `blog/${p.id}`, title: p.data.title })),
     ...[...new Set(posts.flatMap((p) => p.data.tags))].map((t) => ({ slug: `blog/tag/${t}`, title: `${t.replace(/-/g, ' ').replace(/^./, (c) => c.toUpperCase())} articles` })),
   ];
