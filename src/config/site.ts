@@ -33,10 +33,11 @@ export const LEGAL_ADDRESS = { street: '1500 N Grant St, Ste R', locality: 'Denv
 export const LEGAL_ADDRESS_LINE = `${LEGAL_ADDRESS.street}, ${LEGAL_ADDRESS.locality}, ${LEGAL_ADDRESS.region} ${LEGAL_ADDRESS.postal}, ${LEGAL_ADDRESS.country}`;
 /** The Kathmandu office: shown on the site and used for local search. Must match
  *  the Google Business Profile exactly. */
-export const ADDRESS = { street: 'Bulbule Marga, Anamnagar', locality: 'Kathmandu', region: 'Bagmati', postal: '30608', country: 'NP', countryName: 'Nepal' } as const;
+export const ADDRESS = { street: 'Bulbule Marga, Anamnagar', locality: 'Kathmandu', region: 'Bagmati', country: 'NP', countryName: 'Nepal', lat: 27.6932429, lng: 85.3301396 } as const;
 /** Short office line for the footer and contact page: "Denver, CO 80203, US". */
 export const OFFICE_LINE = `${ADDRESS.street}, ${ADDRESS.locality}, ${ADDRESS.countryName}`;
-export const OFFICE_MAP_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${ADDRESS.street}, ${ADDRESS.locality}, ${ADDRESS.countryName}`)}`;
+/** The office's Google Maps place (listed as Ninja Infosys Pvt. Ltd.). */
+export const OFFICE_MAP_URL = 'https://www.google.com/maps/place/Ninja+Infosys+Pvt.+Ltd./@27.6932429,85.3301396,17z/data=!4m6!3m5!1s0xa8783ce7a30f3c2f:0xfb91b2dfbc0c1f56!8m2!3d27.6932429!4d85.3301396';
 
 /** AirFone's official profiles. Sent as `sameAs` so search engines link them to the site. */
 export const SOCIAL_PROFILES = [
