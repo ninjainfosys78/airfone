@@ -195,3 +195,34 @@ export function definedTermJsonLd(t: { slug: string; term: string; full?: string
     inDefinedTermSet: `${SITE_URL}/glossary#set`,
   };
 }
+
+/** A product's published plans as offers (pricing page only). */
+export function pricedProductJsonLd(p: { slug: string; name: string; short: string }, tiers: { name: string; price: number; mrp: number }[]) {
+  const prices = tiers.map((t) => t.price);
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: `AirFone ${p.name}`,
+    description: p.short,
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web, Android',
+    url: canonicalFor(`/products/${p.slug}`),
+    offers: {
+      '@type': 'AggregateOffer',
+      priceCurrency: 'NPR',
+      lowPrice: Math.min(...prices),
+      highPrice: Math.max(...prices),
+      offerCount: tiers.length,
+      offers: tiers.map((t) => ({
+        '@type': 'Offer',
+        name: `${p.name} ${t.name}`,
+        price: t.price,
+        priceCurrency: 'NPR',
+        priceSpecification: { '@type': 'UnitPriceSpecification', price: t.price, priceCurrency: 'NPR', unitText: 'MONTH', referenceQuantity: { '@type': 'QuantitativeValue', value: 1, unitCode: 'MON' } },
+        url: canonicalFor('/pricing'),
+        availability: 'https://schema.org/InStock',
+      })),
+    },
+    provider: { '@id': ORG_ID },
+  };
+}

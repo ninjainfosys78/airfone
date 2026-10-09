@@ -127,7 +127,7 @@ export function audit(dist, { designColours = DESIGN_COLOURS } = {}) {
     for (const s of root.querySelectorAll('script[type="application/ld+json"]')) {
       try {
         const data = JSON.parse(s.text);
-        if (JSON.stringify(data).includes('"offers"')) add('SD-2', file, 'JSON-LD carries offers (no prices yet)');
+        if (JSON.stringify(data).includes('"offers"') && !file.endsWith('pricing.html')) add('SD-2', file, 'JSON-LD carries offers outside the pricing page');
       } catch {
         add('SD-7', file, 'JSON-LD does not parse');
       }
@@ -162,6 +162,8 @@ export function audit(dist, { designColours = DESIGN_COLOURS } = {}) {
     const text = body.text.replace(/\s+/g, ' ');
     // Call transcripts quote callers' own words, including a shop's prices.
     for (const t of body.querySelectorAll('[data-transcript]')) t.remove();
+    // Published prices live only inside [data-prices] (the pricing page).
+    for (const t of body.querySelectorAll('[data-prices]')) t.remove();
     const ownText = body.text.replace(/\s+/g, ' ');
     // Legal pages describe the whole service, including app channels.
     for (const t of body.querySelectorAll('[data-legal]')) t.remove();

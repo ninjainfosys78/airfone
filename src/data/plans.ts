@@ -55,8 +55,9 @@ export const addons = [
 ];
 
 export const pricingFaq = [
-  { q: 'Why are there no prices here?', a: 'Prices depend on how many calls you get and how many people answer them. Tell us a little about your business and we send you a price, usually the same working day.' },
-  { q: 'What decides the price?', a: 'Mainly three things: how many calls the AI agent answers, how many calls can run at the same time, and how many people on your team use the phone system.' },
+  { q: 'Are prices per month?', a: 'Yes. Every plan is a monthly price in Nepali rupees. Extra use beyond what a plan includes is charged at the rate shown under each product.' },
+  { q: 'Which plan should I choose?', a: 'Start from how many people answer calls and how many calls arrive at once. Most small businesses start on Starter and move up when they need more users or minutes.' },
+  { q: 'Need a different mix?', a: 'Tell us what you need. Scale plans and combinations of products are priced around your call volume.' },
   { q: 'Do I need to buy phones or hardware?', a: 'No. Your team uses the AirFone app or a browser, and your existing number connects through a SIP line. Desk IP phones work too if you already have them.' },
   { q: 'Can I start small?', a: 'Yes. Many businesses start with the phone system, or with the AI agent only after hours, and add more once they have listened to a few weeks of calls.' },
   { q: 'Can I hear it before I decide?', a: 'Yes. Ring 970-269-7774 to talk to the agent, or book a demo and we set it up on a test number with your own prices.' },

@@ -2,43 +2,60 @@
 import Base from '../layouts/Base.astro';
 import Faq from '../components/site/Faq.astro';
 import CtaBand from '../components/site/CtaBand.astro';
-import ArrowRight from '@lucide/astro/icons/arrow-right';
-import { plans, addons, pricingFaq } from '../data/plans';
-import { breadcrumbJsonLd, faqJsonLd } from '../lib/seo';
 import Related from '../components/site/Related.astro';
+import { pricingFaq } from '../data/plans';
+import { priceRows, offerPrice, rs, OFFER_OFF } from '../data/prices';
 import { products } from '../data/products';
 import { solutions } from '../data/solutions';
+import { breadcrumbJsonLd, faqJsonLd, pricedProductJsonLd } from '../lib/seo';
+
+const off = Math.round(OFFER_OFF * 100);
+const rows = priceRows.map((r) => ({ ...r, p: products.find((x) => x.slug === r.product)! }));
+const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.mrp).map((t) => ({ name: t.name, mrp: t.mrp!, price: offerPrice(t.mrp!) }))));
 ---
-<Base title="Pricing: AI call agent and cloud phone system plans" description="AirFone pricing for the cloud phone system, the AI call agent that answers in Nepali, and the AI phone system. Priced for your call volume, quoted the same day." path="/pricing" jsonLd={[faqJsonLd(pricingFaq), breadcrumbJsonLd([{ name: 'Pricing', path: '/pricing' }])]}>
+<Base
+  title="Pricing: AI call agent, phone system and website agent plans in Nepal"
+  description={`AirFone plans in Nepali rupees per month: AI call agent, AI phone system, cloud PBX, website voice agent and chatbot. Now ${off}% off every plan.`}
+  path="/pricing"
+  jsonLd={[...offers, faqJsonLd(pricingFaq), breadcrumbJsonLd([{ name: 'Pricing', path: '/pricing' }])]}
+>
   <section class="top">
     <div class="wrap">
-      <h1 data-enter>Plans priced for your calls</h1>
+      <h1 data-enter>{off ? `${off}% off every plan` : 'Pricing'}</h1>
     </div>
   </section>
 
-  <section class="plans-wrap">
+  <section class="prices" data-prices>
     <div class="wrap">
-      <ul class="plans">
-        {plans.map((p, i) => (
-          <li class:list={['plan', { featured: p.featured }]} data-enter style={`--d:${i + 1}`}>
-            <h2>{p.name}</h2>
-            <p class="pitch">{p.pitch}</p>
-            {p.price && <p class="price"><span class="amount">{p.price}</span> <span class="per">{p.per}</span></p>}
-            <a class:list={['btn', p.featured ? 'btn-lime' : 'btn-secondary']} href={p.cta.href}>{p.cta.label}</a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
-
-  <section class="section-tight" data-reveal>
-    <div class="wrap two">
-      <h2>Add to any plan</h2>
-      <ul class="addons" data-stagger>
-        {addons.map((a, i) => (
-          <li style={`--i:${i}`}><a href={a.href}><span class="a-name">{a.name}</span><ArrowRight class="go" size={20} stroke-width={2} aria-hidden="true" /></a></li>
-        ))}
-      </ul>
+      {rows.map((r, ri) => (
+        <div class="row" data-enter style={`--d:${Math.min(ri + 1, 5)}`}>
+          <div class="pname">
+            <h2><a href={`/products/${r.p.slug}`}>{r.p.name}</a></h2>
+            <p class="extra">{r.extra}</p>
+          </div>
+          <ul class="tiers">
+            {r.tiers.map((t) => (
+              <li class="tier">
+                <span class="tname">{t.name}</span>
+                {t.mrp ? (
+                  <span class="cost">
+                    {off > 0 && <span class="was"><s>{rs(t.mrp)}</s><span class="tag">{off}% off</span></span>}
+                    <span class="now">{rs(offerPrice(t.mrp))}{t.from && <span class="plus">+</span>}</span>
+                    <span class="per">per month</span>
+                  </span>
+                ) : (
+                  <span class="cost"><span class="now custom">Custom</span><span class="per">priced on your volume</span></span>
+                )}
+                <span class="inc">{t.includes}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      <div class="actions">
+        <a class="btn btn-primary" href="/demo">Book a demo</a>
+        <a class="btn btn-secondary" href="/contact">Ask for a different mix</a>
+      </div>
     </div>
   </section>
 
@@ -52,45 +69,37 @@ import { solutions } from '../data/solutions';
 </Base>
 
 <style>
-  .top { padding-block: var(--space-9) var(--space-7); }
-  h1 { max-width: 14ch; }
+  .top { padding-block: var(--space-9) var(--space-6); }
+  h1 { max-width: 16ch; }
 
-  .plans-wrap { padding-bottom: var(--space-9); }
-  .plans { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); align-items: stretch; }
-  .plan {
-    display: flex; flex-direction: column; gap: var(--space-5); min-height: 340px; padding: var(--space-7);
-    transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1), border-color 200ms var(--ease);
+  .prices { padding-bottom: var(--space-9); }
+  .row { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: var(--space-7); padding: var(--space-7) 0; border-top: 1px solid var(--line); }
+  .row:last-of-type { border-bottom: 1px solid var(--line); }
+  .pname h2 { font-size: 1.375rem; margin: 0 0 var(--space-2); }
+  .pname h2 a { color: var(--ink); text-decoration: none; }
+  .pname h2 a:hover { color: var(--link); }
+  .extra { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink-muted); }
+
+  .tiers { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); }
+  .tier {
+    display: grid; align-content: start; gap: var(--space-2); padding: var(--space-5);
     background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-panel);
+    transition: border-color 200ms var(--ease), transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .plan:hover { transform: translateY(-4px); border-color: var(--brand); }
-  .plan h2 { font-size: 1rem; font-weight: 600; margin: 0; color: var(--link); }
-  .pitch { margin: 0 0 auto; font-size: clamp(1.625rem, 1.3rem + 1vw, 2rem); font-weight: 600; line-height: 1.2; max-width: 14ch; }
-  .featured h2 { color: var(--lime); }
-  .price { margin: 0; padding-block: var(--space-4); border-block: 1px solid var(--line); }
-  .amount { font-size: 2.25rem; font-weight: 600; }
-  .per { font-size: 16px; color: var(--ink-muted); }
-  .plan .btn { width: 100%; }
+  .tier:hover { border-color: var(--brand); transform: translateY(-3px); }
+  .tname { font-size: 14px; font-weight: 600; color: var(--link); }
+  .cost { display: grid; gap: 2px; }
+  .was { display: flex; align-items: center; gap: var(--space-2); font-size: 14px; color: var(--ink-muted); }
+  .tag { padding: 2px 8px; border-radius: 999px; background: var(--lime); color: var(--on-lime); font-size: 12px; font-weight: 600; }
+  .now { font-family: var(--font-display); font-size: 1.75rem; font-weight: 600; line-height: 1.15; font-variant-numeric: tabular-nums; }
+  .now.custom { font-size: 1.5rem; }
+  .plus { font-size: 1.25rem; margin-left: 2px; }
+  .per { font-size: 14px; color: var(--ink-muted); }
+  .inc { margin-top: var(--space-2); padding-top: var(--space-3); border-top: 1px solid var(--line); font-size: 14px; line-height: 1.45; color: var(--ink); }
 
-  /* The plan most businesses pick sits on the green stage. */
-  .featured { background: var(--stage); border-color: var(--stage); color: var(--stage-ink); }
-  .featured .per { color: var(--stage-muted); }
-  .featured .price { border-color: var(--stage-line); }
+  .actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-7); }
 
-  .two { display: grid; grid-template-columns: 1fr 1.4fr; gap: var(--space-8); align-items: start; }
-  .addons { list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--line); }
-  .addons a {
-    display: grid; grid-template-columns: 1fr auto; grid-template-areas: 'name go'; gap: var(--space-1) var(--space-4); align-items: center;
-    padding: var(--space-5) 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none;
-  }
-  .a-name { grid-area: name; font-size: 1.25rem; font-weight: 600; transition: color var(--fast) var(--ease); }
-  .addons :global(.go) { grid-area: go; color: var(--link); transition: transform var(--fast) var(--ease); }
-  .addons a:hover .a-name { color: var(--link); }
-  .addons a:hover :global(.go) { transform: translateX(4px); }
-
-  @media (prefers-reduced-motion: reduce) { .plan:hover { transform: none; } }
-  @media (max-width: 959px) {
-    .plans { grid-template-columns: 1fr; }
-    .plan { min-height: 260px; }
-    .two { grid-template-columns: 1fr; gap: var(--space-6); }
-  }
+  @media (prefers-reduced-motion: reduce) { .tier:hover { transform: none; } }
+  @media (max-width: 1023px) { .row { grid-template-columns: 1fr; gap: var(--space-4); } }
+  @media (max-width: 699px) { .tiers { grid-template-columns: 1fr; } }
 </style>
