@@ -24,7 +24,7 @@ It was printed on the old signboard, on every invoice book, on the side of the d
 
 They kept the number in the end. But it was close, and it made them realise something most businesses only notice when it is almost too late: the phone number is one of the most valuable things a small business owns, and almost nobody treats it that way.
 
-## Why the number matters more than the phone
+## Why your business phone number matters more than the phone
 
 Customers do not remember your website. They remember the number on the board, the one on last year's bill, the one their cousin passed on. A number that has been in use for years carries every one of those saved contacts with it.
 
@@ -32,7 +32,7 @@ Change it and some of those customers are simply gone. They call the old number,
 
 So the first rule is simple. Pick a number you are willing to keep for a very long time, and set it up so that it can stay yours whatever else changes.
 
-## Whose number is it?
+## Whose business phone number is it?
 
 The most common problem we see is not the type of number. It is who it belongs to.
 
@@ -68,7 +68,7 @@ A support line, separate from sales, so a customer with a fault does not wait be
 
 The main number should still be the one on your signboard. The others sit around it.
 
-## What to ask before you choose
+## What to ask before you choose a business phone number
 
 Whether you are getting a new number or moving an old one, five questions save a lot of trouble later.
 
