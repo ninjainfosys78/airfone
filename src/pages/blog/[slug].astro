@@ -10,7 +10,7 @@ import Related from '../../components/site/Related.astro';
 import { productsForTags, solutionsForTags } from '../../data/links';
 import { coverFor, fmtDate, posts, type Post } from '../../lib/posts';
 import { related } from '../../lib/blog';
-import { articleJsonLd, breadcrumbJsonLd } from '../../lib/seo';
+import { articleJsonLd, breadcrumbJsonLd, faqJsonLd } from '../../lib/seo';
 
 export async function getStaticPaths() {
   const all = await posts();
@@ -39,6 +39,7 @@ const readNext = (next.length ? next : all.filter((p) => p.id !== post.id)).slic
   jsonLd={[
     articleJsonLd({ slug: post.id, title: d.title, description: d.description, date: d.date, updated: d.updated, image, tags: d.tags, words: (post.body ?? '').split(/\s+/).filter(Boolean).length }),
     breadcrumbJsonLd([{ name: 'Insights', path: '/blog' }, { name: d.title, path }]),
+    ...((d.faq ?? []).length ? [faqJsonLd(d.faq ?? [])] : []),
   ]}
 >
   <link slot="head" rel="preload" href={serifUrl} as="font" type="font/woff2" crossorigin />
@@ -53,7 +54,15 @@ const readNext = (next.length ? next : all.filter((p) => p.id !== post.id)).slic
       </p>
     </header>
     <div class="wrap grid">
-      <div class="col prose body" data-enter><Content /></div>
+      <div class="col prose body" data-enter>
+        <Content />
+        {(d.faq ?? []).length > 0 && (
+          <section class="post-faq" aria-labelledby="faq-h">
+            <h2 id="faq-h">Questions people ask</h2>
+            {(d.faq ?? []).map((f) => <><h3>{f.q}</h3><p>{f.a}</p></>)}
+          </section>
+        )}
+      </div>
       {readNext.length > 0 && (
         <nav class="next no-print" aria-labelledby="next-h" data-enter>
           <h2 id="next-h" class="next-h">Read next</h2>

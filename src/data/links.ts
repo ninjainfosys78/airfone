@@ -16,7 +16,7 @@ export const productTags: Record<string, string[]> = {
 export const solutionTags: Record<string, string[]> = {
   banks: ['banks', 'ai-call-agent'],
   shops: ['website', 'ai-call-agent'],
-  clinics: ['ai-call-agent'],
+  clinics: ['clinics', 'ai-call-agent'],
   isps: ['phone-system', 'ai-call-agent'],
 };
 
@@ -41,4 +41,4 @@ export const productsForTags = (tags: string[]): Link[] =>
 
 /** Industries a post is about, from its tags. */
 export const solutionsForTags = (tags: string[]): Link[] =>
-  solutions.filter((s) => solutionTags[s.slug]?.includes(tags[0]) || (s.slug === 'banks' && tags.includes('banks'))).map((s) => solutionLink(s.slug)!);
+  solutions.filter((s) => tags.includes(s.slug) || solutionTags[s.slug]?.[0] === tags[0]).map((s) => solutionLink(s.slug)!);

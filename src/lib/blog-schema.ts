@@ -10,4 +10,6 @@ export const postSchema = z.object({
   pillar: z.boolean().default(false),
   image: z.string().optional(),
   imageAlt: z.string().optional(),
+  /** Questions answered at the end of the post; also sent as FAQPage data. */
+  faq: z.array(z.object({ q: z.string().min(5), a: z.string().min(20) })).default([]),
 });
