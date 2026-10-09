@@ -6,7 +6,7 @@ import Mail from '@lucide/astro/icons/mail';
 import AudioLines from '@lucide/astro/icons/audio-lines';
 import MapPin from '@lucide/astro/icons/map-pin';
 import ArrowRight from '@lucide/astro/icons/arrow-right';
-import { OFFICE_LINE, CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, DEMO_NUMBER_DISPLAY, DEMO_NUMBER_TEL } from '../config/site';
+import { OFFICE_LINE, OFFICE_MAP_URL, CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, DEMO_NUMBER_DISPLAY, DEMO_NUMBER_TEL } from '../config/site';
 import { breadcrumbJsonLd, localBusinessJsonLd } from '../lib/seo';
 import Related from '../components/site/Related.astro';
 import { products } from '../data/products';
@@ -20,7 +20,7 @@ const ways = [
   { icon: AudioLines, label: 'Hear the agent', value: DEMO_NUMBER_DISPLAY, href: DEMO_NUMBER_TEL },
 ];
 ---
-<Base title="Contact" description="Talk to the AirFone team. Sales and support on 985-1343348, email info@airfone.app, or ring 970-269-7774 to hear the AI call agent answer for yourself." path="/contact" jsonLd={[localBusinessJsonLd(), breadcrumbJsonLd([{ name: 'Contact', path: '/contact' }])]}>
+<Base title="Contact" description="Contact AirFone in Anamnagar, Kathmandu. Sales and support on 985-1343348, email info@airfone.app, or ring 970-269-7774 to hear the AI call agent." path="/contact" jsonLd={[localBusinessJsonLd(), breadcrumbJsonLd([{ name: 'Contact', path: '/contact' }])]}>
   <section class="top">
     <div class="wrap">
       <h1 data-enter>Talk to the AirFone team</h1>
@@ -49,7 +49,7 @@ const ways = [
         <Image src={team} alt="A receptionist at the AirFone office front desk dialling a desk phone" widths={[400, 800, 1080]} sizes="(max-width: 959px) 100vw, 420px" quality={90} format="webp" class="photo" />
         <figcaption>
           <MapPin size={18} stroke-width={1.75} aria-hidden="true" />
-          <span>{OFFICE_LINE}</span>
+          <a href={OFFICE_MAP_URL} target="_blank" rel="noopener">{OFFICE_LINE}</a>
         </figcaption>
       </figure>
     </div>
@@ -92,6 +92,8 @@ const ways = [
   .photo-col { position: relative; margin: 0; }
   .photo { display: block; width: 100%; height: auto; aspect-ratio: 1080 / 1700; border-radius: var(--radius-panel); }
   /* Where the office is, set on the photo itself. */
+  figcaption a { color: inherit; text-decoration: none; }
+  figcaption a:hover { text-decoration: underline; }
   figcaption {
     position: absolute; left: var(--space-4); bottom: var(--space-4);
     display: inline-flex; align-items: center; gap: var(--space-2); padding: 8px 14px 8px 12px;

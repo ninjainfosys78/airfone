@@ -25,15 +25,18 @@ export const CONTACT_PHONE_DISPLAY = '985-1343348';
 export const CONTACT_PHONE_TEL = 'tel:+9779851343348';
 export const CONTACT_PHONE_JSONLD = '+977-9851343348';
 
-// AirFone presents as an international product from its US company; the
-// office shown on the site is the registered address.
+// AirFone is run by its US company (legal address below) and has an office in
+// Kathmandu (ADDRESS), which is what the site shows for local search.
 export const COMPANY = 'Ninja Infosys LLC';
 // Registered address of the company that runs AirFone.
 export const LEGAL_ADDRESS = { street: '1500 N Grant St, Ste R', locality: 'Denver', region: 'CO', postal: '80203', country: 'US' } as const;
 export const LEGAL_ADDRESS_LINE = `${LEGAL_ADDRESS.street}, ${LEGAL_ADDRESS.locality}, ${LEGAL_ADDRESS.region} ${LEGAL_ADDRESS.postal}, ${LEGAL_ADDRESS.country}`;
-export const ADDRESS = { locality: 'Denver', region: 'CO', postal: '80203', country: 'US' } as const;
+/** The Kathmandu office: shown on the site and used for local search. Must match
+ *  the Google Business Profile exactly. */
+export const ADDRESS = { street: 'Bulbule Marga, Anamnagar', locality: 'Kathmandu', region: 'Bagmati', postal: '30608', country: 'NP', countryName: 'Nepal' } as const;
 /** Short office line for the footer and contact page: "Denver, CO 80203, US". */
-export const OFFICE_LINE = `${ADDRESS.locality}, ${ADDRESS.region} ${ADDRESS.postal}, ${ADDRESS.country}`;
+export const OFFICE_LINE = `${ADDRESS.street}, ${ADDRESS.locality}, ${ADDRESS.countryName}`;
+export const OFFICE_MAP_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${ADDRESS.street}, ${ADDRESS.locality}, ${ADDRESS.countryName}`)}`;
 
 /** AirFone's official profiles. Sent as `sameAs` so search engines link them to the site. */
 export const SOCIAL_PROFILES = [
