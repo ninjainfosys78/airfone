@@ -5,8 +5,9 @@ import Phone from '@lucide/astro/icons/phone';
 import Mail from '@lucide/astro/icons/mail';
 import AudioLines from '@lucide/astro/icons/audio-lines';
 import MapPin from '@lucide/astro/icons/map-pin';
+import ArrowUpRight from '@lucide/astro/icons/arrow-up-right';
 import ArrowRight from '@lucide/astro/icons/arrow-right';
-import { OFFICE_LINE, OFFICE_MAP_URL, CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, DEMO_NUMBER_DISPLAY, DEMO_NUMBER_TEL } from '../config/site';
+import { ADDRESS, OFFICE_MAP_URL, CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, DEMO_NUMBER_DISPLAY, DEMO_NUMBER_TEL } from '../config/site';
 import { breadcrumbJsonLd, localBusinessJsonLd } from '../lib/seo';
 import Related from '../components/site/Related.astro';
 import { products } from '../data/products';
@@ -48,8 +49,14 @@ const ways = [
       <figure class="photo-col">
         <Image src={team} alt="A receptionist at the AirFone office front desk dialling a desk phone" widths={[400, 800, 1080]} sizes="(max-width: 959px) 100vw, 420px" quality={90} format="webp" class="photo" />
         <figcaption>
-          <MapPin size={18} stroke-width={1.75} aria-hidden="true" />
-          <a href={OFFICE_MAP_URL} target="_blank" rel="noopener">{OFFICE_LINE}</a>
+          <a class="place" href={OFFICE_MAP_URL} target="_blank" rel="noopener">
+            <span class="pin" aria-hidden="true"><MapPin size={20} stroke-width={1.75} /></span>
+            <span class="where">
+              <span class="city">Kathmandu office</span>
+              <span class="street">{ADDRESS.street}</span>
+            </span>
+            <ArrowUpRight class="out" size={18} stroke-width={2} aria-hidden="true" />
+          </a>
         </figcaption>
       </figure>
     </div>
@@ -92,14 +99,20 @@ const ways = [
   .photo-col { position: relative; margin: 0; }
   .photo { display: block; width: 100%; height: auto; aspect-ratio: 1080 / 1700; border-radius: var(--radius-panel); }
   /* Where the office is, set on the photo itself. */
-  figcaption a { color: inherit; text-decoration: none; }
-  figcaption a:hover { text-decoration: underline; }
-  figcaption {
-    position: absolute; left: var(--space-4); bottom: var(--space-4);
-    display: inline-flex; align-items: center; gap: var(--space-2); padding: 8px 14px 8px 12px;
-    background: var(--surface); border-radius: 999px; font-size: 15px; font-weight: 500; color: var(--ink);
+  /* Office card laid over the bottom of the photo; opens the Maps place. */
+  figcaption { position: absolute; left: var(--space-4); right: var(--space-4); bottom: var(--space-4); }
+  .place {
+    display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: var(--space-3);
+    padding: var(--space-3) var(--space-4); background: var(--surface); border-radius: var(--radius-panel);
+    color: var(--ink); text-decoration: none; transition: transform 250ms cubic-bezier(0.22, 1, 0.36, 1);
   }
-  figcaption :global(svg) { flex: none; color: var(--brand); }
+  .place:hover { transform: translateY(-2px); }
+  .pin { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; background: var(--subtle); color: var(--brand); }
+  .where { display: grid; gap: 1px; min-width: 0; }
+  .city { font-size: 15px; font-weight: 600; }
+  .street { font-size: 14px; color: var(--ink-muted); line-height: 1.35; }
+  .place :global(.out) { color: var(--ink-muted); transition: color var(--fast) var(--ease); }
+  .place:hover :global(.out) { color: var(--brand); }
 
 
   @media (prefers-reduced-motion: reduce) { .ways a, .ways a:hover { transform: none; } }
