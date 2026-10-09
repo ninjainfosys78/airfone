@@ -77,15 +77,28 @@ export interface OrbEngine {
   destroy(): void;
 }
 
+/** Signs this device will struggle to render the orb smoothly. */
+export function lowEndDevice(): boolean {
+  const n = navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
+  return (n.hardwareConcurrency ?? 8) <= 4 || (n.deviceMemory ?? 8) <= 4 || !!n.connection?.saveData;
+}
+
 export function createOrb(
   canvas: HTMLCanvasElement,
   variant: OrbVariant,
   palette?: Partial<Record<EngineState, Record<string, string>>>,
   /** Fixed parameter values that win over the variant's presets (framing, light). */
   tune: Record<string, number> = {},
+  /** Called once if the device cannot keep up even at the lowest quality. */
+  onTooSlow?: () => void,
 ): OrbEngine | null {
-  const gl = canvas.getContext('webgl', { alpha: true, antialias: false, premultipliedAlpha: true });
-  if (!gl) { console.warn('[airfone-orb] WebGL unavailable, showing the still'); return null; }
+  // failIfMajorPerformanceCaveat: no context at all when WebGL would run in
+  // software, which is what freezes smart boards and old TVs.
+  const gl = canvas.getContext('webgl', { alpha: true, antialias: false, premultipliedAlpha: true, powerPreference: 'low-power', failIfMajorPerformanceCaveat: true });
+  if (!gl) { console.warn('[airfone-orb] WebGL unavailable or software-rendered, showing the still'); return null; }
+  const info = gl.getExtension('WEBGL_debug_renderer_info');
+  const renderer = info ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL)) : '';
+  if (/swiftshader|llvmpipe|softpipe|software|basic render/i.test(renderer)) { console.warn('[airfone-orb] software renderer, showing the still'); return null; }
 
   const compile = (type: number, src: string) => {
     const s = gl.createShader(type)!;
@@ -128,8 +141,16 @@ export function createOrb(
   let vin = 0, vout = 0.3, speed = 0.4, speedV = 0, anim = 0, t = 0;
   let raf = 0, running = false, last = 0;
 
+  // Adaptive quality. Weak devices start at a lower resolution and 30 fps.
+  // If frames still run slow, resolution drops in steps; at the floor the
+  // orb gives up and the page shows the still image instead.
+  const weak = lowEndDevice();
+  let scale = weak ? 0.6 : 1;
+  let minGap = weak ? 1000 / 30 : 0;
+  let lastDraw = 0, slowFrames = 0, sampled = 0, gaveUp = false;
+
   const resize = () => {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5) * scale;
     const w = Math.max(1, Math.round(canvas.clientWidth * dpr));
     const h = Math.max(1, Math.round(canvas.clientHeight * dpr));
     if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
@@ -141,6 +162,22 @@ export function createOrb(
   resize();
 
   const frame = (now: number) => {
+    // At rest the orb only drifts, so 30 fps is plenty and halves the work.
+    const need = state === 'idle' ? Math.max(minGap, 1000 / 30) : minGap;
+    if (need && lastDraw && now - lastDraw < need - 2) { if (running) raf = requestAnimationFrame(frame); return; }
+    const gap = lastDraw ? now - lastDraw : 0;
+    lastDraw = now;
+    if (gap) {
+      sampled++;
+      if (gap > (need || 1000 / 60) * 1.8) slowFrames++;
+      if (sampled >= 45) {
+        if (slowFrames > 15) {
+          if (scale > 0.4) { scale = Math.max(0.35, scale * 0.7); minGap = 1000 / 30; resize(); }
+          else if (!gaveUp) { gaveUp = true; running = false; onTooSlow?.(); return; }
+        }
+        sampled = 0; slowFrames = 0;
+      }
+    }
     const dt = last ? Math.min((now - last) / 1000, 0.1) : 1 / 60;
     last = now;
     t += dt;
@@ -184,7 +221,8 @@ export function createOrb(
     setRunning(on) {
       if (on === running) return;
       running = on;
-      if (on) { last = 0; raf = requestAnimationFrame(frame); } else cancelAnimationFrame(raf);
+      if (on && gaveUp) { running = false; return; }
+      if (on) { last = 0; lastDraw = 0; raf = requestAnimationFrame(frame); } else cancelAnimationFrame(raf);
     },
     destroy() {
       running = false;

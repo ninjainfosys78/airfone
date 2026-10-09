@@ -28,7 +28,7 @@ export function defineOrb(variants: Record<string, OrbVariant>) {
       if (!variant) return;
       const canvas = document.createElement('canvas');
       canvas.setAttribute('aria-hidden', 'true');
-      this.engine = createOrb(canvas, variant, palettes[variant.key], tunes[variant.key]);
+      this.engine = createOrb(canvas, variant, palettes[variant.key], tunes[variant.key], () => this.fallBack(canvas));
       if (!this.engine) return;
       this.append(canvas);
       this.classList.add('is-live');
@@ -54,6 +54,16 @@ export function defineOrb(variants: Record<string, OrbVariant>) {
       this.audio?.removeEventListener('ended', this.onStop);
       cancelAnimationFrame(this.tick);
       this.engine?.destroy();
+    }
+
+    /** The device could not keep up: drop the canvas and show the still. */
+    private fallBack(canvas: HTMLCanvasElement) {
+      console.warn('[airfone-orb] too slow on this device, showing the still');
+      this.io?.disconnect();
+      this.engine?.destroy();
+      this.engine = null;
+      canvas.remove();
+      this.classList.remove('is-live');
     }
 
     private sync = () => this.engine?.setRunning(this.visible && !document.hidden);
