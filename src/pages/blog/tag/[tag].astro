@@ -14,11 +14,13 @@ export async function getStaticPaths() {
 const { tag, tags, items } = Astro.props as { tag: string; tags: string[]; items: Post[] };
 const label = tagLabel(tag);
 const path = `/blog/tag/${tag}`;
+// Topics with fewer than three posts stay out of search until they fill up.
 ---
 <Base
   title={`${label} articles`}
   description={`AirFone articles about ${label.toLowerCase()} for Nepali businesses: practical guides on answering calls, phone systems and website agents.`}
   path={path}
+  noindex={items.length < 3}
   jsonLd={[breadcrumbJsonLd([{ name: 'Insights', path: '/blog' }, { name: label, path }])]}
 >
   <section class="section blog-serif">
