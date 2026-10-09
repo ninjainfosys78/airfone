@@ -162,7 +162,7 @@ export function localBusinessJsonLd() {
     image: o.logo,
     email: CONTACT_EMAIL,
     telephone: o.contactPoint.telephone,
-    address: { '@type': 'PostalAddress', streetAddress: ADDRESS.street, addressLocality: ADDRESS.locality, addressRegion: ADDRESS.region, addressCountry: ADDRESS.country },
+    address: { '@type': 'PostalAddress', streetAddress: ADDRESS.street, addressLocality: ADDRESS.locality, addressRegion: ADDRESS.region, postalCode: ADDRESS.postal, addressCountry: ADDRESS.country },
     geo: { '@type': 'GeoCoordinates', latitude: ADDRESS.lat, longitude: ADDRESS.lng },
     hasMap: OFFICE_MAP_URL,
     areaServed: { '@type': 'Country', name: 'Nepal' },
