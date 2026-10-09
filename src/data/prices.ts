@@ -28,20 +28,20 @@ export interface PriceRow {
 
 export const priceRows: PriceRow[] = [
   {
-    product: 'ai-call-agent',
-    tiers: [
-      { name: 'Starter', mrp: 15199, includes: '15 calls at once, 5 team users' },
-      { name: 'Growth', mrp: 22799, includes: '15 calls at once, 15 team users' },
-      { name: 'Scale', includes: '15+ calls at once, 40+ team users' },
-    ],
-    extra: 'Extra use Rs 7.49 to 8.49 per minute · Rs 379 per extra user',
-  },
-  {
     product: 'ai-phone-system',
     tiers: [
       { name: 'Starter', mrp: 16399, includes: '15 calls at once, 5 users, 1,500 outbound minutes, unlimited inbound' },
       { name: 'Growth', mrp: 23999, includes: '15 calls at once, 15 users, 3,000 outbound minutes, unlimited inbound' },
       { name: 'Scale', mrp: 34199, from: true, includes: '15+ calls at once, 40+ users, built around your volume' },
+    ],
+    extra: 'Extra use Rs 7.49 to 8.49 per minute · Rs 379 per extra user',
+  },
+  {
+    product: 'ai-call-agent',
+    tiers: [
+      { name: 'Starter', mrp: 15199, includes: '15 calls at once, 5 team users' },
+      { name: 'Growth', mrp: 22799, includes: '15 calls at once, 15 team users' },
+      { name: 'Scale', includes: '15+ calls at once, 40+ team users' },
     ],
     extra: 'Extra use Rs 7.49 to 8.49 per minute · Rs 379 per extra user',
   },

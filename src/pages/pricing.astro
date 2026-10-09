@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Faq from '../components/site/Faq.astro';
 import CtaBand from '../components/site/CtaBand.astro';
 import Related from '../components/site/Related.astro';
+import ArrowRight from '@lucide/astro/icons/arrow-right';
 import { pricingFaq } from '../data/plans';
 import { priceRows, offerPrice, rs, OFFER_OFF } from '../data/prices';
 import { products } from '../data/products';
@@ -22,8 +23,10 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
   <section class="top">
     <div class="wrap">
       <h1 data-enter>{off ? `${off}% off every plan` : 'Pricing'}</h1>
+      {off > 0 && <p class="promo" data-enter style="--d:1"><span class="dot" aria-hidden="true"></span>Launch prices: {off}% off the listed price (MRP) on every monthly plan.</p>}
 
-      <div class="switch" role="tablist" aria-label="Products" data-enter style="--d:1">
+      <div class="switch" role="tablist" aria-label="Products" data-enter style="--d:2">
+        <span class="pill" aria-hidden="true"></span>
         {rows.map((r, i) => (
           <button type="button" role="tab" id={`tab-${r.p.slug}`} aria-controls={`plans-${r.p.slug}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{r.p.name}</button>
         ))}
@@ -47,7 +50,7 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
                   <div class="cost">
                     <span class="now"><span class="cur">Rs</span>{offerPrice(t.mrp).toLocaleString('en-IN')}{t.from && <span class="plus">+</span>}</span>
                     <span class="per">per month</span>
-                    {off > 0 && <span class="was"><s>{rs(t.mrp)}</s> <span class="tag">Save {off}%</span></span>}
+                    {off > 0 && <span class="was"><span class="tag">Launch price</span> <span>MRP <s>{rs(t.mrp)}</s></span></span>}
                   </div>
                 ) : (
                   <div class="cost">
@@ -60,7 +63,10 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
               </li>
             ))}
           </ul>
-          <p class="extra"><a href={`/products/${r.p.slug}`}>About {r.p.name}</a><span aria-hidden="true">·</span>{r.extra}</p>
+          <div class="foot">
+            <p class="extra">{r.extra}</p>
+            <a class="about" href={`/products/${r.p.slug}`}>How {r.p.name} works <ArrowRight size={16} stroke-width={2} aria-hidden="true" /></a>
+          </div>
         </div>
       ))}
     </div>
@@ -72,9 +78,19 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
     const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-panel]'));
     if (tabs.length) {
       document.documentElement.classList.add('tabs-on');
+      const bar = document.querySelector<HTMLElement>('.switch')!;
+      const pill = bar.querySelector<HTMLElement>('.pill')!;
+      // The white pill slides to the chosen product.
+      const place = (i: number) => {
+        const t = tabs[i];
+        pill.style.transform = `translateX(${t.offsetLeft - 4}px)`;
+        pill.style.width = `${t.offsetWidth}px`;
+        t.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+      };
       const pick = (i: number, focus = false) => {
         tabs.forEach((t, j) => { t.setAttribute('aria-selected', String(i === j)); t.tabIndex = i === j ? 0 : -1; });
         panels.forEach((p, j) => { p.hidden = i !== j; });
+        place(i);
         if (focus) tabs[i].focus();
         history.replaceState(null, '', `#${tabs[i].id.slice(4)}`);
       };
@@ -87,6 +103,8 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
       });
       const start = tabs.findIndex((t) => t.id === `tab-${location.hash.slice(1)}`);
       pick(start >= 0 ? start : 0);
+      requestAnimationFrame(() => bar.classList.add('ready'));
+      addEventListener('resize', () => place(tabs.findIndex((t) => t.getAttribute('aria-selected') === 'true')), { passive: true });
     }
   </script>
 
@@ -101,10 +119,16 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
 
 <style>
   .top { padding-block: var(--space-9) var(--space-6); }
-  h1 { max-width: 16ch; margin-bottom: var(--space-7); }
+  h1 { max-width: 16ch; margin-bottom: var(--space-4); }
+  .promo { display: inline-flex; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-7); padding: 6px 14px 6px 10px; border-radius: 12px; background: var(--subtle); font-size: 15px; font-weight: 500; color: var(--ink); }
+  .promo .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); }
+  .promo + .switch { display: flex; width: max-content; }
 
   /* Product switch: a segmented control that scrolls sideways on phones. */
-  .switch { display: inline-flex; gap: 4px; padding: 4px; max-width: 100%; overflow-x: auto; scrollbar-width: none; background: var(--subtle); border-radius: 12px; }
+  .switch { position: relative; display: inline-flex; gap: 4px; padding: 4px; max-width: 100%; overflow-x: auto; scrollbar-width: none; background: var(--subtle); border-radius: 12px; }
+  .pill { position: absolute; top: 4px; bottom: 4px; left: 4px; width: 0; border-radius: 9px; background: var(--surface); outline: 1px solid var(--line); pointer-events: none; }
+  .switch.ready .pill { transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1), width 380ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .switch button { position: relative; z-index: 1; }
   .switch::-webkit-scrollbar { display: none; }
   .switch button {
     flex: none; min-height: 44px; padding: 0 var(--space-5); border: 0; border-radius: 9px; background: none; cursor: pointer;
@@ -112,7 +136,7 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
     transition: background-color 200ms var(--ease), color 200ms var(--ease);
   }
   .switch button:hover { color: var(--ink); }
-  .switch button[aria-selected='true'] { background: var(--surface); color: var(--ink); font-weight: 600; outline: 1px solid var(--line); }
+  .switch button[aria-selected='true'] { color: var(--ink); }
   :global(html:not(.tabs-on)) .switch { display: none; }
 
   .prices { padding-bottom: var(--space-10); }
@@ -154,8 +178,11 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
   .featured .tag { background: var(--lime); color: var(--on-lime); }
   .featured .inc { border-color: var(--stage-line); }
 
-  .extra { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-5) 0 0; font-size: 14px; color: var(--ink-muted); }
-  .extra a { color: var(--link); font-weight: 500; }
+  .foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3) var(--space-6); margin-top: var(--space-5); padding: var(--space-4) var(--space-5); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+  .extra { margin: 0; font-size: 14px; color: var(--ink-muted); }
+  .about { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--link); text-decoration: none; }
+  .about :global(svg) { transition: transform var(--fast) var(--ease); }
+  .about:hover :global(svg) { transform: translateX(3px); }
 
   @media (prefers-reduced-motion: reduce) { .tier { animation: none; } .tier:hover { transform: none; } }
   @media (max-width: 899px) { .tiers { grid-template-columns: 1fr; } .tier { padding: var(--space-6) var(--space-5); } }
