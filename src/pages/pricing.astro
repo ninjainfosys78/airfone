@@ -22,42 +22,73 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
   <section class="top">
     <div class="wrap">
       <h1 data-enter>{off ? `${off}% off every plan` : 'Pricing'}</h1>
+
+      <div class="switch" role="tablist" aria-label="Products" data-enter style="--d:1">
+        {rows.map((r, i) => (
+          <button type="button" role="tab" id={`tab-${r.p.slug}`} aria-controls={`plans-${r.p.slug}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{r.p.name}</button>
+        ))}
+      </div>
     </div>
   </section>
 
   <section class="prices" data-prices>
     <div class="wrap">
       {rows.map((r, ri) => (
-        <div class="row" data-enter style={`--d:${Math.min(ri + 1, 5)}`}>
-          <div class="pname">
-            <h2><a href={`/products/${r.p.slug}`}>{r.p.name}</a></h2>
-            <p class="extra">{r.extra}</p>
-          </div>
+        <div class="panel" role="tabpanel" id={`plans-${r.p.slug}`} aria-labelledby={`tab-${r.p.slug}`} data-panel>
+          <h2 class="panel-h">{r.p.name}</h2>
           <ul class="tiers">
-            {r.tiers.map((t) => (
-              <li class="tier">
-                <span class="tname">{t.name}</span>
+            {r.tiers.map((t, ti) => (
+              <li class:list={['tier', { featured: ti === 1 }]} style={`--i:${ti}`}>
+                <div class="tier-top">
+                  <span class="tname">{t.name}</span>
+                  {ti === 1 && <span class="pick">Recommended</span>}
+                </div>
                 {t.mrp ? (
-                  <span class="cost">
-                    {off > 0 && <span class="was"><s>{rs(t.mrp)}</s><span class="tag">{off}% off</span></span>}
-                    <span class="now">{rs(offerPrice(t.mrp))}{t.from && <span class="plus">+</span>}</span>
+                  <div class="cost">
+                    <span class="now"><span class="cur">Rs</span>{offerPrice(t.mrp).toLocaleString('en-IN')}{t.from && <span class="plus">+</span>}</span>
                     <span class="per">per month</span>
-                  </span>
+                    {off > 0 && <span class="was"><s>{rs(t.mrp)}</s> <span class="tag">Save {off}%</span></span>}
+                  </div>
                 ) : (
-                  <span class="cost"><span class="now custom">Custom</span><span class="per">priced on your volume</span></span>
+                  <div class="cost">
+                    <span class="now custom">Custom</span>
+                    <span class="per">priced on your call volume</span>
+                  </div>
                 )}
-                <span class="inc">{t.includes}</span>
+                <p class="inc">{t.includes}</p>
+                <a class:list={['btn', ti === 1 ? 'btn-lime' : 'btn-secondary']} href={t.mrp ? '/demo' : '/contact'}>{t.mrp ? 'Get started' : 'Talk to sales'}</a>
               </li>
             ))}
           </ul>
+          <p class="extra"><a href={`/products/${r.p.slug}`}>About {r.p.name}</a><span aria-hidden="true">·</span>{r.extra}</p>
         </div>
       ))}
-      <div class="actions">
-        <a class="btn btn-primary" href="/demo">Book a demo</a>
-        <a class="btn btn-secondary" href="/contact">Ask for a different mix</a>
-      </div>
     </div>
   </section>
+
+  <script>
+    // Product tabs. Without JavaScript every product's plans stay listed.
+    const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('.switch [role="tab"]'));
+    const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-panel]'));
+    if (tabs.length) {
+      document.documentElement.classList.add('tabs-on');
+      const pick = (i: number, focus = false) => {
+        tabs.forEach((t, j) => { t.setAttribute('aria-selected', String(i === j)); t.tabIndex = i === j ? 0 : -1; });
+        panels.forEach((p, j) => { p.hidden = i !== j; });
+        if (focus) tabs[i].focus();
+        history.replaceState(null, '', `#${tabs[i].id.slice(4)}`);
+      };
+      tabs.forEach((t, i) => {
+        t.addEventListener('click', () => pick(i));
+        t.addEventListener('keydown', (e) => {
+          const k = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+          if (k) { e.preventDefault(); pick((i + k + tabs.length) % tabs.length, true); }
+        });
+      });
+      const start = tabs.findIndex((t) => t.id === `tab-${location.hash.slice(1)}`);
+      pick(start >= 0 ? start : 0);
+    }
+  </script>
 
   <Faq items={pricingFaq} />
   <Related groups={[
@@ -70,36 +101,62 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
 
 <style>
   .top { padding-block: var(--space-9) var(--space-6); }
-  h1 { max-width: 16ch; }
+  h1 { max-width: 16ch; margin-bottom: var(--space-7); }
 
-  .prices { padding-bottom: var(--space-9); }
-  .row { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: var(--space-7); padding: var(--space-7) 0; border-top: 1px solid var(--line); }
-  .row:last-of-type { border-bottom: 1px solid var(--line); }
-  .pname h2 { font-size: 1.375rem; margin: 0 0 var(--space-2); }
-  .pname h2 a { color: var(--ink); text-decoration: none; }
-  .pname h2 a:hover { color: var(--link); }
-  .extra { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink-muted); }
-
-  .tiers { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); }
-  .tier {
-    display: grid; align-content: start; gap: var(--space-2); padding: var(--space-5);
-    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-panel);
-    transition: border-color 200ms var(--ease), transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  /* Product switch: a segmented control that scrolls sideways on phones. */
+  .switch { display: inline-flex; gap: 4px; padding: 4px; max-width: 100%; overflow-x: auto; scrollbar-width: none; background: var(--subtle); border-radius: 12px; }
+  .switch::-webkit-scrollbar { display: none; }
+  .switch button {
+    flex: none; min-height: 44px; padding: 0 var(--space-5); border: 0; border-radius: 9px; background: none; cursor: pointer;
+    color: var(--ink-muted); font-size: 15px; font-weight: 500; white-space: nowrap;
+    transition: background-color 200ms var(--ease), color 200ms var(--ease);
   }
-  .tier:hover { border-color: var(--brand); transform: translateY(-3px); }
-  .tname { font-size: 14px; font-weight: 600; color: var(--link); }
-  .cost { display: grid; gap: 2px; }
-  .was { display: flex; align-items: center; gap: var(--space-2); font-size: 14px; color: var(--ink-muted); }
-  .tag { padding: 2px 8px; border-radius: 999px; background: var(--lime); color: var(--on-lime); font-size: 12px; font-weight: 600; }
-  .now { font-family: var(--font-display); font-size: 1.75rem; font-weight: 600; line-height: 1.15; font-variant-numeric: tabular-nums; }
-  .now.custom { font-size: 1.5rem; }
-  .plus { font-size: 1.25rem; margin-left: 2px; }
+  .switch button:hover { color: var(--ink); }
+  .switch button[aria-selected='true'] { background: var(--surface); color: var(--ink); font-weight: 600; outline: 1px solid var(--line); }
+  :global(html:not(.tabs-on)) .switch { display: none; }
+
+  .prices { padding-bottom: var(--space-10); }
+  .panel + .panel { margin-top: var(--space-9); }
+  .panel-h { font-size: 1.375rem; margin-bottom: var(--space-5); }
+  :global(html.tabs-on) .panel-h { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  :global(html.tabs-on) .panel + .panel { margin-top: 0; }
+
+  .tiers { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); align-items: stretch; }
+  .tier {
+    display: flex; flex-direction: column; gap: var(--space-5); padding: var(--space-7) var(--space-6);
+    background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+    animation: tier-in 600ms cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: calc(var(--i) * 70ms);
+    transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1), border-color 200ms var(--ease);
+  }
+  .tier:hover { transform: translateY(-4px); border-color: var(--brand); }
+  @keyframes tier-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+  .tier-top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); min-height: 26px; }
+  .tname { font-family: var(--font-display); font-size: 1.125rem; font-weight: 600; }
+  .pick { padding: 3px 10px; border-radius: 999px; background: var(--lime); color: var(--on-lime); font-size: 12px; font-weight: 600; }
+
+  .cost { display: grid; gap: 4px; }
+  .now { display: flex; align-items: flex-start; gap: 4px; font-family: var(--font-display); font-size: clamp(2.25rem, 1.8rem + 1.2vw, 2.75rem); font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
+  .cur { font-size: 0.45em; font-weight: 600; margin-top: 0.3em; }
+  .plus { font-size: 0.55em; margin-top: 0.15em; }
+  .now.custom { font-size: 2.25rem; }
   .per { font-size: 14px; color: var(--ink-muted); }
-  .inc { margin-top: var(--space-2); padding-top: var(--space-3); border-top: 1px solid var(--line); font-size: 14px; line-height: 1.45; color: var(--ink); }
+  .was { margin-top: var(--space-2); display: flex; align-items: center; gap: var(--space-2); font-size: 14px; color: var(--ink-muted); }
+  .tag { padding: 2px 8px; border-radius: 6px; background: var(--subtle); color: var(--link); font-size: 12px; font-weight: 600; }
 
-  .actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-7); }
+  .inc { margin: 0 0 auto; padding-top: var(--space-5); border-top: 1px solid var(--line); font-size: 15px; line-height: 1.5; }
+  .tier .btn { width: 100%; }
 
-  @media (prefers-reduced-motion: reduce) { .tier:hover { transform: none; } }
-  @media (max-width: 1023px) { .row { grid-template-columns: 1fr; gap: var(--space-4); } }
-  @media (max-width: 699px) { .tiers { grid-template-columns: 1fr; } }
+  /* The recommended plan sits on the green stage. */
+  .featured { background: var(--stage); border-color: var(--stage); color: var(--stage-ink); }
+  .featured:hover { border-color: var(--stage); }
+  .featured .per, .featured .was { color: var(--stage-muted); }
+  .featured .tag { background: var(--lime); color: var(--on-lime); }
+  .featured .inc { border-color: var(--stage-line); }
+
+  .extra { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-5) 0 0; font-size: 14px; color: var(--ink-muted); }
+  .extra a { color: var(--link); font-weight: 500; }
+
+  @media (prefers-reduced-motion: reduce) { .tier { animation: none; } .tier:hover { transform: none; } }
+  @media (max-width: 899px) { .tiers { grid-template-columns: 1fr; } .tier { padding: var(--space-6) var(--space-5); } }
 </style>
