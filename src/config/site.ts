@@ -34,3 +34,11 @@ export const LEGAL_ADDRESS_LINE = `${LEGAL_ADDRESS.street}, ${LEGAL_ADDRESS.loca
 export const ADDRESS = { locality: 'Denver', region: 'CO', postal: '80203', country: 'US' } as const;
 /** Short office line for the footer and contact page: "Denver, CO 80203, US". */
 export const OFFICE_LINE = `${ADDRESS.locality}, ${ADDRESS.region} ${ADDRESS.postal}, ${ADDRESS.country}`;
+
+/** AirFone's official profiles. Sent as `sameAs` so search engines link them to the site. */
+export const SOCIAL_PROFILES = [
+  'https://www.facebook.com/airfoneapp',
+  'https://www.instagram.com/airfoneapp',
+  'https://www.tiktok.com/@airfone8',
+  'https://www.linkedin.com/company/airfone',
+] as const;

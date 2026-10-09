@@ -1,4 +1,4 @@
-import { COMPANY, CONTACT_EMAIL, CONTACT_PHONE_JSONLD, LEGAL_ADDRESS, SITE_NAME, SITE_URL } from '../config/site';
+import { SOCIAL_PROFILES, COMPANY, CONTACT_EMAIL, CONTACT_PHONE_JSONLD, LEGAL_ADDRESS, SITE_NAME, SITE_URL } from '../config/site';
 
 /** The one URL a page is known by: lowercase, no query, no .html, no trailing slash except root. */
 export function canonicalFor(path: string): string {
@@ -27,6 +27,7 @@ export function orgJsonLd() {
     legalName: COMPANY,
     url: `${SITE_URL}/`,
     logo: abs('/brand/airfone-mark.png'),
+    sameAs: [...SOCIAL_PROFILES],
     email: CONTACT_EMAIL,
     telephone: CONTACT_PHONE_JSONLD,
     address: {
