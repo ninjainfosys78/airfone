@@ -27,7 +27,7 @@ const CLIENT_ID = '801237312001-p3ir2gc38mesec2riv6e5odjhfjrp7p1.apps.googleuser
           },
         });
         document.querySelectorAll('[data-gsi-button]').forEach(function (el) {
-          el.textContent = '';
+          var slot = el.closest('[data-gsi-slot]');
           google.accounts.id.renderButton(el, {
             type: 'standard',
             theme: 'outline',
@@ -37,13 +37,24 @@ const CLIENT_ID = '801237312001-p3ir2gc38mesec2riv6e5odjhfjrp7p1.apps.googleuser
             logo_alignment: 'left',
             width: 250,
           });
+          // Reveal once Google's frame has loaded its final (personalised)
+          // version, not the first draft it paints.
+          var frame = el.querySelector('iframe');
+          var show = function () { if (slot) slot.classList.add('ready'); };
+          if (frame) frame.addEventListener('load', function () { setTimeout(show, 120); });
+          else show();
         });
         google.accounts.id.prompt();
       };
       document.head.appendChild(s);
     }
-    // After the page has settled, so it never slows the first paint.
-    if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 3000 });
-    else setTimeout(start, 1500);
+    // Async, so it never blocks the page; started right away so the header
+    // button is there quickly.
+    start();
+    setTimeout(function () {
+      document.querySelectorAll('[data-gsi-slot]:not(.ready)').forEach(function (s) {
+        s.classList.add('fallback');
+      });
+    }, 4000);
   })();
 </script>

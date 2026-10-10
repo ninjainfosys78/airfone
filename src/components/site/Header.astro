@@ -78,7 +78,7 @@ const plain = [
     </nav>
 
     <div class="actions">
-      <div class="gsi" data-gsi-button><a class="btn btn-secondary" href={`${APP_URL}/welcome`}>Continue with Google</a></div>
+      <div class="gsi" data-gsi-slot><div class="gsi-btn" data-gsi-button></div><a class="btn btn-secondary gsi-fallback" href={`${APP_URL}/welcome`}>Continue with Google</a></div>
       <details class="mobile" data-menu>
         <summary aria-label="Menu"><span class="bars" aria-hidden="true"><i></i></span><span class="mobile-label">Menu</span></summary>
         <nav class="mobile-panel" aria-label="Main">
@@ -244,9 +244,16 @@ const plain = [
   .mobile { display: none; }
   /* Google's own button: "Continue as <name>" with their photo for anyone
      signed in to Google here, plain "Continue with Google" otherwise.
-     Until Google's script has drawn it (or if it is blocked) a plain
-     link to the app's sign-in stands in. */
-  .gsi { display: flex; align-items: center; min-height: 44px; }
+     The space is held at its final size, the button stays invisible until
+     Google has drawn its final version, then fades in once. The plain link
+     shows only if Google never arrives (blocked, offline). */
+  .gsi { position: relative; display: grid; align-items: center; width: 250px; height: 44px; }
+  .gsi > * { grid-area: 1 / 1; }
+  .gsi-btn { opacity: 0; transition: opacity 200ms var(--ease); }
+  .gsi:global(.ready) .gsi-btn { opacity: 1; }
+  .gsi-fallback { visibility: hidden; justify-self: end; }
+  .gsi:global(.fallback) .gsi-fallback { visibility: visible; }
+  .gsi:global(.ready) .gsi-fallback { display: none; }
   .mobile > summary {
     display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
     min-height: 44px; min-width: 44px; padding: 0 var(--space-3);
