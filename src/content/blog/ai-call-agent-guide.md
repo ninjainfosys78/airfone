@@ -1,7 +1,7 @@
 ---
 title: AI call agents for Nepali businesses, a practical guide
 description: What an AI call agent does on a Nepali business line, what it needs from you, where it helps most and where a person should still pick up.
-date: 2026-10-08
+date: 2026-10-02
 tags: [ai-call-agent, guides]
 pillar: true
 draft: false

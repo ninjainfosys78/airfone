@@ -1,7 +1,7 @@
 ---
 title: Can an AI really speak Nepali on the phone?
 description: How well a Nepali voice AI copes with real callers, from accents and English words mixed in to bad lines, and what still trips it up on a business phone line.
-date: 2026-10-03
+date: 2026-09-25
 tags: [ai-call-agent, voice-agent]
 draft: false
 ---

@@ -1,7 +1,7 @@
 ---
 title: "Press 1 for sales: why callers hang up on IVR, and what to use instead"
 description: Phone menus lose callers before they reach anyone. How an AI call agent in Nepali compares with an IVR, and when a simple menu is still the right choice.
-date: 2026-10-07
+date: 2026-09-30
 tags: [ai-call-agent, phone-system]
 draft: false
 ---

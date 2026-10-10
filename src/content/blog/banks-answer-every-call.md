@@ -1,7 +1,7 @@
 ---
 title: How banks and cooperatives in Nepal can answer every member call
 description: Rate questions, branch hours and loan papers fill bank lines on salary day. How an AI call agent answers them in Nepali and keeps accounts with your staff.
-date: 2026-10-04
+date: 2026-09-26
 updated: 2026-10-09
 tags: [banks, ai-call-agent]
 faq:

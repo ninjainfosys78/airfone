@@ -1,7 +1,7 @@
 ---
 title: Call center software in Nepal for small and growing businesses
 description: What a small Nepali team that handles lots of calls needs from call center software, what to ignore, and how to tell you have outgrown answering by hand.
-date: 2026-10-05
+date: 2026-09-28
 updated: 2026-10-09
 tags: [phone-system, guides]
 faq:

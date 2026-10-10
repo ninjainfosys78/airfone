@@ -1,7 +1,7 @@
 ---
 title: "The front desk problem: how clinics and hospitals in Nepal can stop losing patient calls"
 description: Why clinic phones go unanswered at the busiest hour, what patients actually call about, and how an AI call agent books, reminds and hands over safely.
-date: 2026-10-09
+date: 2026-10-05
 tags: [clinics, ai-call-agent]
 faq:
   - q: Can an AI call agent book appointments for a clinic?

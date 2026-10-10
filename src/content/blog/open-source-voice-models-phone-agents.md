@@ -1,7 +1,7 @@
 ---
 title: "Open-source voice models for phone agents: what works, and what breaks on a Nepali line"
 description: Ten open-source speech models compared for phone agents, with licences, languages and speed, and why a good benchmark score can still fail on a Nepali call.
-date: 2026-10-10
+date: 2026-10-08
 tags: [voice-agent, guides]
 faq:
   - q: Is there an open-source model that understands Nepali out of the box?

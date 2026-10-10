@@ -1,7 +1,7 @@
 ---
 title: "Your business phone number in Nepal: how to choose one and keep it as you grow"
 description: The number on your signboard is one of your most valuable assets. How to pick a business number in Nepal, keep it as you grow, and what to ask first.
-date: 2026-10-09
+date: 2026-10-04
 tags: [phone-system, guides]
 faq:
   - q: Can I keep my existing business number if I move to AirFone?

@@ -1,7 +1,7 @@
 ---
 title: Should you replace the PBX box in your office? A plain guide for Nepali businesses
 description: When an old PBX box still makes sense, the signs it is holding your business back, and what actually changes when you move your phone system online.
-date: 2026-10-06
+date: 2026-09-29
 updated: 2026-10-09
 tags: [phone-system, guides]
 faq:

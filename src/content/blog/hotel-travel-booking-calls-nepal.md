@@ -1,7 +1,7 @@
 ---
 title: "Hotels and travel agencies in Nepal: answering booking calls in Nepali, English and Hindi"
 description: Hotel and travel desks get calls in three languages, often in one sentence. How an AI call agent answers booking questions in the caller's language.
-date: 2026-10-10
+date: 2026-10-07
 tags: [hotels, ai-call-agent]
 faq:
   - q: Can an AI call agent answer calls in Nepali, English and Hindi?
