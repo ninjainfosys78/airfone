@@ -78,6 +78,7 @@ const plain = [
     </nav>
 
     <div class="actions">
+      <div class="gsi" data-gsi-button></div>
       <a class="btn btn-primary" href="/demo">Book a demo</a>
       <details class="mobile" data-menu>
         <summary aria-label="Menu"><span class="bars" aria-hidden="true"><i></i></span><span class="mobile-label">Menu</span></summary>
@@ -242,6 +243,12 @@ const plain = [
   .actions .btn { min-height: 44px; padding: 0 var(--space-5); font-size: 16px; }
 
   .mobile { display: none; }
+  /* Google's own button: "Continue as <name>" with their photo for anyone
+     signed in to Google here, plain "Continue with Google" otherwise.
+     Empty until Google's script has drawn it, then it fades in. */
+  .gsi { display: flex; align-items: center; min-height: 44px; opacity: 0; transition: opacity 200ms var(--ease); }
+  .gsi:global(.ready) { opacity: 1; }
+  .gsi:empty { display: none; }
   .mobile > summary {
     display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
     min-height: 44px; min-width: 44px; padding: 0 var(--space-3);
@@ -299,6 +306,7 @@ const plain = [
   @keyframes sheet-out { to { opacity: 0; transform: translateY(-8px); } }
   :global(html.menu-locked), :global(html.menu-locked body) { overflow: hidden; }
 
+  @media (max-width: 1279px) { .gsi { display: none; } }
   @media (max-width: 1023px) {
     .bar { gap: var(--space-4); }
     .nav-wide { display: none; }

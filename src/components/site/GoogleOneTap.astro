@@ -1,5 +1,5 @@
 ---
-// Google One Tap: the "Continue as <name>" prompt for visitors already
+// Google One Tap and the header's Google button: the "Continue as <name>" prompt for visitors already
 // signed in to Google. The credential is handed to the AirFone app in the
 // URL fragment (never sent to this site's server); the app trades it for
 // a session at /api/auth/google. The client id is public.
@@ -25,6 +25,18 @@ const CLIENT_ID = '801237312001-p3ir2gc38mesec2riv6e5odjhfjrp7p1.apps.googleuser
             if (!r || !r.credential) return;
             location.href = APP_URL + '/welcome#google_credential=' + encodeURIComponent(r.credential);
           },
+        });
+        document.querySelectorAll('[data-gsi-button]').forEach(function (el) {
+          google.accounts.id.renderButton(el, {
+            type: 'standard',
+            theme: 'outline',
+            size: 'large',
+            shape: 'pill',
+            text: 'continue_with',
+            logo_alignment: 'left',
+            width: 250,
+          });
+          requestAnimationFrame(function () { el.classList.add('ready'); });
         });
         google.accounts.id.prompt();
       };
