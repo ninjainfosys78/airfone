@@ -1,0 +1,37 @@
+---
+// Google One Tap: the "Continue as <name>" prompt for visitors already
+// signed in to Google. The credential is handed to the AirFone app in the
+// URL fragment (never sent to this site's server); the app trades it for
+// a session at /api/auth/google. The client id is public.
+import { APP_URL } from '../../config/site';
+const CLIENT_ID = '801237312001-p3ir2gc38mesec2riv6e5odjhfjrp7p1.apps.googleusercontent.com';
+---
+<script is:inline define:vars={{ CLIENT_ID, APP_URL }}>
+  (function () {
+    function start() {
+      var s = document.createElement('script');
+      s.src = 'https://accounts.google.com/gsi/client';
+      s.async = true;
+      s.onload = function () {
+        if (!window.google || !google.accounts) return;
+        google.accounts.id.initialize({
+          client_id: CLIENT_ID,
+          auto_select: false,
+          cancel_on_tap_outside: true,
+          context: 'signin',
+          itp_support: true,
+          use_fedcm_for_prompt: true,
+          callback: function (r) {
+            if (!r || !r.credential) return;
+            location.href = APP_URL + '/welcome#google_credential=' + encodeURIComponent(r.credential);
+          },
+        });
+        google.accounts.id.prompt();
+      };
+      document.head.appendChild(s);
+    }
+    // After the page has settled, so it never slows the first paint.
+    if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 3000 });
+    else setTimeout(start, 1500);
+  })();
+</script>
