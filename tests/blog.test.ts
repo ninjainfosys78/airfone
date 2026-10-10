@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { allTags, byTag, pagePath, published, related, tagLabel } from '../src/lib/blog';
+import { allTags, byTag, pagePath, pageWindow, published, related, tagLabel } from '../src/lib/blog';
 
 const post = (id: string, date: string, tags: string[], draft = false) => ({ id, data: { title: id, date: new Date(date), tags, draft } });
 const posts = [
@@ -18,6 +18,9 @@ describe('blog helpers', () => {
     expect(pagePath(1)).toBe('/blog');
     expect(pagePath(2)).toBe('/blog/page/2');
   });
+  it('page window shows all pages when few', () => expect(pageWindow(2, 3)).toEqual([1, 2, 3]));
+  it('page window collapses a long run with ellipses', () => expect(pageWindow(6, 12)).toEqual([1, null, 5, 6, 7, null, 12]));
+  it('page window fills a single skipped page', () => expect(pageWindow(4, 8)).toEqual([1, 2, 3, 4, 5, null, 8]));
   it('labels tags in sentence case', () => expect(tagLabel('call-centres')).toBe('Call centres'));
   it('related posts share tags and exclude itself', () => expect(related(posts, posts[0]).map((p) => p.id)).toEqual(['b', 'd']));
 });

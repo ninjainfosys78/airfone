@@ -1,16 +1,60 @@
 ---
-import { pagePath } from '../../lib/blog';
+import ArrowLeft from '@lucide/astro/icons/arrow-left';
+import ArrowRight from '@lucide/astro/icons/arrow-right';
+import { pagePath, pageWindow } from '../../lib/blog';
 export interface Props { current: number; last: number }
 const { current, last } = Astro.props;
+const pages = pageWindow(current, last);
 ---
 {last > 1 && (
   <nav class="pager" aria-label="Blog pages">
-    {current > 1 ? <a href={pagePath(current - 1)} rel="prev">Newer posts</a> : <span></span>}
-    <span class="muted small">Page {current} of {last}</span>
-    {current < last ? <a href={pagePath(current + 1)} rel="next">Older posts</a> : <span></span>}
+    {current > 1
+      ? <a class="step" href={pagePath(current - 1)} rel="prev"><ArrowLeft size={18} aria-hidden="true" />Previous</a>
+      : <span class="step off" aria-hidden="true"><ArrowLeft size={18} />Previous</span>}
+    <ol>
+      {pages.map((n) =>
+        n === null ? (
+          <li class="gap" aria-hidden="true">…</li>
+        ) : n === current ? (
+          <li><span class="num on" aria-current="page">{n}</span></li>
+        ) : (
+          <li><a class="num" href={pagePath(n)} aria-label={`Page ${n}`}>{n}</a></li>
+        ),
+      )}
+    </ol>
+    <p class="where">{current} / {last}</p>
+    {current < last
+      ? <a class="step" href={pagePath(current + 1)} rel="next">Next<ArrowRight size={18} aria-hidden="true" /></a>
+      : <span class="step off" aria-hidden="true">Next<ArrowRight size={18} /></span>}
   </nav>
 )}
 
 <style>
-  .pager { display: flex; justify-content: space-between; align-items: center; margin-top: var(--space-6); }
+  .pager {
+    display: flex; align-items: center; justify-content: space-between; gap: var(--space-4);
+    margin-top: var(--space-9);
+  }
+  ol { display: flex; align-items: center; gap: var(--space-2); list-style: none; margin: 0; padding: 0; }
+  .num, .step {
+    height: 44px; display: inline-flex; align-items: center; justify-content: center;
+    color: var(--ink-muted); text-decoration: none; font-size: 1rem;
+    transition: color var(--fast) var(--ease), background-color var(--fast) var(--ease);
+  }
+  .num { min-width: 44px; border-radius: 999px; font-variant-numeric: tabular-nums; }
+  a.num:hover { color: var(--ink); background: var(--subtle); }
+  .num.on { color: var(--ink); background: var(--subtle); font-weight: 600; }
+  .step { gap: var(--space-2); color: var(--ink); font-weight: 500; }
+  .step :global(svg) { transition: transform var(--fast) var(--ease); }
+  a.step:hover { color: var(--brand); }
+  a.step[rel="prev"]:hover :global(svg) { transform: translateX(-3px); }
+  a.step[rel="next"]:hover :global(svg) { transform: translateX(3px); }
+  .step.off { visibility: hidden; }
+  .num:focus-visible, .step:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 999px; }
+  .gap { min-width: 24px; text-align: center; color: var(--ink-muted); }
+  .where { display: none; margin: 0; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+
+  @media (max-width: 599px) {
+    ol { display: none; }
+    .where { display: block; }
+  }
 </style>

@@ -21,6 +21,26 @@ export function allTags<T extends PostLike>(posts: T[]): string[] {
 /** Page 1 is /blog; later pages are /blog/page/N. */
 export const pagePath = (n: number) => (n <= 1 ? '/blog' : `/blog/page/${n}`);
 
+/**
+ * Page numbers to show: first, last, and a window around the current page,
+ * with null where pages are skipped (rendered as an ellipsis).
+ */
+export function pageWindow(current: number, last: number, around = 1): (number | null)[] {
+  const keep = new Set([1, last]);
+  for (let i = current - around; i <= current + around; i++) if (i >= 1 && i <= last) keep.add(i);
+  const sorted = [...keep].sort((a, b) => a - b);
+  const out: (number | null)[] = [];
+  sorted.forEach((n, i) => {
+    if (i > 0) {
+      const gap = n - sorted[i - 1];
+      if (gap === 2) out.push(n - 1);
+      else if (gap > 2) out.push(null);
+    }
+    out.push(n);
+  });
+  return out;
+}
+
 export const tagLabel = (tag: string) =>
   tag.replace(/-/g, ' ').replace(/^./, (c) => c.toUpperCase()).replace(/\b(ai|pbx|ip|isp|sip)\b/gi, (w) => w.toUpperCase());
 
