@@ -249,10 +249,11 @@ const plain = [
      shows only if Google never arrives (blocked, offline). */
   .gsi { position: relative; display: grid; align-items: center; width: 250px; height: 44px; }
   .gsi > * { grid-area: 1 / 1; }
-  .gsi-btn { opacity: 0; transition: opacity 200ms var(--ease); }
-  .gsi:global(.ready) .gsi-btn { opacity: 1; }
+  .gsi-btn, .gsi-fallback { opacity: 0; transform: translateY(3px); transition: opacity 320ms cubic-bezier(0.2, 0, 0, 1), transform 320ms cubic-bezier(0.2, 0, 0, 1); }
+  .gsi:global(.ready) .gsi-btn { opacity: 1; transform: none; }
   .gsi-fallback { visibility: hidden; justify-self: end; }
-  .gsi:global(.fallback) .gsi-fallback { visibility: visible; }
+  .gsi:global(.fallback) .gsi-fallback { visibility: visible; opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .gsi-btn, .gsi-fallback { transition: none; transform: none; } }
   .gsi:global(.ready) .gsi-fallback { display: none; }
   .mobile > summary {
     display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
