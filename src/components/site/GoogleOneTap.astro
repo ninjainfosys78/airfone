@@ -27,6 +27,7 @@ const CLIENT_ID = '801237312001-p3ir2gc38mesec2riv6e5odjhfjrp7p1.apps.googleuser
           },
         });
         document.querySelectorAll('[data-gsi-button]').forEach(function (el) {
+          el.textContent = '';
           google.accounts.id.renderButton(el, {
             type: 'standard',
             theme: 'outline',
@@ -36,7 +37,6 @@ const CLIENT_ID = '801237312001-p3ir2gc38mesec2riv6e5odjhfjrp7p1.apps.googleuser
             logo_alignment: 'left',
             width: 250,
           });
-          requestAnimationFrame(function () { el.classList.add('ready'); });
         });
         google.accounts.id.prompt();
       };
