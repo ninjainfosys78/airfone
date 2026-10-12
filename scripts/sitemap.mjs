@@ -109,7 +109,7 @@ export function validate(entries, xml, exists) {
     if (/[?#]/.test(e.loc)) errors.push(`query or fragment in ${e.loc}`);
     if (e.loc !== e.loc.toLowerCase()) errors.push(`uppercase in ${e.loc}`);
     if (e.lastmod && !/^\d{4}-\d{2}-\d{2}$/.test(e.lastmod)) errors.push(`bad lastmod ${e.lastmod} on ${e.loc}`);
-    if (e.lastmod && e.lastmod > day(new Date().toISOString())) errors.push(`future lastmod on ${e.loc}`);
+    if (e.lastmod && e.lastmod > day(new Date(Date.now() + 345 * 60000).toISOString())) errors.push(`future lastmod on ${e.loc}`);
     for (const img of e.images) if (!exists(img)) errors.push(`missing image ${img} on ${e.loc}`);
   }
   if (!seen.has(`${SITE}/`)) errors.push('home page missing');

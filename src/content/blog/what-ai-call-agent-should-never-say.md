@@ -1,7 +1,7 @@
 ---
 title: "What an AI call agent should never say, and what it should do instead"
 description: "The lines an AI call agent must not cross on a business phone: invented facts, promises, advice and secrets. How handoff rules keep callers safe."
-date: 2026-10-12
+date: 2026-10-13
 tags: [ai-call-agent, guides]
 faq:
   - q: "Should an AI call agent pretend to be a person?"
