@@ -46,3 +46,8 @@ export const SOCIAL_PROFILES = [
   'https://www.tiktok.com/@airfone8',
   'https://www.linkedin.com/company/airfone',
 ] as const;
+
+/** The company the product belongs to. The footer links here, and structured data names it as the parent. */
+export const PARENT_COMPANY_NAME = 'Ninja Infosys LLC';
+export const PARENT_COMPANY_URL = 'https://ninjainfosys.com';
+export const PARENT_COMPANY_ID = 'https://ninjainfosys.com/#organization';
