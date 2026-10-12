@@ -153,5 +153,6 @@
 /share/* https://app.airfone.app/share/:splat 301
 /en/share/* https://app.airfone.app/share/:splat 301
 /ne/share/* https://app.airfone.app/share/:splat 301
+/r/:code https://app.airfone.app/signup?ref=:code 302
 /en/* /:splat 301
 /ne/* /:splat 301

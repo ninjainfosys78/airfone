@@ -54,6 +54,8 @@ export function nginxConf() {
   for (const [from, to] of exact) lines.push(`location = ${from} { return 301 ${to.startsWith('http') ? to : SITE + to}; }`);
   lines.push('', '# Share links keep their token.');
   lines.push(`location ~ ^/(?:ne/|en/)?share/(.+)$ { return 301 ${APP}/share/$1; }`);
+  lines.push('', '# Invite links: sign up in the app with the code (kept 30 days there).');
+  lines.push(`location ~ ^/r/([A-Za-z0-9]+)$ { return 302 ${APP}/signup?ref=$1; }`);
   lines.push('', '# Any other trailing slash: drop it (root excepted).');
   lines.push(`location ~ ^(/.+)/$ { return 301 ${SITE}$1$is_args$args; }`);
   lines.push('', '# Real 404 status for missing pages.', 'error_page 404 /404.html;');
@@ -71,6 +73,8 @@ export function cloudflareRedirects() {
   lines.push(`/share/* ${APP}/share/:splat 301`);
   lines.push(`/en/share/* ${APP}/share/:splat 301`);
   lines.push(`/ne/share/* ${APP}/share/:splat 301`);
+  // Invite links: sign up in the app with the code (kept 30 days there).
+  lines.push(`/r/:code ${APP}/signup?ref=:code 302`);
   lines.push('/en/* /:splat 301');
   lines.push('/ne/* /:splat 301');
   return `${lines.join('\n')}\n`;
