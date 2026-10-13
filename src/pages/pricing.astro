@@ -58,9 +58,11 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
                       <a class="now custom" href="/contact">Talk to sales</a>
                     )}
                     {t.mrp && off > 0 && <span class="was">MRP <s>{rs(t.mrp)}</s></span>}
-                    <ul class="inc">
-                      {r.features.map((f) => <li>{f.values[ti]} {/^[A-Z][a-z]/.test(f.label) ? f.label[0].toLowerCase() + f.label.slice(1) : f.label}</li>)}
-                    </ul>
+                    {t.mrp && (
+                      <ul class="inc">
+                        {r.features.map((f) => <li>{f.values[ti]} {/^[A-Z][a-z]/.test(f.label) ? f.label[0].toLowerCase() + f.label.slice(1) : f.label}</li>)}
+                      </ul>
+                    )}
                   </td>
                 ))}
               </tr>
