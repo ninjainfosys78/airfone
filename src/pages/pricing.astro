@@ -16,7 +16,7 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
 ---
 <Base
   title="Pricing: AI call agent, phone system and website agent plans in Nepal"
-  description={`AirFone plans in Nepali rupees per month: AI call agent, AI phone system, cloud PBX, website voice agent and chatbot, with pay-as-you-go add-ons and one-time setup charges.`}
+  description={`AirFone plans in Nepali rupees per month: AI call agent, AI based cloud PBX, cloud PBX, website voice agent and chatbot, with pay-as-you-go add-ons and one-time setup charges.`}
   path="/pricing"
   jsonLd={[...offers, faqJsonLd(pricingFaq), breadcrumbJsonLd([{ name: 'Pricing', path: '/pricing' }])]}
 >
@@ -56,6 +56,7 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
                       <span class="now"><span class="cur">Rs</span>{offerPrice(t.mrp).toLocaleString('en-IN')}<span class="per">/month</span></span>
                     ) : (
                       <a class="now custom" href="/contact">Talk to sales</a>
+                      <span class="was">for better options</span>
                     )}
                     {t.mrp && off > 0 && <span class="was">MRP <s>{rs(t.mrp)}</s></span>}
                     {t.mrp && (

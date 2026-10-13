@@ -64,17 +64,17 @@ export const products: Product[] = [
   },
   {
     slug: 'ai-phone-system',
-    name: 'AI Phone System',
+    name: 'AI Based Cloud PBX',
     short: 'A full business phone system with an agent that answers and calls out for you.',
-    seoTitle: 'AI Phone System in Nepal for inbound and outbound calls',
+    seoTitle: 'AI Based Cloud PBX in Nepal for inbound and outbound calls',
     headline: 'A phone system that answers calls and makes them',
-    description: 'AirFone AI phone system for Nepal: extensions, queues and recording, plus an AI agent that answers callers and makes reminder and follow-up calls.',
+    description: 'AirFone AI based cloud PBX for Nepal: extensions, queues and recording, plus an AI agent that answers callers and makes reminder and follow-up calls.',
     demo: { kind: 'outbound', clip: 'outbound' },
     problem: {
       heading: 'Calls go both ways',
       body: [
         'Appointments need confirming, payments need reminding and orders need a follow-up call. Your team spends hours dialling.',
-        'The AI phone system answers incoming calls and works through outgoing ones too: it rings, confirms, reschedules and logs the result.',
+        'The AI based cloud PBX answers incoming calls and works through outgoing ones too: it rings, confirms, reschedules and logs the result.',
       ],
     },
     how: [

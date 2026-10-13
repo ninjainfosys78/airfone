@@ -13,7 +13,7 @@ faq:
   - q: Does it work in Nepali?
     a: Yes. Patients speak to it in Nepali, or in the mix of Nepali and English most people use on the phone.
   - q: Can it call patients to remind them of appointments?
-    a: Yes. With the AI phone system it rings patients the day before, asks whether they are still coming, and records the answer so your desk knows which slots may open up.
+    a: Yes. With the AI based cloud PBX it rings patients the day before, asks whether they are still coming, and records the answer so your desk knows which slots may open up.
   - q: How long does it take to set up for a clinic?
     a: Most clinics are answering calls within a day. You connect your line, upload the doctor rota and your common answers, and set which calls always go to a person.
 ---
@@ -56,7 +56,7 @@ Because it can hold [up to fifteen calls at once](/products/ai-call-agent), the 
 
 Every clinic knows the other side of the problem. A patient books, then simply does not come. The doctor sits with a gap in the morning, and someone who needed that slot was told there were none.
 
-Reminder calls fix a lot of this, and they are exactly the kind of job nobody at the front desk has time for. With the [AI phone system](/products/ai-phone-system), the day before each appointment the agent calls the patient, reminds them of the time and the doctor, and asks if they are still coming. If they say no, it can offer another day. Each answer is saved, so in the morning your desk can see which slots are likely to open up and who is on the waiting list.
+Reminder calls fix a lot of this, and they are exactly the kind of job nobody at the front desk has time for. With the [AI based cloud PBX](/products/ai-phone-system), the day before each appointment the agent calls the patient, reminds them of the time and the doctor, and asks if they are still coming. If they say no, it can offer another day. Each answer is saved, so in the morning your desk can see which slots are likely to open up and who is on the waiting list.
 
 It is a small change. Over a month it adds up to a lot of appointments that would otherwise have gone empty.
 

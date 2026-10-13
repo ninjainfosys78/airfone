@@ -38,7 +38,7 @@ export const plans: Plan[] = [
   },
   {
     id: 'scale',
-    name: 'AI phone system',
+    name: 'AI based cloud PBX',
     for: 'For high volume and many branches.',
     pitch: 'Calls in and out, across branches',
     cta: { label: 'Talk to sales', href: '/contact' },

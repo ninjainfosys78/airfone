@@ -49,7 +49,7 @@ Something that answers when nobody can. An [AI call agent](/products/ai-call-age
 
 Many small teams spend as much time calling as answering. Reminding customers about payments. Confirming tomorrow's appointments. Following up on a quote sent last week.
 
-Done by hand, this is a spreadsheet, a phone and a lot of "ring no answer, try again later". With the [AI phone system](/products/ai-phone-system), you upload the list and choose the times calls may go out. Each customer is called, their answer is saved against their name, and the ones who did not pick up are tried again later. Your team sees who still needs a person.
+Done by hand, this is a spreadsheet, a phone and a lot of "ring no answer, try again later". With the [AI based cloud PBX](/products/ai-phone-system), you upload the list and choose the times calls may go out. Each customer is called, their answer is saved against their name, and the ones who did not pick up are tried again later. Your team sees who still needs a person.
 
 ## What you can safely ignore
 
