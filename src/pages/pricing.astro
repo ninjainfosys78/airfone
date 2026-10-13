@@ -24,21 +24,14 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
     <div class="wrap">
       <h1 data-enter>{off ? `${off}% off every plan` : 'Pricing'}</h1>
       {off > 0 && <p class="promo" data-enter style="--d:1">Launch prices. {off}% off the listed price (MRP) on every monthly plan.</p>}
-
-      <div class="switch" role="tablist" aria-label="Products" data-enter style="--d:2">
-        <span class="pill" aria-hidden="true"></span>
-        {rows.map((r, i) => (
-          <button type="button" role="tab" id={`tab-${r.p.slug}`} aria-controls={`plans-${r.p.slug}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{r.p.name}</button>
-        ))}
-      </div>
     </div>
   </section>
 
   <section class="prices" data-prices>
     <div class="wrap">
       {rows.map((r, ri) => (
-        <div class="panel" role="tabpanel" id={`plans-${r.p.slug}`} aria-labelledby={`tab-${r.p.slug}`} data-panel>
-          <h2 class="panel-h">{r.p.name}</h2>
+        <div class="panel" id={`plans-${r.p.slug}`}>
+          <h2 class="panel-h"><a href={`/products/${r.p.slug}`}>{r.p.name}</a></h2>
           <ul class="tiers" style={`--cols:${r.tiers.length}`}>
             {r.tiers.map((t, ti) => (
               <li class:list={['tier', { featured: ti === 1 }]} style={`--i:${ti}`}>
@@ -93,41 +86,6 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
     </div>
   </section>
 
-  <script>
-    // Product tabs. Without JavaScript every product's plans stay listed.
-    const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('.switch [role="tab"]'));
-    const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-panel]'));
-    if (tabs.length) {
-      document.documentElement.classList.add('tabs-on');
-      const bar = document.querySelector<HTMLElement>('.switch')!;
-      const pill = bar.querySelector<HTMLElement>('.pill')!;
-      // The white pill slides to the chosen product.
-      const place = (i: number) => {
-        const t = tabs[i];
-        pill.style.transform = `translateX(${t.offsetLeft}px)`;
-        pill.style.width = `${t.offsetWidth}px`;
-        t.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
-      };
-      const pick = (i: number, focus = false) => {
-        tabs.forEach((t, j) => { t.setAttribute('aria-selected', String(i === j)); t.tabIndex = i === j ? 0 : -1; });
-        panels.forEach((p, j) => { p.hidden = i !== j; });
-        place(i);
-        if (focus) tabs[i].focus();
-        history.replaceState(null, '', `#${tabs[i].id.slice(4)}`);
-      };
-      tabs.forEach((t, i) => {
-        t.addEventListener('click', () => pick(i));
-        t.addEventListener('keydown', (e) => {
-          const k = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-          if (k) { e.preventDefault(); pick((i + k + tabs.length) % tabs.length, true); }
-        });
-      });
-      const start = tabs.findIndex((t) => t.id === `tab-${location.hash.slice(1)}`);
-      pick(start >= 0 ? start : 0);
-      requestAnimationFrame(() => bar.classList.add('ready'));
-      addEventListener('resize', () => place(tabs.findIndex((t) => t.getAttribute('aria-selected') === 'true')), { passive: true });
-    }
-  </script>
 
   <Faq items={pricingFaq} />
   <Related groups={[
@@ -143,23 +101,11 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
   h1 { max-width: 16ch; margin-bottom: var(--space-3); }
   .promo { margin: 0 0 var(--space-7); font-size: 17px; color: var(--ink-muted); }
 
-  /* Product tabs: plain text with an underline that slides to the chosen one. */
-  .switch { position: relative; display: flex; gap: var(--space-6); max-width: 100%; overflow-x: auto; scrollbar-width: none; border-bottom: 1px solid var(--line); }
-  .switch::-webkit-scrollbar { display: none; }
-  .pill { position: absolute; left: 0; bottom: -1px; height: 2px; width: 0; background: var(--brand); pointer-events: none; }
-  .switch.ready .pill { transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1), width 380ms cubic-bezier(0.22, 1, 0.36, 1); }
-  .switch button {
-    position: relative; flex: none; min-height: 52px; padding: 0; border: 0; background: none; cursor: pointer;
-    color: var(--ink-muted); font-size: 16px; font-weight: 500; white-space: nowrap; transition: color 200ms var(--ease);
-  }
-  .switch button:hover, .switch button[aria-selected='true'] { color: var(--ink); }
-  :global(html:not(.tabs-on)) .switch { display: none; }
 
   .prices { padding: var(--space-8) 0 var(--space-10); }
   .panel + .panel { margin-top: var(--space-9); }
-  .panel-h { font-size: 1.375rem; margin-bottom: var(--space-5); }
-  :global(html.tabs-on) .panel-h { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-  :global(html.tabs-on) .panel + .panel { margin-top: 0; }
+  .panel-h { font-size: 1.5rem; margin-bottom: var(--space-5); }
+  .panel-h a { color: inherit; text-decoration: none; }
 
   /* Three plans side by side in one bordered strip, divided by hairlines. */
   .tiers { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); border: 1px solid var(--line); border-radius: var(--radius-panel); overflow: hidden; }

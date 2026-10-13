@@ -62,10 +62,10 @@ export const priceRows: PriceRow[] = [
   {
     product: 'website-chatbot',
     tiers: [
-      { name: 'Starter', mrp: 899, includes: '250 chat sessions' },
-      { name: 'Growth', mrp: 1999, includes: '670 chat sessions' },
+      { name: 'Starter', mrp: 899, includes: 'Free tokens included, then billed per token' },
+      { name: 'Growth', mrp: 1999, includes: 'More free tokens included, then billed per token' },
     ],
-    extra: 'Extra chat sessions Rs 2.50 each',
+    extra: 'Chat is billed per token: Rs 60 per 1M input tokens, Rs 500 per 1M output tokens',
   },
 ];
 
@@ -74,7 +74,8 @@ export const addOnRates: { name: string; price: string; unit: string }[] = [
   { name: 'Bulk SMS', price: 'Rs 1', unit: 'per SMS' },
   { name: 'Bulk call', price: 'Rs 2.50', unit: 'per minute' },
   { name: 'AI voice', price: 'Rs 6.50', unit: 'per minute' },
-  { name: 'Chat session', price: 'Rs 2.50', unit: 'per session' },
+  { name: 'AI chat, input tokens', price: 'Rs 60', unit: 'per 1M tokens' },
+  { name: 'AI chat, output tokens', price: 'Rs 500', unit: 'per 1M tokens' },
   { name: 'Extension', price: 'Rs 199', unit: 'per user' },
   { name: 'Concurrent session', price: 'Rs 350', unit: 'per session' },
 ];
