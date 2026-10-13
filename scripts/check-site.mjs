@@ -16,6 +16,8 @@ const BANNED_COPY = [
   [/\bRs\.?\s?\d|NPR\s?\d|रु\s?\d/, 'price on the site'],
   [/lorem ipsum|TODO|TBD/i, 'placeholder text'],
 ];
+// Posts whose topic is the platforms themselves may name them.
+const PLATFORM_NAMES_ALLOWED = new Set(['blog/chat-app-blocked-business-phone-line.html']);
 const BANNED_CLASSES = /\b(lead|subtitle|byline|eyebrow|kicker|tagline|overline)\b/;
 const BANNED_CSS = [
   [/box-shadow\s*:\s*(?!none)/, 'box-shadow'],
@@ -169,6 +171,7 @@ export function audit(dist, { designColours = DESIGN_COLOURS } = {}) {
     for (const t of body.querySelectorAll('[data-legal]')) t.remove();
     const marketingText = body.text.replace(/\s+/g, ' ');
     for (const [re, what] of BANNED_COPY) {
+      if (what.startsWith('social') && PLATFORM_NAMES_ALLOWED.has(relative(dist, file))) continue;
       const hay = what === 'price on the site' ? ownText : what.startsWith('social') ? marketingText : text;
       const m = hay.match(re);
       if (m) add('CV-8', file, `${what}: "…${hay.slice(Math.max(0, m.index - 30), m.index + 30).trim()}…"`);
