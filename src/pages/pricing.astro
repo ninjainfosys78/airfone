@@ -5,7 +5,7 @@ import CtaBand from '../components/site/CtaBand.astro';
 import Related from '../components/site/Related.astro';
 import ArrowRight from '@lucide/astro/icons/arrow-right';
 import { pricingFaq } from '../data/plans';
-import { priceRows, offerPrice, rs, OFFER_OFF } from '../data/prices';
+import { priceRows, offerPrice, rs, OFFER_OFF, addOnRates, oneTimeCharges } from '../data/prices';
 import { products } from '../data/products';
 import { solutions } from '../data/solutions';
 import { breadcrumbJsonLd, faqJsonLd, pricedProductJsonLd } from '../lib/seo';
@@ -16,7 +16,7 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
 ---
 <Base
   title="Pricing: AI call agent, phone system and website agent plans in Nepal"
-  description={`AirFone plans in Nepali rupees per month: AI call agent, AI phone system, cloud PBX, website voice agent and chatbot. Now ${off}% off every plan.`}
+  description={`AirFone plans in Nepali rupees per month: AI call agent, AI phone system, cloud PBX, website voice agent and chatbot, with pay-as-you-go add-ons and one-time setup charges.`}
   path="/pricing"
   jsonLd={[...offers, faqJsonLd(pricingFaq), breadcrumbJsonLd([{ name: 'Pricing', path: '/pricing' }])]}
 >
@@ -39,7 +39,7 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
       {rows.map((r, ri) => (
         <div class="panel" role="tabpanel" id={`plans-${r.p.slug}`} aria-labelledby={`tab-${r.p.slug}`} data-panel>
           <h2 class="panel-h">{r.p.name}</h2>
-          <ul class="tiers">
+          <ul class="tiers" style={`--cols:${r.tiers.length}`}>
             {r.tiers.map((t, ti) => (
               <li class:list={['tier', { featured: ti === 1 }]} style={`--i:${ti}`}>
                 <div class="tier-top">
@@ -69,6 +69,27 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
           </div>
         </div>
       ))}
+    </div>
+  </section>
+
+  <section class="charges">
+    <div class="wrap">
+      <div class="charge-block">
+        <h2>Add-ons, pay as you go</h2>
+        <ul class="rates">
+          {addOnRates.map((a) => (
+            <li><span class="rn">{a.name}</span><span class="rp">{a.price} <span class="ru">{a.unit}</span></span></li>
+          ))}
+        </ul>
+      </div>
+      <div class="charge-block">
+        <h2>One-time charges</h2>
+        <ul class="rates">
+          {oneTimeCharges.map((a) => (
+            <li><span class="rn">{a.name}</span><span class="rp">{a.price} <span class="ru">{a.unit}</span></span></li>
+          ))}
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -141,7 +162,7 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
   :global(html.tabs-on) .panel + .panel { margin-top: 0; }
 
   /* Three plans side by side in one bordered strip, divided by hairlines. */
-  .tiers { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: var(--radius-panel); overflow: hidden; }
+  .tiers { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); border: 1px solid var(--line); border-radius: var(--radius-panel); overflow: hidden; }
   .tier {
     display: flex; flex-direction: column; gap: var(--space-5); padding: var(--space-7) var(--space-6);
     background: var(--canvas); border-left: 1px solid var(--line);
@@ -170,6 +191,15 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
   .featured + .tier { border-left-color: var(--stage); }
   .featured .per, .featured .was { color: var(--stage-muted); }
   .featured .inc { border-color: var(--stage-line); }
+
+  .charges { padding: 0 0 var(--space-10); }
+  .charges .wrap { display: grid; gap: var(--space-8) var(--space-9); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .charge-block h2 { font-size: 1.375rem; margin-bottom: var(--space-5); }
+  .rates { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  .rates li { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-4); padding: var(--space-4) 0; border-bottom: 1px solid var(--line); font-size: 16px; }
+  .rp { font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
+  .ru { font-weight: 400; color: var(--ink-muted); font-size: 14px; }
+  @media (max-width: 899px) { .charges .wrap { grid-template-columns: 1fr; } }
 
   .foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3) var(--space-6); margin-top: var(--space-4); }
   .extra { margin: 0; font-size: 14px; color: var(--ink-muted); }
