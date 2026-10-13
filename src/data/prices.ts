@@ -15,57 +15,64 @@ export interface Tier {
   name: 'Starter' | 'Growth';
   /** Monthly price in rupees; absent means priced on request. */
   mrp?: number;
-  /** Shown after the price, e.g. "+" for "from". */
-  from?: boolean;
-  includes: string;
+}
+
+/** One line of the plan table: what each tier (Starter, Growth) includes. */
+export interface Feature {
+  label: string;
+  values: [string, string];
 }
 
 export interface PriceRow {
   product: string; // product slug
-  tiers: Tier[];
+  tiers: [Tier, Tier];
+  features: Feature[];
+  /** What extra use costs. */
   extra: string;
 }
 
 export const priceRows: PriceRow[] = [
   {
     product: 'website-chatbot',
-    tiers: [
-      { name: 'Starter', mrp: 899, includes: '2.5 million free chat tokens a month, then billed per token' },
-      { name: 'Growth', mrp: 1999, includes: '6 million free chat tokens a month, then billed per token' },
-    ],
-    extra: 'Chat is billed per token: Rs 60 per 1M input tokens, Rs 500 per 1M output tokens',
+    tiers: [{ name: 'Starter', mrp: 899 }, { name: 'Growth', mrp: 1999 }],
+    features: [{ label: 'Free chat tokens a month', values: ['2.5 million', '6 million'] }],
+    extra: 'After the free tokens: Rs 60 per 1M input tokens, Rs 500 per 1M output tokens',
   },
   {
     product: 'website-voice-agent',
-    tiers: [
-      { name: 'Starter', mrp: 899, includes: '100 AI voice minutes' },
-      { name: 'Growth', mrp: 1999, includes: '250 AI voice minutes' },
-    ],
+    tiers: [{ name: 'Starter', mrp: 899 }, { name: 'Growth', mrp: 1999 }],
+    features: [{ label: 'AI voice minutes', values: ['100', '250'] }],
     extra: 'Extra AI voice Rs 6.50 per minute',
   },
   {
     product: 'ai-call-agent',
-    tiers: [
-      { name: 'Starter', mrp: 9999, includes: '1,000 AI call minutes, 15 calls at once, 5 user extensions' },
-      { name: 'Growth', mrp: 22999, includes: '3,000 AI call minutes, 15 calls at once, 10 user extensions' },
+    tiers: [{ name: 'Starter', mrp: 9999 }, { name: 'Growth', mrp: 22999 }],
+    features: [
+      { label: 'AI call minutes', values: ['1,000', '3,000'] },
+      { label: 'Calls at once', values: ['15', '15'] },
+      { label: 'User extensions', values: ['5', '10'] },
     ],
-    extra: 'Extra AI voice Rs 6.50 per minute · Rs 199 per extra user · Rs 350 per extra concurrent session',
+    extra: 'Extra AI voice Rs 6.50 per minute, Rs 199 per extra user, Rs 350 per extra concurrent session',
   },
   {
     product: 'phone-system',
-    tiers: [
-      { name: 'Starter', mrp: 999, includes: '5 user extensions, 15 calls at once' },
-      { name: 'Growth', includes: '10 user extensions, 15 calls at once' },
+    tiers: [{ name: 'Starter', mrp: 999 }, { name: 'Growth' }],
+    features: [
+      { label: 'User extensions', values: ['5', '10'] },
+      { label: 'Calls at once', values: ['15', '15'] },
     ],
-    extra: 'Rs 199 per extra user · Rs 350 per extra concurrent session',
+    extra: 'Rs 199 per extra user, Rs 350 per extra concurrent session',
   },
   {
     product: 'ai-phone-system',
-    tiers: [
-      { name: 'Starter', mrp: 9999, includes: '850 AI calling minutes, 1,000 outbound minutes, 15 calls at once, 5 user extensions' },
-      { name: 'Growth', mrp: 22999, includes: '2,500 AI calling minutes, 2,500 outbound minutes, 15 calls at once, 10 user extensions' },
+    tiers: [{ name: 'Starter', mrp: 9999 }, { name: 'Growth', mrp: 22999 }],
+    features: [
+      { label: 'AI calling minutes', values: ['850', '2,500'] },
+      { label: 'Outbound minutes', values: ['1,000', '2,500'] },
+      { label: 'Calls at once', values: ['15', '15'] },
+      { label: 'User extensions', values: ['5', '10'] },
     ],
-    extra: 'Extra AI voice Rs 6.50 per minute · Bulk call Rs 2.50 per minute · Rs 199 per extra user · Rs 350 per extra concurrent session',
+    extra: 'Extra AI voice Rs 6.50 per minute, bulk call Rs 2.50 per minute, Rs 199 per extra user, Rs 350 per extra concurrent session',
   },
 ];
 
