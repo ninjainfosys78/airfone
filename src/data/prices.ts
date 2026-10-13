@@ -28,28 +28,12 @@ export interface PriceRow {
 
 export const priceRows: PriceRow[] = [
   {
-    product: 'ai-call-agent',
+    product: 'website-chatbot',
     tiers: [
-      { name: 'Starter', mrp: 9999, includes: '1,000 AI call minutes, 15 calls at once, 5 user extensions' },
-      { name: 'Growth', mrp: 22999, includes: '3,000 AI call minutes, 15 calls at once, 10 user extensions' },
+      { name: 'Starter', mrp: 899, includes: '2.5 million free chat tokens a month, then billed per token' },
+      { name: 'Growth', mrp: 1999, includes: '6 million free chat tokens a month, then billed per token' },
     ],
-    extra: 'Extra AI voice Rs 6.50 per minute · Rs 199 per extra user · Rs 350 per extra concurrent session',
-  },
-  {
-    product: 'ai-phone-system',
-    tiers: [
-      { name: 'Starter', mrp: 9999, includes: '850 AI calling minutes, 1,000 outbound minutes, 15 calls at once, 5 user extensions' },
-      { name: 'Growth', mrp: 22999, includes: '2,500 AI calling minutes, 2,500 outbound minutes, 15 calls at once, 10 user extensions' },
-    ],
-    extra: 'Extra AI voice Rs 6.50 per minute · Bulk call Rs 2.50 per minute · Rs 199 per extra user · Rs 350 per extra concurrent session',
-  },
-  {
-    product: 'phone-system',
-    tiers: [
-      { name: 'Starter', mrp: 999, includes: '5 user extensions, 15 calls at once' },
-      { name: 'Growth', includes: '10 user extensions, 15 calls at once' },
-    ],
-    extra: 'Rs 199 per extra user · Rs 350 per extra concurrent session',
+    extra: 'Chat is billed per token: Rs 60 per 1M input tokens, Rs 500 per 1M output tokens',
   },
   {
     product: 'website-voice-agent',
@@ -60,12 +44,28 @@ export const priceRows: PriceRow[] = [
     extra: 'Extra AI voice Rs 6.50 per minute',
   },
   {
-    product: 'website-chatbot',
+    product: 'ai-call-agent',
     tiers: [
-      { name: 'Starter', mrp: 899, includes: '2.5 million free chat tokens a month, then billed per token' },
-      { name: 'Growth', mrp: 1999, includes: '6 million free chat tokens a month, then billed per token' },
+      { name: 'Starter', mrp: 9999, includes: '1,000 AI call minutes, 15 calls at once, 5 user extensions' },
+      { name: 'Growth', mrp: 22999, includes: '3,000 AI call minutes, 15 calls at once, 10 user extensions' },
     ],
-    extra: 'Chat is billed per token: Rs 60 per 1M input tokens, Rs 500 per 1M output tokens',
+    extra: 'Extra AI voice Rs 6.50 per minute · Rs 199 per extra user · Rs 350 per extra concurrent session',
+  },
+  {
+    product: 'phone-system',
+    tiers: [
+      { name: 'Starter', mrp: 999, includes: '5 user extensions, 15 calls at once' },
+      { name: 'Growth', includes: '10 user extensions, 15 calls at once' },
+    ],
+    extra: 'Rs 199 per extra user · Rs 350 per extra concurrent session',
+  },
+  {
+    product: 'ai-phone-system',
+    tiers: [
+      { name: 'Starter', mrp: 9999, includes: '850 AI calling minutes, 1,000 outbound minutes, 15 calls at once, 5 user extensions' },
+      { name: 'Growth', mrp: 22999, includes: '2,500 AI calling minutes, 2,500 outbound minutes, 15 calls at once, 10 user extensions' },
+    ],
+    extra: 'Extra AI voice Rs 6.50 per minute · Bulk call Rs 2.50 per minute · Rs 199 per extra user · Rs 350 per extra concurrent session',
   },
 ];
 

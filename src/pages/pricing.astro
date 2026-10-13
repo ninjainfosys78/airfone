@@ -24,15 +24,24 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
     <div class="wrap">
       <h1 data-enter>{off ? `${off}% off every plan` : 'Pricing'}</h1>
       {off > 0 && <p class="promo" data-enter style="--d:1">Launch prices. {off}% off the listed price (MRP) on every monthly plan.</p>}
+      <nav class="jump" aria-label="Products" data-enter style="--d:2">
+        {rows.map((r) => <a href={`#plans-${r.p.slug}`}>{r.p.name}</a>)}
+        <a href="#extras">Add-ons and setup</a>
+      </nav>
     </div>
   </section>
 
-  <section class="prices" data-prices>
+  <section class="prices">
     <div class="wrap">
-      {rows.map((r, ri) => (
-        <div class="panel" id={`plans-${r.p.slug}`}>
-          <h2 class="panel-h"><a href={`/products/${r.p.slug}`}>{r.p.name}</a></h2>
-          <ul class="tiers" style={`--cols:${r.tiers.length}`}>
+      {rows.map((r) => (
+        <div class="product" id={`plans-${r.p.slug}`}>
+          <div class="intro">
+            <h2><a href={`/products/${r.p.slug}`}>{r.p.name}</a></h2>
+            <p class="short">{r.p.short}</p>
+            <p class="extra">{r.extra}</p>
+            <a class="about" href={`/products/${r.p.slug}`}>How {r.p.name} works <ArrowRight size={16} stroke-width={2} aria-hidden="true" /></a>
+          </div>
+          <ul class="tiers">
             {r.tiers.map((t, ti) => (
               <li class:list={['tier', { featured: ti === 1 }]} style={`--i:${ti}`}>
                 <div class="tier-top">
@@ -47,25 +56,23 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
                   </div>
                 ) : (
                   <div class="cost">
-                    <span class="now custom">Custom</span>
+                    <span class="now custom">Talk to sales</span>
                     <span class="per">priced on your call volume</span>
                   </div>
                 )}
-                <p class="inc">{t.includes}</p>
+                <ul class="inc">
+                  {t.includes.split(', ').map((x) => <li>{x}</li>)}
+                </ul>
                 <a class:list={['btn', ti === 1 ? 'btn-lime' : 'btn-secondary']} href={t.mrp ? '/demo' : '/contact'}>{t.mrp ? 'Get started' : 'Talk to sales'}</a>
               </li>
             ))}
           </ul>
-          <div class="foot">
-            <p class="extra">{r.extra}</p>
-            <a class="about" href={`/products/${r.p.slug}`}>How {r.p.name} works <ArrowRight size={16} stroke-width={2} aria-hidden="true" /></a>
-          </div>
         </div>
       ))}
     </div>
   </section>
 
-  <section class="charges">
+  <section class="charges" id="extras">
     <div class="wrap">
       <div class="charge-block">
         <h2>Add-ons, pay as you go</h2>
@@ -99,65 +106,65 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
 <style>
   .top { padding-block: var(--space-9) 0; }
   h1 { max-width: 16ch; margin-bottom: var(--space-3); }
-  .promo { margin: 0 0 var(--space-7); font-size: 17px; color: var(--ink-muted); }
+  .promo { margin: 0 0 var(--space-5); font-size: 17px; color: var(--ink-muted); }
+  .jump { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-6); margin-top: var(--space-6); padding-bottom: var(--space-5); border-bottom: 1px solid var(--line); }
+  .jump a { font-size: 16px; font-weight: 500; color: var(--ink-muted); text-decoration: none; transition: color var(--fast) var(--ease); }
+  .jump a:hover { color: var(--link); }
 
+  .prices { padding: 0 0 var(--space-9); }
+  .product { display: grid; gap: var(--space-6) var(--space-8); padding: var(--space-8) 0; border-bottom: 1px solid var(--line); scroll-margin-top: var(--space-6); }
+  .product:last-child { border-bottom: 0; }
+  @media (min-width: 900px) { .product { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; } }
 
-  .prices { padding: var(--space-8) 0 var(--space-10); }
-  .panel + .panel { margin-top: var(--space-9); }
-  .panel-h { font-size: 1.5rem; margin-bottom: var(--space-5); }
-  .panel-h a { color: inherit; text-decoration: none; }
+  .intro h2 { font-size: 1.625rem; margin-bottom: var(--space-3); }
+  .intro h2 a { color: inherit; text-decoration: none; }
+  .short { margin: 0 0 var(--space-4); font-size: 17px; line-height: 1.5; color: var(--ink-muted); max-width: 38ch; }
+  .extra { margin: 0 0 var(--space-5); font-size: 14px; line-height: 1.5; color: var(--ink-muted); max-width: 44ch; }
+  .about { display: inline-flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 600; color: var(--link); text-decoration: none; }
+  .about :global(svg) { transition: transform var(--fast) var(--ease); }
+  .about:hover :global(svg) { transform: translateX(3px); }
 
-  /* Three plans side by side in one bordered strip, divided by hairlines. */
-  .tiers { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); border: 1px solid var(--line); border-radius: var(--radius-panel); overflow: hidden; }
+  /* One card per plan; the recommended plan is the dark one. */
+  .tiers { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
   .tier {
-    display: flex; flex-direction: column; gap: var(--space-5); padding: var(--space-7) var(--space-6);
-    background: var(--canvas); border-left: 1px solid var(--line);
-    animation: tier-in 600ms cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: calc(var(--i) * 70ms);
+    display: flex; flex-direction: column; gap: var(--space-5); padding: var(--space-6);
+    background: var(--canvas); border: 1px solid var(--line); border-radius: var(--radius-panel);
+    animation: tier-in 400ms var(--ease) both; animation-delay: calc(var(--i) * 60ms);
   }
-  .tier:first-child { border-left: 0; }
-  @keyframes tier-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @keyframes tier-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
   .tier-top { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); }
   .tname { font-family: var(--font-display); font-size: 1.125rem; font-weight: 600; }
-  .pick { font-size: 13px; font-weight: 600; color: var(--lime); }
+  .pick { font-size: 14px; font-weight: 600; color: var(--lime); }
 
   .cost { display: grid; gap: 6px; }
-  .now { display: flex; align-items: flex-start; gap: 4px; font-family: var(--font-display); font-size: clamp(2.25rem, 1.8rem + 1.2vw, 2.75rem); font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
+  .now { display: flex; align-items: flex-start; gap: 4px; font-family: var(--font-display); font-size: clamp(2rem, 1.7rem + 1vw, 2.5rem); font-weight: 600; line-height: 1.05; font-variant-numeric: tabular-nums; }
   .cur { font-size: 0.45em; margin-top: 0.3em; }
   .plus { font-size: 0.55em; margin-top: 0.15em; }
-  .now.custom { font-size: 2.25rem; }
-  .per { font-size: 14px; color: var(--ink-muted); }
-  .was { font-size: 14px; color: var(--ink-muted); }
+  .now.custom { font-size: 1.5rem; padding-block: 0.3rem; }
+  .per, .was { font-size: 14px; color: var(--ink-muted); }
 
-  .inc { margin: 0 0 auto; padding-top: var(--space-5); border-top: 1px solid var(--line); font-size: 15px; line-height: 1.5; }
+  .inc { list-style: none; margin: 0 0 auto; padding: var(--space-4) 0 0; border-top: 1px solid var(--line); display: grid; gap: var(--space-3); font-size: 15px; line-height: 1.45; }
   .tier .btn { width: 100%; }
 
-  /* The recommended plan is the dark column. */
-  .featured { background: var(--stage); color: var(--stage-ink); border-left-color: var(--stage); }
-  .featured + .tier { border-left-color: var(--stage); }
+  .featured { background: var(--stage); color: var(--stage-ink); border-color: var(--stage); }
   .featured .per, .featured .was { color: var(--stage-muted); }
   .featured .inc { border-color: var(--stage-line); }
 
-  .charges { padding: 0 0 var(--space-10); }
+  .charges { padding: var(--space-8) 0 var(--space-10); border-top: 1px solid var(--line); scroll-margin-top: var(--space-6); }
   .charges .wrap { display: grid; gap: var(--space-8) var(--space-9); grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .charge-block h2 { font-size: 1.375rem; margin-bottom: var(--space-5); }
   .rates { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
   .rates li { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-4); padding: var(--space-4) 0; border-bottom: 1px solid var(--line); font-size: 16px; }
   .rp { font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
   .ru { font-weight: 400; color: var(--ink-muted); font-size: 14px; }
-  @media (max-width: 899px) { .charges .wrap { grid-template-columns: 1fr; } }
-
-  .foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3) var(--space-6); margin-top: var(--space-4); }
-  .extra { margin: 0; font-size: 14px; color: var(--ink-muted); }
-  .about { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--link); text-decoration: none; }
-  .about :global(svg) { transition: transform var(--fast) var(--ease); }
-  .about:hover :global(svg) { transform: translateX(3px); }
 
   @media (prefers-reduced-motion: reduce) { .tier { animation: none; } }
   @media (max-width: 899px) {
+    .charges .wrap { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
     .tiers { grid-template-columns: 1fr; }
-    .tier { border-left: 0; border-top: 1px solid var(--line); padding: var(--space-6) var(--space-5); }
-    .tier:first-child { border-top: 0; }
-    .featured + .tier { border-top-color: var(--stage); }
+    .tier { padding: var(--space-5); }
   }
 </style>
