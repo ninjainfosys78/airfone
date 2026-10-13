@@ -62,8 +62,8 @@ export const priceRows: PriceRow[] = [
   {
     product: 'website-chatbot',
     tiers: [
-      { name: 'Starter', mrp: 899, includes: 'Free tokens included, then billed per token' },
-      { name: 'Growth', mrp: 1999, includes: 'More free tokens included, then billed per token' },
+      { name: 'Starter', mrp: 899, includes: '2.5 million free chat tokens a month, then billed per token' },
+      { name: 'Growth', mrp: 1999, includes: '6 million free chat tokens a month, then billed per token' },
     ],
     extra: 'Chat is billed per token: Rs 60 per 1M input tokens, Rs 500 per 1M output tokens',
   },
