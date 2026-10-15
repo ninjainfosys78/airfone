@@ -58,7 +58,7 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
                       <a class="now custom" href="/contact">Talk to sales</a>
                       <span class="was">for better options</span>
                     )}
-                    {t.mrp && off > 0 && <span class="was">MRP <s>{rs(t.mrp)}</s></span>}
+                    {t.mrp && off > 0 && <span class="was">MRP <s>{rs(t.mrp)}</s> <span class="off">{off}% OFF</span></span>}
                     {t.mrp && (
                       <ul class="inc">
                         {r.features.map((f) => <li>{f.values[ti]} {/^[A-Z][a-z]/.test(f.label) ? f.label[0].toLowerCase() + f.label.slice(1) : f.label}</li>)}
@@ -133,6 +133,7 @@ const offers = rows.map((r) => pricedProductJsonLd(r.p, r.tiers.filter((t) => t.
   .cur { font-size: 0.6em; }
   .per { font-family: var(--font-sans); font-size: 14px; font-weight: 400; color: var(--ink-muted); margin-left: 2px; }
   .now.custom { font-size: 1.0625rem; color: var(--link); text-decoration: none; }
+  .off { display: inline-block; margin-left: 6px; padding: 2px 8px; border-radius: 4px; background: #D7263D; color: #fff; font: 600 13px/1.4 var(--font-display); }
   .was { display: block; margin-top: 2px; font-size: 14px; color: var(--ink-muted); }
   .inc { list-style: none; margin: var(--space-3) 0 0; padding: 0; display: grid; gap: 4px; font-size: 15px; line-height: 1.4; }
   .table-cta { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }

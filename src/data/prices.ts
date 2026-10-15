@@ -1,10 +1,9 @@
 // Public prices from the AirFone price sheet of 13 October 2026, in Nepali
-// rupees per month. These are the prices customers pay: there is no launch
-// offer on top. Base rates and reseller tiers are internal and do not live
+// rupees per month. A Dashain offer of 15% off runs on top (OFFER_OFF). Base rates and reseller tiers are internal and do not live
 // here.
 
 /** Share off the monthly price for a launch offer. 0 shows the price as listed. */
-export const OFFER_OFF = 0;
+export const OFFER_OFF = 0.15;
 
 /** Price after the offer, rounded to a rupee amount ending in 9. With no offer it returns the listed price. */
 export const offerPrice = (mrp: number) => Math.max(9, Math.round((mrp * (1 - OFFER_OFF) + 1) / 10) * 10 - 1);
