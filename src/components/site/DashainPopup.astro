@@ -1,0 +1,259 @@
+---
+// Dashain bulk-call offer. Shows once a day until Tika is over, a few seconds
+// after the page opens. Nepali copy; links straight to a new bulk call.
+import '@fontsource/poppins/devanagari-600.css';
+import { APP_URL } from '../../config/site';
+
+const GREETING_URL = 'https://cdn.airfone.app/samples/landing/dashain-greeting.mp3';
+// Set a number (e.g. 20) to show a "% OFF" sticker. Leave null when there is no real discount.
+const OFF_PERCENT: number | null = null;
+---
+<dialog id="dashain" class="dp" aria-labelledby="dp-title" data-ends="2026-10-22T00:00:00+05:45">
+  <div class="art">
+    <span class="sticker new">नयाँ</span>
+    {OFF_PERCENT && <span class="sticker off"><b>{OFF_PERCENT}%</b> OFF</span>}
+    <svg class="kite" viewBox="0 0 120 140" aria-hidden="true">
+      <path d="M60 4 112 60 60 116 8 60Z" fill="#8BC53E" />
+      <path d="M60 4V116M8 60H112" stroke="#2F4F08" stroke-width="3" />
+      <path d="M60 116c-6 8 6 12 0 22" stroke="#C9D6B8" stroke-width="3" fill="none" />
+    </svg>
+    <p class="count" id="dp-count" hidden></p>
+  </div>
+
+  <div class="body">
+    <h2 id="dp-title">यो दशैं, सबैलाई एकैचोटि फोनमै शुभकामना</h2>
+    <p class="lead">साथीभाइ, आफन्त र ग्राहक सबैको फोनमा तपाईंको शुभकामना बज्छ। एउटा सुनेर हेर्नुहोस्।</p>
+
+    <button class="listen" type="button" aria-pressed="false">
+      <span class="ic" aria-hidden="true">
+        <svg class="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+        <svg class="i-pause" viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/></svg>
+      </span>
+      <span class="lbl">नमूना शुभकामना सुन्नुहोस्</span>
+      <span class="bar" aria-hidden="true"><i></i></span>
+    </button>
+    <audio preload="none" src={GREETING_URL}></audio>
+
+    <div class="price">
+      <span class="big">रु २.५०</span>
+      <span>प्रति मिनेट कल · SMS रु १ मात्र</span>
+    </div>
+
+    <a class="cta" href={`${APP_URL}/bulk-calls/new`}>अहिले शुभकामना पठाउनुहोस्</a>
+    <button class="later" type="button" data-close>पछि हेर्छु</button>
+  </div>
+
+  <button class="x" type="button" data-close aria-label="बन्द गर्नुहोस्">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+  </button>
+</dialog>
+
+<script>
+  const dlg = document.getElementById('dashain') as HTMLDialogElement | null;
+  const KEY = 'af-dashain-popup';
+  const today = new Date().toISOString().slice(0, 10);
+  const ends = dlg ? new Date(dlg.dataset.ends!) : new Date(0);
+
+  let seen: string | null = null;
+  try { seen = localStorage.getItem(KEY); } catch {}
+
+  if (dlg && typeof dlg.showModal === 'function' && Date.now() < ends.getTime() && seen !== today && !/[?&]nopopup/.test(location.search)) {
+    const days = Math.ceil((ends.getTime() - 86400000 - Date.now()) / 86400000);
+    const count = document.getElementById('dp-count')!;
+    const ne = (n: number) => String(n).replace(/\d/g, (d) => '०१२३४५६७८९'[+d]);
+    count.textContent = days > 0 ? `टीकामा ${ne(days)} दिन बाँकी` : 'आज टीका';
+    count.hidden = false;
+
+    const audio = dlg.querySelector('audio')!;
+    const btn = dlg.querySelector('.listen') as HTMLButtonElement;
+    const fill = dlg.querySelector('.bar i') as HTMLElement;
+    btn.addEventListener('click', () => (audio.paused ? audio.play() : audio.pause()));
+    audio.addEventListener('play', () => btn.setAttribute('aria-pressed', 'true'));
+    audio.addEventListener('pause', () => btn.setAttribute('aria-pressed', 'false'));
+    audio.addEventListener('timeupdate', () => {
+      fill.style.transform = `scaleX(${audio.duration ? audio.currentTime / audio.duration : 0})`;
+    });
+
+    const close = () => { audio.pause(); dlg.close(); };
+    dlg.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', close));
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) close(); });
+    dlg.addEventListener('close', () => audio.pause());
+
+    setTimeout(() => {
+      if (document.querySelector('dialog[open]')) return;
+      dlg.showModal();
+      try { localStorage.setItem(KEY, today); } catch {}
+    }, 2500);
+  }
+</script>
+
+<style>
+  .dp {
+    width: min(760px, calc(100vw - 32px));
+    max-height: calc(100dvh - 32px);
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-panel);
+    background: var(--canvas);
+    color: var(--ink);
+    overflow: auto;
+  }
+  .dp[open] { display: grid; grid-template-columns: 5fr 7fr; }
+  .dp::backdrop { background: rgb(13 21 2 / 0.6); }
+
+  .art {
+    position: relative;
+    display: grid;
+    place-items: center;
+    padding: var(--space-6);
+    background: var(--brand);
+    color: var(--stage-ink);
+    min-height: 220px;
+  }
+  .kite { width: 46%; max-width: 140px; transform: rotate(-12deg); }
+  .count {
+    position: absolute;
+    left: var(--space-4);
+    bottom: var(--space-4);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 16px;
+  }
+  .sticker {
+    position: absolute;
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1;
+  }
+  .new {
+    top: var(--space-4);
+    left: var(--space-4);
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: var(--lime);
+    color: var(--on-lime);
+    font-size: 16px;
+    transform: rotate(-4deg);
+  }
+  .off {
+    top: var(--space-4);
+    right: var(--space-4);
+    display: grid;
+    place-items: center;
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    background: #FFD23F;
+    color: var(--on-lime);
+    font-size: 14px;
+    text-align: center;
+    transform: rotate(10deg);
+  }
+  .off b { display: block; font-size: 26px; }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-6);
+  }
+  h2 { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem); line-height: 1.3; padding-right: var(--space-6); }
+  .lead { font-size: 16px; line-height: 1.5; color: var(--ink-muted); }
+
+  .listen {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: 'ic lbl' 'ic bar';
+    align-items: center;
+    gap: 6px var(--space-3);
+    padding: var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-control);
+    background: var(--surface);
+    color: var(--ink);
+    font: 600 16px var(--font-display);
+    text-align: left;
+    cursor: pointer;
+  }
+  .listen .ic {
+    grid-area: ic;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--brand);
+    color: #fff;
+  }
+  .listen svg { width: 22px; height: 22px; }
+  .i-pause, .listen[aria-pressed='true'] .i-play { display: none; }
+  .listen[aria-pressed='true'] .i-pause { display: block; }
+  .lbl { grid-area: lbl; }
+  .bar { grid-area: bar; height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; }
+  .bar i { display: block; height: 100%; background: var(--brand); transform: scaleX(0); transform-origin: left; transition: transform 250ms linear; }
+
+  .price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px var(--space-3); font-size: 16px; color: var(--ink-muted); }
+  .price .big { font: 600 28px/1.2 var(--font-display); color: var(--brand); }
+
+  .cta {
+    display: block;
+    padding: 14px var(--space-5);
+    border-radius: var(--radius-control);
+    background: var(--brand);
+    color: var(--on-brand);
+    font: 600 17px var(--font-display);
+    text-align: center;
+    text-decoration: none;
+    transition: background-color var(--fast) var(--ease);
+  }
+  .cta:hover { background: #24400A; }
+  .later {
+    align-self: center;
+    padding: 8px;
+    border: 0;
+    background: none;
+    color: var(--ink-muted);
+    font: 500 15px var(--font-display);
+    cursor: pointer;
+  }
+  .x {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--canvas);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .x svg { width: 20px; height: 20px; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .dp[open] { animation: dp-in 250ms var(--ease); }
+    .dp[open]::backdrop { animation: dp-fade 200ms ease-out; }
+  }
+  @keyframes dp-in { from { opacity: 0; transform: translateY(16px); } }
+  @keyframes dp-fade { from { opacity: 0; } }
+
+  /* Phones: a bottom sheet with a short art strip. */
+  @media (max-width: 639px) {
+    .dp {
+      width: 100vw;
+      max-width: 100vw;
+      max-height: 92dvh;
+      margin: auto 0 0;
+      border-radius: var(--radius-panel) var(--radius-panel) 0 0;
+    }
+    .dp[open] { grid-template-columns: 1fr; }
+    .art { min-height: 0; height: 132px; padding: var(--space-4); }
+    .kite { width: 76px; }
+    .off { width: 68px; height: 68px; right: 64px; }
+    .off b { font-size: 20px; }
+    .body { padding: var(--space-5) var(--space-4) calc(var(--space-4) + env(safe-area-inset-bottom)); }
+    h2 { padding-right: 0; }
+  }
+</style>
