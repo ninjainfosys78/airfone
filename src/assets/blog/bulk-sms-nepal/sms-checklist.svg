@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 982 190" role="img" aria-label="Before you press send" font-family="Poppins, Arial, sans-serif">
+<rect width="982" height="190" fill="#FFFFFF"/>
+<text x="20" y="34" font-size="18" font-weight="600" fill="#16190F">Before you press send</text>
+<rect x="20" y="58" width="210" height="100" rx="10" fill="#F4F8EC" stroke="#DCE5CC"/>
+<text x="125" y="102" text-anchor="middle" font-size="16" font-weight="600" fill="#16190F">Customer asked</text>
+<text x="125" y="124" text-anchor="middle" font-size="16" fill="#16190F">for messages</text>
+<path d="M236 108 H258" stroke="#3E4636" stroke-width="2" fill="none"/><path d="M252 102 L259 108 L252 114" stroke="#3E4636" stroke-width="2" fill="none"/>
+<rect x="264" y="58" width="210" height="100" rx="10" fill="#F4F8EC" stroke="#DCE5CC"/>
+<text x="369" y="102" text-anchor="middle" font-size="16" font-weight="600" fill="#16190F">Sender ID</text>
+<text x="369" y="124" text-anchor="middle" font-size="16" fill="#16190F">approved</text>
+<path d="M480 108 H502" stroke="#3E4636" stroke-width="2" fill="none"/><path d="M496 102 L503 108 L496 114" stroke="#3E4636" stroke-width="2" fill="none"/>
+<rect x="508" y="58" width="210" height="100" rx="10" fill="#F4F8EC" stroke="#DCE5CC"/>
+<text x="613" y="102" text-anchor="middle" font-size="16" font-weight="600" fill="#16190F">Daytime</text>
+<text x="613" y="124" text-anchor="middle" font-size="16" fill="#16190F">hours only</text>
+<path d="M724 108 H746" stroke="#3E4636" stroke-width="2" fill="none"/><path d="M740 102 L747 108 L740 114" stroke="#3E4636" stroke-width="2" fill="none"/>
+<rect x="752" y="58" width="210" height="100" rx="10" fill="#2F4F08" stroke="#2F4F08"/>
+<text x="857" y="102" text-anchor="middle" font-size="16" font-weight="600" fill="#FFFFFF">Stop route</text>
+<text x="857" y="124" text-anchor="middle" font-size="16" fill="#FFFFFF">is clear</text>
+</svg>
