@@ -185,15 +185,40 @@ export function definedTermSetJsonLd(terms: { slug: string; term: string; short:
 }
 
 /** One glossary term. */
-export function definedTermJsonLd(t: { slug: string; term: string; full?: string; short: string }) {
+export function definedTermJsonLd(t: { slug: string; term: string; full?: string; aka?: string[]; short: string }) {
+  const alt = [...(t.full ? [t.full] : []), ...(t.aka ?? [])];
   return {
     '@context': 'https://schema.org',
     '@type': 'DefinedTerm',
+    '@id': `${canonicalFor(`/glossary/${t.slug}`)}#term`,
     name: t.term,
-    ...(t.full ? { alternateName: t.full } : {}),
+    ...(alt.length ? { alternateName: alt.length === 1 ? alt[0] : alt } : {}),
     description: t.short,
     url: canonicalFor(`/glossary/${t.slug}`),
-    inDefinedTermSet: `${SITE_URL}/glossary#set`,
+    inDefinedTermSet: { '@type': 'DefinedTermSet', '@id': `${SITE_URL}/glossary#set`, name: 'AirFone glossary of telecom and voice AI terms', url: canonicalFor('/glossary') },
+  };
+}
+
+/** A long-form glossary page as an article about its term, for terms with sections. */
+export function termArticleJsonLd(t: { slug: string; term: string; title: string; description: string; published: string; updated: string; sections: { id: string; h: string }[]; words: number }) {
+  const url = canonicalFor(`/glossary/${t.slug}`);
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    headline: t.title,
+    description: t.description,
+    url,
+    mainEntityOfPage: url,
+    image: abs(`/og/glossary/${t.slug}.png`),
+    datePublished: t.published,
+    dateModified: t.updated,
+    author: { '@type': 'Organization', '@id': ORG_ID, name: SITE_NAME },
+    publisher: { '@id': ORG_ID },
+    inLanguage: 'en',
+    about: { '@id': `${url}#term` },
+    articleSection: 'Glossary',
+    wordCount: t.words,
+    hasPart: t.sections.map((s) => ({ '@type': 'WebPageElement', name: s.h, url: `${url}#${s.id}` })),
   };
 }
 
