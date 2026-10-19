@@ -41,7 +41,7 @@ faq:
 
 Bulk SMS is the oldest tool in a Nepali business's outreach kit, and the price list is the part that confuses people. Operators sell packs, resellers sell credits and everyone talks about a sender ID without saying what it is.
 
-This guide uses only prices and rules from pages we opened in October 2026, and links each one. For messages that need to be heard rather than read, see [bulk voice calls in Nepal](/blog/bulk-voice-call-nepal).
+This guide uses only prices and rules from pages we opened in October 2026, and links each one. For messages that need to be heard rather than read, see bulk voice calls in Nepal.
 
 ## Three ways to buy bulk SMS in Nepal
 
@@ -183,7 +183,7 @@ Example, 83 characters in English, one part: "Himal Dental: your appointment is 
 
 ## SMS or a call
 
-SMS is right when people need to keep the information: a date, a code, an address. A call is better when the message is urgent or needs an answer. A school can call parents about a closure and text the new dates, as described in [automated calls to parents](/blog/school-automated-calls-parents). AirFone offers bulk SMS and smart bulk calls on one platform, so one list can serve both.
+SMS is right when people need to keep the information: a date, a code, an address. A call is better when the message is urgent or needs an answer. A school can call parents about a closure and text the new dates, as described in automated calls to parents. AirFone offers bulk SMS and smart bulk calls on one platform, so one list can serve both.
 
 ## How to choose a provider
 
