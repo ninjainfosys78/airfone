@@ -6,11 +6,11 @@
   "description": "airfone.app marketing site (Astro static).",
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/redirects.mjs && astro build && node scripts/sitemap.mjs dist",
+    "build": "site-kit redirects && astro build && site-kit sitemap dist",
     "preview": "astro preview",
     "test": "vitest run",
-    "check": "node scripts/check-credits.mjs && node scripts/check-site.mjs dist",
-    "indexnow": "node scripts/indexnow.mjs",
+    "check": "site-kit credits && site-kit check dist",
+    "indexnow": "site-kit indexnow",
     "voices": "node scripts/make-voices.mjs",
     "bundle": "pnpm run build && node scripts/make-bundle.mjs",
     "verify": "node scripts/make-bundle.mjs --verify-only",
@@ -18,22 +18,19 @@
     "qa": "pnpm test && pnpm build && pnpm check"
   },
   "dependencies": {
-    "@astrojs/rss": "^4",
     "@fontsource-variable/inter": "5.2.8",
     "@fontsource-variable/source-serif-4": "5.2.8",
     "@fontsource/jetbrains-mono": "^5.2.0",
     "@fontsource/poppins": "^5",
     "@lucide/astro": "1.53.0",
-    "astro": "^5"
+    "astro": "^5",
+    "@ninjainfosys/site-kit": "^0.1.0"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2",
     "axe-core": "^4",
-    "node-html-parser": "^7",
     "puppeteer-core": "^24",
-    "satori": "^0.18",
     "sharp": "^0.35.4",
-    "simple-icons": "16.34.0",
     "typescript": "^5.4.0",
     "vitest": "^3"
   },

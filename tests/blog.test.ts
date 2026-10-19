@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { allTags, byTag, pagePath, pageWindow, published, related, tagLabel } from '../src/lib/blog';
+import { allTags, byTag, pagePath, pageWindow, published, related, tagLabel } from '@ninjainfosys/site-kit/lib/blog';
 
 const post = (id: string, date: string, tags: string[], draft = false) => ({ id, data: { title: id, date: new Date(date), tags, draft } });
 const posts = [
@@ -25,7 +25,7 @@ describe('blog helpers', () => {
   it('related posts share tags and exclude itself', () => expect(related(posts, posts[0]).map((p) => p.id)).toEqual(['b', 'd']));
 });
 
-import { postSchema } from '../src/lib/blog-schema';
+import { postSchema } from '@ninjainfosys/site-kit/lib/blog-schema';
 
 describe('post schema', () => {
   const ok = { title: 'A useful title here', description: 'x'.repeat(130), date: '2026-10-01', tags: ['guides'] };

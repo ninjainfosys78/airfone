@@ -1,0 +1,85 @@
+/* The site's stylesheet. Fonts, tokens and the call panel are AirFone's own;
+   base.css and motion.css come from the kit, then the rules only AirFone uses. */
+@import '@fontsource/poppins/latin-400.css';
+@import '@fontsource/poppins/latin-500.css';
+@import '@fontsource/poppins/latin-600.css';
+@import '@fontsource/poppins/devanagari-400.css';
+@import '@fontsource-variable/inter/wght.css';
+@import '@fontsource-variable/source-serif-4/wght.css';
+@import './tokens.css';
+@import './call-panel.css';
+@import '@ninjainfosys/site-kit/styles/base.css';
+@import '@ninjainfosys/site-kit/styles/motion.css';
+
+/* Arial sized to Poppins' metrics, so text keeps its size and line breaks
+   if Poppins arrives late. Stops the header and headings jumping on load. */
+@font-face { font-family: 'Poppins Fallback'; src: local('Arial'), local('Helvetica Neue'), local('Helvetica'); size-adjust: 112.5%; ascent-override: 93%; descent-override: 31%; line-gap-override: 9%; }
+
+::selection { background: var(--lime); color: var(--on-lime); }
+
+.btn-lime { background: var(--lime); color: var(--on-lime); }
+.btn-lime:hover { background: var(--stage-ink); }
+
+/* Tactile play buttons: grow and show a ring on hover, squash on press,
+   send one ripple outward on click (call-player.ts adds .ripple). */
+.tap { position: relative; transition: transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1), translate 260ms cubic-bezier(0.2, 0, 0, 1), background-color var(--fast) var(--ease); }
+.tap::before {
+  content: ''; position: absolute; inset: -6px; border-radius: inherit;
+  border: 2px solid var(--stage-ink); opacity: 0; transform: scale(0.92);
+  transition: opacity 180ms var(--ease), transform 180ms cubic-bezier(0.2, 0, 0, 1);
+  pointer-events: none;
+}
+.tap:hover { transform: scale(1.06); }
+.tap:hover::before { opacity: 0.9; transform: scale(1); }
+.tap:active, .tap.pressed { transform: scale(0.92); transition-duration: 90ms; }
+.tap.ripple::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; background: var(--stage-ink);
+  animation: ripple 600ms cubic-bezier(0.2, 0, 0, 1) forwards; pointer-events: none;
+}
+@keyframes ripple { from { opacity: 0.45; transform: scale(1); } to { opacity: 0; transform: scale(2.2); } }
+
+/* Invite a first tap: a faint ring every few seconds until anything plays. */
+.tap.invite::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; border: 2px solid var(--stage-ink);
+  animation: invite 1.8s cubic-bezier(0.2, 0, 0, 1) infinite; pointer-events: none;
+}
+.tap.invite:not(:hover) { animation: taptap 1.8s linear infinite; }
+@keyframes invite { 0% { opacity: 0.9; transform: scale(1); } 70%, 100% { opacity: 0; transform: scale(2.3); } }
+/* Tap-tap: two quick springy bumps, then a rest. */
+@keyframes taptap {
+  0% { transform: scale(1); }
+  7% { transform: scale(1.14); }
+  13% { transform: scale(0.95); }
+  20% { transform: scale(1.1); }
+  27% { transform: scale(0.98); }
+  33%, 100% { transform: scale(1); }
+}
+
+
+/* Scroll-linked hero and heading effects (the kit holds the entrance motion). */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    /* Hero drifts away as you scroll past it. */
+    .hero .copy { animation: hero-copy-out linear both; animation-timeline: scroll(root); animation-range: 0 70vh; }
+    .hero .orb-btn { animation: hero-stage-out linear both; animation-timeline: scroll(root); animation-range: 0 80vh; }
+    @keyframes hero-copy-out { to { transform: translateY(-60px); opacity: 0.35; } }
+    @keyframes hero-stage-out { to { transform: translateY(40px) scale(0.92); } }
+
+    /* Section headings slide up into place as they enter. */
+    .section > .wrap > h2, .how h2, .cta h2 {
+      animation: heading-in linear both; animation-timeline: view(); animation-range: entry 0% entry 90%;
+    }
+    @keyframes heading-in { from { opacity: 0; transform: translateY(36px); } to { opacity: 1; transform: none; } }
+
+    /* Steps: numbers climb at their own pace, the rule draws across. */
+    .how li { animation: step-in linear both; animation-timeline: view(); animation-range: entry 10% cover 35%; }
+    .how li:nth-child(2) { animation-range: entry 25% cover 42%; }
+    .how li:nth-child(3) { animation-range: entry 40% cover 50%; }
+    @keyframes step-in { from { opacity: 0; transform: translateY(70px); } to { opacity: 1; transform: none; } }
+
+    /* The closing band opens out from the page edges. */
+    .cta { animation: band-open linear both; animation-timeline: view(); animation-range: entry 0% entry 70%; }
+    @keyframes band-open { from { clip-path: inset(0 4% round 16px); } to { clip-path: inset(0 0 round 0); } }
+
+  }
+}

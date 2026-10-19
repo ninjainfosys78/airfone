@@ -51,3 +51,6 @@ export const SOCIAL_PROFILES = [
 export const PARENT_COMPANY_NAME = 'Ninja Infosys LLC';
 export const PARENT_COMPANY_URL = 'https://ninjainfosys.com';
 export const PARENT_COMPANY_ID = 'https://ninjainfosys.com/#organization';
+
+/** Words kept upper-case in blog topic labels ("Ai call agent" becomes "AI call agent"). */
+export const TAG_ACRONYMS = ['ai', 'pbx', 'ip', 'isp', 'sip'] as const;

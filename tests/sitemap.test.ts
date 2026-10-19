@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { pathFor, readPage, exclusion, toXml, validate, day } from '../scripts/sitemap.mjs';
+import { pathFor, readPage, exclusion, toXml, validate, day } from '@ninjainfosys/site-kit/scripts/sitemap.mjs';
 
 const page = (head: string, body = '') => `<html><head>${head}</head><body><main>${body}</main></body></html>`;
 

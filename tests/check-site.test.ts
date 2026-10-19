@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { fileURLToPath } from 'node:url';
 // @ts-expect-error plain JS module
-import { audit } from '../scripts/check-site.mjs';
+import { audit } from '@ninjainfosys/site-kit/scripts/check-site.mjs';
 
 const fx = (name: string) => fileURLToPath(new URL(`./fixtures/${name}`, import.meta.url));
 const colours = new Set(['#15181F', '#000000', '#FFFFFF']);

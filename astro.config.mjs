@@ -1,12 +1,12 @@
 import { defineConfig } from 'astro/config';
-import { rehypeFigures } from './src/lib/rehype-figures.mjs';
+import siteKit from '@ninjainfosys/site-kit/integration';
 
 // Static build. The eShasan route-bundle pipeline ingests `dist/` as a
 // tarball and serves it from R2 behind nginx (see docs/nginx-redirects.conf).
 // URLs have no trailing slash; nginx 301s the slash form (see
-// scripts/redirects.mjs).
+// site-kit.config.mjs).
 
-// The sitemap is written after the build from dist/ (scripts/sitemap.mjs).
+// The sitemap is written after the build from dist/ (site-kit sitemap).
 
 export default defineConfig({
   site: 'https://airfone.app',
@@ -19,14 +19,9 @@ export default defineConfig({
   },
   devToolbar: { enabled: false },
   compressHTML: true,
-  markdown: { rehypePlugins: [rehypeFigures] },
+  integrations: [siteKit()],
   server: { host: '0.0.0.0', port: Number(process.env.ASTRO_DEV_PORT ?? 4321) },
   vite: {
     server: { allowedHosts: true },
-    // resvg is a native module used only at build time for OG images; Vite
-    // must load it from node_modules instead of trying to bundle the .node file.
-    ssr: { external: ['@resvg/resvg-js'] },
-    optimizeDeps: { exclude: ['@resvg/resvg-js'] },
-    build: { rollupOptions: { external: [/\.node$/] } },
   },
 });

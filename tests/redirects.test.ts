@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { existsSync } from 'node:fs';
 // @ts-expect-error plain JS module
-import { exact, nginxConf } from '../scripts/redirects.mjs';
+import { exact, nginxConf } from '@ninjainfosys/site-kit/scripts/redirects.mjs';
 
 const map = exact as Map<string, string>;
 const dist = new URL('../dist/', import.meta.url);
@@ -26,7 +26,7 @@ describe('redirects', () => {
     for (const [, to] of map) if (to.startsWith('/')) expect(builds(to), `${to} not built`).toBe(true);
   });
   it('sends /en and /ne (and everything under them) home for Cloudflare', async () => {
-    const { cloudflareRedirects } = await import('../scripts/redirects.mjs');
+    const { cloudflareRedirects } = await import('@ninjainfosys/site-kit/scripts/redirects.mjs');
     const out = cloudflareRedirects();
     expect(out).toContain('/en / 301');
     expect(out).toContain('/en/* /:splat 301');
