@@ -3,6 +3,36 @@ title: "The front desk problem: how clinics and hospitals in Nepal can stop losi
 description: Why clinic phones go unanswered at the busiest hour, what patients actually call about, and how an AI call agent books, reminds and hands over safely.
 date: 2026-10-05
 tags: [clinics, ai-call-agent]
+updated: 2026-10-19
+cover: ../../assets/blog/clinic-front-desk-calls/bir-hospital-kathmandu.jpg
+coverAlt: Bir Hospital emergency entrance in Kathmandu with an ambulance parked outside and Nepali signage
+takeaways:
+  - "Clinic calls are mostly about doctor timings, bookings, fees and reports, and most have one right answer."
+  - "An AI call agent answers those from the rota and fee list you keep, and can hold up to fifteen calls at once."
+  - "It does not give medical advice, and it tells emergency callers to contact emergency services."
+  - "Reminder calls the day before an appointment help fill slots that would otherwise sit empty."
+credits:
+  - file: bir-hospital-kathmandu.jpg
+    title: "Bir Hospital situated in Kathmandu"
+    author: "Sandeep Raut"
+    authorUrl: "https://commons.wikimedia.org/wiki/User:Sandeep_Raut"
+    source: "https://commons.wikimedia.org/wiki/File:Bir_Hospital_situated_in_Kathmandu.jpg"
+    licence: CC BY-SA 4.0
+    changes: "Resized"
+  - file: kathmandu-pharmacy-counter.jpg
+    title: "Kathmandu-Laden-70-Apotheke-Zeitungsleser-2013-gje"
+    author: "Gerd Eichmann"
+    authorUrl: "https://commons.wikimedia.org/wiki/User:Gerd_Eichmann"
+    source: "https://commons.wikimedia.org/wiki/File:Kathmandu-Laden-70-Apotheke-Zeitungsleser-2013-gje.jpg"
+    licence: CC BY-SA 4.0
+    changes: "Resized"
+  - file: pokhara-health-post-pharmacist.jpg
+    title: "Pharmacist Durga K. C. selecting medicine from one of the simple drug boxes being used while this clinic is operating out of a temporary location. Batulechaur Health Post, Pokhara, Nepal (10712931004)"
+    author: "Department of Foreign Affairs and Trade"
+    authorUrl: "https://www.flickr.com/people/106853342@N04"
+    source: "https://commons.wikimedia.org/wiki/File:Pharmacist_Durga_K._C._selecting_medicine_from_one_of_the_simple_drug_boxes_being_used_while_this_clinic_is_operating_out_of_a_temporary_location._Batulechaur_Health_Post,_Pokhara,_Nepal_(10712931004).jpg"
+    licence: CC BY 4.0
+    changes: "Resized"
 faq:
   - q: Can an AI call agent book appointments for a clinic?
     a: Yes. It reads the doctor schedule you keep up to date, offers the free slots, takes the patient's name and confirms the booking by SMS. If a slot is taken or the rota changes, it offers the next one.
@@ -42,6 +72,8 @@ Reports and results. Whether the report is ready, and sometimes what it means.
 
 The first three have answers that sit in the rota, the fee list and a few notes. The fourth one does not, and it should never be answered by anyone except your staff. That split is the whole idea.
 
+![Pharmacy storefront in Kathmandu with shelves of medicine boxes behind the window and two men reading newspapers](../../assets/blog/clinic-front-desk-calls/kathmandu-pharmacy-counter.jpg "Fees, timings and stock are the questions a front desk answers all day. Photo: Gerd Eichmann, CC BY-SA 4.0")
+
 ## Answering the questions that have one right answer
 
 An [AI call agent](/products/ai-call-agent) answers your clinic's normal number. It speaks Nepali, and it understands the way patients actually talk on the phone, with English words for tests and departments mixed in.
@@ -75,6 +107,8 @@ You decide where these lines sit. Some clinics send every billing question to a 
 The receptionist does not disappear. The difference is what she spends her morning on.
 
 Instead of answering "is the doctor sitting today" forty times, she deals with the patient in front of her, the worried parent on the line who needs a real person, and the report that came back and needs a doctor's call. The phone questions that have one right answer are already handled, and every one of them is recorded and written out, so she can check what a caller was told if they come in confused.
+
+![Hand taking a labelled strip of tablets from a wooden medicine drawer at Batulechaur Health Post in Pokhara](../../assets/blog/clinic-front-desk-calls/pokhara-health-post-pharmacist.jpg "Small clinics already run on lists, like this labelled medicine drawer in Pokhara. Photo: Department of Foreign Affairs and Trade, CC BY 4.0")
 
 For the patient, it simply means the phone gets answered.
 

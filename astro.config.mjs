@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import { rehypeFigures } from './src/lib/rehype-figures.mjs';
 
 // Static build. The eShasan route-bundle pipeline ingests `dist/` as a
 // tarball and serves it from R2 behind nginx (see docs/nginx-redirects.conf).
@@ -18,6 +19,7 @@ export default defineConfig({
   },
   devToolbar: { enabled: false },
   compressHTML: true,
+  markdown: { rehypePlugins: [rehypeFigures] },
   server: { host: '0.0.0.0', port: Number(process.env.ASTRO_DEV_PORT ?? 4321) },
   vite: {
     server: { allowedHosts: true },

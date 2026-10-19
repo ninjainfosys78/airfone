@@ -2,7 +2,31 @@
 title: "What an AI call agent should never say, and what it should do instead"
 description: "The lines an AI call agent must not cross on a business phone: invented facts, promises, advice and secrets. How handoff rules keep callers safe."
 date: 2026-10-13
+updated: 2026-10-19
 tags: [ai-call-agent, guides]
+cover: ../../assets/blog/what-ai-call-agent-should-never-say/bir-hospital-building-kathmandu.jpg
+coverAlt: Bir Hospital emergency building in Kathmandu with its signboard above the entrance
+takeaways:
+  - "An agent should answer only from what the business gave it, and say so when it does not know."
+  - "It should never promise refunds, discounts or confirmed bookings that only a person can decide."
+  - "It should not give medical, legal or financial advice, and never ask for OTPs, PINs or card numbers."
+  - "If asked, it says it is an AI assistant, and it hands over at once when the caller wants a person."
+  - "Write the handoff rules down before launch, then read real calls in the first weeks."
+credits:
+  - file: bir-hospital-building-kathmandu.jpg
+    title: "Bir Hospital 02"
+    author: "Krish Dulal"
+    authorUrl: "https://commons.wikimedia.org/wiki/User:Krish_Dulal"
+    source: "https://commons.wikimedia.org/wiki/File:Bir_Hospital_02.jpg"
+    licence: CC BY-SA 3.0
+    changes: "Resized"
+  - file: switchboard-operators-handing-over-calls.jpg
+    title: "Clinical Center telephone switchboard operators (14172771998)"
+    author: "NIH History Office from Bethesda"
+    authorUrl: "https://www.flickr.com/people/124413887@N04"
+    source: "https://commons.wikimedia.org/wiki/File:Clinical_Center_telephone_switchboard_operators_(14172771998).jpg"
+    licence: Public domain
+    changes: "Resized and cropped"
 faq:
   - q: "Should an AI call agent pretend to be a person?"
     a: "No. If a caller asks whether they are speaking to a person, the agent should say it is an AI assistant for the business and offer a person if they want one."
@@ -76,6 +100,8 @@ Write the handoff rules down before launch, and keep them short. These are the c
 - **The caller is stuck.** The same question asked again usually means the answer did not work.
 
 A transfer should carry a short note of what was said, so the staff member does not start with "how can I help you?" and make the caller repeat themselves. AirFone's agent passes the call with a note for exactly that reason.
+
+![Four switchboard operators wearing headsets at a telephone switchboard, smiling toward the camera](../../assets/blog/what-ai-call-agent-should-never-say/switchboard-operators-handing-over-calls.jpg "A good handoff works like a good operator: the next person already knows who is calling and why. Photo: NIH History Office, Public domain")
 
 ## What to do when staff are not there
 

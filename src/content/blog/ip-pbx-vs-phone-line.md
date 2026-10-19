@@ -2,8 +2,29 @@
 title: Should you replace the PBX box in your office? A plain guide for Nepali businesses
 description: When an old PBX box still makes sense, the signs it is holding your business back, and what actually changes when you move your phone system online.
 date: 2026-09-29
-updated: 2026-10-09
 tags: [phone-system, guides]
+updated: 2026-10-19
+cover: ../../assets/blog/ip-pbx-vs-phone-line/nepal-telecom-office-naxal.jpg
+coverAlt: Nepal Telecom office building in Naxal, Kathmandu, with red brick walls and overhead cables
+takeaways:
+  - "A PBX gives an office its extensions, transfers and menus, and a working box nobody needs to change is fine to keep."
+  - "It holds you back when calls only ring at desks, branches need separate boxes or every change needs a technician."
+  - "Online, the same number connects through a SIP line and staff answer in an app or browser."
+  - "The switch keeps the number and the greeting your customers already know."
+credits:
+  - file: nepal-telecom-office-naxal.jpg
+    title: "Nepal Telecom @ Naxal"
+    author: "Krish Dulal"
+    authorUrl: "https://commons.wikimedia.org/wiki/User:Krish_Dulal"
+    source: "https://commons.wikimedia.org/wiki/File:Nepal_Telecom_@_Naxal.jpg"
+    licence: CC BY-SA 3.0
+    changes: "Resized"
+  - file: kathmandu-telephone-cables-pole.jpg
+    title: "Massive electric, telephone, cable and broadband cables on a pole, Kathmandu, Nepal"
+    author: "Subhashish Panigrahi"
+    source: "https://commons.wikimedia.org/wiki/File:Massive_electric,_telephone,_cable_and_broadband_cables_on_a_pole,_Kathmandu,_Nepal.jpg"
+    licence: CC BY-SA 4.0
+    changes: "Resized"
 faq:
   - q: What is a PBX?
     a: A PBX is the system that gives an office its extensions, transfers and call menus. Traditionally it is a box in a cupboard wired to the desk phones. An IP or cloud PBX does the same job online, without the box.
@@ -43,6 +64,8 @@ The receptionist goes on leave and the main line only rings at her desk, so for 
 
 Every change to the menu or opening hours needs the technician, who can come next Tuesday. During festivals, when the office closes early, the phones keep ringing to an empty room because nobody remembered to change the hours.
 
+![Tangled bundle of electric, telephone and broadband cables on a pole in Kathmandu](../../assets/blog/ip-pbx-vs-phone-line/kathmandu-telephone-cables-pole.jpg "Old wiring is hard to change, which is part of what moving a number online avoids. Photo: Subhashish Panigrahi, CC BY-SA 4.0")
+
 And when a customer says "but your staff told me last month", there is no recording to check.
 
 None of these is a disaster by itself. Together they mean the box is now deciding how your business can work, rather than the other way round.
@@ -64,6 +87,10 @@ For most offices the change is quieter than people expect.
 The number is connected to the online system, everyone installs the app or opens the browser version, and the menu and opening hours are set up to match how the old box behaved. Then calls start arriving the new way. Customers hear the same number and, if you want, the same greeting.
 
 The old box can stay switched off in the cupboard for a few weeks while everyone gets comfortable, and then it can go.
+
+## What the lines and links cost
+
+The box is only part of the bill. A Nepal Telecom landline costs Rs 1,635 to install and Rs 200 a month, which includes 175 free calls, then Rs 1 a minute for local calls to other Nepal Telecom numbers ([NepaliTelecom guide](https://www.nepalitelecom.com/nepal-telecom-ntc-landline-phone), updated June 2026, checked October 2026). Mobile calls are billed by the minute too: one tariff guide lists Rs 1 a minute at peak hours between Nepal Telecom numbers and Rs 1.5 to Ncell, before tax ([NepaliTelecom tariff guide](https://www.nepalitelecom.com/voice-call-rates-in-ncell-ntc-smart-cell), last updated July 2024, checked October 2026). An online phone system also needs a steady internet link. Nepal Telecom launched a 30 Mbps fiber package at Rs 4,999 a year on 16 October 2026 ([ShareSansar](https://www.sharesansar.com/newsdetail/nepal-telecom-unveils-30-mbps-fiber-internet-at-rs-4999-a-year-2026-10-16), checked October 2026). Put these next to what you pay now, plus the technician's visits, before deciding. For what AirFone charges, see [pricing](/pricing).
 
 ## The short version
 

@@ -2,8 +2,23 @@
 title: Call center software in Nepal for small and growing businesses
 description: What a small Nepali team that handles lots of calls needs from call center software, what to ignore, and how to tell you have outgrown answering by hand.
 date: 2026-09-28
-updated: 2026-10-09
 tags: [phone-system, guides]
+updated: 2026-10-19
+cover: ../../assets/blog/call-center-software-nepal/nepal-team-laptops-office.jpg
+coverAlt: Woman typing on a laptop at a cafe table in front of a pebble wall in Nepal
+takeaways:
+  - "Call center software starts to matter when calls arrive faster than your team can answer them, not at a set size."
+  - "Four things do most of the work: a queue, rules for who answers what, a shared record of calls and something that answers when nobody can."
+  - "Reminder and follow-up calls can run from an uploaded list instead of a spreadsheet and a phone."
+  - "Skip wallboards, workforce scheduling and predictive dialers until a real problem asks for them."
+credits:
+  - file: nepal-team-laptops-office.jpg
+    title: "Wiki Women edit-a-thon 2018 2"
+    author: "Poonampahari"
+    authorUrl: "https://commons.wikimedia.org/wiki/User:Poonampahari"
+    source: "https://commons.wikimedia.org/wiki/File:Wiki_Women_edit-a-thon_2018_2.jpg"
+    licence: CC BY-SA 4.0
+    changes: "Resized"
 faq:
   - q: Do small businesses need call center software?
     a: Not every small business does. It starts to matter when calls arrive faster than your team can answer them, or when you need to know who called, what they asked and what they were told.
@@ -56,6 +71,10 @@ Done by hand, this is a spreadsheet, a phone and a lot of "ring no answer, try a
 Big platforms come with wallboards showing live queue numbers, workforce scheduling, predictive dialers and quality-scoring dashboards. They are genuinely useful at fifty agents. At five, they are screens nobody looks at and settings nobody maintains.
 
 Start with the four things above. Add more only when a real problem asks for it.
+
+## What a small call desk costs
+
+Staff are the biggest cost, and calls are the next. Paylab's salary survey puts monthly gross pay for call operators in Nepal between Rs 28,790 and Rs 77,547 for the middle 80% of people in the role ([Paylab](https://www.paylab.com/np/salaryinfo/customer-support/call-operator?lang=en), checked October 2026). Calls are billed by the minute: one tariff guide lists Nepal Telecom calls to other Nepal Telecom numbers at Rs 1 a minute at peak hours and Rs 1.5 to Ncell, before tax ([NepaliTelecom](https://www.nepalitelecom.com/voice-call-rates-in-ncell-ntc-smart-cell), page last updated July 2024, checked October 2026). Check the operator's current tariff before you plan around it. For what AirFone charges, see [pricing](/pricing).
 
 ## Picking where to start
 

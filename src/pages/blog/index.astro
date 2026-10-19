@@ -1,28 +1,110 @@
 ---
+// The blog front, laid out like a news front: the top story big with three
+// beside it, the latest stories as photo cards, then a section per topic and a
+// numbered "Start here" list of the guides to read first.
 import Base from '../../layouts/Base.astro';
-import PostList from '../../components/blog/PostList.astro';
-import Pager from '../../components/blog/Pager.astro';
+import Story from '../../components/blog/Story.astro';
 import Topics from '../../components/blog/Topics.astro';
+import Pager from '../../components/blog/Pager.astro';
 import { posts } from '../../lib/posts';
-import { PAGE_SIZE, allTags, tagLabel } from '../../lib/blog';
+import { PAGE_SIZE, allTags, byTag, tagLabel } from '../../lib/blog';
 import { breadcrumbJsonLd } from '../../lib/seo';
 
 const all = await posts();
-const items = all.slice(0, PAGE_SIZE);
-const last = Math.max(1, Math.ceil(all.length / PAGE_SIZE));
 const tags = allTags(all.map((p) => ({ ...p, data: { ...p.data, draft: false } })));
+const last = Math.max(1, Math.ceil(all.length / PAGE_SIZE));
+const [lead, ...rest] = all;
+const side = rest.slice(0, 3);
+const latest = rest.slice(3, 11);
+const guides = all.filter((p) => p.data.pillar).concat(all.filter((p) => !p.data.pillar && p.data.tags.includes('guides'))).slice(0, 5);
+// Topic sections: the busiest topics with at least three stories, guides aside.
+const sections = tags
+  .filter((t) => t !== 'guides')
+  .map((t) => ({ tag: t, items: byTag(all, t) }))
+  .filter((s) => s.items.length >= 3)
+  .sort((a, b) => b.items.length - a.items.length)
+  .slice(0, 3);
 ---
 <Base title="Insights" description="Guides for Nepali businesses on answering every call: AI call agents, business phone systems, website voice agents and chatbots." path="/blog" jsonLd={[breadcrumbJsonLd([{ name: 'Insights', path: '/blog' }])]}>
-  <section class="section blog-serif">
+  <section class="front">
     <div class="wrap">
       <h1>Insights</h1>
       <Topics tags={tags} />
-      {items.length ? <PostList items={items} feature /> : <p class="muted">The first posts are on their way.</p>}
-      <Pager current={1} last={last} />
+
+      {lead ? (
+        <>
+          <div class="top" data-enter>
+            <Story post={lead} size="top" level="h2" eager />
+            {side.length > 0 && <div class="side-list">{side.map((p) => <Story post={p} size="side" />)}</div>}
+          </div>
+
+          {latest.length > 0 && (
+            <section class="block" aria-labelledby="latest-h">
+              <h2 id="latest-h" class="block-h">Latest</h2>
+              <div class="cards">{latest.map((p) => <Story post={p} size="grid" />)}</div>
+            </section>
+          )}
+
+          <div class="split">
+            <div class="topics-col">
+              {sections.map((s) => (
+                <section class="block" aria-labelledby={`s-${s.tag}`}>
+                  <div class="block-head">
+                    <h2 id={`s-${s.tag}`} class="block-h">{tagLabel(s.tag)}</h2>
+                    <a class="all" href={`/blog/tag/${s.tag}`}>See all {s.items.length}</a>
+                  </div>
+                  <div class="topic">
+                    <Story post={s.items[0]} size="grid" />
+                    <div>{s.items.slice(1, 5).map((p) => <Story post={p} size="list" />)}</div>
+                  </div>
+                </section>
+              ))}
+            </div>
+            {guides.length > 0 && (
+              <aside class="block start" aria-labelledby="start-h">
+                <h2 id="start-h" class="block-h">Start here</h2>
+                {guides.map((p, i) => <Story post={p} size="list" n={i + 1} />)}
+              </aside>
+            )}
+          </div>
+
+          <Pager current={1} last={last} />
+        </>
+      ) : <p class="muted">The first posts are on their way.</p>}
     </div>
   </section>
 </Base>
 
 <style>
-  h1 { margin-bottom: var(--space-6); }
+  .front { padding-block: var(--space-7) var(--space-9); }
+  h1 { margin: 0 0 var(--space-5); font-size: clamp(2rem, 1.5rem + 2vw, 3rem); }
+  .front :global(.topics) { margin-bottom: var(--space-7); }
+
+  .top { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: var(--space-7); align-items: start; }
+  .side-list > :global(.story:first-child) { border-top: 0; padding-top: 0; }
+
+  .block { margin-top: var(--space-9); }
+  .block-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4); border-top: 2px solid var(--ink); padding-top: var(--space-3); margin-bottom: var(--space-5); }
+  .block-h { margin: 0; font-size: 1.375rem; }
+  .block > .block-h { border-top: 2px solid var(--ink); padding-top: var(--space-3); margin-bottom: var(--space-5); }
+  .all { font-size: 15px; font-weight: 500; color: var(--link); white-space: nowrap; }
+
+  .cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-7) var(--space-6); }
+  .split { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: var(--space-8); align-items: start; }
+  .topic { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-6); }
+  .topic > div > :global(.story:first-child) { border-top: 0; padding-top: 0; }
+  .start { position: sticky; top: 104px; }
+
+  @media (max-width: 1099px) { .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 899px) {
+    .top, .split { grid-template-columns: 1fr; }
+    .side-list > :global(.story:first-child) { border-top: 1px solid var(--line); padding-top: var(--space-4); }
+    .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .start { position: static; }
+  }
+  @media (max-width: 599px) {
+    .front { padding-top: var(--space-5); }
+    .block { margin-top: var(--space-8); }
+    .cards, .topic { grid-template-columns: 1fr; gap: var(--space-6); }
+  }
 </style>

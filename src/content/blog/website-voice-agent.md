@@ -2,8 +2,29 @@
 title: Adding a voice agent to your website, and what visitors actually ask it
 description: A voice agent lets website visitors ask their question out loud and hear an answer from your own information. How it works, what people ask, and how to add one.
 date: 2026-09-23
-updated: 2026-10-09
+updated: 2026-10-19
 tags: [website, voice-agent]
+cover: ../../assets/blog/website-voice-agent/woman-using-smartphone-browsing.jpg
+coverAlt: Woman sitting at a dining table in a furniture showroom, reading something on her phone
+takeaways:
+  - "Visitors leave a website when one practical question, such as delivery to their city, goes unanswered."
+  - "A voice agent is a talk button: the visitor asks in Nepali and hears an answer from your own information."
+  - "When a visitor is ready to buy, the agent takes their name and number and the team gets the whole conversation."
+  - "It takes one line of code, and it shares knowledge with the phone agent and the chatbot."
+credits:
+  - file: woman-using-smartphone-browsing.jpg
+    title: "Woman with Phone"
+    author: "epSos.de"
+    source: "https://commons.wikimedia.org/wiki/File:Woman_with_Phone.jpg"
+    licence: CC BY 2.0
+    changes: "Resized and cropped"
+  - file: kathmandu-woman-typing-on-laptop.jpg
+    title: "Wiki Women edit-a-thon 2018 2"
+    author: "Poonampahari"
+    authorUrl: "https://commons.wikimedia.org/wiki/User:Poonampahari"
+    source: "https://commons.wikimedia.org/wiki/File:Wiki_Women_edit-a-thon_2018_2.jpg"
+    licence: CC BY-SA 4.0
+    changes: "Resized and cropped"
 faq:
   - q: What is a website voice agent?
     a: It is a talk button on your website. A visitor taps it, asks a question out loud, and hears an answer from your own pages, price lists and notes.
@@ -52,6 +73,8 @@ That one sentence is the difference between a callback that feels like a sales c
 ## How to add it
 
 It takes one line of code, pasted into your website the same way you would add analytics or a chat widget. If you would rather not touch the site yourself, we add it with you.
+
+![Woman typing on a laptop at a wooden table in front of a stone wall in Kathmandu](../../assets/blog/website-voice-agent/kathmandu-woman-typing-on-laptop.jpg "Adding the button is a one-line change to the site, so no developer is needed. Photo: Poonampahari, CC BY-SA 4.0")
 
 Then you give it your information: your product pages, price lists, delivery areas and the answers to the questions you hear most. If you already use AirFone on your phone line, there is nothing new to teach. The [website voice agent](/products/website-voice-agent) uses the same knowledge as the phone agent, so a caller and a website visitor hear the same answer.
 

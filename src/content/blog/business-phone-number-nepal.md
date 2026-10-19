@@ -3,6 +3,36 @@ title: "Your business phone number in Nepal: how to choose one and keep it as yo
 description: The number on your signboard is one of your most valuable assets. How to pick a business number in Nepal, keep it as you grow, and what to ask first.
 date: 2026-10-04
 tags: [phone-system, guides]
+updated: 2026-10-19
+cover: ../../assets/blog/business-phone-number-nepal/kathmandu-street-shops.jpg
+coverAlt: Busy shopping street in old Kathmandu with stalls, shop signs and people walking past
+takeaways:
+  - "Your phone number is one of the most valuable things a small business owns, because customers save it for years."
+  - "The number should belong to the business, not to the owner's personal SIM."
+  - "Mobile or landline matters less than what happens when someone calls."
+  - "Run the number through a phone system so it can ring a team, queue callers and follow opening hours."
+credits:
+  - file: kathmandu-street-shops.jpg
+    title: "Kathmandu, Nepal (23659150241)"
+    author: "Juan Antonio Segal from Madrid, Spain"
+    authorUrl: "https://www.flickr.com/people/67525885@N00"
+    source: "https://commons.wikimedia.org/wiki/File:Kathmandu,_Nepal_(23659150241).jpg"
+    licence: CC BY 2.0
+    changes: "Resized and cropped"
+  - file: kathmandu-shop-street-customers.jpg
+    title: "Clothes shopping for the holiday, street, Kathmandu, Nepal"
+    author: "Wonderlane"
+    authorUrl: "https://www.flickr.com/photos/71401718@N00"
+    source: "https://www.flickr.com/photos/71401718@N00/3930358451"
+    licence: CC BY 2.0
+    changes: "Resized"
+  - file: nepal-telecom-sim-card-queue.jpg
+    title: "Nepal Telecom distributed 74000 SIM Cards on a single day"
+    author: "anantal"
+    authorUrl: "https://www.flickr.com/photos/33088287@N00"
+    source: "https://www.flickr.com/photos/33088287@N00/449443927"
+    licence: CC BY 2.0
+    changes: "Resized"
 faq:
   - q: Can I keep my existing business number if I move to AirFone?
     a: Yes. Your existing line connects to AirFone through a SIP line, so the number your customers already know keeps working and callers notice no change.
@@ -30,6 +60,8 @@ Customers do not remember your website. They remember the number on the board, t
 
 Change it and some of those customers are simply gone. They call the old number, hear that it is out of service, and call someone else. There is no error message on your side. The calls just stop.
 
+![Shoppers outside a clothes shop in Chabahil, Kathmandu, with the shop phone number painted on its signboard](../../assets/blog/business-phone-number-nepal/kathmandu-shop-street-customers.jpg "The number on the signboard is the one customers save. Photo: Wonderlane, CC BY 2.0")
+
 So the first rule is simple. Pick a number you are willing to keep for a very long time, and set it up so that it can stay yours whatever else changes.
 
 ## Whose business phone number is it?
@@ -43,6 +75,8 @@ A business number should belong to the business. It should be able to ring whoev
 ## Mobile or landline?
 
 Both are fine, and the answer is less important than people think.
+
+![A long queue of people waiting for Nepal Telecom SIM cards in Kathmandu](../../assets/blog/business-phone-number-nepal/nepal-telecom-sim-card-queue.jpg "Mobile numbers are easy to get: Nepal Telecom once handed out 74,000 SIM cards in a single day. Photo: anantal, CC BY 2.0")
 
 A mobile number is easy to get and easy for customers to save. A landline number looks established on an invoice, and some customers still trust it more. What decides whether either one works well is not the number itself but what happens when someone dials it.
 

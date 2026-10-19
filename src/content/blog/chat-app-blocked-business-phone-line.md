@@ -3,6 +3,22 @@ title: "When a chat app gets blocked: why your business phone line is the channe
 description: "When WhatsApp and Facebook went dark in Nepal in September 2025, the phone number still worked. How to build customer contact on a channel you control."
 date: 2026-10-14
 tags: [phone-system, guides]
+updated: 2026-10-19
+cover: ../../assets/blog/chat-app-blocked-business-phone-line/thamel-street-shops-kathmandu.jpg
+coverAlt: Thamel street in Kathmandu lined with shop and tour signs, with a bus and a press van on the road
+takeaways:
+  - "In early September 2025 many Nepali businesses lost their chat-app channels overnight while phone numbers kept working."
+  - "Whoever owns a platform decides whether your channel exists, so no chat app should be your only front door."
+  - "A phone number works on every handset, and a call needs no mobile data on the caller's side."
+  - "A number nobody answers is not a channel: it should belong to the business, ring a team and be answered when everyone is busy."
+credits:
+  - file: thamel-street-shops-kathmandu.jpg
+    title: "Thamel street"
+    author: "Sgroey"
+    authorUrl: "https://commons.wikimedia.org/wiki/User:Sgroey"
+    source: "https://commons.wikimedia.org/wiki/File:Thamel_street.jpg"
+    licence: CC BY-SA 4.0
+    changes: "Resized"
 faq:
   - q: "What happened to WhatsApp and Facebook in Nepal in September 2025?"
     a: "In early September 2025 the government blocked 26 social media and messaging platforms that had not registered under new rules, including Facebook, WhatsApp, Instagram and YouTube. The block was lifted after a few days, following large protests in which many people were killed."

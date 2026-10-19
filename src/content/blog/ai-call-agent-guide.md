@@ -5,6 +5,29 @@ date: 2026-10-02
 tags: [ai-call-agent, guides]
 pillar: true
 draft: false
+updated: 2026-10-19
+cover: ../../assets/blog/ai-call-agent-guide/new-road-kathmandu-street-traffic.jpg
+coverAlt: New Road in Kathmandu with electronics and mobile phone shop signs, motorbikes, cars and a rickshaw
+takeaways:
+  - "The agent answers your normal number in Nepali, using the prices and answers you give it."
+  - "Setup usually takes an afternoon: a price list, ten common questions and a list of what it should not handle."
+  - "It helps most at the busy hour and after closing, when calls otherwise go unanswered."
+  - "Refunds, complaints and account questions still go to a person, with a short note of the call so far."
+credits:
+  - file: new-road-kathmandu-street-traffic.jpg
+    title: "New Road-kathmandu-07"
+    author: "S Pakhrin from DC, USA"
+    authorUrl: "https://www.flickr.com/people/72739078@N00"
+    source: "https://commons.wikimedia.org/wiki/File:New_Road-kathmandu-07.jpg"
+    licence: CC BY 2.0
+    changes: "Resized"
+  - file: nepal-shopkeeper-at-counter.jpg
+    title: "Shopkeeper"
+    author: "Hari gurung77"
+    authorUrl: "https://commons.wikimedia.org/wiki/User:Hari_gurung77"
+    source: "https://commons.wikimedia.org/wiki/File:Shopkeeper.jpg"
+    licence: CC BY-SA 4.0
+    changes: "Resized"
 ---
 
 It's eleven in the morning at a mobile shop on New Road. There are two customers at the counter, and one of them wants a refund for a cracked screen. The phone rings. Somebody looks at it, looks back at the customer, and lets it ring out.
@@ -32,6 +55,8 @@ When a price changes, change it once. The next caller gets the new price.
 ## Where you'll notice it
 
 Mostly at the busy hour. Every business has one, and that's when calls go unanswered. The agent can be on fifteen calls at the same time, so nobody hears an engaged tone.
+
+![Shopkeeper at a Kathmandu stall of coloured powders and religious goods, looking down at his counter](../../assets/blog/ai-call-agent-guide/nepal-shopkeeper-at-counter.jpg "At the busy hour the counter comes first and the phone rings out. Photo: Hari gurung77, CC BY-SA 4.0")
 
 You'll also notice it after closing. A lot of people only get round to calling in the evening, and right now those calls just ring. And your staff will notice it, because they'll stop answering "where exactly are you?" forty times a day.
 

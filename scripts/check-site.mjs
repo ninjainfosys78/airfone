@@ -170,8 +170,12 @@ export function audit(dist, { designColours = DESIGN_COLOURS } = {}) {
     // Legal pages describe the whole service, including app channels.
     for (const t of body.querySelectorAll('[data-legal]')) t.remove();
     const marketingText = body.text.replace(/\s+/g, ' ');
+    // Blog posts may quote sourced market prices (owner, 2026-10-19).
+    const isPost = /^blog\/[^/]+\.html$/.test(relative(dist, file)) && !/^blog\/(index|page|tag)/.test(relative(dist, file));
     for (const [re, what] of BANNED_COPY) {
-      if (what.startsWith('social') && PLATFORM_NAMES_ALLOWED.has(relative(dist, file))) continue;
+      if (what === 'price on the site' && isPost) continue;
+      // Blog listing pages quote that post's title and summary, so they may name it too.
+      if (what.startsWith('social') && (PLATFORM_NAMES_ALLOWED.has(relative(dist, file)) || /^blog(\.html|\/(page|tag)\/)/.test(relative(dist, file)))) continue;
       const hay = what === 'price on the site' ? ownText : what.startsWith('social') ? marketingText : text;
       const m = hay.match(re);
       if (m) add('CV-8', file, `${what}: "…${hay.slice(Math.max(0, m.index - 30), m.index + 30).trim()}…"`);

@@ -2,7 +2,29 @@
 title: "How to cut hold time and stop losing callers in the queue"
 description: Callers hang up after a minute or two on hold. Why queues build up, how to measure them, and practical ways to cut waiting for Nepali businesses of any size.
 date: 2026-10-12
+updated: 2026-10-19
 tags: [phone-system, guides]
+cover: ../../assets/blog/reduce-call-hold-time/nepal-telecom-sim-card-crowd.jpg
+coverAlt: Large crowd of people standing in a tightly packed queue outside a gate in Kathmandu
+takeaways:
+  - "Callers hang up when they cannot see the line, hear no progress and have no way out."
+  - "Measure first: calls per hour, abandon rate, the slowest ten percent of waits and the reasons people call."
+  - "Staffing to the peak hours and answering simple questions automatically often beats hiring."
+  - "Offer a callback only when you can keep the promise."
+credits:
+  - file: nepal-telecom-sim-card-crowd.jpg
+    title: "Nepal Telecom distributed 74000 SIM Cards on a single day"
+    author: "anantal"
+    authorUrl: "https://www.flickr.com/photos/33088287@N00"
+    source: "https://www.flickr.com/photos/33088287@N00/449441117"
+    licence: CC BY 2.0
+    changes: "Resized"
+  - file: telephone-operators-switchboard-queue.jpg
+    title: "WAC telephone switchboard operators"
+    author: "PhotosNormandie"
+    source: "https://commons.wikimedia.org/wiki/File:WAC_telephone_switchboard_operators.jpg"
+    licence: CC BY-SA 2.0
+    changes: "Resized and cropped"
 faq:
   - q: "How long will a caller wait on hold?"
     a: "Most callers give up somewhere between one and three minutes. Mobile callers paying for the call give up sooner. Aim to answer most calls within thirty seconds."
@@ -51,6 +73,8 @@ Once you know your busy hours, match staff to them. This sounds obvious, but man
 - If you have more than one branch, let calls overflow to a branch that is quiet.
 
 A small change in who answers when often cuts the longest waits by half.
+
+![Row of telephone switchboard operators wearing headsets at a large switchboard while a supervisor looks on](../../assets/blog/reduce-call-hold-time/telephone-operators-switchboard-queue.jpg "Every call needs someone free to take it, so peak hours decide how long callers wait. Photo: PhotosNormandie, CC BY-SA 2.0")
 
 ## Answer the simple questions automatically
 
@@ -101,6 +125,10 @@ A queue with no limit means some callers wait ten or fifteen minutes. That is wo
 
 - After a set wait, offer a callback or a message instead of more hold music.
 - Outside working hours, say so at once, give the hours, and take a message.
+
+## What more staff would cost
+
+Adding people is the obvious fix and the most expensive one. Nepal's [minimum monthly wage rose to Rs 19,550](https://en.himalpress.com/?p=75907) in July 2025, and [entry-level receptionists earn about Rs 15,000 to 20,000 a month, and staff with one to three years of experience Rs 20,000 to 35,000](https://www.necojobs.com.np/blogs/career-tips/receptionist-jobs-in-nepal) (checked October 2026). Staff at that rate still handle one call at a time, so a second person helps at the peak but sits idle the rest of the day. Weigh that against the cheaper changes above. For what an AI call agent costs on AirFone, see [pricing](/pricing).
 
 ## Check the result every month
 

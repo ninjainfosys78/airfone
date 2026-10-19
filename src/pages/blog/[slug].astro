@@ -1,14 +1,14 @@
 ---
 import ArrowLeft from '@lucide/astro/icons/arrow-left';
+import ChevronDown from '@lucide/astro/icons/chevron-down';
 import { render } from 'astro:content';
-import '@fontsource-variable/source-serif-4/wght.css';
-import '@fontsource-variable/source-serif-4/wght-italic.css';
-import serifUrl from '@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-normal.woff2?url';
+import { Image, getImage } from 'astro:assets';
+import { LICENCES } from '../../lib/blog-schema';
 import Base from '../../layouts/Base.astro';
 import CtaBand from '../../components/site/CtaBand.astro';
 import Related from '../../components/site/Related.astro';
 import { productsForTags, solutionsForTags } from '../../data/links';
-import { coverFor, fmtDate, posts, type Post } from '../../lib/posts';
+import { coverFor, fmtDate, posts, readMinutes, type Post } from '../../lib/posts';
 import { related } from '../../lib/blog';
 import { articleJsonLd, breadcrumbJsonLd, faqJsonLd } from '../../lib/seo';
 
@@ -17,10 +17,29 @@ export async function getStaticPaths() {
   return all.map((post) => ({ params: { slug: post.id }, props: { post, all } }));
 }
 const { post, all } = Astro.props as { post: Post; all: Post[] };
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
+// Contents list from the post's own H2s, shown when there are enough to need one.
+const toc = headings.filter((h) => h.depth === 2);
+const hasToc = toc.length >= 4;
+const minutes = readMinutes(post);
 const d = post.data;
 const path = `/blog/${post.id}`;
-const image = coverFor(post);
+// Share image: the cover cropped to 1200x630, else the generated card.
+const image = d.cover ? (await getImage({ src: d.cover, width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src : coverFor(post);
+const credits = d.credits.filter((c) => !('own' in c));
+// Every credited image as an ImageObject with its licence, so search engines
+// show the right credit (and the Licensable badge) in image results.
+const files = import.meta.glob<{ default: ImageMetadata }>('/src/assets/blog/**/*.{jpg,jpeg,png,webp,avif}', { eager: true });
+const imageObjects = await Promise.all(
+  d.credits.map(async (c) => {
+    const mod = files[`/src/assets/blog/${post.id}/${c.file}`];
+    if (!mod) return null;
+    const url = new URL((await getImage({ src: mod.default, width: 1200, format: 'jpg' })).src, Astro.site).href;
+    return 'own' in c
+      ? { '@context': 'https://schema.org', '@type': 'ImageObject', contentUrl: url, creditText: 'AirFone', creator: { '@type': 'Organization', name: 'AirFone' }, copyrightNotice: 'AirFone' }
+      : { '@context': 'https://schema.org', '@type': 'ImageObject', contentUrl: url, name: c.title, creditText: `${c.author}, ${c.licence}`, creator: { '@type': 'Person', name: c.author, ...(c.authorUrl ? { url: c.authorUrl } : {}) }, license: LICENCES[c.licence], acquireLicensePage: c.source };
+  }),
+).then((xs) => xs.filter((x) => x !== null));
 const more = related(all.map((p) => ({ ...p, data: { ...p.data, draft: false } })), { ...post, data: { ...d, draft: false } }) as Post[];
 const pillar = all.find((p) => p.data.pillar && p.id !== post.id && p.data.tags.some((t) => d.tags.includes(t)));
 const next = [...(pillar ? [pillar] : []), ...more.filter((m) => m.id !== pillar?.id)];
@@ -32,7 +51,7 @@ const readNext = (next.length ? next : all.filter((p) => p.id !== post.id)).slic
   path={path}
   type="article"
   image={image}
-  imageAlt={d.imageAlt}
+  imageAlt={d.coverAlt ?? d.imageAlt}
   published={d.date}
   modified={d.updated ?? d.date}
   noindex={d.draft}
@@ -40,40 +59,81 @@ const readNext = (next.length ? next : all.filter((p) => p.id !== post.id)).slic
     articleJsonLd({ slug: post.id, title: d.title, description: d.description, date: d.date, updated: d.updated, image, tags: d.tags, words: (post.body ?? '').split(/\s+/).filter(Boolean).length }),
     breadcrumbJsonLd([{ name: 'Insights', path: '/blog' }, { name: d.title, path }]),
     ...((d.faq ?? []).length ? [faqJsonLd(d.faq ?? [])] : []),
+    ...imageObjects,
   ]}
 >
-  <link slot="head" rel="preload" href={serifUrl} as="font" type="font/woff2" crossorigin />
   <article class="post">
-    <header class="wrap">
+    <header class="wrap head">
       <a class="back" href="/blog" data-enter><ArrowLeft size={18} stroke-width={2} aria-hidden="true" /> All insights</a>
       <h1 class="title" data-enter>{d.title}</h1>
       <p class="meta" data-enter>
         <time datetime={d.date.toISOString()}>{fmtDate(d.date)}</time>
         {d.updated && <> · Updated <time datetime={d.updated.toISOString()}>{fmtDate(d.updated)}</time></>}
+        <> · {minutes} min read</>
         {d.draft && <span class="draft"> · Draft, not published</span>}
       </p>
+      {d.cover && (
+        <figure class="cover" data-enter>
+          <Image src={d.cover} alt={d.coverAlt ?? ''} widths={[480, 800, 1200, 1600]} sizes="(max-width: 1200px) 100vw, 1200px" loading="eager" fetchpriority="high" />
+        </figure>
+      )}
     </header>
     <div class="wrap grid">
-      <div class="col prose body" data-enter>
-        <Content />
-        {(d.faq ?? []).length > 0 && (
-          <section class="post-faq" aria-labelledby="faq-h">
-            <h2 id="faq-h">Questions people ask</h2>
-            {(d.faq ?? []).map((f) => <><h3>{f.q}</h3><p>{f.a}</p></>)}
+      <div class="col">
+        {d.takeaways.length > 0 && (
+          <section class="takeaways" aria-labelledby="tk-h" data-enter>
+            <h2 id="tk-h">Key takeaways</h2>
+            <ul>{d.takeaways.map((t) => <li>{t}</li>)}</ul>
           </section>
         )}
+        {hasToc && (
+          <details class="toc-inline no-print" data-enter>
+            <summary>On this page<ChevronDown size={18} stroke-width={2} aria-hidden="true" /></summary>
+            <ol>{toc.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}</ol>
+          </details>
+        )}
+        <div class="prose body" data-enter>
+          <Content />
+          {(d.faq ?? []).length > 0 && (
+            <section class="post-faq" aria-labelledby="faq-h">
+              <h2 id="faq-h">Questions people ask</h2>
+              {(d.faq ?? []).map((f) => <><h3>{f.q}</h3><p>{f.a}</p></>)}
+            </section>
+          )}
+        </div>
+        {credits.length > 0 && (
+          <section class="credits" aria-labelledby="credits-h">
+            <h2 id="credits-h">Image credits</h2>
+            <ul>
+              {credits.map((c) => 'title' in c && (
+                <li>
+                  “<a href={c.source} rel="nofollow noopener">{c.title}</a>” by {c.authorUrl ? <a href={c.authorUrl} rel="nofollow noopener">{c.author}</a> : c.author},
+                  {' '}<a href={LICENCES[c.licence]} rel="license nofollow noopener">{c.licence}</a>{c.changes && <>. {c.changes}</>}.
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+        {readNext.length > 0 && (
+          <nav class="next no-print" aria-labelledby="next-h">
+            <h2 id="next-h">Read next</h2>
+            <ul>
+              {readNext.map((p) => (
+                <li><a href={`/blog/${p.id}`}><span>{p.data.title}</span><time datetime={p.data.date.toISOString()}>{fmtDate(p.data.date)}</time></a></li>
+              ))}
+            </ul>
+          </nav>
+        )}
       </div>
-      {readNext.length > 0 && (
-        <nav class="next no-print" aria-labelledby="next-h" data-enter>
-          <h2 id="next-h" class="next-h">Read next</h2>
-          <ul>
-            {readNext.map((p) => (
-              <li><a href={`/blog/${p.id}`}><span>{p.data.title}</span><time datetime={p.data.date.toISOString()}>{fmtDate(p.data.date)}</time></a></li>
-            ))}
-          </ul>
-        </nav>
+      {hasToc && (
+        <aside class="rail no-print" aria-labelledby="rail-h">
+          <nav class="toc" aria-labelledby="rail-h">
+            <h2 id="rail-h">On this page</h2>
+            <ol>{toc.map((h) => <li><a href={`#${h.slug}`} data-toc={h.slug}>{h.text}</a></li>)}</ol>
+          </nav>
+        </aside>
       )}
-  </div>
+    </div>
   </article>
 
   <Related groups={[
@@ -92,43 +152,112 @@ const readNext = (next.length ? next : all.filter((p) => p.id !== post.id)).slic
     t.replaceWith(box);
     box.append(t);
   });
+
+  // The side contents list marks the section being read.
+  const links = new Map([...document.querySelectorAll<HTMLAnchorElement>('[data-toc]')].map((a) => [a.dataset.toc!, a]));
+  if (links.size) {
+    const seen = new Set<string>();
+    const mark = () => {
+      const order = [...links.keys()];
+      const current = order.filter((id) => seen.has(id)).at(0) ?? null;
+      links.forEach((a, id) => a.toggleAttribute('aria-current', id === current));
+    };
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => (e.isIntersecting ? seen.add(e.target.id) : seen.delete(e.target.id)));
+      mark();
+    }, { rootMargin: '-96px 0px -60% 0px' });
+    links.forEach((_, id) => { const h = document.getElementById(id); if (h) io.observe(h); });
+  }
+  // Closing the mobile contents list after a jump keeps the text in view.
+  document.querySelectorAll('.toc-inline a').forEach((a) => a.addEventListener('click', () => a.closest('details')?.removeAttribute('open')));
 </script>
 
 
-<style is:global>
-  /* Georgia sized to Source Serif 4, so text barely moves if the font is late. */
-  @font-face { font-family: 'Serif Fallback'; src: local('Georgia'); size-adjust: 92%; ascent-override: 98%; descent-override: 31%; line-gap-override: 0%; }
-</style>
-
 <style>
-  /* One reading column on the page's left edge: back link, title, date, text. */
-  .col { max-width: 700px; }
-  .post { padding-block: var(--space-7) var(--space-9); }
-  .back { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 44px; color: var(--ink-muted); text-decoration: none; font-size: 16px; transition: color var(--fast) var(--ease); }
+  /* Reading layout: one text column (about 68 characters a line) and, on wide
+     screens, a sticky "On this page" rail. Phones get the same order with a
+     tap-to-open contents list. */
+  .post { padding-block: var(--space-6) var(--space-9); }
+  .back { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 44px; color: var(--ink-muted); text-decoration: none; font-size: 15px; transition: color var(--fast) var(--ease); }
   .back svg { transition: transform var(--fast) var(--ease); }
   .back:hover { color: var(--ink); }
   .back:hover svg { transform: translateX(-4px); }
-  .title { margin: var(--space-6) 0 var(--space-4); width: min(calc(100vw - 2 * var(--gutter)), 1000px); max-width: 28ch; font-family: 'Source Serif 4 Variable', 'Serif Fallback', Georgia, serif; font-weight: 600; font-variation-settings: 'opsz' 60; font-size: clamp(2.25rem, 1.6rem + 2.4vw, 3.5rem); line-height: 1.1; overflow-wrap: anywhere; }
-  .meta { margin: 0 0 var(--space-8); padding-bottom: var(--space-6); border-bottom: 1px solid var(--line); font-family: 'Source Serif 4 Variable', 'Serif Fallback', Georgia, serif; font-size: 16px; color: var(--ink-muted); }
+  .title { margin: var(--space-4) 0 var(--space-3); max-width: 26ch; font-weight: 600; font-size: clamp(1.875rem, 1.3rem + 2.4vw, 3.25rem); line-height: 1.12; text-wrap: balance; overflow-wrap: anywhere; }
+  .meta { margin: 0 0 var(--space-6); font-size: 15px; color: var(--ink-muted); }
   .draft { color: var(--error); }
-  .body { max-width: none; font-family: 'Source Serif 4 Variable', 'Serif Fallback', Georgia, serif; font-size: 1.1875rem; line-height: 1.45; }
-  .body :global(h2), .body :global(h3) { font-family: inherit; font-weight: 600; }
-  .body :global(li + li) { margin-top: var(--space-1); }
-  .body :global(h2) { font-size: 1.5rem; line-height: 1.25; margin: var(--space-7) 0 var(--space-3); scroll-margin-top: 104px; }
-  .body :global(p), .body :global(ul), .body :global(ol) { margin-bottom: var(--space-4); }
+  /* Header, cover and text share the page's left edge; the cover spans text and rail. */
+  .cover { margin: 0 0 var(--space-7); }
+  .cover :global(img) { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius-panel); background: var(--surface); }
+
+  .grid { display: grid; grid-template-columns: minmax(0, 680px) 240px; justify-content: space-between; gap: var(--space-9); }
+  .col { min-width: 0; }
+
+  /* Key takeaways: a light list between two rules, no box. */
+  .takeaways { margin: 0 0 var(--space-6); padding: var(--space-5) 0; border-block: 1px solid var(--line); }
+  .takeaways h2 { margin: 0 0 var(--space-3); font-size: 1rem; line-height: 1.3; }
+  .takeaways ul { margin: 0; padding-left: 1.2em; display: grid; gap: var(--space-2); }
+  .takeaways li { font-size: 1.0625rem; line-height: 1.6; padding-left: 0.2em; }
+  .takeaways li::marker { color: var(--lime); font-size: 1.1em; }
+
+  /* Body text: serif, 18px, comfortable but not airy. */
+  .body { max-width: none; font-size: 1.0625rem; line-height: 1.7; }
+  .body :global(p), .body :global(ul), .body :global(ol) { margin: 0 0 1.1em; }
+  .body :global(li + li) { margin-top: 0.35em; }
+  .body :global(h2) { font-weight: 600; font-size: 1.5rem; line-height: 1.25; margin: 1.8em 0 0.6em; scroll-margin-top: 104px; }
+  .body :global(h3) { font-weight: 600; font-size: 1.1875rem; line-height: 1.3; margin: 1.5em 0 0.4em; scroll-margin-top: 104px; }
   .body :global(table) { display: block; overflow-x: auto; }
-  /* Desktop: read next sits in the empty right column and stays in view. */
-  .grid { display: grid; grid-template-columns: minmax(0, 700px) minmax(220px, 300px); justify-content: space-between; gap: var(--space-9); }
-  .next { position: sticky; top: 112px; align-self: start; }
-  @media (max-width: 1099px) {
-    .grid { grid-template-columns: minmax(0, 700px); gap: 0; }
-    .next { position: static; margin-top: var(--space-8); }
-  }
-  .next-h { font-size: 1.125rem; margin: 0 0 var(--space-3); }
+  .body :global(figure) { margin: 1.6em 0; }
+  .body :global(figure img), .body :global(img) { display: block; width: 100%; height: auto; margin: 0; border-radius: var(--radius-panel); background: var(--surface); }
+  .body :global(figcaption) { margin-top: var(--space-2); font-size: 14px; line-height: 1.45; color: var(--ink-muted); }
+
+  /* Contents on the right, sticky, current section in ink. */
+  .rail { position: relative; }
+  .toc { position: sticky; top: 104px; max-height: calc(100vh - 128px); overflow-y: auto; }
+  .toc h2, .toc-inline summary { font-size: 14px; font-weight: 600; color: var(--ink); margin: 0 0 var(--space-3); }
+  .toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line); }
+  .toc a { display: block; margin-left: -1px; padding: 7px 0 7px var(--space-4); border-left: 2px solid transparent; color: var(--ink-muted); font-size: 14px; line-height: 1.45; text-decoration: none; transition: color var(--fast) var(--ease), border-color var(--fast) var(--ease); }
+  .toc a:hover { color: var(--ink); }
+  .toc a[aria-current] { color: var(--ink); font-weight: 500; border-left-color: var(--lime); }
+
+  /* Tablet and phone: no rail; contents fold into a list under the takeaways. */
+  .toc-inline { display: none; margin: 0 0 var(--space-6); border: 1px solid var(--line); border-radius: var(--radius-panel); }
+  .toc-inline summary { display: flex; align-items: center; justify-content: space-between; min-height: 48px; margin: 0; padding: 0 var(--space-4); cursor: pointer; list-style: none; }
+  .toc-inline summary::-webkit-details-marker { display: none; }
+  .toc-inline summary :global(svg) { transition: transform var(--fast) var(--ease); }
+  .toc-inline[open] summary :global(svg) { transform: rotate(180deg); }
+  .toc-inline ol { list-style: none; margin: 0; padding: 0 var(--space-4) var(--space-2); }
+  .toc-inline li + li { border-top: 1px solid var(--line); }
+  .toc-inline a { display: flex; align-items: center; min-height: 44px; padding-block: var(--space-2); color: var(--ink); font-size: 15px; line-height: 1.4; text-decoration: none; }
+  .toc-inline a:hover { color: var(--link); }
+
+  .credits { margin-top: var(--space-7); padding-top: var(--space-5); border-top: 1px solid var(--line); font-size: 14px; line-height: 1.5; color: var(--ink-muted); }
+  .credits h2 { font-size: 15px; margin: 0 0 var(--space-2); color: var(--ink); }
+  .credits ul { margin: 0; padding-left: var(--space-5); }
+  .credits li + li { margin-top: var(--space-1); }
+  .credits a { color: var(--ink-muted); }
+
+  .next { margin-top: var(--space-8); }
+  .next h2 { font-size: 1.125rem; margin: 0 0 var(--space-3); }
   .next ul { list-style: none; margin: 0; padding: 0; }
   .next a { display: flex; flex-direction: column; gap: var(--space-1); padding: var(--space-4) 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
   .next li:last-child a { border-bottom: 1px solid var(--line); }
   .next span { font-weight: 500; line-height: 1.35; transition: color var(--fast) var(--ease); }
   .next a:hover span { color: var(--link); }
-  .next time { flex: none; font-size: 14px; color: var(--ink-muted); }
+  .next time { font-size: 14px; color: var(--ink-muted); }
+
+  @media (max-width: 1099px) {
+    .grid { grid-template-columns: minmax(0, 680px); gap: 0; }
+    .rail { display: none; }
+    .toc-inline { display: block; }
+  }
+  @media (max-width: 599px) {
+    .post { padding-top: var(--space-4); }
+    .cover { margin: 0 calc(-1 * var(--gutter)) var(--space-6); }
+    .cover :global(img) { border-radius: 0; aspect-ratio: 3 / 2; }
+    .body { font-size: 1rem; line-height: 1.7; }
+    .body :global(h2) { font-size: 1.3125rem; }
+    .body :global(figure) { margin: 1.4em calc(-1 * var(--gutter)); }
+    .body :global(figure img) { border-radius: 0; }
+    .body :global(figcaption) { padding-inline: var(--gutter); }
+  }
 </style>

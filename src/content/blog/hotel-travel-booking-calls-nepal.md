@@ -3,6 +3,36 @@ title: "Hotels and travel agencies in Nepal: answering booking calls in Nepali, 
 description: Hotel and travel desks get calls in three languages, often in one sentence. How an AI call agent answers booking questions in the caller's language.
 date: 2026-10-07
 tags: [hotels, ai-call-agent]
+updated: 2026-10-19
+cover: ../../assets/blog/hotel-travel-booking-calls-nepal/thamel-kathmandu-shops-travel-agencies.jpg
+coverAlt: Thamel street in Kathmandu with travel agency, restaurant and clothing shop signs and a motorbike passing
+takeaways:
+  - "Hotel and travel desks get the same questions again and again: rates, availability, pickup, packages and cancellation rules."
+  - "The agent answers in the language the caller starts with, including Nepali, English and Hindi, from the rates you give it."
+  - "It takes booking details, and every call is recorded and written out so staff confirm from what the guest said."
+  - "Discounts, groups and custom prices go to a person."
+credits:
+  - file: thamel-kathmandu-shops-travel-agencies.jpg
+    title: "Kathmandu, Nepal, Thamel shops"
+    author: "Vyacheslav Argenberg"
+    authorUrl: "https://commons.wikimedia.org/wiki/User:Argenberg"
+    source: "https://commons.wikimedia.org/wiki/File:Kathmandu,_Nepal,_Thamel_shops.jpg"
+    licence: CC BY 4.0
+    changes: "Resized"
+  - file: kathmandu-hotel-lobby-reception.jpg
+    title: "Hotel Lobby, Kathmandu, Nepal 2020"
+    author: "Gaurav Dhwaj Khadka"
+    authorUrl: "https://commons.wikimedia.org/wiki/User:Gaurav_Dhwaj_Khadka"
+    source: "https://commons.wikimedia.org/wiki/File:Hotel_Lobby,_Kathmandu,_Nepal_2020.jpg"
+    licence: CC BY-SA 4.0
+    changes: "Resized"
+  - file: pokhara-lakeside-street.jpg
+    title: "Lakeside Pokhara - panoramio"
+    author: "salomon10"
+    authorUrl: "https://web.archive.org/web/20161014212512/http://www.panoramio.com/user/2817537?with_photo_id=30424756"
+    source: "https://commons.wikimedia.org/wiki/File:Lakeside_Pokhara_-_panoramio.jpg"
+    licence: CC BY-SA 3.0
+    changes: "Resized"
 faq:
   - q: Can an AI call agent answer calls in Nepali, English and Hindi?
     a: Yes. It answers in the language the caller starts with and stays in it. A single English or Hindi word in a Nepali sentence does not make it switch, but whole sentences in another language do.
@@ -42,9 +72,13 @@ Most booking calls are the same handful of questions, asked over and over by dif
 
 Almost all of these have one right answer, and that answer already lives in your rate card, your package sheet or the notes the manager keeps in a drawer. You give the agent that information once. When rates change for the season, you change them once, and the next caller hears the new price. There is nothing to re-record and nothing to retrain.
 
+![Hotel lobby in Kathmandu with a marble floor, leather armchairs and lit ceiling panels](../../assets/blog/hotel-travel-booking-calls-nepal/kathmandu-hotel-lobby-reception.jpg "A lobby at night is quiet, but calls still arrive. Photo: Gaurav Dhwaj Khadka, CC BY-SA 4.0")
+
 ## Seasons change the questions
 
 A hotel in Nepal does not have a steady year. The autumn trekking season, Dashain and Tihar, the spring rush and the monsoon lull each bring a different caller with a different question.
+
+![Phewa Lake in Pokhara seen across green rice fields with hills and clouds behind](../../assets/blog/hotel-travel-booking-calls-nepal/pokhara-lakeside-street.jpg "The season and the view decide what guests ask. Photo: salomon10, CC BY-SA 3.0")
 
 In peak weeks the phone never stops, and most calls are for dates you are already full on. A person spends the day saying "sorry, full" forty times. The agent can say it for them, offer the nearest free dates, and take a name for a waiting list, so your staff only deal with calls that can turn into a booking.
 

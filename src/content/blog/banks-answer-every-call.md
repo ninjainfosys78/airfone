@@ -2,8 +2,36 @@
 title: How banks and cooperatives in Nepal can answer every member call
 description: Rate questions, branch hours and loan papers fill bank lines on salary day. How an AI call agent answers them in Nepali and keeps accounts with your staff.
 date: 2026-09-26
-updated: 2026-10-09
 tags: [banks, ai-call-agent]
+updated: 2026-10-19
+cover: ../../assets/blog/banks-answer-every-call/nepal-rastra-bank-building.jpg
+coverAlt: Nepal Rastra Bank building in Kathmandu with a columned facade, a lawn and parked cars
+takeaways:
+  - "Most bank and cooperative calls are about rates, branch hours, loan documents and mobile banking steps."
+  - "An AI call agent answers these in Nepali from the sheets you upload, and a new rate sheet changes the answer for the next caller."
+  - "It cannot see balances or transactions, so questions about a member's own account go to staff."
+  - "It can take up to fifteen calls at once, which helps on salary day."
+  - "Every call is recorded and written out, so you can search what members ask about."
+credits:
+  - file: nepal-rastra-bank-building.jpg
+    title: "Rastrabank"
+    author: "Clemensmarabu"
+    source: "https://commons.wikimedia.org/wiki/File:Rastrabank.JPG"
+    licence: CC BY-SA 3.0
+    changes: "Resized"
+  - file: kathmandu-old-city-street.jpg
+    title: "Kathmandu Old City Chaos"
+    author: "Francisco Anzola"
+    authorUrl: "https://500px.com/franciscoanzola"
+    source: "https://commons.wikimedia.org/wiki/File:Kathmandu_Old_City_Chaos_(221813587).jpeg"
+    licence: CC BY 3.0
+    changes: "Resized"
+  - file: nepal-sbi-bank-branch.jpg
+    title: "Nepal sbi bank"
+    author: "Vandana Agrawal Goyal"
+    source: "https://commons.wikimedia.org/wiki/File:Nepal_sbi_bank_.jpeg"
+    licence: CC BY-SA 4.0
+    changes: "Resized"
 faq:
   - q: Can an AI call agent answer bank and cooperative calls?
     a: Yes, for general questions. It answers rates, branch hours, loan documents and mobile banking steps from the material you upload, in Nepali.
@@ -23,11 +51,15 @@ Then ask what those callers wanted, and it is almost always one of four things. 
 
 None of these are difficult questions. Every answer is already written down somewhere: on the rate sheet pinned by the counter, on the notice board, on page three of the loan brochure. The problem is only that hundreds of members want them read out at the same moment, and there are a handful of people to do it.
 
+![Kathmandu street with a savings and credit cooperative signboard above shops, pedestrians and parked motorbikes](../../assets/blog/banks-answer-every-call/kathmandu-old-city-street.jpg "Cooperatives sit above shops across Kathmandu, and their members ring in with the same few questions. Photo: Francisco Anzola, CC BY 3.0")
+
 ## Reading out what you already publish
 
 An [AI call agent](/products/ai-call-agent) is well suited to exactly this. You give it the documents your staff already use, the current rate sheet, branch hours, the loan checklist and the mobile banking steps, and it answers members from them, in Nepali, on as many calls as come in at once.
 
 A member asks about the one-year fixed deposit rate. The agent reads the rate from this month's sheet, mentions the minimum deposit if there is one, and tells them they can open it in mobile banking or at any branch. If they then ask which branches open on Saturday, it answers that too.
+
+![Illuminated Nepal SBI Bank New Road branch sign listing 365 days banking, evening counter and locker facility](../../assets/blog/banks-answer-every-call/nepal-sbi-bank-branch.jpg "Branch hours and counters are among the first things callers ask. Photo: Vandana Agrawal Goyal, CC BY-SA 4.0")
 
 When rates change at the start of the month, you upload the new sheet. The next caller hears the new rate. In a bank, this matters more than anywhere else. Reading out last month's rate to a member is worse than not answering at all, and an agent that always uses the latest sheet removes that risk.
 

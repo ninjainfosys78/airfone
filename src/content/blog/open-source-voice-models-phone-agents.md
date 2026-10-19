@@ -2,7 +2,37 @@
 title: "Open-source voice models for phone agents: what works, and what breaks on a Nepali line"
 description: Ten open-source speech models compared for phone agents, with licences, languages and speed, and why a good benchmark score can still fail on a Nepali call.
 date: 2026-10-08
+updated: 2026-10-19
 tags: [voice-agent, guides]
+cover: ../../assets/blog/open-source-voice-models-phone-agents/data-centre-server-racks-south-asia.jpg
+coverAlt: Long aisle of white server racks in a data centre in South Asia
+takeaways:
+  - "Leaderboards use clean English recordings, while phone calls are narrowband, noisy, interrupted and Nepali mixed with English."
+  - "Fast English and European models such as Parakeet and Canary-Qwen do not list Nepali."
+  - "Fine-tuning on Nepali data matters more than the choice of base model."
+  - "Check each licence: MIT and Apache 2.0 are permissive, CC-BY needs credit, and some popular voices are non-commercial."
+  - "Record fifty real calls from your own line and test every candidate on them."
+credits:
+  - file: data-centre-server-racks-south-asia.jpg
+    title: "Racks Amravati Data Center"
+    author: "PiDatacenters"
+    source: "https://commons.wikimedia.org/wiki/File:Racks_Amravati_Data_Center.jpg"
+    licence: CC BY-SA 4.0
+    changes: "Resized and cropped"
+  - file: technician-laptop-server-rack.jpg
+    title: "Technician with laptop working on server rack at NERSC"
+    author: "Derrick Coetzee from Berkeley, CA, USA"
+    authorUrl: "https://www.flickr.com/people/29507259@N02"
+    source: "https://commons.wikimedia.org/wiki/File:Technician_with_laptop_working_on_server_rack_at_NERSC.jpg"
+    licence: CC0 1.0
+    changes: "Resized"
+  - file: studio-ribbon-microphone.jpg
+    title: "ShinyBox 46MXC Ribbon Microphone, LowSwing studio, Berlin, 2011-01-25 22 29 45"
+    author: "Marc Wathieu from Huy, Belgium"
+    authorUrl: "https://www.flickr.com/people/88133570@N00"
+    source: "https://commons.wikimedia.org/wiki/File:ShinyBox_46MXC_Ribbon_Microphone,_LowSwing_studio,_Berlin,_2011-01-25_22_29_45.jpg"
+    licence: CC BY 2.0
+    changes: "Resized and cropped"
 faq:
   - q: Is there an open-source model that understands Nepali out of the box?
     a: Not reliably. The fastest English and European models, such as Parakeet and Canary-Qwen, do not list Nepali. Whisper and multilingual models like MMS and IndicWav2Vec can be fine-tuned on Nepali data, and published results show fine-tuning matters more than the base model.
@@ -30,6 +60,8 @@ A voice agent on a phone line has three jobs, and each has its own family of mod
 
 A newer group of models does all three in one pass. This is called speech-to-speech. It can feel more natural, but today's open ones come with trade-offs that matter for a business line, covered below.
 
+![Technician crouching beside an open server rack with a laptop on the floor, connecting cables](../../assets/blog/open-source-voice-models-phone-agents/technician-laptop-server-rack.jpg "Running a model yourself means someone also looks after the machines it runs on. Photo: Derrick Coetzee, CC0 1.0")
+
 ## Hearing the caller
 
 **Whisper large-v3** is the multilingual default and covers more than 99 languages, which makes it the first thing most people try for Nepali. It is MIT licensed, so commercial use is straightforward. The cost is weight. It is a large model that processes audio in chunks rather than word by word, so it is awkward on a live call unless you give it a fast GPU and a streaming wrapper.
@@ -53,6 +85,8 @@ A newer group of models does all three in one pass. This is called speech-to-spe
 **Orpheus** produces expressive, natural-sounding speech and is built on a Llama base. Its model card lists Apache 2.0, but the Llama base may bring its own attribution terms, so read both before shipping. Its card tags English only.
 
 Two older names come up constantly, **XTTS-v2** and **F5-TTS**. Both are widely reported as non-commercial, which makes them fine for experiments and unsuitable for a paid product. Read the licence on the model page yourself rather than trusting a summary, including this one.
+
+![Studio condenser microphone hanging in a shock mount in front of an acoustic wall](../../assets/blog/open-source-voice-models-phone-agents/studio-ribbon-microphone.jpg "A studio voice is clean. A phone caller sounds nothing like it, which is why voice models need testing on real calls. Photo: Marc Wathieu, CC BY 2.0")
 
 ## Doing it all in one model
 
@@ -104,6 +138,12 @@ Do not choose from a list, including this one. Do this instead.
 6. Re-run it after any change, because a fix for one kind of caller can break another.
 
 That is a week of work, and it will tell you more than any leaderboard.
+
+## What running them costs
+
+Open models are free to download but not free to run. A GPU server is the main cost. RunPod lists the H100 SXM from [$2.69 per GPU hour on demand](https://computeprices.com/providers/runpod/gpus/h100), and [community cloud H100s from about $1.99 per hour](https://www.beam.cloud/blog/nvidia-h100-pcie-pricing) (checked October 2026). A server left running all month costs far more than a small business spends on calls, so self-hosting only pays when call volume is high.
+
+The hosted alternative is priced per minute. OpenAI lists gpt-4o-transcribe at $0.006 per minute and gpt-4o-mini-transcribe at $0.003, according to [the OpenAI pricing summary](https://diyai.io/ai-tools/speech-to-text/openai-whisper-api-pricing-2026/) (checked October 2026). For what AirFone charges, see [pricing](/pricing).
 
 ## If you would rather skip that work
 

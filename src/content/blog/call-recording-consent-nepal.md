@@ -3,6 +3,22 @@ title: "Recording business calls in Nepal: telling callers and keeping recording
 description: Recording calls helps you check what was said, but callers have privacy too. How to tell callers, what to keep, for how long, and who may listen.
 date: 2026-10-11
 tags: [phone-system, guides]
+updated: 2026-10-19
+cover: ../../assets/blog/call-recording-consent-nepal/call-centre-desk-phone-extension.jpg
+coverAlt: Call centre desk phone with a display showing Available and a note about leaving the headset at the desk
+takeaways:
+  - "Tell callers at the start of the call with one sentence, and put the same line in an AI agent's greeting."
+  - "Record for a stated purpose and delete on a schedule, not when someone remembers."
+  - "Give access by role, log who plays what, and search transcripts before anyone listens to audio."
+  - "Decide in advance how to handle card numbers, citizenship numbers and medical details said aloud."
+credits:
+  - file: call-centre-desk-phone-extension.jpg
+    title: "Aspect Tel-set telephone call centre"
+    author: "Petiatil"
+    authorUrl: "https://commons.wikimedia.org/wiki/User:Petiatil"
+    source: "https://commons.wikimedia.org/wiki/File:Aspect_Tel-set_telephone_call_centre.jpg"
+    licence: CC BY-SA 3.0
+    changes: "Resized"
 faq:
   - q: "Do I have to tell callers I am recording?"
     a: "It is the safe and fair practice. Nepal's Privacy Act, 2075 protects the privacy of communications, so say it at the start of the call. Ask a lawyer about your sector."

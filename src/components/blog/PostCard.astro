@@ -1,11 +1,17 @@
 ---
+import { Image } from 'astro:assets';
 import { fmtDate, type Post } from '../../lib/posts';
 export interface Props { post: Post; big?: boolean; level?: 'h2' | 'h3' }
 const { post, big = false, level = 'h2' } = Astro.props;
 const d = post.data;
 const H = level;
 ---
-<article class:list={['card', { big }]}>
+<article class:list={['card', { big, pic: !!d.cover }]}>
+  {d.cover && (
+    <div class="thumb">
+      <Image src={d.cover} alt="" widths={big ? [600, 900, 1200] : [400, 600, 800]} sizes={big ? '(max-width: 900px) 100vw, 1200px' : '(max-width: 600px) 100vw, 400px'} loading={big ? 'eager' : 'lazy'} />
+    </div>
+  )}
   <div class="text">
     <H class="title"><a href={`/blog/${post.id}`}>{d.title}{d.draft && <span class="draft"> (draft)</span>}</a></H>
     <span class="meta"><time datetime={d.date.toISOString()}>{fmtDate(d.date)}</time></span>
@@ -14,6 +20,9 @@ const H = level;
 
 <style>
   .card { position: relative; display: grid; gap: var(--space-4); align-content: start; padding-top: var(--space-5); border-top: 1px solid var(--line); height: 100%; }
+  .pic { padding-top: 0; border-top: 0; }
+  .thumb { overflow: hidden; border-radius: var(--radius-panel); background: var(--surface); aspect-ratio: 16 / 9; }
+  .thumb :global(img) { display: block; width: 100%; height: 100%; object-fit: cover; }
   .text { display: grid; gap: var(--space-2); }
   .title { font-size: 1.25rem; line-height: 1.3; margin: 0; overflow-wrap: anywhere; }
   .title a { color: var(--ink); text-decoration: none; transition: color var(--fast) var(--ease); }
@@ -31,5 +40,14 @@ const H = level;
   .big:hover .title a { color: var(--stage-ink); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
   .big .meta { color: var(--stage-muted); }
   .big .text { gap: var(--space-3); }
-  @media (max-width: 599px) { .big { padding: var(--space-6); min-height: 240px; } }
+  /* With a cover, the newest post is the photo beside a green panel. */
+  .big.pic { padding: 0; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 0; overflow: hidden; align-content: stretch; }
+  .big.pic .thumb { border-radius: 0; aspect-ratio: auto; min-height: 320px; }
+  .big.pic .text { padding: var(--space-7); align-content: end; }
+  @media (max-width: 899px) {
+    .big.pic { grid-template-columns: 1fr; }
+    .big.pic .thumb { aspect-ratio: 16 / 9; min-height: 0; }
+    .big.pic .text { padding: var(--space-6); }
+  }
+  @media (max-width: 599px) { .big { padding: var(--space-6); min-height: 240px; } .big.pic { padding: 0; } }
 </style>

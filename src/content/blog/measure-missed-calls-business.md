@@ -2,7 +2,37 @@
 title: "Missed calls cost you customers: how to measure what your phone is really losing"
 description: A missed call is a customer you never see. How to count missed calls, find your worst hours and put a rupee figure on them, with a spreadsheet and no software.
 date: 2026-10-10
+updated: 2026-10-19
 tags: [phone-system, guides]
+cover: ../../assets/blog/measure-missed-calls-business/kathmandu-shop-counter.jpg
+coverAlt: Young men sitting beside a Kathmandu brassware shop, looking at their phones while the shop stands unattended
+takeaways:
+  - "Most businesses cannot say how many calls they miss, because a missed call leaves nothing behind."
+  - "Count four kinds of loss: rang out, answered then dropped, busy, and outside hours."
+  - "Four numbers tell most of the story: missed rate, misses by hour, return rate and time to return."
+  - "Turn the count into rupees with a simple sum, then try the free fixes first."
+credits:
+  - file: kathmandu-shop-counter.jpg
+    title: "Nepal 2018-04-08 (27457939357)"
+    author: "Guillaume Baviere from Uppsala, Sweden"
+    authorUrl: "https://www.flickr.com/people/84554176@N00"
+    source: "https://commons.wikimedia.org/wiki/File:Nepal_2018-04-08_(27457939357).jpg"
+    licence: CC BY-SA 2.0
+    changes: "Resized and cropped"
+  - file: vintage-rotary-dial-phone.jpg
+    title: "Vintage Rotary Dial Phone"
+    author: "Janak Bhatta"
+    authorUrl: "https://commons.wikimedia.org/wiki/User:Janak_Bhatta"
+    source: "https://commons.wikimedia.org/wiki/File:Vintage_Rotary_Dial_Phone.jpg"
+    licence: CC BY-SA 4.0
+    changes: "Resized"
+  - file: thamel-kathmandu-shops-street.jpg
+    title: "Kathmandu, Nepal, Thamel shops"
+    author: "Vyacheslav Argenberg"
+    authorUrl: "https://commons.wikimedia.org/wiki/User:Argenberg"
+    source: "https://commons.wikimedia.org/w/index.php?curid=103049927"
+    licence: CC BY 4.0
+    changes: "Resized"
 faq:
   - q: How do I find out how many calls my business misses?
     a: Your phone provider's call log or the missed-calls list on the handset shows every call that rang without being answered. Copy a week of it into a spreadsheet with the time, the number and whether anyone called back. That is enough to see the pattern.
@@ -30,6 +60,8 @@ There are good reasons for the gap. You remember the calls you answered, because
 
 Counting turns a feeling into a number. The number is what lets you decide whether to do something about it.
 
+![Antique wooden telephone with a rotary dial and brass earpiece on a table](../../assets/blog/measure-missed-calls-business/vintage-rotary-dial-phone.jpg "Phones have changed, but an unanswered ring still leaves no trace unless you count it. Photo: Janak Bhatta, CC BY-SA 4.0")
+
 ## What counts as a missed call
 
 Be strict, or the count will flatter you. Four kinds of calls are lost:
@@ -43,6 +75,8 @@ Be strict, or the count will flatter you. Four kinds of calls are lost:
 **Outside hours.** Calls that came in after closing or on a holiday. You may think of these as fair, but the caller does not. They wanted an answer and went elsewhere.
 
 Count all four. You can separate them later and decide which ones you care about.
+
+![Narrow shopping street in Thamel, Kathmandu, with clothing shops, signs and shopkeepers standing at their doors](../../assets/blog/measure-missed-calls-business/thamel-kathmandu-shops-street.jpg "In a street like this, the person who should answer the phone is often serving someone at the door. Photo: Vyacheslav Argenberg, CC BY 4.0")
 
 ## Collect a week of calls
 
@@ -99,6 +133,10 @@ Here is a worked example with made-up numbers, so you can see the shape of it. U
 That is about Rs 30,000 a week, or Rs 120,000 a month, in sales that never reached you. Even if you halve every assumption, the figure is still worth a conversation. If you cut the assumptions to a tenth and the figure is still small, then you have good news: your phone is not your problem.
 
 The point is not accuracy. It is to find out whether the leak is the size of a cup or a bucket.
+
+## Compare it with what a phone person costs
+
+Once you have a rupee figure, set it against the cost of fixing it. Nepal's [minimum monthly wage rose to Rs 19,550](https://en.himalpress.com/?p=75907) in July 2025, and [entry-level receptionists earn about Rs 15,000 to 20,000 a month, and staff with one to three years of experience Rs 20,000 to 35,000](https://www.necojobs.com.np/blogs/career-tips/receptionist-jobs-in-nepal) (checked October 2026). If the sum above is larger than a month of that salary, the case for dedicated phone cover is strong. If it is smaller, start with the free fixes below. For what an AI call agent costs on AirFone, see [pricing](/pricing).
 
 ## Fixes that cost almost nothing
 
