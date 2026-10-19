@@ -24,7 +24,7 @@
     "@fontsource/poppins": "^5",
     "@lucide/astro": "1.53.0",
     "astro": "^5",
-    "@ninjainfosys/site-kit": "^0.1.0"
+    "@ninjainfosys/site-kit": "^0.2.0"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2",
