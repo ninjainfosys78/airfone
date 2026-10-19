@@ -1,5 +1,4 @@
 ---
-import ArrowLeft from '@lucide/astro/icons/arrow-left';
 import ChevronDown from '@lucide/astro/icons/chevron-down';
 import { render } from 'astro:content';
 import { Image, getImage } from 'astro:assets';
@@ -9,7 +8,7 @@ import CtaBand from '../../components/site/CtaBand.astro';
 import Related from '../../components/site/Related.astro';
 import { productsForTags, solutionsForTags } from '../../data/links';
 import { coverFor, fmtDate, posts, readMinutes, type Post } from '../../lib/posts';
-import { related } from '../../lib/blog';
+import { related, tagLabel } from '../../lib/blog';
 import { articleJsonLd, breadcrumbJsonLd, faqJsonLd } from '../../lib/seo';
 
 export async function getStaticPaths() {
@@ -24,6 +23,8 @@ const hasToc = toc.length >= 4;
 const minutes = readMinutes(post);
 const d = post.data;
 const path = `/blog/${post.id}`;
+// The post's first topic is its section in the breadcrumb trail.
+const topic = d.tags.find((t) => t !== 'guides') ?? d.tags[0];
 // Share image: the cover cropped to 1200x630, else the generated card.
 const image = d.cover ? (await getImage({ src: d.cover, width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src : coverFor(post);
 const credits = d.credits.filter((c) => !('own' in c));
@@ -57,14 +58,19 @@ const readNext = (next.length ? next : all.filter((p) => p.id !== post.id)).slic
   noindex={d.draft}
   jsonLd={[
     articleJsonLd({ slug: post.id, title: d.title, description: d.description, date: d.date, updated: d.updated, image, tags: d.tags, words: (post.body ?? '').split(/\s+/).filter(Boolean).length }),
-    breadcrumbJsonLd([{ name: 'Insights', path: '/blog' }, { name: d.title, path }]),
+    breadcrumbJsonLd([{ name: 'Insights', path: '/blog' }, ...(topic ? [{ name: tagLabel(topic), path: `/blog/tag/${topic}` }] : []), { name: d.title, path }]),
     ...((d.faq ?? []).length ? [faqJsonLd(d.faq ?? [])] : []),
     ...imageObjects,
   ]}
 >
   <article class="post">
     <header class="wrap head">
-      <a class="back" href="/blog" data-enter><ArrowLeft size={18} stroke-width={2} aria-hidden="true" /> All insights</a>
+      <nav class="crumbs" aria-label="Breadcrumb" data-enter>
+        <ol>
+          <li><a href="/blog">Insights</a></li>
+          {topic && <li><a href={`/blog/tag/${topic}`}>{tagLabel(topic)}</a></li>}
+        </ol>
+      </nav>
       <h1 class="title" data-enter>{d.title}</h1>
       <p class="meta" data-enter>
         <time datetime={d.date.toISOString()}>{fmtDate(d.date)}</time>
@@ -178,10 +184,13 @@ const readNext = (next.length ? next : all.filter((p) => p.id !== post.id)).slic
      screens, a sticky "On this page" rail. Phones get the same order with a
      tap-to-open contents list. */
   .post { padding-block: var(--space-6) var(--space-9); }
-  .back { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 44px; color: var(--ink-muted); text-decoration: none; font-size: 15px; transition: color var(--fast) var(--ease); }
-  .back svg { transition: transform var(--fast) var(--ease); }
-  .back:hover { color: var(--ink); }
-  .back:hover svg { transform: translateX(-4px); }
+  /* Breadcrumb trail: section and topic, the title follows as the heading. */
+  .crumbs ol { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); list-style: none; margin: 0; padding: 0; font-size: 14px; }
+  .crumbs li { display: inline-flex; align-items: center; gap: var(--space-2); }
+  .crumbs li + li::before { content: '›'; color: var(--ink-muted); }
+  .crumbs a { display: inline-flex; align-items: center; min-height: 32px; color: var(--ink-muted); text-decoration: none; }
+  .crumbs a:hover { color: var(--link); text-decoration: underline; text-underline-offset: 3px; }
+  .crumbs li:last-child a { color: var(--link); font-weight: 500; }
   .title { margin: var(--space-4) 0 var(--space-3); max-width: 26ch; font-weight: 600; font-size: clamp(1.875rem, 1.3rem + 2.4vw, 3.25rem); line-height: 1.12; text-wrap: balance; overflow-wrap: anywhere; }
   .meta { margin: 0 0 var(--space-6); font-size: 15px; color: var(--ink-muted); }
   .draft { color: var(--error); }
