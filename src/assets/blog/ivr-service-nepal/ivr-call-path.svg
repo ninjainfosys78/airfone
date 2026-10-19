@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1026 190" role="img" aria-label="What happens when a customer calls your IVR number" font-family="Poppins, Arial, sans-serif">
+<rect width="1026" height="190" fill="#FFFFFF"/>
+<text x="20" y="34" font-size="18" font-weight="600" fill="#16190F">What happens when a customer calls your IVR number</text>
+<rect x="20" y="58" width="170" height="100" rx="10" fill="#F4F8EC" stroke="#DCE5CC"/>
+<text x="105" y="102" text-anchor="middle" font-size="16" font-weight="600" fill="#16190F">Customer dials</text>
+<text x="105" y="124" text-anchor="middle" font-size="16" fill="#16190F">your number</text>
+<path d="M196 108 H218" stroke="#3E4636" stroke-width="2" fill="none"/><path d="M212 102 L219 108 L212 114" stroke="#3E4636" stroke-width="2" fill="none"/>
+<rect x="224" y="58" width="170" height="100" rx="10" fill="#F4F8EC" stroke="#DCE5CC"/>
+<text x="309" y="102" text-anchor="middle" font-size="16" font-weight="600" fill="#16190F">Greeting</text>
+<text x="309" y="124" text-anchor="middle" font-size="16" fill="#16190F">and menu</text>
+<path d="M400 108 H422" stroke="#3E4636" stroke-width="2" fill="none"/><path d="M416 102 L423 108 L416 114" stroke="#3E4636" stroke-width="2" fill="none"/>
+<rect x="428" y="58" width="170" height="100" rx="10" fill="#F4F8EC" stroke="#DCE5CC"/>
+<text x="513" y="102" text-anchor="middle" font-size="16" font-weight="600" fill="#16190F">Key press</text>
+<text x="513" y="124" text-anchor="middle" font-size="16" fill="#16190F">1, 2 or 3</text>
+<path d="M604 108 H626" stroke="#3E4636" stroke-width="2" fill="none"/><path d="M620 102 L627 108 L620 114" stroke="#3E4636" stroke-width="2" fill="none"/>
+<rect x="632" y="58" width="170" height="100" rx="10" fill="#F4F8EC" stroke="#DCE5CC"/>
+<text x="717" y="102" text-anchor="middle" font-size="16" font-weight="600" fill="#16190F">Right team</text>
+<text x="717" y="124" text-anchor="middle" font-size="16" fill="#16190F">or voicemail</text>
+<path d="M808 108 H830" stroke="#3E4636" stroke-width="2" fill="none"/><path d="M824 102 L831 108 L824 114" stroke="#3E4636" stroke-width="2" fill="none"/>
+<rect x="836" y="58" width="170" height="100" rx="10" fill="#2F4F08" stroke="#2F4F08"/>
+<text x="921" y="102" text-anchor="middle" font-size="16" font-weight="600" fill="#FFFFFF">Staff answer</text>
+<text x="921" y="124" text-anchor="middle" font-size="16" fill="#FFFFFF">in app or browser</text>
+</svg>
