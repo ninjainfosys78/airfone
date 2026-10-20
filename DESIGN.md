@@ -35,6 +35,9 @@ the owner chose over the no-glow rule for that element only.
 | `--stage-muted` | `#C9D6B8` | `#C9D6B8` | secondary text on stage |
 | `--stage-line` | `#4A6A22` | `#2F4317` | borders on stage |
 | `--error` | `#B3261E` | `#FF8A80` | form errors |
+| `--mark` | = `--lime` | = `--lime` | bullets, the reading progress bar |
+| `--warn-bg` | `#FFF1CC` | `#FFF1CC` | warning callout panel in posts |
+| `--warn-ink` | `#5C3A00` | `#5C3A00` | text on the warning panel (9:1) |
 
 Orb palette (WebGL orb, by state): body `#1B2A0A`, light `#8BC53E` idle, `#C9D6B8` thinking, `#D4ECB1` speaking, `#FFFFFF` and `#4A6A22` for Nimbus. The orb idles slowly while on screen and stops when off screen or the tab is hidden.
 
@@ -90,3 +93,5 @@ Radius 8px (controls), 12px (panels). Inline code 4px. Borders 1px. No
 - The orb and waveform move only while audio plays.
 - Play buttons (owner, 2026-10-08): a tap-tap double bounce and a white ring every 1.8s until the first play, springy press (cubic-bezier(0.34, 1.56, 0.64, 1)), one ripple on click. The only place bounce is used.
 - `prefers-reduced-motion: reduce` turns all of it off.
+
+Fonts are tokens (`--font-sans`, `--font-display`, `--font-mono`, `--font-serif`); the shared blog and glossary styles use only these.

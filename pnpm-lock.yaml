@@ -24,8 +24,8 @@ importers:
         specifier: 1.53.0
         version: 1.53.0(astro@5.18.2(@types/node@24.13.4)(rollup@4.62.4)(typescript@5.9.3))
       '@ninjainfosys/site-kit':
-        specifier: ^0.5.1
-        version: 0.5.1(astro@5.18.2(@types/node@24.13.4)(rollup@4.62.4)(typescript@5.9.3))
+        specifier: ^0.7.0
+        version: 0.7.0(astro@5.18.2(@types/node@24.13.4)(rollup@4.62.4)(typescript@5.9.3))
       astro:
         specifier: ^5
         version: 5.18.2(@types/node@24.13.4)(rollup@4.62.4)(typescript@5.9.3)
@@ -712,8 +712,8 @@ packages:
     cpu: [x64]
     os: [linux]
 
-  '@ninjainfosys/site-kit@0.5.1':
-    resolution: {integrity: sha512-bNGLf0rBxbCMjrZPN9GZaDfp511MQg7/3PLlUwOxMzDwlmUT6koDCyGFkmj78+4swTKYJZdRN8o6ZjLswYYX8g==}
+  '@ninjainfosys/site-kit@0.7.0':
+    resolution: {integrity: sha512-a6Cqbd/1YyTJGVFHHAwZkuqP+oWDBWvI2Ig8dHniXxjt1rje2pz5Zc3XsoI7t9EYItjfhbt9piouVsiPclUYaw==}
     engines: {node: '>=20'}
     hasBin: true
     peerDependencies:
@@ -2939,7 +2939,7 @@ snapshots:
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
     optional: true
 
-  '@ninjainfosys/site-kit@0.5.1(astro@5.18.2(@types/node@24.13.4)(rollup@4.62.4)(typescript@5.9.3))':
+  '@ninjainfosys/site-kit@0.7.0(astro@5.18.2(@types/node@24.13.4)(rollup@4.62.4)(typescript@5.9.3))':
     dependencies:
       '@astrojs/rss': 4.0.19
       '@fontsource-variable/inter': 5.2.8

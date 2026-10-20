@@ -16,11 +16,15 @@
   --stage-muted: #C9D6B8;
   --stage-line: #4A6A22;
   --error: #B3261E;
+  --mark: var(--lime);
+  --warn-bg: #FFF1CC;
+  --warn-ink: #5C3A00;
 
   /* Inter for reading (body, forms, lists); Poppins for headings, buttons and navigation. */
   --font-sans: 'Inter Variable', 'Inter Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-display: 'Poppins', 'Poppins Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-serif: 'Source Serif 4 Variable', 'Serif Fallback', Georgia, serif;
 
   --radius-control: 8px;
   --radius-panel: 12px;
