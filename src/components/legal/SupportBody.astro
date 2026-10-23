@@ -1,0 +1,45 @@
+---
+import LegalBody from './LegalBody.astro';
+import { CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL } from '../../config/site';
+
+const mail = `<a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>`;
+const tel = `<a href="${CONTACT_PHONE_TEL}">${CONTACT_PHONE_DISPLAY}</a>`;
+const sections = [
+  {
+    h: 'Contact us',
+    p: [
+      `Email ${mail} or call ${tel}. Write from the email address registered to your account and tell us what you were doing when the problem happened. We reply by email.`,
+    ],
+  },
+  {
+    h: 'Signing in',
+    list: [
+      'You can sign in with your email and password, with Google, or with Apple.',
+      'If you forgot your password, tap Forgot password on the sign-in screen. We send a code to your email.',
+      'If you signed up with Apple and chose to hide your email, the address on your account is an Apple relay address. Mail sent to it reaches you.',
+    ],
+  },
+  {
+    h: 'Calls and credit',
+    list: [
+      'Calls, SMS and AI replies are paid from your credit. Add credit in Billing.',
+      'If a call did not connect, check that your credit covers it and that the number is typed with its country code.',
+      'Payment records for every charge are in Billing, under Payment history.',
+    ],
+  },
+  {
+    h: 'Your data',
+    list: [
+      'To delete your account and its data, follow <a href="/delete-account">the steps here</a>.',
+      'To ask what we hold about you, or to correct it, write to us. See the <a href="/privacy">privacy policy</a> for what we collect and why.',
+    ],
+  },
+  {
+    h: 'Reporting a problem with an AI reply',
+    p: [
+      'If an AI reply was wrong, offensive or unsafe, tell us which call or message it was and what it said. We review every report.',
+    ],
+  },
+];
+---
+<LegalBody h1="Help and support" updated="Last updated 24 October 2026" intro={['Answers to common questions, and how to reach a person.']} sections={sections} />
