@@ -100,6 +100,7 @@ export const kit: SiteKit = {
       { slug: 'terms', title: 'Terms of service' },
       { slug: 'privacy', title: 'Privacy policy' },
       { slug: 'delete-account', title: 'Delete your account' },
+      { slug: 'support', title: 'Help and support' },
       { slug: '404', title: 'Page not found' },
       { slug: 'orb-pick', title: 'Orb pick' },
       ...products.map((p) => ({ slug: `products/${p.slug}`, title: p.headline })),
