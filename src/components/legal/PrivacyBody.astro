@@ -8,7 +8,7 @@ const del = '/delete-account';
 const copy = {
   en: {
     h1: 'Privacy policy',
-    updated: 'Last updated 8 October 2026',
+    updated: 'Last updated 24 October 2026',
     intro: [
       'AirFone is a product of Ninja Infosys LLC, 1500 N Grant St, Ste R, Denver, CO 80203, US. It answers phone calls and WhatsApp messages for businesses with an AI assistant, connects callers to the right person, and gives the business its calls, messages and recordings in one app. This policy explains what we collect when you use the AirFone app or website, why, who we share it with, how long we keep it, and what you can do about it.',
       `Questions about this policy: ${mail}.`,
@@ -17,7 +17,7 @@ const copy = {
       {
         h: 'What we collect',
         list: [
-          '<strong>Your account:</strong> your name, email address, password (stored only as a secure hash), and your Google account ID if you sign in with Google. A phone number, if you add one.',
+          '<strong>Your account:</strong> your name, email address, password (stored only as a secure hash), and your Google or Apple account ID if you sign in with one of them. If you use Apple and hide your email, we hold the private relay address Apple gives us instead. A phone number, if you add one.',
           '<strong>Your business:</strong> its name and type, the people in it and their roles, and what you teach the assistant: opening hours, prices, services, documents, photos and website pages you add.',
           '<strong>Calls and messages:</strong> the phone numbers of callers and of the people you call, when calls happen and how long they last, what the assistant said and did, voicemails, chat messages, and, where the business has turned recording on, call recordings and their transcripts and summaries.',
           '<strong>Your devices:</strong> push notification tokens, the app version and device type, and network addresses we use to keep accounts secure.',
@@ -61,7 +61,7 @@ const copy = {
         list: [
           'Cloud hosting and storage providers: running our servers and storing recordings, files and backups, with network protection.',
           'Messaging platforms: the WhatsApp Business Platform, to send and receive WhatsApp messages for businesses that connect a number.',
-          'AI and speech providers: understanding callers, writing replies, turning speech into text and text into speech.',
+          'AI and speech providers: understanding callers, writing replies, turning speech into text and text into speech. These are Google (Gemini and Google Cloud speech and language services), OpenAI, and Voyage AI. What they receive is call audio, transcripts, chat text and the business information the assistant needs to answer. We ask for your agreement before the app first sends your data to them.',
           'Sign-in and notification services: signing in with an existing account and sending app notifications.',
           'Payment providers: taking payments by card and through Nepali payment services.',
           'Phone carriers: connecting calls to and from phone numbers.',
@@ -93,6 +93,8 @@ const copy = {
           `Delete your account in the app, or follow <a href="${del}">these steps</a>.`,
           `Ask for a copy of your information, or to correct it, by writing to ${mail}.`,
           'Turn call recording on or off, and set how long recordings are kept, in the app.',
+          'Withdraw your agreement to AI processing in the app, in Settings. The AI features stop until you agree again.',
+          'Report an AI reply, or block a contact, from the conversation in the app. Reports reach AirFone staff.',
         ],
       },
       {
@@ -111,7 +113,7 @@ const copy = {
   },
   ne: {
     h1: 'गोपनीयता नीति',
-    updated: 'अन्तिम पटक अद्यावधिक: ८ अक्टोबर २०२६',
+    updated: 'अन्तिम पटक अद्यावधिक: २४ अक्टोबर २०२६',
     intro: [
       'AirFone, निन्जा इन्फोसिस प्रा. लि., काठमाडौं, नेपालको उत्पादन हो। यसले व्यवसायका फोन कल र WhatsApp सन्देशहरू AI सहायकमार्फत सम्हाल्छ, कल गर्नेलाई सही व्यक्तिसम्म जोड्छ, र व्यवसायलाई आफ्ना कल, सन्देश र रेकर्डिङ एउटै एपमा दिन्छ। तपाईंले AirFone एप वा वेबसाइट प्रयोग गर्दा हामी के सङ्कलन गर्छौं, किन, कोसँग बाँड्छौं, कति समय राख्छौं र तपाईं के गर्न सक्नुहुन्छ भन्ने यो नीतिले बताउँछ।',
       `यो नीतिबारे प्रश्न: ${mail}।`,
@@ -120,7 +122,7 @@ const copy = {
       {
         h: 'हामी के सङ्कलन गर्छौं',
         list: [
-          '<strong>तपाईंको खाता:</strong> नाम, इमेल ठेगाना, पासवर्ड (सुरक्षित ह्यासको रूपमा मात्र), र Google बाट साइन इन गर्नुभएमा Google खाताको ID। फोन नम्बर थप्नुभएमा त्यो पनि।',
+          '<strong>तपाईंको खाता:</strong> नाम, इमेल ठेगाना, पासवर्ड (सुरक्षित ह्यासको रूपमा मात्र), र Google वा Apple बाट साइन इन गर्नुभएमा त्यो खाताको ID। Apple मा इमेल लुकाएमा Apple ले दिएको निजी रिले ठेगाना हामीसँग रहन्छ। फोन नम्बर थप्नुभएमा त्यो पनि।',
           '<strong>तपाईंको व्यवसाय:</strong> नाम र प्रकार, त्यसमा भएका व्यक्ति र तिनका भूमिका, र तपाईंले सहायकलाई सिकाउनुभएका कुरा: खुल्ने समय, मूल्य, सेवा, कागजात, फोटो र वेबसाइटका पृष्ठ।',
           '<strong>कल र सन्देश:</strong> कल गर्ने र तपाईंले कल गर्नुभएका व्यक्तिका फोन नम्बर, कल कहिले र कति समय भयो, सहायकले के भन्यो र के गर्‍यो, भ्वाइसमेल, च्याट सन्देश, र व्यवसायले रेकर्डिङ खोलेको भए कल रेकर्डिङ, त्यसको लिखित रूप र सारांश।',
           '<strong>तपाईंका उपकरण:</strong> पुस सूचनाका टोकन, एपको संस्करण र उपकरणको प्रकार, र खाता सुरक्षित राख्न प्रयोग हुने नेटवर्क ठेगाना।',
@@ -164,7 +166,7 @@ const copy = {
         list: [
           'क्लाउड होस्टिङ र भण्डारण प्रदायक: सर्भर चलाउन, रेकर्डिङ, फाइल र ब्याकअप राख्न, र नेटवर्क सुरक्षा।',
           'सन्देश प्लेटफर्म: नम्बर जोडेका व्यवसायका लागि WhatsApp सन्देश पठाउन र पाउन WhatsApp Business Platform।',
-          'AI र आवाज प्रदायक: कल गर्नेको कुरा बुझ्न, जवाफ लेख्न, आवाजलाई पाठ र पाठलाई आवाजमा बदल्न।',
+          'AI र आवाज प्रदायक: कल गर्नेको कुरा बुझ्न, जवाफ लेख्न, आवाजलाई पाठ र पाठलाई आवाजमा बदल्न। यी हुन् Google (Gemini र Google Cloud का आवाज र भाषा सेवा), OpenAI र Voyage AI। उनीहरूले कलको आवाज, ट्रान्सक्रिप्ट, च्याट पाठ र सहायकलाई चाहिने व्यवसायको जानकारी पाउँछन्। एपले पहिलो पटक तपाईंको जानकारी पठाउनुअघि हामी तपाईंको सहमति लिन्छौं।',
           'साइन इन र सूचना सेवा: भइरहेको खाताबाट साइन इन गर्न र एपका सूचना पठाउन।',
           'भुक्तानी प्रदायक: कार्ड र नेपाली भुक्तानी सेवामार्फत भुक्तानी लिन।',
           'फोन कम्पनी: फोन नम्बरमा कल जोड्न।',
@@ -196,6 +198,8 @@ const copy = {
           `एपबाटै खाता मेटाउनुहोस्, वा <a href="${del}">यी चरण</a> पालना गर्नुहोस्।`,
           `आफ्नो जानकारीको प्रति वा सुधार चाहिएमा ${mail} मा लेख्नुहोस्।`,
           'कल रेकर्डिङ खोल्ने वा बन्द गर्ने, र रेकर्डिङ कति समय राख्ने भन्ने एपमै मिलाउनुहोस्।',
+          'AI प्रशोधनमा दिएको सहमति एपको सेटिङमा गएर फिर्ता लिनुहोस्। तपाईंले फेरि सहमति नदिउञ्जेल AI सुविधा बन्द रहन्छन्।',
+          'कुराकानीबाटै AI को जवाफ रिपोर्ट गर्न वा सम्पर्क ब्लक गर्न सकिन्छ। रिपोर्ट AirFone का कर्मचारीसम्म पुग्छ।',
         ],
       },
       {
