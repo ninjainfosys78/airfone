@@ -20,9 +20,9 @@
   --warn-bg: #FFF1CC;
   --warn-ink: #5C3A00;
 
-  /* Inter for reading (body, forms, lists); Poppins for headings, buttons and navigation. */
-  --font-sans: 'Inter Variable', 'Inter Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-display: 'Poppins', 'Poppins Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Geist for reading (body, forms, lists); Manrope for headings, buttons and navigation, as in the app. */
+  --font-sans: 'Geist Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Manrope Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   --font-serif: 'Source Serif 4 Variable', 'Serif Fallback', Georgia, serif;
 

@@ -1,9 +1,8 @@
 // What the site-kit package reads from this site beyond the constants in
 // config/site.ts: header, footer, share cards, llms.txt and blog wording.
 import type { SiteKit } from '@ninjainfosys/site-kit/contract';
-import fontInter from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
-import font500 from '@fontsource/poppins/files/poppins-latin-500-normal.woff2?url';
-import font600 from '@fontsource/poppins/files/poppins-latin-600-normal.woff2?url';
+import fontGeist from '@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url';
+import fontManrope from '@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url';
 import { products } from '../data/products';
 import { solutions } from '../data/solutions';
 import { footerColumns } from '../data/nav';
@@ -27,7 +26,7 @@ export const kit: SiteKit = {
     contactPoint: { contactType: 'sales', areaServed: 'NP', availableLanguage: ['en', 'ne'] },
   },
   head: {
-    preloadFonts: [fontInter, font500, font600],
+    preloadFonts: [fontGeist, fontManrope],
     icons: [
       { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
       { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
